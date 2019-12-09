@@ -21,7 +21,8 @@
         </div>
       </div>
       <div class="cardList ">
-        <div class="card green" *ngFor="let item of temporaryArray" (click)="viewTournament()" >
+        <div class="lazyCard" loading="lazy" *ngIf="inprogress.length==0" ><h1>No Tournaments</h1></div>
+        <div class="card green" *ngFor="let item of inprogress" (click)="viewTournament()" >
           <div class="title">
             <h5>Msansi Championship Tournament</h5>
           </div>
@@ -58,7 +59,8 @@
         </div>
       </div>
       <div class="cardList">
-        <div class="card blue" *ngFor="let item of temporaryArray" >
+          <div class="lazyCard" loading="lazy" *ngIf="upcoming.length==0" ><h1>No Tournaments</h1></div>
+        <div class="card blue" *ngFor="let item of upcoming" >
           <div class="title">
             <h5>Msansi Championship Tournament</h5>
           </div>
@@ -94,7 +96,8 @@
         </div>
       </div>
       <div class="cardList">
-        <div class="card red" *ngFor="let item of temporaryArray" >
+          <div class="lazyCard" loading="lazy" *ngIf="finnished.length==0" ><h1>No Tournaments</h1></div>
+        <div class="card red" *ngFor="let item of finnished" >
           <div class="title">
             <h5>Msansi Championship Tournament</h5>
           </div>

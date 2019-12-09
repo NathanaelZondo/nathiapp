@@ -241,4 +241,7 @@ if (!addTeamForm.valid) {
       { type: 'required', message: 'Contact details are required.' }
     ],
   };
+  back() {
+    this.router.navigateByUrl('home')
+  }
 }
