@@ -1,0 +1,68 @@
+
+  <div *ngIf = " role == 'user' " >
+    <ion-item (click)="login()">
+        <ion-label>
+         Login
+        </ion-label>
+      </ion-item>
+      <ion-item (click)="register()">
+        <ion-label>
+          Register
+        </ion-label>
+      </ion-item>
+      <ion-item (click)="buttonClick()">
+        <ion-label>
+         FAQs
+        </ion-label>
+      </ion-item>
+</div>
+<div *ngIf="role == 'teamManager'">
+ 
+      <ion-item (click)="manageteam()">
+        <ion-label>
+       Manage Team
+        </ion-label>
+      </ion-item>
+      <ion-item (click)="applyTournament()">
+        <ion-label>
+          Apply for Tournaments <ion-badge *ngIf="unreadKeys.length>0"  color="primary" mode="ios">{{unreadKeys.length}}</ion-badge>
+        </ion-label>
+      </ion-item>
+      <ion-item (click)="buttonClick()">
+          <ion-label>
+              FAQs
+          </ion-label>
+        </ion-item>
+        <ion-item (click)="profile()">
+          <ion-label>
+            Profile
+          </ion-label>
+        </ion-item>
+        <ion-item (click)="signout()">
+            <ion-label>
+                Sign Out
+            </ion-label>
+          </ion-item>
+</div>
+<div *ngIf="role == 'vendor'">
+  <ion-item (click)="applyTournament()">
+    <ion-label>
+   Apply for tournaments
+    </ion-label>
+  </ion-item>
+  <ion-item (click)="buttonClick()">
+      <ion-label>
+          FAQs
+      </ion-label>
+    </ion-item>
+    <ion-item (click)="profile()">
+      <ion-label>
+        Profile
+      </ion-label>
+    </ion-item>
+    <ion-item (click)="signout()">
+        <ion-label>
+            signout
+        </ion-label>
+      </ion-item>
+</div>

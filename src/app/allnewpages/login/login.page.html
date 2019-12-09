@@ -1,0 +1,32 @@
+<ion-content>
+  <div class="close">
+    <ion-fab-button size="small" color="light" (click)="close()">
+      <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </div>
+<div class="container">
+  <div id="recaptcha-container"></div>
+  <form  [formGroup]="registrationForm" (ngSubmit)="addUser(registrationForm.value)">
+    <h4><b>Nathi's </b>Tournaments</h4> 
+    <p>Login</p>
+    
+      <ion-item style="background: none;
+      color: rgb(0, 0, 0);border-radius: 5px;">
+          <ion-label position="floating" style="color: white;">Phone Number</ion-label>
+        <ion-input style="
+      border-bottom: solid 2px white;
+       color: white
+      "
+      formControlName="phoneNumber"
+      type="tel"
+      [(ngModel)]="phoneNumber"></ion-input>
+      </ion-item>
+<div class="button">
+  <ion-button id="sign-in-button" type="submit" class="form-buttons" [disabled]="!registrationForm.valid"  >
+    Login
+  </ion-button>
+</div>
+    </form>
+
+</div>
+</ion-content>

@@ -1,0 +1,53 @@
+<ion-content>
+  <!-- <ion-card  *ngFor="let x of applytournaments">
+    <ion-card-header>
+ 
+      <ion-card-title>{{x.doc.formInfo.tournamentName}}</ion-card-title>
+      <ion-card-subtitle>{{x.doc.formInfo.joiningFee}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+     
+    </ion-card-content>
+   
+  </ion-card> -->
+<div class="container">
+    <div class="header">
+      <div class="button">
+        <ion-fab-button size="small" color="success" style="margin: 0;">
+          <ion-icon name="arrow-back"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <div class="text">
+        <p>Apply Tournament</p>
+      </div>
+    </div>
+    <div class="t-list">
+      <div class="label">
+        <div class="t">
+          <p><sub><b>New Tournaments</b></sub></p>
+        </div>
+        <div class="line">
+          <div class="l"></div>
+        </div>
+      </div>
+      <div class="newTournamentList">
+        <div class="lister">
+            <div class="card" *ngFor="let x of applytournaments">
+<div class="details">
+    <p>{{x.doc.formInfo.applicationClosing | date}}</p><br> <p>{{x.doc.formInfo.applicationClosing | date}}</p>
+    <div *ngIf="x.isApplied == false">
+      <ion-button fill="outline" slot="end" (click)="applyForTournament(x)" >Apply</ion-button>
+    </div>
+    <div *ngIf="x.isApplied == true">
+    <p *ngIf="x.application.status == 'awaiting'"> Your application is still being processed</p>
+    <p *ngIf="x.application.status == 'accepted'"> Application is being conditionally approved, please use {{x.application.refNumber}} to pay</p>
+      <ion-button slot="end" (click)="checkStatus(x)" >check sta</ion-button>
+    </div>
+</div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+</ion-content>

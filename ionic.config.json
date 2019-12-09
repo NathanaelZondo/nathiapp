@@ -1,5 +1,7 @@
 {
   "name": "nathiapp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

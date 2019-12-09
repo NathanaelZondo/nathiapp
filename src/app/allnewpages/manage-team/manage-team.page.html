@@ -1,0 +1,54 @@
+<ion-content>
+
+  <div class="head">
+    <div class="title">
+      <div class="close">
+        <ion-fab-button (click)="back()" size="small" shape="round" color="clear" style="margin: 0;">
+          <ion-icon  name="home"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <div class="t">
+        <h5>{{display.teamName}}</h5>
+      </div>
+    </div>
+    <div class="details">
+      <div class="d"><p>{{display.region}}</p>
+        <p>{{display.tel}}</p></div>
+    </div>
+  </div>
+  <div class="teamList">
+    <div class="label">
+      <p>Squad</p>
+      <ion-button style="margin: 0;" size="small" shape="round" (click)="addPlayer()"> Manage </ion-button>
+    </div>
+    <div class="list">
+
+  <div >
+    <p>
+      {{display.teamName}}
+    </p>
+
+        <div class="card" *ngFor="let i of players" (click)="viewPlayer()">
+            <img src="https://image.businessinsider.com/5c13e188b3c21d151e336e54?width=1200&format=jpeg">
+            <div class="details">
+              <div>
+                  <p style="font-size: 4vw;"><b>{{i.fullName}}</b></p>
+                  <p><b>{{i.DOB | date}}</b></p>
+                  <p>{{i.position}}</p>
+                  <!-- <p style="font-size: 4vw;"><b></b></p>
+                  <p><b>28 Jul, 1992</b></p>
+                  <p>Defender</p>
+                  <p>3 m tall</p>
+                  <p>Played for Droggo Team</p>
+                  <p>Best Defender</p> -->
+              </div>
+            </div>
+          </div>
+
+
+   
+  </div>
+    </div>
+  </div>
+
+</ion-content>

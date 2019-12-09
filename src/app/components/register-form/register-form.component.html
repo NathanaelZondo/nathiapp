@@ -1,0 +1,16 @@
+<form [formGroup]="authForm">
+  <ion-item>
+    <ion-label position="stacked">Phone number</ion-label>
+    <ion-input formControlName="phonenumber" type="tel" maxlength="10" placeholder="Your phone number" [class.invalid]="!authForm.controls['phonenumber'].valid &&
+      authForm.controls['phonenumber'].touched">
+    </ion-input>
+  </ion-item>
+  <ion-item class="error-message" *ngIf="!authForm.controls['phonenumber'].valid &&
+       authForm.controls['phonenumber'].touched">
+    <ion-label>Please enter valid numbers .</ion-label>
+  </ion-item>
+
+  <ion-button (click)="submitCredentials(authForm)" expand="block" [disabled]="!authForm.valid">
+    {{ actionButtonText }}
+  </ion-button>
+</form>

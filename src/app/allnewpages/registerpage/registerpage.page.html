@@ -1,0 +1,52 @@
+<ion-content>
+  <div class="close">
+      <ion-fab-button size="small" color="light" (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-fab-button>
+    </div>
+    <div class="container">
+      <div id="recaptcha-container"></div>
+  <form  [formGroup]="registrationForm" (ngSubmit)="addUser(registrationForm.value)">
+      <h4><b>Nathi's </b>Tournaments</h4> 
+      <p>Registration</p>
+      <hr>
+      <ion-item  style="border-radius: 10px;
+      margin: 2px 0px;">
+        <ion-label position="floating">Phone Number</ion-label>
+        <ion-input formControlName="phoneNumber" type="tel" [(ngModel)]="phoneNumber"></ion-input>
+      </ion-item>
+      
+     <ion-item  style="border-radius: 10px;
+     margin: 2px 0px;">
+        <ion-label position="floating">Full Name</ion-label>
+      <ion-input formControlName="fullName" type="text" [(ngModel)]="fullName"></ion-input>
+     </ion-item>
+    
+      <ion-list>
+        <ion-radio-group formControlName="role"  [(ngModel)]="role">
+          <ion-list-header>
+            <ion-label style="color: white;">Register as:</ion-label>
+          </ion-list-header>
+    
+          <ion-item style="border-radius: 10px;
+          margin: 2px 0px;">
+            <ion-label>Team manager</ion-label>
+            <ion-radio slot="start" value="teamManager" checked></ion-radio>
+          </ion-item>
+    
+          <ion-item style="    border-radius: 10px;
+          margin: 2px 0px;
+      ">
+            <ion-label>Vendor</ion-label>
+            <ion-radio slot="start" value="vendor"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+      <!--  -->
+    <ion-button id="sign-in-button" [disabled]="!registrationForm.valid"  type="submit" class="form-buttons"  >
+      Sign In
+    </ion-button>
+    </form>
+    </div>
+  
+</ion-content>

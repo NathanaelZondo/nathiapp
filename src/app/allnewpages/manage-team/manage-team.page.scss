@@ -1,0 +1,98 @@
+.head {
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(rgba(0, 26, 0, 0.637)), url(../../../assets/greenbg.jpg);
+    background-size: cover;
+    border-radius: 0px 0px 10px 10px;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    .title {
+        flex-basis: 100%;
+        height: 20%;
+        display: flex;
+    align-items: center;
+    .close {
+        padding: 3px;
+    }
+    .t {
+        flex-basis: 100%;
+        text-align: center;
+        h5 {
+            margin: 0;
+        }
+    }
+    }
+    .details {
+        height: 70%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        .d {
+            margin: auto;
+            text-align: center;
+        }
+    }
+    
+
+}
+.teamList {
+    z-index: 5;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 27%;
+    padding-top: 10px;
+    color: white;
+    background: linear-gradient(rgba(0, 14, 3, 0.849)),url(../../../assets/greenbg.jpg);
+    .label {
+        backdrop-filter: blur(10px);
+        height: 10%;
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        p {
+            padding: 0px 5px;
+        }
+    }
+    .list {
+        height: 89%;
+        overflow-y: auto;
+        .card {
+            min-width: 300px;
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            margin: 10px auto;
+            color: black !important;
+            position: relative;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .details {
+                border-radius: 10px;
+                padding: 5px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                backdrop-filter: blur(10px);
+                display: flex;
+                align-items: center;
+                overflow-y: auto;
+                color: white;
+                p {
+                    font-size: 3vw;
+                }
+            }
+        }
+    }
+}

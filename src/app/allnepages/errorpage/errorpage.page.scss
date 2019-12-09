@@ -1,0 +1,22 @@
+.container {
+    background: url(../../../assets/popover_bg.jpg);
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    color: white;
+    .div {
+        width: 80%;
+        margin: auto;
+        text-align: center;
+        .title {
+            padding: 10px;
+        }
+        .main {
+            h1 {
+                font-weight: bolder;
+            }
+        }
+    }
+}

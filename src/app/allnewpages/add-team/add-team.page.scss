@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+}
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: rgb(255, 255, 255);
+  }
+  
+.container {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.438)),url(../../../assets/add-team.jpg);
+    background-size: cover;
+    text-align: center;
+    overflow-y: auto;
+    .title {
+        color: white;
+        padding: 10px;
+    }
+    .imageUploads {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        justify-items: center;
+        padding: 20px 0px;
+        .backimage {
+            color: white;
+            p {
+                font-size: 3vw;
+            }
+        }
+    }
+    .form {
+        form {
+            .sc-ion-input-md, .native-input, ion-input  {
+                background: green;
+                color: white;
+                margin: 3px 0px 3px 20px;
+                border-radius: 100px 0px 0px 100px;
+                text-align: left;
+            }
+            .error {
+                .messages {
+                    p {
+                        font-size: 4vw;
+                        color: rgb(255, 134, 134);
+                    }
+                }
+            }
+            .buttoning {
+                text-align: center;
+            }
+        }
+    }
+}

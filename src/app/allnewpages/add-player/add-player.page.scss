@@ -1,0 +1,133 @@
+* {
+    color: white !important;
+}
+.error {
+    .messages {
+        background: rgba(255, 0, 0, 0.068);
+    color: red;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px;
+    p {
+        color: red !important;
+        margin: 0;
+        padding: 0;
+    }
+    }
+    
+}
+.container {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background: linear-gradient(rgba(0, 0, 0, 0.678)),url(../../../assets/popover_bg.jpg);
+    background-size: cover;
+    .title {
+        color: white;
+        text-align: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        backdrop-filter: blur(10px);
+        z-index: 300;
+        display: flex;
+        align-items: center;
+        .back {
+            padding: 0px 5px;
+        }
+        .t {
+            flex-basis: 100%;
+            text-align: center;
+             p {
+                 margin: 0;
+             }
+        }
+    }
+    .squadPreview {
+        margin-top: 43px;
+        width: 100%;
+        height: 40%;
+        display: flex;
+        padding: 5px;
+        overflow-x: scroll;
+        .nopplayer {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            border: dashed 2px white;
+            display: flex;
+            align-items: center;
+            .p {
+                margin: auto;
+                text-align: center;
+                p {
+                    margin: 0px auto;
+                    width: 80%;
+                }
+            }
+        }
+        .card {
+            min-width: 300px;
+            height: 100%;
+            background: white;
+            border-radius: 10px;
+            margin: 0px 3px;
+            color: black !important;
+            position: relative;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .details {
+                border-radius: 10px;
+                padding: 5px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                backdrop-filter: blur(10px);
+                display: flex;
+                align-items: center;
+                overflow-y: auto;
+                p {
+                    font-size: 3vw;
+                }
+            }
+        }
+    }
+    .backimage {
+        display: flex;
+        align-items: center;
+        .bimage, .btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+        }
+        img {
+            outline: none;
+        }
+    }
+    .achievements {
+        background: rgba(0, 128, 0, 0.253);
+        position: relative;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+        .btn {
+            position: absolute;
+            bottom: -17px;
+            right: 0;
+        }
+        .closer {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
+}
