@@ -62,7 +62,7 @@ export class HomePage {
         token: this.token
       })
       
-    }else{
+    }else if(!res.uid){
       firebase.firestore().collection('Tokens').add({
         uid: '',
         token: this.token

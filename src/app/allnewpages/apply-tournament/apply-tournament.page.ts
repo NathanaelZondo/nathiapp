@@ -84,7 +84,14 @@ export class ApplyTournamentPage implements OnInit {
     console.log('item', value)
     if(!this.userObj && this.passService.role=='teamManager'){
 console.log('you dont have a team');
-this.presentTeamCreateAlert()
+const alert = await this.alertController.create({
+  header: 'Alert',
+  subHeader: 'No team Found',
+  message: 'This is an alert message.',
+  buttons: ['OK']
+});
+
+await alert.present();
     }else{
       const alert = await this.alertController.create({
         header: 'Confirm!',
