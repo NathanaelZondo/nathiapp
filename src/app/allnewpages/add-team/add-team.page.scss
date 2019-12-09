@@ -16,7 +16,15 @@
     overflow-y: auto;
     .title {
         color: white;
-        padding: 10px;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        .text {
+            flex-basis: 100%;
+            h1 {
+                margin: 0;
+            }
+        }
     }
     .imageUploads {
         display: flex;

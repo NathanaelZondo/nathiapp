@@ -16,6 +16,7 @@ import {config} from './firebaseConfig'
 export class AppComponent {
   role
    profile = {} as Profile 
+   token
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -28,6 +29,7 @@ export class AppComponent {
   ) {
     firebase.initializeApp(config)
     this.initializeApp();
+    
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (!user) {
         this.router.navigateByUrl("/home");
@@ -47,6 +49,7 @@ this.ngZone.run(()=>{
   initializeApp() {
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
+        this.initUpdate()
         this.setupPush();
        }
       this.statusBar.styleDefault();
@@ -97,6 +100,13 @@ this.ngZone.run(()=>{
       ]
     })
     alert.present();
+  }
+  initUpdate(){
+   
+      firebase.firestore().collection('Tokens').add({
+        TokenID: this.token
+      })
+    
   }
 
 }

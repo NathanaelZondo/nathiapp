@@ -1,6 +1,14 @@
 <ion-content>
-
-  <div class="head">
+  <div class="noTeam" *ngIf="!isTeam" >
+    <div class="c">
+      <h1>Please Create a Team</h1>
+      <p><sub>You need a team to participate in a tournament.</sub></p>
+      <ion-button shape="round" color="success" (click)="addTeam()">
+        Add Team
+      </ion-button>
+    </div>
+  </div>
+  <div class="head" *ngIf="isTeam" >
     <div class="title">
       <div class="close">
         <ion-fab-button (click)="back()" size="small" shape="round" color="clear" style="margin: 0;">
@@ -16,7 +24,7 @@
         <p>{{display.tel}}</p></div>
     </div>
   </div>
-  <div class="teamList">
+  <div class="teamList" *ngIf="isTeam" >
     <div class="label">
       <p>Squad</p>
       <ion-button style="margin: 0;" size="small" shape="round" (click)="addPlayer()"> Manage </ion-button>

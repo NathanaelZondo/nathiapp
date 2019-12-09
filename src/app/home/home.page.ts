@@ -20,7 +20,9 @@ export class HomePage {
   role
   user
   token
-  temporaryArray = []
+  inprogress = []
+  upcoming = []
+  finnished = []
     constructor(public router:Router,
       public popoverController: PopoverController,
       public pass : PassInformationServiceService, 
@@ -60,7 +62,7 @@ export class HomePage {
         token: this.token
       })
       
-    }else{
+    }else if(!res.uid){
       firebase.firestore().collection('Tokens').add({
         uid: '',
         token: this.token
@@ -75,10 +77,6 @@ export class HomePage {
       // this.getUserProfile();
       this.getUser();
     })
-    while (this.temporaryArray.length < 20) {
-      this.temporaryArray.push('card')
-    }
-  
     this.getToken();
     setTimeout(() => {
       console.log('home', this.pass.role);
