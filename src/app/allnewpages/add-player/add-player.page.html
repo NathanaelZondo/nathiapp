@@ -18,13 +18,13 @@
               </div>
           </div>
           <div class="card" *ngFor="let i of players" (click)="edit(i)" >
-            <img src="https://firebasestorage.googleapis.com/v0/b/nathistournamentdb.appspot.com/o/Teams-Jersey-image%2FJrIZfJOXOSgYBys2MgJ7RJg88y521575639021.jpg?alt=media&token=38fae9bb-952a-447b-9c56-812e336d56c7">
+            <img src="http://wordpress.penndelcomputerguy.com/wp-content/plugins/wp-club-manager/assets/images/placeholder.png">
             <div class="details">
-              <div>
-                  <p style="font-size: 4vw;"><b>{{i.docdata.fullName}}</b></p>
+              <div class="d">
+                  <h5 style="font-size: 4vw;"><b>{{i.docdata.fullName}}</b></h5>
                   <p><b>{{i.docdata.DOB | date}}</b></p>
                   <p>{{i.docdata.playerPosition}}</p>
-                  <p>{{i.docdata.height}}</p>
+                  <p>{{i.docdata.height}}m tall</p>
                   <p>{{i.docdata.previousTeam}}</p>
                   <p >{{i.docdata.Achievements}}</p>
                   <!-- <p *ngIf="i.docdata.Achievements.length>0"><li *ngFor="let F of i.docdata.Achievements" >{{F}}</li></p> -->
@@ -64,7 +64,7 @@
           <!-- / ================================ -->
           <ion-item>
             <ion-label position="floating">Date of Birth</ion-label>
-            <ion-datetime formControlName="DOB" [(ngModel)]="playerNode.DOB" ngDefaultControl displayFormat="MM/DD/YYYY"
+            <ion-datetime formControlName="DOB" [(ngModel)]="playerNode.DOB" ngDefaultControl displayFormat="DD, MMM YYYY"
               min="1970-03-14" max="{{date}}"></ion-datetime>
           </ion-item>
           <!-- / ================================ -->

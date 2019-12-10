@@ -3,9 +3,14 @@
 <div class="title">
   <h4><b>Nathis's </b>Tournaments</h4>
 </div>
-<div class="button">
-  <ion-button (click)="popover()" color="none">
+<div class="button" *ngIf="accountRole" >
+  <ion-button (click)="popover()" fill="clear" color="light">
     <ion-icon name="more"></ion-icon>
+  </ion-button>
+</div>
+<div class="button"  *ngIf="!accountRole" >
+  <ion-button fill="clear" color="light">
+    <ion-spinner color="light" name="bubbles"></ion-spinner>
   </ion-button>
 </div>
   </div>

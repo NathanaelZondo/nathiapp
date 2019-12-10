@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
@@ -26,7 +27,8 @@ export class ApplyTournamentPage implements OnInit {
     public authService : AuthServiceService ,
     public passService : PassInformationServiceService,
     public loadingController: LoadingController,
-    public store: NativeStorage) { }
+    public store: NativeStorage,
+    public router: Router) { }
     async presentLoading() {
       const loading = await this.loadingController.create({
      
@@ -68,6 +70,9 @@ export class ApplyTournamentPage implements OnInit {
      })
 
    });
+  }
+  back() {
+    this.router.navigateByUrl('home')
   }
   async presentTeamCreateAlert() {
     const alert = await this.alertController.create({

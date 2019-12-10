@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import { Router } from '@angular/router';
@@ -16,7 +16,8 @@ export class ManageTeamPage implements OnInit {
   display = {}
   isPlayer = false
   players = []
-    constructor(    private formBuilder: FormBuilder, public router : Router,public navctrl : NavController) { 
+  noTeam = document.getElementsByClassName('noTeam')
+    constructor(  public renderer: Renderer2,  private formBuilder: FormBuilder, public router : Router,public navctrl : NavController) { 
    
       
     }
@@ -24,9 +25,6 @@ export class ManageTeamPage implements OnInit {
       this.navctrl.pop()
     }
     ngOnInit() {
-      while (this.players.length < 10) {
-        this.players.push('card')
-      }
       this.getTeam();
     }
     addTeam(){
@@ -40,6 +38,9 @@ export class ManageTeamPage implements OnInit {
       if(res.exists){
        console.log('data',res.data());
        this.isTeam = true;
+       setTimeout(() => {
+        this.renderer.setStyle(this.noTeam[0],'display','none')
+       }, 500);
        this.display = res.data();
        
       //  this.isNotTeam = false;

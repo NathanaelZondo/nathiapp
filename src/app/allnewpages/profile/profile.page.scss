@@ -1,0 +1,133 @@
+.container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.headDiv {
+    position: relative;
+    width: 100%;
+    height: 50%;
+
+    background: linear-gradient(rgba(0, 128, 0, 0.774)),url('https://images.unsplash.com/photo-1554331587-285152b85ce1?ixlib=rb-1.2.1&w=1000&q=80');
+    background-size: cover;
+    background-attachment: fixed;
+    color: white;
+    border-radius: 0px 0px 20px 20px;
+    .head {
+        // padding: 10px;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+    .details {
+        padding:3vw 3vw 3vw 31vw;
+        p {
+            margin: 0;
+        }
+    }
+    .pImage {
+      position: absolute;
+      top: 84%;
+      left: 5%;
+      right: 5%;
+      bottom: -18%;
+      /* width: 90vw; */
+      /* height: 88%; */
+      border-radius: 10px;
+      box-shadow: 0px 3px 3px #17171777;
+      overflow: hidden;
+      z-index: 500;
+        .slant {
+          backdrop-filter: blur(10px);
+          position: absolute;
+          top: 0%;
+          left: 2.5%;
+          width: 85vw;
+          height: 100%;
+          border-radius: 10px;
+          box-shadow: 0px 3px 3px #17171777;
+          overflow: hidden;
+          z-index: 600;
+          background: rgba(255, 255, 255, 0.322);
+          display: -webkit-box;
+          display: flex;
+          -webkit-box-align: center;
+          align-items: center;
+          text-align: center;
+          .g {
+            margin: auto;
+            text-align: center;
+            h3 {
+              margin: 0;
+            }
+            p {
+              font-size: 3vw;
+              margin: 0;
+            }
+          }
+        }
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+.tList {
+    position: absolute;
+    top: 50vh;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(18, 20, 32, 0.856)),url('https://images.unsplash.com/photo-1554331587-285152b85ce1?ixlib=rb-1.2.1&w=1000&q=80');
+    background-attachment: fixed;
+    background-size: cover;
+    border-radius: 12px 20px 0px 0px;
+    z-index: 1;
+    .head {
+      color: white;
+      padding: 10px;
+      h3 {
+        margin: 0;
+      }
+    }
+    .data {
+      width: 100%;
+      height: 78%;
+    }
+
+}
+.animation-wrapper {
+  width: 50%;
+  padding-bottom: 50%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 22vh;
+  right: 0;
+  z-index: 8;
+}
+
+.sphere-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vw;
+  margin: 0;
+  overflow: hidden;
+  transform: translateX(0px);
+}
+
+.sphere path {
+  fill: url(#sphereGradient);
+  stroke-width: 1px;
+  stroke: rgba(79, 202, 100, 0.35);
+  backface-visibility: hidden;
+}
+
+@media (min-width: 500px) {
+  .sphere path {
+    stroke-width: .4px;
+  }
+}

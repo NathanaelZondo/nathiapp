@@ -22,7 +22,8 @@ export class LoginPage implements OnInit {
   inputCode
   fullName 
   uid 
-  role 
+  role
+  loginLoader
   public recaptchaVerifier: firebase.auth.RecaptchaVerifier
   constructor(
     public authService: AuthServiceService,
@@ -37,34 +38,35 @@ export class LoginPage implements OnInit {
     })
   }
   async presentLoading() {
-    const loading = await this.loadingController.create({
+    this.loginLoader = await this.loadingController.create({
    
-      duration: 2000,
       message: 'Please wait...',
       translucent: true,
      
     });
-    return await loading.present();
+    return await this.loginLoader.present();
   }
   ngOnInit() {
   }
-  requestCode(){
+  async requestCode(){
     // this.phoneNumber = this.registrationForm.get('phoneNumber').value
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
     console.log(window.recaptchaVerifier);
     let appVerifier = window.recaptchaVerifier
-    return this.authService.requestLogin(this.lastNum, appVerifier).then(result => {
+    return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
       if(result.success === true){
         console.log(result);
         this.confirmationResult = result.result
         console.log(this.confirmationResult);
+
       }
     })
   }
   logins(code){
     if(this.confirmationResult !== ''){
       return this.authService.login(code, this.confirmationResult).then(result => {
-        console.log(result);
+        this.loginLoader.dismiss();
+        this.route.navigateByUrl('/home');
       })
     }
   }
@@ -96,7 +98,11 @@ this.phoneNumber = form.phoneNumber
         console.log(result);
         this.confirmationResult = result.result
         console.log(this.confirmationResult);
-      
+        setTimeout(() => {
+          console.log('dismaissed loader');
+          
+          this.loginLoader.dismiss();
+        }, 500);
        this.alert(form);
       
       }
@@ -111,7 +117,7 @@ this.phoneNumber = form.phoneNumber
       inputs: [
         {
           name: 'code',
-          type: 'text',
+          type: 'tel',
           placeholder: 'Enter code'
         }],
       buttons: [{
@@ -128,8 +134,7 @@ this.phoneNumber = form.phoneNumber
 //               console.log('see ',res.uid);
 //             }
 //           })
-          this.route.navigateByUrl('/home');
-          this.presentLoading()
+          
         }
       }]
     });

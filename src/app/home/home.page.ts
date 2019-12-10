@@ -6,9 +6,9 @@ import { MenuComponent } from '../components/menu/menu.component';
 import * as firebase from 'firebase';
 import { PassInformationServiceService } from '../service/pass-information-service.service';
 import { AuthServiceService } from '../service/auth-service.service';
-import { findWires } from 'selenium-webdriver/firefox';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 // import { FCM } from '@ionic-native/fcm/ngx';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
+// import { OneSignal } from '@ionic-native/onesignal/ngx';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -23,12 +23,13 @@ export class HomePage {
   inprogress = []
   upcoming = []
   finnished = []
+  accountRole = null
     constructor(public router:Router,
       public popoverController: PopoverController,
       public pass : PassInformationServiceService, 
       public auth: AuthServiceService,
-      // public fcm: FCM,
-      private oneSignal: OneSignal,
+      public splashScreen: SplashScreen,
+      // private oneSignal: OneSignal,
       public ngZone: NgZone) {
   
   // this.router.navigate(['tournament']);
@@ -51,6 +52,7 @@ export class HomePage {
   {
     this.popover1.dismiss(); 
   }
+  /*
   getToken(){
     this.oneSignal.getIds().then(res =>{
       this.token = res.userId;
@@ -71,16 +73,20 @@ export class HomePage {
   })
     
   }
+  */
   ngOnInit(){
     this.ngZone.run(()=>{
       this.auth.setUser(this.user);
       // this.getUserProfile();
       this.getUser();
     })
-    this.getToken();
+    // this.getToken();
     setTimeout(() => {
       console.log('home', this.pass.role);
     }, 500);
+    setTimeout(() => {
+      this.splashScreen.hide()
+    }, 3000);
   }
   addTeam() {
     this.router.navigateByUrl('add-team');
@@ -88,14 +94,7 @@ export class HomePage {
   viewTournament() {
     this.router.navigateByUrl('tournament')
   }
-  // getUserProfile() {
-  //   this.db.collection('members').doc(this.auth.getUser()).get().then(res => {
-  //     this.pass.role = res.data().form.role;
-  //    this.pass.profile = res.data()
-  //     console.log('mmmmm',this.role);
-      
-  //   })
-  // }
+
   getUser(){
     this.ngZone.run(()=>{
     
@@ -104,11 +103,12 @@ export class HomePage {
         firebase.firestore().collection('members').doc(state.uid).get().then(res =>{
           if(res.exists){
             this.pass.role = res.data().form.role;
+            this.accountRole = res.data().form.role;
             console.log('role',  this.pass.role );
           }
         });
       }else{
-        console.log('no state found');
+        this.accountRole = 'user'
         
       }
    

@@ -10,10 +10,10 @@
     </ion-card-content>
    
   </ion-card> -->
-<div class="container">
+  <div class="container">
     <div class="header">
       <div class="button">
-        <ion-fab-button size="small" color="success" style="margin: 0;">
+        <ion-fab-button size="small" color="success" (click)="back()" style="margin: 0;">
           <ion-icon name="arrow-back"></ion-icon>
         </ion-fab-button>
       </div>
@@ -32,22 +32,34 @@
       </div>
       <div class="newTournamentList">
         <div class="lister">
-            <div class="card" *ngFor="let x of applytournaments">
-<div class="details">
-    <p>{{x.doc.formInfo.applicationClosing | date}}</p><br> <p>{{x.doc.formInfo.applicationClosing | date}}</p>
-    <div *ngIf="x.isApplied == false">
-      <ion-button fill="outline" slot="end" (click)="applyForTournament(x)" >Apply</ion-button>
-    </div>
-    <div *ngIf="x.isApplied == true">
-    <p *ngIf="x.application.status == 'awaiting'"> Your application is still being processed</p>
-    <p *ngIf="x.application.status == 'accepted'"> Application is being conditionally approved, please use {{x.application.refNumber}} to pay</p>
-      <ion-button slot="end" (click)="checkStatus(x)" >check sta</ion-button>
-    </div>
-</div>
+          <div class="card" *ngFor="let x of applytournaments">
+            <div class="title">
+              <h2>Msansi Championship Tournament</h2>
             </div>
+            <div class="details">
+              <div class="v">
+                <p>Participants 32</p>
+                <p>FNB Stadium</p>
+                <hr>
+                <p>27 Jul, 2019 to 5 Oct, 2019</p>
+                <p>R 200.00 fee</p>
+                <p>Top 32</p>
+                <p>Application Closing Date: 01 Oct 2019</p>
+                <p>Vendors 2</p>
+              </div>
+              <div class="applied" *ngIf="x.isApplied == false">
+                <ion-button shape="round" slot="end" (click)="applyForTournament(x)">Apply</ion-button>
+              </div>
+              <div class="applied" *ngIf="x.isApplied == true">
+                <p *ngIf="x.application.status == 'awaiting'"> Your application is still being processed</p>
+                <p *ngIf="x.application.status == 'accepted'"> Application is being conditionally approved, please use <br>
+                  <span>{{x.application.refNumber}}</span> <br> as your reference number to pay</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-</div>
+  </div>
 
 </ion-content>

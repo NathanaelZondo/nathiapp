@@ -131,6 +131,9 @@ this.playerNode.previousTeam = i.docdata.previousTeam
     // upon success...
     user.then(async() => {
       this.buttonChange = false
+      this.addPlayerForm.reset()
+      console.log(this.addPlayerForm);
+      
       this.playerNode = {
         fullName: '',
         palyerImage: '',
@@ -184,6 +187,18 @@ this.playerNode.previousTeam = i.docdata.previousTeam
 
       // upon success...
       user.then(async() => {
+        this.addPlayerForm.reset()
+        this.playerNode = {
+          fullName: '',
+          palyerImage: '',
+          DOB : '',
+          previousTeam : '',
+          DateCreated : null,
+          DateEdited : null,
+          playerPosition: '',
+          height: '',
+          Achievements: []
+        }
         this.router.navigateByUrl('add-player')
         const toast = await this.toastController.create({
           message: 'User Team added.',

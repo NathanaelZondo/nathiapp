@@ -4,7 +4,7 @@ import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
+// import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { PassInformationServiceService } from './service/pass-information-service.service';
 import * as firebase from 'firebase';
 import {config} from './firebaseConfig'
@@ -24,7 +24,7 @@ export class AppComponent {
     private router : Router,
     private pass : PassInformationServiceService,
     public ngZone: NgZone,
-    private oneSignal: OneSignal,
+    // private oneSignal: OneSignal,
     private alertCtrl: AlertController,
   ) {
     firebase.initializeApp(config)
@@ -50,12 +50,15 @@ this.ngZone.run(()=>{
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
         this.initUpdate()
-        this.setupPush();
+        // this.setupPush();
        }
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      // this.statusBar.styleDefault();
+      this.statusBar.styleLightContent()
+      this.statusBar.backgroundColorByHexString('#387336')
+      // this.splashScreen.hide();
     });
   }
+  /*
   setupPush() {
     // I recommend to put these into your environment.ts
     this.oneSignal.startInit('eb1dd5d9-19ad-4e2b-a93a-6540efa172d5', '743242408134');
@@ -86,6 +89,7 @@ this.ngZone.run(()=>{
 
     this.oneSignal.endInit();
   }
+  */
   async showAlert(title, msg, task) {
     const alert = await this.alertCtrl.create({
       header: title,
@@ -103,10 +107,12 @@ this.ngZone.run(()=>{
   }
   initUpdate(){
    
-      firebase.firestore().collection('Tokens').add({
-        TokenID: this.token
-      })
-    
+if (this.token) {
+  firebase.firestore().collection('Tokens').add({
+    TokenID: this.token
+  })
+
+}
   }
 
 }
