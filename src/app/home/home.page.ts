@@ -99,17 +99,21 @@ export class HomePage {
     this.ngZone.run(()=>{
     
     firebase.auth().onAuthStateChanged(state =>{
+      console.log(state.uid);
+      
       if(state){
-        firebase.firestore().collection('members').doc(state.uid).get().then(res =>{
+        this.db.collection('members').doc(state.uid).get().then(res =>{
+          console.log(res);
+          
           if(res.exists){
+            console.log(res.data());
+            
             this.pass.role = res.data().form.role;
             this.accountRole = res.data().form.role;
-            console.log('role',  this.pass.role );
           }
         });
       }else{
         this.accountRole = 'user'
-        
       }
    
     })

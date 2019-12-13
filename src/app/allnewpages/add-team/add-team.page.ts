@@ -22,7 +22,7 @@ export class AddTeamPage implements OnInit {
     teamLogo: '',
     teamJerseyIMG: '',
     goalKeeperJerseyIMG: '',
-    teamManagerInfo : {}
+    uid: firebase.auth().currentUser.uid
   }
   addTeamForm: FormGroup;
   db = firebase.firestore();

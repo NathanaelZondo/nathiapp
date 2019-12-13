@@ -38,6 +38,7 @@ export class AppComponent {
         unsubscribe();
       } else {
 this.ngZone.run(()=>{
+  
   this.router.navigateByUrl("/home");
   console.log('logged in');
   unsubscribe();
