@@ -99,10 +99,10 @@ export class HomePage {
     this.ngZone.run(()=>{
     
     firebase.auth().onAuthStateChanged(state =>{
-      console.log(state.uid);
+      
       
       if(state){
-        this.db.collection('members').doc(state.uid).get().then(res =>{
+        this.db.collection('members').doc(state.uid).onSnapshot(res =>{
           console.log(res);
           
           if(res.exists){

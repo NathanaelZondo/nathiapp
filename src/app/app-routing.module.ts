@@ -39,7 +39,11 @@ const routes: Routes = [
   {
     path: 'errorpage',
     loadChildren: () => import('./allnepages/errorpage/errorpage.module').then( m => m.ErrorpagePageModule)
+  },  {
+    path: 'faqs',
+    loadChildren: () => import('./allnewpages/faqs/faqs.module').then( m => m.FaqsPageModule)
   },
+
 
 ];
 
