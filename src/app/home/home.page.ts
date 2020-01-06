@@ -22,7 +22,7 @@ export class HomePage {
   token
   inprogress = []
   upcoming = []
-  finnished = []
+  finished = []
   accountRole = null
     constructor(public router:Router,
       public popoverController: PopoverController,
@@ -31,13 +31,34 @@ export class HomePage {
       public splashScreen: SplashScreen,
       // private oneSignal: OneSignal,
       public ngZone: NgZone) {
-  
+  this.upcoming =[];
   // this.router.navigate(['tournament']);
   // console.log('uid',firebase.auth().currentUser.uid);
   // this.getUserProfile()
   // this.user = firebase.auth().currentUser.uid
   
-  
+  firebase.firestore().collection('newTournaments').where("state",'==','newTournament').onSnapshot(res=>{
+    res.forEach(val=>{
+      this.upcoming.push({...{doc_id:val.id},...val.data()});
+      console.log("here")
+    })
+  })
+
+
+  firebase.firestore().collection('newTournaments').where("state",'==','newTournament').onSnapshot(res=>{
+    res.forEach(val=>{
+      this.inprogress.push({...{doc_id:val.id},...val.data()});
+      console.log("here")
+    })
+  })
+
+
+  firebase.firestore().collection('newTournaments').where("state",'==','finished').onSnapshot(res=>{
+    res.forEach(val=>{
+      this.finished.push({...{doc_id:val.id},...val.data()});
+      console.log("here")
+    })
+  })
     }
   async  popover(){
     this. popover1 = await this.popoverController.create({
@@ -99,7 +120,7 @@ export class HomePage {
     this.ngZone.run(()=>{
     
     firebase.auth().onAuthStateChanged(state =>{
-      
+     
       
       if(state){
         this.db.collection('members').doc(state.uid).onSnapshot(res =>{
@@ -122,4 +143,6 @@ export class HomePage {
     })
   }
 
+
+  
 }
