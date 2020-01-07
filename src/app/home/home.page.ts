@@ -7,6 +7,7 @@ import * as firebase from 'firebase';
 import { PassInformationServiceService } from '../service/pass-information-service.service';
 import { AuthServiceService } from '../service/auth-service.service';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { NavigationExtras } from '@angular/router';
 // import { FCM } from '@ionic-native/fcm/ngx';
 // import { OneSignal } from '@ionic-native/onesignal/ngx';
 @Component({
@@ -39,13 +40,24 @@ export class HomePage {
   
   firebase.firestore().collection('newTournaments').where("state",'==','newTournament').onSnapshot(res=>{
     res.forEach(val=>{
+      console.log("here",this.upcoming)
       this.upcoming.push({...{doc_id:val.id},...val.data()});
-      console.log("here")
+      if(this.upcoming.length==undefined)
+      {
+this.upcoming =[];
+      }
+      else
+      {
+        this.upcoming.push({...{doc_id:val.id},...val.data()});
+
+      }
+      
+      
     })
   })
 
 
-  firebase.firestore().collection('newTournaments').where("state",'==','newTournament').onSnapshot(res=>{
+  firebase.firestore().collection('newTournaments').where("state",'==','inprogress').onSnapshot(res=>{
     res.forEach(val=>{
       this.inprogress.push({...{doc_id:val.id},...val.data()});
       console.log("here")
@@ -112,16 +124,11 @@ export class HomePage {
   addTeam() {
     this.router.navigateByUrl('add-team');
   }
-  viewTournament() {
-    this.router.navigateByUrl('tournament')
-  }
-
   getUser(){
     this.ngZone.run(()=>{
-    
+
     firebase.auth().onAuthStateChanged(state =>{
-     
-      
+
       if(state){
         this.db.collection('members').doc(state.uid).onSnapshot(res =>{
           console.log(res);
@@ -142,7 +149,14 @@ export class HomePage {
     
     })
   }
-
-
-  
+  viewTournament(tournament) {
+    console.log(tournament);
+    let navigationExtras: NavigationExtras = {
+      state: {
+        parms:tournament
+      }
+    };
+    // passes nav params
+    this.router.navigate(['view-tournament'],navigationExtras);
+  }
 }

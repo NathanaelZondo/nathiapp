@@ -1,0 +1,49 @@
+<ion-content>
+<div class="header">
+  <div class="backb">
+    <ion-fab-button size="small" color="success" (click)="goBack()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-fab-button>
+  </div>
+  <div class="info">
+  <div class="t"> <span>{{viewedTournament.formInfo.tournamentName}}</span>
+    <p>Participants {{viewedTournament.formInfo.type}}</p>
+    <p>{{viewedTournament.formInfo.location}}</p>
+    <p>{{viewedTournament.formInfo.startDate | date}} to {{viewedTournament.formInfo.endDate | date}}</p>
+    <p>R {{viewedTournament.formInfo.joiningFee}}.00 fee</p>
+    <p>Top: {{viewedTournament.formInfo.type}}</p>
+    <p>Application Closing Date <b>{{viewedTournament.dateCreated | date}}</b></p>
+    <p>Vendors {{viewedTournament.approvedVendors.length}}</p></div>
+  </div>
+  <div class="sponsors">
+    <div class="sTitle">
+      <p>Sponsors </p>
+    </div>
+    <div class="arrSponsors">
+      <div class="image" *ngFor="let v of viewedTournament.approvedVendors" >
+        <img src="{{v}}">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="matches" *ngFor="let m of tournMatches"  (click)="viewMatch(m)">
+  <div class="mTitle">
+    <div class="label"><p>Matches</p></div>
+    <div class="line"><div class="l"></div></div>
+  </div>
+  <div class="list">
+    <div class="match">
+      <div class="date">
+        <p>25 Jul, 2019</p>
+      </div>
+      <div class="details">
+        <div class="home"><p>Soweto United</p></div><div class="vs"><p>v</p></div><div class="away"><p>Tladi Jobes</p></div>
+      </div>
+ 
+        <div class="homeF"><p>Home</p></div>
+        <div class="awayF"><p>Away</p></div>
+   
+    </div>
+  </div>
+</div>
+</ion-content>
