@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-// import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { Camera } from '@ionic-native/camera/ngx'
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -9,7 +9,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import * as firebase from 'firebase';
+import {config} from '../app/firebaseConfig'
+firebase.initializeApp(config);
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -17,7 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
   providers: [
     StatusBar,
     SplashScreen,
-    // OneSignal,
+    OneSignal,
     Camera,
     NativeStorage,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

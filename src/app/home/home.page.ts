@@ -40,8 +40,19 @@ export class HomePage {
   
   firebase.firestore().collection('newTournaments').where("state",'==','newTournament').onSnapshot(res=>{
     res.forEach(val=>{
+      console.log("here",this.upcoming)
       this.upcoming.push({...{doc_id:val.id},...val.data()});
-      console.log("here")
+      if(this.upcoming.length==undefined)
+      {
+this.upcoming =[];
+      }
+      else
+      {
+        this.upcoming.push({...{doc_id:val.id},...val.data()});
+
+      }
+      
+      
     })
   })
 
