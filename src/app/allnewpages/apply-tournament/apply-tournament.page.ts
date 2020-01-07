@@ -117,7 +117,8 @@ await alert.present();
               if(this.role == 'vendor'){
                 this.db.collection('newTournaments').doc(value.docid).collection('vendorApplications').doc(firebase.auth().currentUser.uid).set({
                   vendorObject: this.passService.profile,
-                  refNumber: r
+                  refNumber: r,
+                  status: 'awaiting'
                 }).then(res => {
                   console.log('lets see', value.doc.formInfo.tournamentName, some);
                 })
