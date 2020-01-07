@@ -27,7 +27,7 @@
       </div>
       <div class="cardList ">
         <div class="lazyCard" loading="lazy" *ngIf="inprogress.length==0" ><h1>No Tournaments</h1></div>
-        <div class="card green" *ngFor="let item of inprogress" (click)="viewTournament()" >
+        <div class="card green" *ngFor="let item of inprogress" (click)="viewTournament(item)" >
           <div class="title">
             <h5>Msansi Championship Tournament</h5>
           </div>
@@ -65,7 +65,7 @@
       </div>
       <div class="cardList">
           <div class="lazyCard" loading="lazy" *ngIf="upcoming.length==0" ><h1>No Tournaments</h1></div>
-        <div class="card blue" *ngFor="let item of upcoming" >
+        <div class="card blue" *ngFor="let item of upcoming" (click)="viewTournament(item)" >
           <div class="title">
             <h5>Msansi Championship Tournament</h5>
           </div>
@@ -101,8 +101,8 @@
         </div>
       </div>
       <div class="cardList">
-          <div class="lazyCard" loading="lazy" *ngIf="finnished.length==0" ><h1>No Tournaments</h1></div>
-        <div class="card red" *ngFor="let item of finished" >
+          <div class="lazyCard" loading="lazy" *ngIf="finished.length==0" ><h1>No Tournaments</h1></div>
+        <div class="card red" *ngFor="let item of finished" (click)="viewTournament(item)" >
           <div class="title">
             <h5>Msansi Championship Tournament</h5>
           </div>

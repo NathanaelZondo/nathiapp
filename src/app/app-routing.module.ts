@@ -43,6 +43,14 @@ const routes: Routes = [
     path: 'faqs',
     loadChildren: () => import('./allnewpages/faqs/faqs.module').then( m => m.FaqsPageModule)
   },
+  {
+    path: 'view-tournament',
+    loadChildren: () => import('./allnewpages/view-tournament/view-tournament.module').then( m => m.ViewTournamentPageModule)
+  },
+  {
+    path: 'view-match',
+    loadChildren: () => import('./allnewpages/view-match/view-match.module').then( m => m.ViewMatchPageModule)
+  },
 
 
 ];
