@@ -17,6 +17,7 @@ export class ApplyTournamentPage implements OnInit {
   applytournaments = []
   teamState = false
   userObj = {}
+  vendorObj = {}
   appliedForTourn = false
   profile = {
     fullName: '',
@@ -124,10 +125,12 @@ export class ApplyTournamentPage implements OnInit {
               let some = r
               if (this.role == 'vendor') {
                 this.db.collection('newTournaments').doc(value.docid).collection('vendorApplications').doc(firebase.auth().currentUser.uid).set({
-                  vendorObject: this.passService.profile,
+                 vendorobject :  this.vendorObj,
                   refNumber: r,
                   status: 'awaiting'
                 }).then(res => {
+                  this.presentLoading();
+                  this.checkForTournaments();
                   console.log('lets see', value.doc.formInfo.tournamentName, some);
                 })
               } else
@@ -187,6 +190,7 @@ export class ApplyTournamentPage implements OnInit {
           } else if (this.passService.role == 'teamManager') {
             this.db.collection('newTournaments').doc(document.id).collection('teamApplications').doc(firebase.auth().currentUser.uid).get().then(res => {
               console.log('applied tournaments', res.data());
+              
               if (res.exists) {
                 obj = {
                   docid: document.id,
@@ -203,9 +207,23 @@ export class ApplyTournamentPage implements OnInit {
                   application: res.data()
                 }
                 this.applytournaments.push(obj)
-                console.log('arrat', this.applytournaments);
+                console.log('arrat', obj);
+                
               }
+
             })
+//             this.db.collection('newTournaments').doc(document.id).collection('teamApplications').doc(firebase.auth().currentUser.uid).onSnapshot(res => {
+// // this.applyForTournament = []
+//      if(res.exists){
+//        console.log('my document', res.data().status);
+//        if(res.data().status == 'paid'){
+
+//         this.applytournaments.pop
+//          console.log('its done');
+         
+//        }
+//      }
+//             })
           }
         })
       }
@@ -231,6 +249,9 @@ export class ApplyTournamentPage implements OnInit {
   }
   getProfile() {
     firebase.firestore().collection('members').doc(firebase.auth().currentUser.uid).get().then(res => {
+      this.vendorObj = res.data()
+      console.log('vendor',this.vendorObj);
+      
       this.profile.fullName = res.data().form.fullName;
       if (res.data().form.role == 'vendor') {
         this.role = 'vendor';
@@ -238,6 +259,9 @@ export class ApplyTournamentPage implements OnInit {
         this.role = 'teamManager';
       }
     })
+  }
+  routerToProfile(){
+    this.router.navigateByUrl('profile')
   }
 
 }

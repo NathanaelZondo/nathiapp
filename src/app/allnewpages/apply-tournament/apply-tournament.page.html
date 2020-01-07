@@ -36,7 +36,7 @@
             <p>No Tournaments</p>
           </div>
          <div *ngFor="let x of applytournaments">
-            <div class="card" *ngIf="x.application.status != 'paid'" >
+            <div class="card" >
             <div class="title">
               <h2>{{x.doc.formInfo.tournamentName}}</h2>
             </div>
@@ -58,6 +58,8 @@
                 <p *ngIf="x.application.status == 'awaiting'"> Your application is still being processed</p>
                 <p *ngIf="x.application.status == 'accepted'"> Application is being conditionally approved, please use <br>
                   <span>{{x.application.refNumber}}</span> <br> as your reference number to pay</p>
+                  <p (click) = "routerToProfile()" *ngIf="x.application.status == 'paid'"> Application is approved  <br> please go to your profile to view tournament, 
+                </p>
               </div>
             </div>
           </div>
