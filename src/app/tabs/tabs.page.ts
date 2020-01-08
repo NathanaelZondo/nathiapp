@@ -24,8 +24,14 @@ export class TabsPage implements OnInit {
       firebase.auth().onAuthStateChanged(res => {
         if (res) {
           this.role = this.passService.role;
+          
+          
           firebase.firestore().collection('members').doc(res.uid).get().then(snap => {
             if (snap.exists) {
+              this.role = snap.data().form.role
+              console.log(snap.data() );
+              
+              
               this.status = snap.data().status
             }
 

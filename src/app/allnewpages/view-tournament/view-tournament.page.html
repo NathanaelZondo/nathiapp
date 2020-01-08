@@ -7,6 +7,7 @@
   </div>
   <div class="info">
   <div class="t"> <span>{{viewedTournament.formInfo.tournamentName}}</span>
+    <hr>
     <p>Participants {{viewedTournament.formInfo.type}}</p>
     <p>{{viewedTournament.formInfo.location}}</p>
     <p>{{viewedTournament.formInfo.startDate | date}} to {{viewedTournament.formInfo.endDate | date}}</p>
@@ -26,13 +27,16 @@
     </div>
   </div>
 </div>
-<div class="matches" *ngFor="let m of tournMatches"  (click)="viewMatch(m)">
+<div class="matches"   >
   <div class="mTitle">
     <div class="label"><p>Matches</p></div>
     <div class="line"><div class="l"></div></div>
   </div>
   <div class="list">
-    <div class="match">
+    <div class="matcher" *ngIf="tournMatches.length==0" >
+<p>No Matches</p>
+    </div>
+    <div class="match" *ngFor="let m of tournMatches" (click)="viewMatch(m)">
       <div class="date">
         <p>25 Jul, 2019</p>
       </div>

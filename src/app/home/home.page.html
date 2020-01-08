@@ -29,23 +29,22 @@
         <div class="lazyCard" loading="lazy" *ngIf="inprogress.length==0" ><h1>No Tournaments</h1></div>
         <div class="card green" *ngFor="let item of inprogress" (click)="viewTournament(item)" >
           <div class="title">
-            <h5>Msansi Championship Tournament</h5>
+          <h5>{{item.formInfo.tournamentName}}</h5>
           </div>
           <div class="info">
             <div class="details">
               <div>
-                <p>Participants</p>
-                <p>FNB Stadium</p>
-                <p>27 Jul, 2019 to 5 Oct, 2019</p>
-                <p>R 200.00 fee</p>
-                <p>Top 32</p>
-                <p>2 Vendors</p>
+                <p>{{item.formInfo.type}} Participants</p>
+                <p>{{item.formInfo.location}}</p>
+                <p>{{item.formInfo.startDate | date}} to {{item.formInfo.endDate | date}}</p>
+                <p>R {{item.formInfo.joiningFee}}.00 fee</p>
+                <p>Top {{item.formInfo.type}}</p>
+                <p>{{item.approvedVendors.length}} Vendors</p>
                </div>
             </div>
             <div class="sponsors">
               <div>
-                <img src="https://i1.wp.com/themediaonline.co.za/wp-content/uploads/2018/07/Absa_Logo_Primary_Identity_RGB_Passion-01.jpg?fit=1890%2C1890" width="30px" alt="">
-              <img src="https://seeklogo.com/images/M/MTN-logo-459AAF9482-seeklogo.com.png" width="30px"  alt="">
+                <img *ngFor="let s of item.sponsors" src="{{s}}" width="30px">
               </div>
             </div>
           </div>
@@ -67,23 +66,22 @@
           <div class="lazyCard" loading="lazy" *ngIf="upcoming.length==0" ><h1>No Tournaments</h1></div>
         <div class="card blue" *ngFor="let item of upcoming" (click)="viewTournament(item)" >
           <div class="title">
-            <h5>Msansi Championship Tournament</h5>
+            <h5>{{item.formInfo.tournamentName}}</h5>
           </div>
           <div class="info">
             <div class="details">
               <div>
-                <p>Participants</p>
-                <p>FNB Stadium</p>
-                <p>27 Jul, 2019 to 5 Oct, 2019</p>
-                <p>R 200.00 fee</p>
-                <p>Top 32</p>
-                <p>2 Vendors</p>
+                <p>{{item.formInfo.type}} Participants</p>
+                <p>{{item.formInfo.location}}</p>
+                <p>{{item.formInfo.startDate | date}} to {{item.formInfo.endDate | date}}</p>
+                <p>R {{item.formInfo.joiningFee}}.00 fee</p>
+                <p>Top {{item.formInfo.type}}</p>
+                <p>{{item.approvedVendors.length}} Vendors</p>
                </div>
             </div>
             <div class="sponsors">
               <div>
-                <img src="https://i1.wp.com/themediaonline.co.za/wp-content/uploads/2018/07/Absa_Logo_Primary_Identity_RGB_Passion-01.jpg?fit=1890%2C1890" width="30px" alt="">
-              <img src="https://seeklogo.com/images/M/MTN-logo-459AAF9482-seeklogo.com.png" width="30px"  alt="">
+                <img *ngFor="let s of item.sponsors" src="{{s}}" width="30px">
               </div>
             </div>
           </div>
@@ -104,23 +102,22 @@
           <div class="lazyCard" loading="lazy" *ngIf="finished.length==0" ><h1>No Tournaments</h1></div>
         <div class="card red" *ngFor="let item of finished" (click)="viewTournament(item)" >
           <div class="title">
-            <h5>Msansi Championship Tournament</h5>
+            <h5>{{item.formInfo.tournamentName}}</h5>
           </div>
           <div class="info">
             <div class="details">
              <div>
-              <p>Participants</p>
-              <p>FNB Stadium</p>
-              <p>27 Jul, 2019 to 5 Oct, 2019</p>
-              <p>R 200.00 fee</p>
-              <p>Top 32</p>
-              <p>2 Vendors</p>
+              <p>{{item.formInfo.type}} Participants</p>
+              <p>{{item.formInfo.location}}</p>
+              <p>{{item.formInfo.startDate | date}} to {{item.formInfo.endDate | date}}</p>
+              <p>R {{item.formInfo.joiningFee}}.00 fee</p>
+              <p>Top {{item.formInfo.type}}</p>
+              <p>{{item.approvedVendors.length}} Vendors</p>
              </div>
             </div>
             <div class="sponsors">
               <div>
-                <img src="https://i1.wp.com/themediaonline.co.za/wp-content/uploads/2018/07/Absa_Logo_Primary_Identity_RGB_Passion-01.jpg?fit=1890%2C1890" width="30px" alt="">
-              <img src="https://seeklogo.com/images/M/MTN-logo-459AAF9482-seeklogo.com.png" width="30px"  alt="">
+              <img *ngFor="let s of item.sponsors" src="{{s}}" width="30px">
               </div>
             </div>
           </div>

@@ -129,6 +129,9 @@ export class ApplyTournamentPage implements OnInit {
                   refNumber: r,
                   status: 'awaiting'
                 }).then(res => {
+                  this.db.collection('newTournaments').doc(value.docid).update({
+                    vendorTotalApplications: firebase.firestore.FieldValue.increment(1)
+                  })
                   this.presentLoading();
                   this.checkForTournaments();
                   console.log('lets see', value.doc.formInfo.tournamentName, some);
@@ -139,6 +142,9 @@ export class ApplyTournamentPage implements OnInit {
                   refNumber: r,
                   status: 'awaiting'
                 }).then(res => {
+                  this.db.collection('newTournaments').doc(value.docid).update({
+                    totalApplications: firebase.firestore.FieldValue.increment(1)
+                  })
                   this.presentLoading();
                   this.checkForTournaments();
                   console.log('lets see', value.doc.formInfo.tournamentName, some);
@@ -261,7 +267,7 @@ export class ApplyTournamentPage implements OnInit {
     })
   }
   routerToProfile(){
-    this.router.navigateByUrl('profile')
+    this.router.navigateByUrl('tabs/profile')
   }
 
 }

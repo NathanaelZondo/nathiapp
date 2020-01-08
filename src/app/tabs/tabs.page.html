@@ -19,17 +19,17 @@
       <ion-label>Manage Team</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="register" *ngIf="role == 'teamManager'" class="segment-item" >
+    <ion-tab-button tab="profile" *ngIf="role == 'teamManager'||role=='vendor'" class="segment-item" >
       <ion-icon name="person"></ion-icon>
       <ion-label>Profile</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="login" *ngIf="role == 'user'" class="segment-item" (click)="hideTabs('login')" >
+    <ion-tab-button routerLink="/login"  *ngIf="role == 'user'" class="segment-item" >
       <ion-icon name="log-in"></ion-icon>
       <ion-label>Login</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="register" *ngIf="role == 'user'" class="segment-item" (click)="hideTabs('register')" >
+    <ion-tab-button routerLink="/registerpage" *ngIf="role == 'user'" class="segment-item" >
       <ion-icon name="person"></ion-icon>
       <ion-label>Register</ion-label>
     </ion-tab-button>

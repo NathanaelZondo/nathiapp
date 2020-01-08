@@ -66,7 +66,7 @@ export class LoginPage implements OnInit {
     if(this.confirmationResult !== ''){
       return this.authService.login(code, this.confirmationResult).then(result => {
         this.loginLoader.dismiss();
-        this.route.navigateByUrl('/home');
+        this.route.navigateByUrl('/tabs');
       })
     }
   }
@@ -93,7 +93,7 @@ this.phoneNumber = form.phoneNumber
     });
     console.log(window.recaptchaVerifier);
     let appVerifier = window.recaptchaVerifier
-    return this.authService.requestLogin(this.lastNum, appVerifier).then(result => {
+    return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
       if(result.success === true){
         console.log(result);
         this.confirmationResult = result.result
@@ -105,6 +105,22 @@ this.phoneNumber = form.phoneNumber
         }, 500);
        this.alert(form);
       
+      } else {
+        this.loginLoader.dismiss()
+        const alert = await this.alertController.create({
+          header: 'Login Unsuccessful',
+          // subHeader: 'Enter verification code',
+          message: result.result.message,
+          backdropDismiss: false,
+          buttons: [{
+            text: 'Okay',
+            cssClass: 'success',
+            handler: () => {
+              this.route.navigate(['tabs/home'])
+            }
+          }]
+        });
+        await alert.present();
       }
     })
   }

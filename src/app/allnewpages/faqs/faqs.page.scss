@@ -3,13 +3,16 @@
     width: 100%;
     display: flex;
     .links {
-        width: 40%;
+        width: 30%;
         height: 100%;
         display: flex;
         align-items: center;
         background: linear-gradient(rgba(0, 13, 6, 0.664)),url('https://images.unsplash.com/photo-1549490316-686f9b5d359f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80') ;
         color: rgb(247, 255, 252);
-
+        div {
+            width: 80%;
+            margin: auto;
+        }
         h1 {
             background: rgba(255, 255, 255, 0.11);
             border-radius: 8px;
@@ -21,16 +24,19 @@
     }
 
     .information {
-        width: 60%;
+        width: 70%;
         height: 100%;
         display: flex;
         align-items: center;
         .divide {
             width: 96%;
-            margin: auto;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin:10px auto;
             padding-inline-start: 10px;
-            border: solid 1px black;
-            border-radius: 10px;
+            border-bottom: solid 1px black;
+            box-shadow: 0px 2px 3px #1717172f;
+            background: rgb(245, 245, 245);
             p {
                 font-size: 3vw;
             }

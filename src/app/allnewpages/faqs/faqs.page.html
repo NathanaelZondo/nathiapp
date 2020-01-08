@@ -2,15 +2,19 @@
 <div class="container">
   <div class="links">
     <div>
-      <h1>About Us</h1>
       <hr>
-      <h1 *ngFor="let q of FAQS;let i = index" (click)="selectQuestion(i)" >{{q.question}}</h1>
-      
+     <p>Nathi's Tournaments</p>
+      <p>v0.0.1</p>
     </div>
     </div>
     <div class="information">
-<div>
+<div style="
+max-height: 100%;
+overflow-y: auto;
+">
+  <h1>Frequently Asked Questions</h1>
   <div *ngFor="let a of FAQS;let o = index" ngClass="{'fadeInUp':questionIndex==0}" class="divide">
+    <h1>{{a.question}}</h1>
   <p>{{a.answer}}</p>
   </div>
 

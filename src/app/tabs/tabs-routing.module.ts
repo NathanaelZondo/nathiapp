@@ -1,3 +1,4 @@
+import { LoginPageModule } from './../allnewpages/login/login.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {  } from "../allnewpages/profile/profile.module";
@@ -65,7 +66,7 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../allnewpages/login/login-routing.module').then(m => m.LoginPageRoutingModule)
+              import('../allnewpages/login/login.module').then(m => m.LoginPageModule)
           }
         ]
       },

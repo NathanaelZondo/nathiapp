@@ -5,11 +5,12 @@
     background: #012615;
     color: rgb(141, 247, 208);
     padding: 5px;
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 0px 0px 20px 20px;
     .title {
         flex-basis: 100%;
         h4 {
             margin: 0;
+            
         }
     }
     .button {
@@ -60,6 +61,7 @@
     top: 60px;
     h5 {
         margin: 0;
+       
     }
     .inprogress, .upcomming, .finnished {
         height: 33%;
@@ -140,11 +142,20 @@
     }
 }
 .red {
-    background: url(../../assets/redbg.jpg);
+    background: url(../../assets/bg.svg),#012615;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 135px 29%;
 }
 .blue {
-    background: url(../../assets/bluebg.jpg);
+    background: url(../../assets/bg.svg),#02734A;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 135px 29%;
 }
 .green {
-    background: url(../../assets/greenbg.jpg);
+    background: url(../../assets/bg.svg),#05A66B;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 135px 29%;
 }

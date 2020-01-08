@@ -19,7 +19,15 @@ export class FaqsPage implements OnInit {
     {
       question: 'How do I Apply?',
       answer: "To apply for a tournament you're going to have to login to the app or register any role will give you the ability to apply for a tournament"
-    }
+    },
+    {
+      question: "Will i know about new tournaments?",
+      answer: "Yes the app will notify you when a new tournament is available to apply for, but only the team managers and vendors will be able to apply for it."
+    },
+     {
+      question: "What happens if my team can't participate?",
+      answer: "With a valid reason, your team can be postponed to a future date, meaning they will still be part of the tournament. However, if no reason is given, your team automatically forfeits the match and the oposing team moves on."
+     }
   ]
   constructor() { }
 

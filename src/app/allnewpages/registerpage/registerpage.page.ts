@@ -109,7 +109,7 @@ export class RegisterpagePage implements OnInit {
     });
     console.log(window.recaptchaVerifier);
     let appVerifier = window.recaptchaVerifier
-    return this.authService.requestLogin(this.lastNum, appVerifier).then(result => {
+    return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
       if (result.success === true) {
         console.log(result);
         this.confirmationResult = result.result
@@ -117,6 +117,22 @@ export class RegisterpagePage implements OnInit {
 
         this.alert(form);
 
+      } else {
+        console.log(result);
+        const alert = await this.alertController.create({
+          header: 'Register Unsuccessful',
+          // subHeader: 'Enter verification code',
+          message: result.result.message,
+          backdropDismiss: false,
+          buttons: [{
+            text: 'Okay',
+            cssClass: 'success',
+            handler: () => {
+              this.route.navigate(['tabs/home'])
+            }
+          }]
+        });
+        await alert.present();
       }
     })
 
@@ -125,7 +141,7 @@ export class RegisterpagePage implements OnInit {
 
   async alert(form) {
     const alert = await this.alertController.create({
-      header: 'Verfification code',
+      header: 'Verfication code',
       // subHeader: 'Enter verification code',
       backdropDismiss: false,
       inputs: [
@@ -149,7 +165,8 @@ export class RegisterpagePage implements OnInit {
               }
             })
             this.presentLoading()
-            this.route.navigateByUrl('/home');
+            this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
+            this.route.navigateByUrl('/tabs');
           })
         }
       }]

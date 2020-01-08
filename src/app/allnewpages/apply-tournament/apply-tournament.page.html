@@ -56,6 +56,8 @@
                   <span>{{x.application.refNumber}}</span> <br> as your reference number to pay</p>
                   <p (click) = "routerToProfile()" *ngIf="x.application.status == 'paid'"> Application is approved  <br> please go to your profile to view tournament, 
                 </p>
+                <p  *ngIf="x.application.status == 'declined'" style="background: red;color: rgb(255, 223, 223);"> Application for this tournament is unsuccessful.  
+                </p>
               </div>
             </div>
           </div>
