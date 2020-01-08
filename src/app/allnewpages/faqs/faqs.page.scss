@@ -1,0 +1,39 @@
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    .links {
+        width: 40%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(rgba(0, 13, 6, 0.664)),url('https://images.unsplash.com/photo-1549490316-686f9b5d359f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80') ;
+        color: rgb(247, 255, 252);
+
+        h1 {
+            background: rgba(255, 255, 255, 0.11);
+            border-radius: 8px;
+            font-size: 3vw;
+            padding : 10px;
+            margin: 5px;
+            box-shadow: 0px 3px 3px #17171717;
+        }
+    }
+
+    .information {
+        width: 60%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        .divide {
+            width: 96%;
+            margin: auto;
+            padding-inline-start: 10px;
+            border: solid 1px black;
+            border-radius: 10px;
+            p {
+                font-size: 3vw;
+            }
+        }
+    }
+}

@@ -1,0 +1,44 @@
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom">
+    <ion-card no-padding no-margin class="no-border-radius segment-card">
+      
+
+    <ion-tab-button tab="home" class="segment-item" >
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Tournaments</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="applyTournament" *ngIf="role == 'teamManager'||role=='vendor'"  class="segment-item" >
+      <ion-icon name="filing"></ion-icon>
+      <ion-label>Apply Tournament</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="manageTeam" class="segment-item" *ngIf="role == 'teamManager'">
+      <ion-icon name="people"></ion-icon>
+      <ion-label>Manage Team</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="register" *ngIf="role == 'teamManager'" class="segment-item" >
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Profile</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="login" *ngIf="role == 'user'" class="segment-item" (click)="hideTabs('login')" >
+      <ion-icon name="log-in"></ion-icon>
+      <ion-label>Login</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="register" *ngIf="role == 'user'" class="segment-item" (click)="hideTabs('register')" >
+      <ion-icon name="person"></ion-icon>
+      <ion-label>Register</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="faqs" class="segment-item" >
+      <ion-icon name="information-circle" ></ion-icon>
+      <ion-label>FAQs</ion-label>
+    </ion-tab-button>
+  </ion-card>
+  </ion-tab-bar>
+
+</ion-tabs>

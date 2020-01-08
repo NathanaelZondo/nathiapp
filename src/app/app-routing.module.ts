@@ -2,8 +2,12 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
+  { path: '', redirectTo: 'tabs', pathMatch: 'full' },
+  { path: 'tabs', loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)},
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  },
   {
     path: 'add-player',
     loadChildren: () => import('./allnewpages/add-player/add-player.module').then( m => m.AddPlayerPageModule)
@@ -39,7 +43,8 @@ const routes: Routes = [
   {
     path: 'errorpage',
     loadChildren: () => import('./allnepages/errorpage/errorpage.module').then( m => m.ErrorpagePageModule)
-  },  {
+  },
+  {
     path: 'faqs',
     loadChildren: () => import('./allnewpages/faqs/faqs.module').then( m => m.FaqsPageModule)
   },
@@ -51,6 +56,7 @@ const routes: Routes = [
     path: 'view-match',
     loadChildren: () => import('./allnewpages/view-match/view-match.module').then( m => m.ViewMatchPageModule)
   },
+  
 
 
 ];

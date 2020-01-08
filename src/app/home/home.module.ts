@@ -12,12 +12,7 @@ import { MenuComponent } from '../components/menu/menu.component';
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: HomePage
-      }
-    ])
+    RouterModule.forChild([{ path: '', component: HomePage }])
   ],
   entryComponents : [MenuComponent],
   declarations: [HomePage, MenuComponent]

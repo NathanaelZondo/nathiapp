@@ -154,7 +154,7 @@ this.phoneNumber = form.phoneNumber
     });
   }
   close() {
-    this.route.navigateByUrl('home');
+    this.route.navigateByUrl('tabs');
   }
 }
 

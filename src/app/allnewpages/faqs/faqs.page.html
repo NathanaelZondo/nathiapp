@@ -1,9 +1,20 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>faqs</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+<div class="container">
+  <div class="links">
+    <div>
+      <h1>About Us</h1>
+      <hr>
+      <h1 *ngFor="let q of FAQS;let i = index" (click)="selectQuestion(i)" >{{q.question}}</h1>
+      
+    </div>
+    </div>
+    <div class="information">
+<div>
+  <div *ngFor="let a of FAQS;let o = index" ngClass="{'fadeInUp':questionIndex==0}" class="divide">
+  <p>{{a.answer}}</p>
+  </div>
 
+</div>
+    </div>
+</div>
 </ion-content>

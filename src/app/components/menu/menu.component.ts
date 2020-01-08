@@ -113,7 +113,6 @@ export class MenuComponent implements OnInit {
   register() {
     this.router.navigateByUrl('registerpage');
     // this.router.navigateByUrl('manage-team');
-
   }
   manageteam() {
     if (this.status == 'awaiting') {

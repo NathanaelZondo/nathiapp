@@ -31,14 +31,14 @@ export class AppComponent {
     this.initializeApp();
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (!user) {
-        this.router.navigateByUrl("/home");
+        this.router.navigateByUrl("/tabs");
         console.log('not logged in');
         
         unsubscribe();
       } else {
 this.ngZone.run(()=>{
   
-  this.router.navigateByUrl("/home");
+  this.router.navigateByUrl("/tabs");
   console.log('logged in');
   unsubscribe();
 })

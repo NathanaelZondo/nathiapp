@@ -19,6 +19,7 @@ export class ProfilePage implements OnInit {
     },
     status: "awaitin"
   }
+  tournaments = []
   constructor(public router: Router) { }
 
   ngOnInit() {
@@ -64,7 +65,7 @@ export class ProfilePage implements OnInit {
           for (var i = 0; i < pathLength; i++) {
             aimations.push(anime({
               targets: spherePathEls[0].childNodes[i],
-              stroke: { value: ['rgba(255,75,75,1)', 'rgba(80,80,80,.35)'], duration: 500 },
+              stroke: { value: ['rgb(5, 166, 107)', 'rgb(5, 166, 107)'], duration: 500 },
               translateX: [2, -4],
               translateY: [2, -4],
               easing: 'easeOutQuad',
@@ -119,5 +120,11 @@ export class ProfilePage implements OnInit {
   })();
   back() {
     this.router.navigateByUrl('home')
+  }
+  signout() {
+    firebase.auth().signOut().then(() => {
+      this.router.navigateByUrl('tabs/home').catch(err => {
+      })
+    })
   }
 }

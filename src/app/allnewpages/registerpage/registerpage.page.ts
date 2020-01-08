@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, Renderer2 } from '@angular/core';
 import { RegisterFormComponent } from 'src/app/components/register-form/register-form.component';
 import { UserCredential } from 'src/app/Models/user';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
@@ -14,7 +14,7 @@ declare var window
   styleUrls: ['./registerpage.page.scss'],
 })
 export class RegisterpagePage implements OnInit {
-
+  tabElement = document.getElementsByTagName('ion-tab-bar')
   phoneNumber = ''
   lastNum = ''
   password
@@ -40,7 +40,8 @@ export class RegisterpagePage implements OnInit {
     public alertController: AlertController,
     public route: Router,
     public loadingController: LoadingController,
-    public ngZone: NgZone
+    public ngZone: NgZone,
+    public renderer: Renderer2
 
   ) {
     this.smsSent = false
@@ -192,6 +193,7 @@ export class RegisterpagePage implements OnInit {
     // console.log('Loading dismissed!');
   }
   close() {
-    this.route.navigateByUrl('home');
+    this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
+    this.route.navigateByUrl('tabs');
   }
 }

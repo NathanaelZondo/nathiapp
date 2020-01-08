@@ -83,6 +83,8 @@ this.upcoming =[];
     
   ionViewWillLeave()
   {
+    console.log('will leave');
+    
     this.popover1.dismiss(); 
   }
   /*
