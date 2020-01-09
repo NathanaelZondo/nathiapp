@@ -21,6 +21,7 @@ export class AddPlayerPage implements OnInit {
     DateCreated : null,
     DateEdited : null,
     playerPosition: '',
+    playerNumber : '',
     height: '',
     Achievements: []
   }
@@ -69,6 +70,9 @@ export class AddPlayerPage implements OnInit {
     'height': [
       { type: 'required', message: 'height  is required.' }
     ],
+    'playerNumber': [
+      { type: 'required', message: 'Player jersey number is required.' },
+    ],
     // 'Achievements': [
     //   { type: 'required', message: 'Achievements is required.' }
     // ],
@@ -89,6 +93,7 @@ export class AddPlayerPage implements OnInit {
       previousTeam: new FormControl('', Validators.required),
       height: new FormControl('', Validators.compose([Validators.required])),
       playerPosition: new FormControl('', Validators.compose([Validators.required])),
+      playerNumber : new FormControl('', Validators.compose([Validators.required])),
       //  Achievements: new FormControl('', Validators.compose([Validators.required])), 
       Achievements: this.formBuilder.array([
         this.formBuilder.control('')
@@ -117,7 +122,7 @@ this.playerNode.DOB = i.docdata.DOB
 this.playerNode.height = i.docdata.height
 this.playerNode.playerPosition = i.docdata.playerPosition
 this.playerNode.previousTeam = i.docdata.previousTeam
-
+this.playerNode.playerNumber = i.docdata.playerNumber
   }
   remove(){
     this.Achievements.removeAt(this.Achievements.length - 1)
@@ -143,7 +148,9 @@ this.playerNode.previousTeam = i.docdata.previousTeam
         DateEdited : null,
         playerPosition: '',
         height: '',
-        Achievements: []
+        Achievements: [],
+        playerNumber : ''
+        
       }
       this.router.navigateByUrl('add-player')
       const toast = await this.toastController.create({
@@ -197,7 +204,8 @@ this.playerNode.previousTeam = i.docdata.previousTeam
           DateEdited : null,
           playerPosition: '',
           height: '',
-          Achievements: []
+          Achievements: [],
+          playerNumber : ''
         }
         this.router.navigateByUrl('add-player')
         const toast = await this.toastController.create({
