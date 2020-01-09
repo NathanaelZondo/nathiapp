@@ -54,13 +54,24 @@
               <p>{{validate.message}}</p>
             </div>
           </div>
-      
-          <ion-item>
-              <ion-label position="floating">Position</ion-label>
-            <ion-select formControlName="playerPosition" [(ngModel)]="playerNode.playerPosition">
-              <ion-select-option *ngFor="let g of position" [value]="g.value">{{g.label}} </ion-select-option>
-            </ion-select>
-          </ion-item>
+      <!-- ============================================================================================== -->
+      <ion-item>
+        <ion-label position="floating">Position</ion-label>
+      <ion-select formControlName="playerPosition" [(ngModel)]="playerNode.playerPosition">
+        <ion-select-option *ngFor="let g of position" [value]="g.value">{{g.label}} </ion-select-option>
+      </ion-select>
+    </ion-item>
+      <!-- =============================================================================================== -->
+      <ion-item>
+        <ion-label position="floating">Jersey Number</ion-label>
+      <ion-input type="tel" formControlName="playerNumber" [(ngModel)]="playerNode.playerNumber" ngDefaultControl></ion-input>
+    </ion-item>
+    <div class="error" *ngFor="let validate of validation_messages.playerNumber">
+      <div class="messages" style="color:red"
+        *ngIf="addPlayerForm.get('playerNumber').hasError(validate.type) && (addPlayerForm.get('playerNumber').dirty || addPlayerForm.get('playerNumber').touched)">
+        <p>{{validate.message}}</p>
+      </div>
+    </div>
           <!-- / ================================ -->
           <ion-item>
             <ion-label position="floating">Date of Birth</ion-label>
