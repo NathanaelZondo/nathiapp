@@ -3,6 +3,7 @@ import { NavController, NavParams } from '@ionic/angular';
 import { ActivatedRoute, Router} from '@angular/router';
 import { NavigationExtras } from '@angular/router';
 import * as firebase from 'firebase'
+import { PassInformationServiceService } from 'src/app/service/pass-information-service.service';
 @Component({
   selector: 'app-view-tournament',
   templateUrl: './view-tournament.page.html',
@@ -12,19 +13,27 @@ export class ViewTournamentPage implements OnInit {
   viewedTournament = null
   tournMatches = []
   db = firebase.firestore()
-  constructor(public navCtrl: NavController, private route: ActivatedRoute,private router: Router) { }
-
+  constructor(public pass:PassInformationServiceService,public navCtrl: NavController, private activatedRoute: ActivatedRoute,private router: Router) { }
+tournid ;
   ngOnInit() {
     // receives nav params
-    this.route.queryParams.subscribe(params => {
+    
+    this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.viewedTournament = this.router.getCurrentNavigation().extras.state.parms
         console.log(this.viewedTournament);
-        this.db.collection('MatchFixtures').where('tournid','==',this.viewedTournament.doc_id).orderBy("startDate", "desc").get().then(res => {
+        this.pass.tournid =this.viewedTournament.doc_id;
+        this.tournid =this.viewedTournament.doc_id;
+        this.db.collection('MatchFixtures').where('tournid','==',this.viewedTournament.doc_id).orderBy("matchdate", "desc").get().then(res => {
+        
+          this.tournMatches = []
           res.forEach(doc => {
             this.tournMatches.push(doc.data())
           })
           console.log(this.tournMatches);
+          
+        }).catch(err => {
+          console.log(err);
           
         })
       }});
@@ -35,9 +44,15 @@ export class ViewTournamentPage implements OnInit {
     this.viewedTournament = null
   }
   viewMatch(match) {
+
+console.log(match)
+
+this.pass.matchdetails(match);
+
     let navigationExtras: NavigationExtras = {
       state: {
-        parms:match
+        parms:match,
+        tournament: this.viewedTournament
       }
     };
     // passes nav params

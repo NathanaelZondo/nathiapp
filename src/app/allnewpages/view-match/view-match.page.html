@@ -1,5 +1,131 @@
 <ion-content>
-<div class="matchDetails">
-    
+    <div class="playerInfo animated" [ngClass]="{'bounceInDown':viewPlayer,'bounceOutUp':!viewPlayer}">
+        <div class="playerData">
+            <div class="image">
+                <img src="../../../assets/bluebg.jpg" alt="">
+            </div>
+            <div class="details">
+                <h2>Full NAme</h2>
+                <hr>
+                <p>Position</p>
+                <p>Previous Team</p>
+                <p>3m tall</p>
+                <div class="clos">
+                    <ion-button shape="round" (click)="player('away','close')">
+                        Close
+                    </ion-button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="teamInfo animated" [ngClass]="{'bounceInDown':viewTeam,'bounceOutUp':!viewTeam}">
+        <div class="teamData">
+            <div class="goalKeeperJersey image">
+                <img src="http://sc02.alicdn.com/kf/HTB1xgo.SFXXXXa5XXXXq6xXFXXX4/Latest-design-Fashion-sublimation-men-Soccer-Jersey.jpg" alt="">
+            </div>
+            <div class="teamLogo m-image">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIMOnVMZR5Ohj-ObYrhQuXtKrtZoClQL540zYTkVvuISSl6g_b&s" alt="">
+            </div>
+            <div class="playerJersey image">
+                <img src="https://sc01.alicdn.com/kf/H8adb8626e20e4fc7b30c60716187c0bb3/customize-sublimation-soccer-sports-wear-design-your.jpg_350x350.jpg" alt="">
+            </div>
+            <div class="information">
+                <h1>Team Name</h1>
+                <hr>
+                <p>Coach: Caster Semenya</p>
+                <p>0123654789</p>
+                <p>Based in Johannesburg</p>
+                <div class="clos">
+                    <ion-button shape="round" (click)="team('away', 'close')">
+                        Close
+                    </ion-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="backB">
+        <ion-fab-button shape="round" size="small" (click)="goBack( )">
+            <ion-icon name="arrow-back"></ion-icon>
+        </ion-fab-button>
+    </div>
+    <div class="matchDetails">
+<div class="match" >
+    <div class="homeTeam">
+        <div class="image" (click)="team('home','open')">
+            <img [src]="object.TeamObject.teamLogo" alt="No Logo">
+        </div>
+        <div class="teamName">
+    {{object.TeamObject.teamName}}
+        </div>
+    </div>
+    <div class="matchDetails">
+        <p>v</p>
+        <h3>{{object.score}} : {{object.ascore}}</h3>
+        <p>{{object.mins}}:{{object.secs}}</p>
+    </div>
+    <div class="awayTeam">
+        <div class="image" (click)="team('home','open')">
+            <img [src]="object.aTeamObject.teamLogo" alt ="No Logo">
+        </div>
+        <div class="teamName">
+            {{object.aTeamObject.teamName}}
+        </div>
+    </div>
+</div>
+        <div class="segment">
+            <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segmentVal" >
+                <ion-segment-button color="light" value="lineup" color="light">
+                    <ion-label>Line Up</ion-label>
+                </ion-segment-button>
+                <ion-segment-button color="light" value="summary">
+                    <ion-label>Summary</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </div>
+    </div>
+<div class="data">
+    <div class="playerList animated" [ngClass]="{'bounceInLeft':segmentVal=='lineup','bounceOutLeft':segmentVal=='summary'}">
+        <div class="homePlayers">
+            <div class="card" *ngFor="let item of homeplayers" (click)="player('home','open')">
+                <p>{{item.fullName}}</p>
+                <div class="position">
+                    <p>{{item.playerPosition}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="awayPlayers">
+            <div class="card" *ngFor="let item of awayplayers" (click)="player('away','open')">
+                <p>{{item.fullName}}</p>
+                <div class="position">
+                    <p>{{item.playerPosition}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="summary animated" [ngClass]="{'bounceInRight':segmentVal=='summary','bounceOutRight':segmentVal=='lineup'}">
+        <div class="homeStats">
+            <p>{{corner}}</p>
+            <p>{{red}}</p>
+            <p>{{yellow}}</p>
+            <p>{{offside}}</p>
+           
+        </div>
+        <div class="labels">
+            <p>Corners</p>
+            <p>Red Cards</p>
+            <p>Yellow Cards</p>
+            <p>Offsides</p>
+        </div>
+        <div class="awayStats">
+            <p>{{acorner}}</p>
+            <p>{{ared}}</p>
+            <p>{{ayellow}}</p>
+            <p>{{aoffside}}</p>
+           
+        </div>
+    </div>
 </div>
 </ion-content>
