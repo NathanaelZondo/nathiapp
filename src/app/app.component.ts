@@ -17,6 +17,7 @@ export class AppComponent {
   role
   //  profile = {} as Profile 
    token
+   o
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -29,6 +30,8 @@ export class AppComponent {
   ) {
     
     this.initializeApp();
+    
+    
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (!user) {
         this.router.navigateByUrl("/tabs");
@@ -65,8 +68,11 @@ this.ngZone.run(()=>{
     this.oneSignal.getIds().then((res) => {
 
       console.log("OneSignal User ID:", res.userId);
-      // (Output) OneSignal User ID: 270a35cd-4dda-4b3f-b04e-41d7463a2316   
+      // (Output) OneSignal User ID: 270a35cd-4dda-4b3f-b04e-41d7463a2316  
+      console.log('what what', res.pushToken);
+       
       this.token = res.userId 
+      this.o  = res.pushToken
       // if(!res){
       //   this.initUpdate();
       // }
@@ -104,7 +110,8 @@ this.ngZone.run(()=>{
   initUpdate(){
     if(!this.token){
       firebase.firestore().collection('Tokens').add({
-        TokenID: this.token
+        TokenID: this.token,
+        pushToken : this.o 
       }).catch( err =>{
         console.log('ssss',err);
         
