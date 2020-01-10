@@ -2,6 +2,7 @@ import { NavController } from '@ionic/angular';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import * as firebase from 'firebase'
+import { PassInformationServiceService } from 'src/app/service/pass-information-service.service';
 @Component({
   selector: 'app-view-match',
   templateUrl: './view-match.page.html',
@@ -18,9 +19,40 @@ export class ViewMatchPage implements OnInit {
 
   viewingMatch = null
   db = firebase.firestore()
-  match
+  match =[];
   tournament
-  constructor(public navCtrl: NavController, private route: ActivatedRoute, private router: Router,public renderer: Renderer2) { }
+  object:any={};
+  corner;
+  red;
+  yellow;
+  offside;
+  homeplayers =[];
+  awayplayers =[];
+  constructor(public pass:PassInformationServiceService,public navCtrl: NavController, private route: ActivatedRoute, private router: Router,public renderer: Renderer2) {
+    this.homeplayers =[];
+    this.awayplayers =[];
+this.match  =this.pass.currentmatch;
+this.object =this.match[0];
+console.log("Match here = ",this.object.TeamObject.uid);
+
+firebase.firestore().collection('Teams').doc(this.object.TeamObject.uid).collection('Players').get().then(res=>{
+res.forEach(val=>{
+this.homeplayers.push(val.data())
+
+})  
+})
+
+
+firebase.firestore().collection('Teams').doc(this.object.aTeamObject.uid).collection('Players').get().then(res=>{
+  res.forEach(val=>{
+  this.awayplayers.push(val.data())
+  
+  })  
+  })
+
+
+
+   }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {

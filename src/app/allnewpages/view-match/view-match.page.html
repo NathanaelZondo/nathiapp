@@ -52,26 +52,26 @@
         </ion-fab-button>
     </div>
     <div class="matchDetails">
-<div class="match">
+<div class="match" >
     <div class="homeTeam">
         <div class="image" (click)="team('home','open')">
-            <img src="../../../assets/bluebg.jpg" alt="">
+            <img [src]="object.TeamObject.teamLogo" alt="No Logo">
         </div>
         <div class="teamName">
-            Home Team
+    {{object.TeamObject.teamName}}
         </div>
     </div>
     <div class="matchDetails">
         <p>v</p>
-        <h3>0 : 0</h3>
-        <p>25 min</p>
+        <h3>{{object.score}} : {{object.ascore}}</h3>
+        <p>{{object.mins}}:{{object.secs}}</p>
     </div>
     <div class="awayTeam">
         <div class="image" (click)="team('home','open')">
-            <img src="../../../assets/bluebg.jpg">
+            <img [src]="object.aTeamObject.teamLogo" alt ="No Logo">
         </div>
         <div class="teamName">
-            Away Team
+            {{object.aTeamObject.teamName}}
         </div>
     </div>
 </div>
@@ -89,18 +89,18 @@
 <div class="data">
     <div class="playerList animated" [ngClass]="{'bounceInLeft':segmentVal=='lineup','bounceOutLeft':segmentVal=='summary'}">
         <div class="homePlayers">
-            <div class="card" *ngFor="let item of arr" (click)="player('home','open')">
-                <p>13' Alan Bakes</p>
+            <div class="card" *ngFor="let item of homeplayers" (click)="player('home','open')">
+                <p>{{item.fullName}}</p>
                 <div class="position">
-                    <p>Defender</p>
+                    <p>{{item.playerPosition}}</p>
                 </div>
             </div>
         </div>
         <div class="awayPlayers">
-            <div class="card" *ngFor="let item of arr" (click)="player('away','open')">
-                <p>13' Alan Bakes</p>
+            <div class="card" *ngFor="let item of awayplayers" (click)="player('away','open')">
+                <p>{{item.fullName}}</p>
                 <div class="position">
-                    <p>Defender</p>
+                    <p>{{item.playerPosition}}</p>
                 </div>
             </div>
         </div>
@@ -111,21 +111,20 @@
             <p>0</p>
             <p>0</p>
             <p>0</p>
-            <p>0</p>
+           
         </div>
         <div class="labels">
-            <p>Attacks</p>
             <p>Corners</p>
-            <p>Off Targets</p>
             <p>Red Cards</p>
             <p>Yellow Cards</p>
+            <p>Offsides</p>
         </div>
         <div class="awayStats">
             <p>0</p>
             <p>0</p>
             <p>0</p>
             <p>0</p>
-            <p>0</p>
+           
         </div>
     </div>
 </div>
