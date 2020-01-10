@@ -1,6 +1,10 @@
 <ion-content>
-  <div class="noTeam animated" [ngClass]="{'fadeIn':!isTeam,'fadeOutUp':isTeam}" >
-    <div class="c">
+  <div class="noTeam animated" [ngClass]="{'fadeIn':!isTeam,'fadeOutUp':isTeam}">
+    <div class="c" *ngIf="!createTeam">
+      <h1>Checking</h1>
+      <ion-spinner color="light" name="bubbles"></ion-spinner>
+    </div>
+    <div class="c" *ngIf="createTeam">
       <h1>Please Create a Team</h1>
       <p><sub>You need a team to participate in a tournament.</sub></p>
       <ion-button shape="round" color="success" (click)="addTeam()">
@@ -8,7 +12,7 @@
       </ion-button>
     </div>
   </div>
-  <div class="head" *ngIf="isTeam" >
+  <div class="head" *ngIf="isTeam">
     <div class="title">
 
       <div class="t">
@@ -16,38 +20,43 @@
       </div>
     </div>
     <div class="details">
-      <div class="d"><p>{{display.region}}</p>
-        <p>{{display.tel}}</p></div>
+      <div class="d">
+        <p>{{display.region}}</p>
+        <p>{{display.tel}}</p>
+      </div>
     </div>
   </div>
-  <div class="teamList" *ngIf="isTeam" >
+  <div class="teamList" *ngIf="isTeam">
     <div class="label">
       <p>Squad</p>
       <ion-button style="margin: 0;" size="small" shape="round" (click)="addPlayer()"> Manage </ion-button>
     </div>
     <div class="list">
 
-  <div >
-        <div class="card" *ngFor="let i of players" (click)="viewPlayer()">
-            <img src="http://wordpress.penndelcomputerguy.com/wp-content/plugins/wp-club-manager/assets/images/placeholder.png">
-            <div class="details">
-              <div>
-                  <p style="font-size: 4vw;"><b>{{i.fullName}}</b></p>
-                  <p><b>{{i.DOB | date}}</b></p>
-                  <p>{{i.position}}</p>
-                  <!-- <p style="font-size: 4vw;"><b></b></p>
-                  <p><b>28 Jul, 1992</b></p>
-                  <p>Defender</p>
-                  <p>3 m tall</p>
-                  <p>Played for Droggo Team</p>
-                  <p>Best Defender</p> -->
-              </div>
+      <div>
+        <div class="card" *ngFor="let i of players;let ind = index" (click)="viewPlayer(ind)">
+          <div class="playerInformation animated" [ngClass]="{'fadeInLeft':playerMore==ind,'fadeOutLeft':playerMore!=ind}" >
+           <div>
+            <p>Previous team: {{i.previousTeam}}</p>
+            <p>Height: {{i.height}}m</p>
+            <p>DOB: {{i.DOB | date}}</p>
+            <p id="a" *ngFor="let a of i.Achievements"></p>
+           </div>
+          </div>
+          <img *ngIf="i.palyerImage" src="{{i.palyerImage}}" alt="">
+          <img *ngIf="!i.palyerImage"
+            src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=50">
+          <div class="details">
+            <div>
+              <p style="font-size: 4vw;"><b>{{i.fullName}}</b></p>
+              <p>{{i.playerPosition}}</p>
             </div>
           </div>
+        </div>
 
 
-   
-  </div>
+
+      </div>
     </div>
   </div>
 

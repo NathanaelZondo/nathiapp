@@ -10,13 +10,15 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./manage-team.page.scss'],
 })
 export class ManageTeamPage implements OnInit {
+  playerMore =  null;
   isTeam = false;
   isNotTeam = false
   db = firebase.firestore();
   display = {}
-  isPlayer = false
+  isPlayer = false;
   players = []
   noTeam = document.getElementsByClassName('noTeam')
+  createTeam = false;
     constructor(  public renderer: Renderer2,  private formBuilder: FormBuilder, public router : Router,public navctrl : NavController) { 
    
       
@@ -44,6 +46,8 @@ export class ManageTeamPage implements OnInit {
        this.display = res.data();
        
       //  this.isNotTeam = false;
+      } else {
+        this.createTeam = true;
       }
       this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').onSnapshot(res =>{
         this.players = []
@@ -57,6 +61,15 @@ export class ManageTeamPage implements OnInit {
         }
       })
     })
+  }
+  viewPlayer(index) {
+    console.log(index);
+    
+    if (this.playerMore==index) {
+      this.playerMore = null
+    } else {
+      this.playerMore = index
+    }
   }
   }
   

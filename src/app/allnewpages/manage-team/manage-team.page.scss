@@ -20,6 +20,7 @@
     height: 28%;
     background: linear-gradient(#000D06,#014023), url(../../../assets/greenbg.jpg);
     background-size: cover;
+
     border-radius: 0px 0px 10px 10px;
     color: white;
     position: absolute;
@@ -76,15 +77,21 @@
     color: white;
     background: linear-gradient(rgba(0, 31, 7, 0.295)),url(https://images.unsplash.com/photo-1511439664149-58b346f60448?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80);
     background-position: center;
-    background-size: auto 100%;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
     .label {
         backdrop-filter: blur(10px);
         height: 10%;
+        background: #05a66b82;
+        display: -webkit-box;
         display: flex;
+        -webkit-box-align: center;
         align-items: center;
         padding: 5px;
+        border-bottom: solid 1px #05A66B;
+        border-top: solid 1px #05A66B;
         p {
-            padding: 0px 5px;
+            padding: 0px 18px;
         }
     }
     .list {
@@ -104,6 +111,29 @@
                 height: 100%;
                 object-fit: cover;
             }
+            .playerInformation {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                z-index: 20;
+                left: 20%;
+                border-radius: 10px;
+                background: white;
+                display: flex;
+                align-items: center;
+                div {
+                    margin: auto;
+                    max-width: 90%;
+                    max-height: 90%;
+                    overflow: auto;
+                }
+                p {
+                    margin: 0;
+                }
+                
+
+            }
             .details {
                 border-radius: 10px;
                 padding: 5px;
@@ -115,7 +145,8 @@
                 display: flex;
                 align-items: center;
                 overflow-y: auto;
-                color: rgb(126, 126, 126);
+                color: rgb(255, 255, 255);
+                z-index: 5;
                 p {
                     font-size: 3vw;
                     text-shadow: 0px 1px 2px #1717177c;

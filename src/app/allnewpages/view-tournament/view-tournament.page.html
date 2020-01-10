@@ -33,7 +33,7 @@
   </div>
   <div class="list">
     <div class="matcher" *ngIf="tournMatches.length==0" >
-<p>No Matches</p>
+<p style="margin: auto;text-align: center;">No Matches</p>
     </div>
     <div class="match" *ngFor="let m of tournMatches" (click)="viewMatch(m)">
       <div class="date">

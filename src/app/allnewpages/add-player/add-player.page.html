@@ -18,7 +18,9 @@
               </div>
           </div>
           <div class="card" *ngFor="let i of players" (click)="edit(i)" >
-            <img src="http://wordpress.penndelcomputerguy.com/wp-content/plugins/wp-club-manager/assets/images/placeholder.png">
+            <!-- Photo by Abigail Keenan on Unsplash -->
+            <img *ngIf="!i.docdata.palyerImage"  src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=50">
+          <img *ngIf="i.docdata.palyerImage"  src="{{i.docdata.palyerImage}}" alt="">
             <div class="details">
               <div class="d">
                   <h5 style="font-size: 4vw;"><b>{{i.docdata.fullName}}</b></h5>
