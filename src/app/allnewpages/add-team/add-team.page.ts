@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import * as firebase from 'firebase';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { LoadingController, ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PassInformationServiceService } from 'src/app/service/pass-information-service.service';
 
 @Component({
@@ -25,6 +25,7 @@ export class AddTeamPage implements OnInit {
     uid: firebase.auth().currentUser.uid,
     teamManagerInfo: null
   }
+  loaderHolder = null
   addTeamForm: FormGroup;
   db = firebase.firestore();
   storage = firebase.storage().ref();
@@ -33,13 +34,15 @@ export class AddTeamPage implements OnInit {
   logoImage
   GJerseyImage
   TjerseyImage
+  isEditing = false;
   constructor(
     private formBuilder: FormBuilder,
     private camera: Camera ,
     public loadingController: LoadingController,
     private router: Router,
     public toastController: ToastController,
-    public passServie : PassInformationServiceService ) {
+    public passServie : PassInformationServiceService,
+     private activatedRoute: ActivatedRoute ) {
     this.addTeamForm = this.formBuilder.group({
       teamName: new FormControl('', Validators.required),
       // location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(30)])),
@@ -50,7 +53,15 @@ export class AddTeamPage implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.activatedRoute.queryParams.subscribe(() => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.isEditing = this.router.getCurrentNavigation().extras.state.isEditing
+        this.teamNode = this.router.getCurrentNavigation().extras.state.data
+        console.log(this.isEditing, this.teamNode);
+      }
+    });
+   }
   async createTeam(addTeamForm: FormGroup): Promise<void> {
 
 if (!addTeamForm.valid) {
@@ -58,10 +69,18 @@ if (!addTeamForm.valid) {
     }
     else  {
       // load the profile creation process
-      const load = await this.loadingController.create({
+      if (this.isEditing) {
+       this.loaderHolder = await this.loadingController.create({
+          message: 'Editing Your Team..'
+        });
+        this.loaderHolder.present();
+      } else {
+        this.loaderHolder  = await this.loadingController.create({
         message: 'Creating Your Team..'
       });
-      load.present();
+      this.loaderHolder.present();
+      }
+      
       
       parseInt(this.teamNode.tel)
       this.teamNode.teamManagerInfo = this.passServie.profile
@@ -77,7 +96,7 @@ if (!addTeamForm.valid) {
         });
         toast.present();
      
-        load.dismiss();
+        this.loaderHolder.dismiss();
 
         // catch any errors.
       }).catch(async err => {
@@ -87,11 +106,9 @@ if (!addTeamForm.valid) {
         })
         toast.present();
 
-        load.dismiss();
+        this.loaderHolder.dismiss();
       })
     }
-    
-  
   }
 
   //Functions to upload images
@@ -243,6 +260,8 @@ if (!addTeamForm.valid) {
     ],
   };
   back() {
-    this.router.navigateByUrl('home')
+    
+    this.router.navigateByUrl('tabs/manageTeam')
+    this.isEditing  = false
   }
 }

@@ -14,11 +14,20 @@
     background-size: cover;
     text-align: center;
     overflow-y: auto;
+    display: flex;
+    align-items: center;
+.div {
+    margin: auto;
     .title {
         color: white;
         padding: 5px;
         display: flex;
         align-items: center;
+        .closer {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
         .text {
             flex-basis: 100%;
             h1 {
@@ -32,6 +41,7 @@
         justify-content: space-evenly;
         justify-items: center;
         padding: 20px 0px;
+            width: 90vw;
         .backimage {
             color: white;
             p {
@@ -44,8 +54,8 @@
             .sc-ion-input-md, .native-input, ion-input  {
                 background: green;
                 color: white;
-                margin: 3px 0px 3px 20px;
-                border-radius: 100px 0px 0px 100px;
+                margin: 3px 0px;
+                border-radius: 100px;
                 text-align: left;
             }
             .error {
@@ -61,4 +71,5 @@
             }
         }
     }
+}
 }

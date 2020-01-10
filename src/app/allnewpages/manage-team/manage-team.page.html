@@ -7,7 +7,7 @@
     <div class="c" *ngIf="createTeam">
       <h1>Please Create a Team</h1>
       <p><sub>You need a team to participate in a tournament.</sub></p>
-      <ion-button shape="round" color="success" (click)="addTeam()">
+      <ion-button  shape="round" color="success" (click)="addTeam()">
         Add Team
       </ion-button>
     </div>
@@ -16,7 +16,14 @@
     <div class="title">
 
       <div class="t">
-        <h5>{{display.teamName}}</h5>
+        <h5 style="font-size: 5vw;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        padding: 0px 22px;">{{display.teamName}} <ion-button color="light" fill="clear" (click)="editTean()">
+          <ion-icon name="create"></ion-icon>
+          
+        </ion-button></h5>
       </div>
     </div>
     <div class="details">
@@ -59,5 +66,4 @@
       </div>
     </div>
   </div>
-
 </ion-content>

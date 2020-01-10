@@ -1,9 +1,8 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
-import { Router } from '@angular/router';
+import { Router,NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
-
 @Component({
   selector: 'app-manage-team',
   templateUrl: './manage-team.page.html',
@@ -22,6 +21,15 @@ export class ManageTeamPage implements OnInit {
     constructor(  public renderer: Renderer2,  private formBuilder: FormBuilder, public router : Router,public navctrl : NavController) { 
    
       
+    }
+    editTean() {
+      const parms: NavigationExtras  = {
+        state: {
+          isEditing: true,
+          data: this.display 
+        }
+      }
+      this.router.navigateByUrl('add-team',parms)
     }
     back(){
       this.navctrl.pop()
