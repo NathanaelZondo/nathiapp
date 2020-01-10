@@ -2,16 +2,17 @@
     <div class="playerInfo animated" [ngClass]="{'bounceInDown':viewPlayer,'bounceOutUp':!viewPlayer}">
         <div class="playerData">
             <div class="image">
-                <img src="../../../assets/bluebg.jpg" alt="">
+                <img *ngIf="!playerViewed.palyerImage"  src="https://go-gae-image-api-example-dot-gae-lab-001.appspot.com/img?f=img-api-example/2.jpg" alt="">
+            <img *ngIf="playerViewed.palyerImage"  src="{{playerViewed.palyerImage}}" alt="">
             </div>
             <div class="details">
-                <h2>Full NAme</h2>
+            <h2>{{playerViewed.fullName}}</h2>
                 <hr>
-                <p>Position</p>
-                <p>Previous Team</p>
-                <p>3m tall</p>
+                <p>{{playerViewed.playerPosition}}</p>
+            <p>Previous Team {{playerViewed.previousTeam}}</p>
+            <p>{{playerViewed.height}}m tall</p>
                 <div class="clos">
-                    <ion-button shape="round" (click)="player('away','close')">
+                    <ion-button shape="round" (click)="player('away','close', null)">
                         Close
                     </ion-button>
                 </div>
@@ -38,7 +39,7 @@
                 <p>0123654789</p>
                 <p>Based in Johannesburg</p>
                 <div class="clos">
-                    <ion-button shape="round" (click)="team('away', 'close')">
+                    <ion-button shape="round" (click)="team('away', 'close', null)">
                         Close
                     </ion-button>
                 </div>
@@ -55,7 +56,8 @@
 <div class="match" >
     <div class="homeTeam">
         <div class="image" (click)="team('home','open')">
-            <img [src]="object.TeamObject.teamLogo" alt="No Logo">
+            <img *ngIf="!object.TeamObject.teamLogo"  src="https://go-gae-image-api-example-dot-gae-lab-001.appspot.com/img?f=img-api-example/2.jpg" alt="">
+            <img *ngIf="object.TeamObject.teamLogo"  [src]="object.TeamObject.teamLogo" alt="No Logo">
         </div>
         <div class="teamName">
     {{object.TeamObject.teamName}}
@@ -68,7 +70,8 @@
     </div>
     <div class="awayTeam">
         <div class="image" (click)="team('home','open')">
-            <img [src]="object.aTeamObject.teamLogo" alt ="No Logo">
+            <img *ngIf="!object.aTeamObject.teamLogo"  src="https://go-gae-image-api-example-dot-gae-lab-001.appspot.com/img?f=img-api-example/2.jpg" alt="">
+            <img *ngIf="object.aTeamObject.teamLogo"  [src]="object.aTeamObject.teamLogo" alt ="No Logo">
         </div>
         <div class="teamName">
             {{object.aTeamObject.teamName}}
@@ -89,7 +92,7 @@
 <div class="data">
     <div class="playerList animated" [ngClass]="{'bounceInLeft':segmentVal=='lineup','bounceOutLeft':segmentVal=='summary'}">
         <div class="homePlayers">
-            <div class="card" *ngFor="let item of homeplayers" (click)="player('home','open')">
+            <div class="card" *ngFor="let item of homeplayers" (click)="player('home','open', item)">
                 <p>{{item.fullName}}</p>
                 <div class="position">
                     <p>{{item.playerPosition}}</p>
@@ -97,7 +100,7 @@
             </div>
         </div>
         <div class="awayPlayers">
-            <div class="card" *ngFor="let item of awayplayers" (click)="player('away','open')">
+            <div class="card" *ngFor="let item of awayplayers" (click)="player('away','open', item)">
                 <p>{{item.fullName}}</p>
                 <div class="position">
                     <p>{{item.playerPosition}}</p>

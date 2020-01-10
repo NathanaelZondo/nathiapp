@@ -35,7 +35,7 @@
 
       <div>
         <div class="card" *ngFor="let i of players;let ind = index" (click)="viewPlayer(ind)">
-          <div class="playerInformation animated" [ngClass]="{'fadeInLeft':playerMore==ind,'fadeOutLeft':playerMore!=ind}" >
+          <div class="playerInformation animated" [ngClass]="{'fadeInRight':playerMore==ind,'fadeOutRight':playerMore!=ind}" >
            <div>
             <p>Previous team: {{i.previousTeam}}</p>
             <p>Height: {{i.height}}m</p>

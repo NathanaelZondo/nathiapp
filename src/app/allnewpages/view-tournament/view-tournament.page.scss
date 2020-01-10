@@ -113,6 +113,15 @@
                 align-items: center;
                 text-align: center;
                 justify-content: space-evenly;
+                .home  {
+                    flex-basis: 45%;
+                }
+                .vs {
+                    flex-basis: 10%;
+                }
+                .away {
+                    flex-basis: 45%;
+                }
                 p { 
                     margin: 7vw 0px 5vw 0px;
                     font-size: 3vw;

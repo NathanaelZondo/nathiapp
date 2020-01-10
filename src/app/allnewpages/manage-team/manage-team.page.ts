@@ -62,5 +62,12 @@ export class ManageTeamPage implements OnInit {
       });
     });
   }
+  viewPlayer(i) {
+    if(this.playerMore==i) {
+      this.playerMore = null
+    } else {
+      this.playerMore = i
+    }
+  }
 }
 

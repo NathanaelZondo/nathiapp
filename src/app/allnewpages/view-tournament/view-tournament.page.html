@@ -1,7 +1,7 @@
 <ion-content>
 <div class="header">
   <div class="backb">
-    <ion-fab-button size="small" color="success" (click)="goBack()">
+    <ion-fab-button size="small" (click)="goBack()">
       <ion-icon name="arrow-back"></ion-icon>
     </ion-fab-button>
   </div>
@@ -37,7 +37,7 @@
     </div>
     <div class="match" *ngFor="let m of tournMatches" (click)="viewMatch(m)">
       <div class="date">
-        <p>{{m.matchdate}}</p>
+        <p>{{m.matchdate| date}}</p>
       </div>
       <div class="details">
         <div class="home"><p>{{m.TeamObject.teamName}}</p></div><div class="vs"><p>v</p></div><div class="away"><p>{{m.aTeamObject.teamName}}</p></div>
