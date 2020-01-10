@@ -37,10 +37,10 @@
     </div>
     <div class="match" *ngFor="let m of tournMatches" (click)="viewMatch(m)">
       <div class="date">
-        <p>25 Jul, 2019</p>
+        <p>{{m.matchdate}}</p>
       </div>
       <div class="details">
-        <div class="home"><p>Soweto United</p></div><div class="vs"><p>v</p></div><div class="away"><p>Tladi Jobes</p></div>
+        <div class="home"><p>{{m.TeamObject.teamName}}</p></div><div class="vs"><p>v</p></div><div class="away"><p>{{m.aTeamObject.teamName}}</p></div>
       </div>
  
         <div class="homeF"><p>Home</p></div>
