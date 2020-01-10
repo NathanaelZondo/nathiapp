@@ -107,10 +107,10 @@
     </div>
     <div class="summary animated" [ngClass]="{'bounceInRight':segmentVal=='summary','bounceOutRight':segmentVal=='lineup'}">
         <div class="homeStats">
-            <p>0</p>
-            <p>0</p>
-            <p>0</p>
-            <p>0</p>
+            <p>{{corner}}</p>
+            <p>{{red}}</p>
+            <p>{{yellow}}</p>
+            <p>{{offside}}</p>
            
         </div>
         <div class="labels">
@@ -120,10 +120,10 @@
             <p>Offsides</p>
         </div>
         <div class="awayStats">
-            <p>0</p>
-            <p>0</p>
-            <p>0</p>
-            <p>0</p>
+            <p>{{acorner}}</p>
+            <p>{{ared}}</p>
+            <p>{{ayellow}}</p>
+            <p>{{aoffside}}</p>
            
         </div>
     </div>
