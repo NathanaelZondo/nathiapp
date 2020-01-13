@@ -32,7 +32,7 @@
             <p>No Tournaments</p>
           </div>
          <div *ngFor="let x of applytournaments" >
-            <div class="card" *ngIf="x.application.status != 'paid'">
+            <div class="card" >
             <div class="title">
               <h2>{{x.doc.formInfo.tournamentName}}</h2>
             </div>

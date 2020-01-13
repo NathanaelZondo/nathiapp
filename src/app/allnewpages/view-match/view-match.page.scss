@@ -12,8 +12,8 @@
         position: absolute;
         bottom: 0;
         top: 50%;
-        left: 0;
-        right: 0;
+        left: 1px;
+        right: 1px;
         background: #014023e0;
         backdrop-filter: blur(5px);
         border-radius: 10px 10px 0px 0px;
@@ -67,8 +67,8 @@
         position: absolute;
         bottom: 0;
         top: 50%;
-        left: 0;
-        right: 0;
+        left: 1px;
+        right: 1px;
         background: #014023e0;
         backdrop-filter: blur(5px);
         border-radius: 10px 10px 0px 0px;
@@ -115,6 +115,31 @@
                 flex-basis: 50%;
                 padding: 6vw 10px 10px 10px;
                 overflow-y: auto;
+            }
+        }
+    }
+    .goalScorers, .goalScorers-hide {
+        .list {
+            .home, .away {
+                .card {
+                    width: 100%;
+                    border-radius: 3px;
+                    border-bottom: solid 1px #05A66B;
+                    display: flex;
+                    align-items: center;
+                    background: rgb(238, 238, 238);
+                    .name {
+                        flex-basis: 100%;
+                        padding: 10px;
+                    }
+                    .time {
+                        padding: 10px;
+                    }
+                    p {
+                        font-size: 3vw;
+                        margin: 0;
+                    }
+                }
             }
         }
     }
@@ -336,12 +361,12 @@
                 flex-basis: 50%;
                 height: 100%;
                 overflow-y: auto;
-                padding: 10px;
+                padding: 3px;
     
                 .card {
                     width: 100%;
                     margin: 0px auto 5px auto;
-                    background: #05A66B;
+                    background: linear-gradient(20deg, #012615 25%, #0c5037 30%, #012615 14%, #05A66B 81%, #05A66A 6%);;
                     color: white;
                     padding: 10px;
                     border-radius: 5px;

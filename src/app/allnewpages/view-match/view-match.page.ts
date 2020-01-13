@@ -10,7 +10,7 @@ import { PassInformationServiceService } from 'src/app/service/pass-information-
 })
 export class ViewMatchPage implements OnInit {
   segmentVal = 'lineup'
-  arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+  arr = []
   viewPlayer = false;
   playerDetailsDiv = document.getElementsByClassName('playerInfo')
   viewTeam = false;
@@ -152,8 +152,10 @@ export class ViewMatchPage implements OnInit {
     })
 
   }
+
+  // leave it alone
   viewStats(){this.viewStatistics=!this.viewStatistics}
-  
+
   player(side, state, p) {
     console.log(p);
     if (p != null) {
