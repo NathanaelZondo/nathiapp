@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { Camera } from '@ionic-native/camera/ngx'
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -19,7 +18,6 @@ firebase.initializeApp(config);
   providers: [
     StatusBar,
     SplashScreen,
-    OneSignal,
     Camera,
     NativeStorage,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

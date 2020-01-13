@@ -4,7 +4,7 @@ import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
+
 import { PassInformationServiceService } from './service/pass-information-service.service';
 import * as firebase from 'firebase';
 import {config} from './firebaseConfig'
@@ -25,7 +25,6 @@ export class AppComponent {
     private router : Router,
     private pass : PassInformationServiceService,
     public ngZone: NgZone,
-    private oneSignal: OneSignal,
     private alertCtrl: AlertController,
   ) {
     
@@ -53,72 +52,12 @@ this.ngZone.run(()=>{
 
     this.platform.ready().then(() => {
       if (this.platform.is('cordova')) {
-        this.setupPush();
         // this.initUpdate();
        }
       this.statusBar.styleLightContent();
       this.statusBar.backgroundColorByHexString('#387336')
 
     });
-  }
-  setupPush() {
-    // I recommend to put these into your environment.ts
-    this.oneSignal.startInit('9c83adf1-2824-464d-86b4-66c86d66af8d', '547769476202');
-
-    this.oneSignal.getIds().then((res) => {
-
-      console.log("OneSignal User ID:", res.userId);
-      // (Output) OneSignal User ID: 270a35cd-4dda-4b3f-b04e-41d7463a2316  
-      console.log('what what', res.pushToken);
-       
-      this.token = res.userId 
-      this.o  = res.pushToken
-      // if(!res){
-      //   this.initUpdate();
-      // }
-      this.ngZone.run(()=>{
-        if(res){
-          this.ngZone.run(()=>{
-            firebase.firestore().collection('tokens').doc(res.pushToken).set({token: res.userId})
-          })
-        
-        }
-      })
-  
-    });
-
-    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
-
-    // Notifcation was received in general
-    this.oneSignal.handleNotificationReceived().subscribe(data => {
-      let msg = data.payload.body;
-      let title = data.payload.title;
-      let additionalData = data.payload.additionalData;
-
-    });
-
-    // Notification was really clicked/opened
-    this.oneSignal.handleNotificationOpened().subscribe(data => {
-      // Just a note that the data is a different place here!
-      let additionalData = data.notification.payload.additionalData;
-
-
-    });
-
-    this.oneSignal.endInit();
-  }
-  initUpdate(){
-    if(!this.token){
-      firebase.firestore().collection('Tokens').add({
-        TokenID: this.token,
-        pushToken : this.o 
-      }).catch( err =>{
-        console.log('ssss',err);
-        
-      })
-    }
-  
-  
   }
 
 }

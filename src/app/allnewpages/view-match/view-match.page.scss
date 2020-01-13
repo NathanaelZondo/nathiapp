@@ -3,7 +3,14 @@
     top: 0;
     left: 0;
 }
-
+.goalScorers {
+    position: absolute;
+    bottom: 0;
+    top: 50%;
+    left: 0;
+    right: 0;
+    background: #014023;
+}
 .playerInfo {
     position: fixed;
     top: 0;
