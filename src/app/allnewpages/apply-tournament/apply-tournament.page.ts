@@ -140,7 +140,8 @@ export class ApplyTournamentPage implements OnInit {
                 this.db.collection('newTournaments').doc(value.docid).collection('teamApplications').doc(firebase.auth().currentUser.uid).set({
                   TeamObject: this.userObj,
                   refNumber: r,
-                  status: 'awaiting'
+                  status: 'awaiting',
+                  clientNotified : 'no'
                 }).then(res => {
                   this.db.collection('newTournaments').doc(value.docid).update({
                     totalApplications: firebase.firestore.FieldValue.increment(1)

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { PassInformationServiceService } from './service/pass-information-service.service';
 import * as firebase from 'firebase';
 import {config} from './firebaseConfig'
+import { FCM } from '@ionic-native/fcm/ngx';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -18,6 +19,7 @@ export class AppComponent {
   //  profile = {} as Profile 
    token
    o
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -26,10 +28,18 @@ export class AppComponent {
     private pass : PassInformationServiceService,
     public ngZone: NgZone,
     private alertCtrl: AlertController,
+    private fcm : FCM
   ) {
     
     this.initializeApp();
-    
+    this.fcm.getToken().then(token => {
+      this.token = token
+      console.log('token',token);
+      firebase.firestore().collection('testToken').add({
+        token: token,
+        timeStamp : new Date
+      })
+      });
     
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (!user) {
@@ -39,7 +49,9 @@ export class AppComponent {
         unsubscribe();
       } else {
 this.ngZone.run(()=>{
-  
+  firebase.firestore().collection('members').doc(user.uid).update({
+    Token : this.token
+  })
   this.router.navigateByUrl("/tabs");
   console.log('logged in');
   unsubscribe();
@@ -58,7 +70,11 @@ this.ngZone.run(()=>{
       this.statusBar.backgroundColorByHexString('#387336')
 
     });
+
+
   }
+
+
 
 }
 
