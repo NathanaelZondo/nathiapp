@@ -89,19 +89,19 @@
         bottom: 0;
         overflow-y: auto;
         .match {
-            width: 96%;
+            width: 99%;
             min-height: 50px;
             margin: auto;
             box-shadow: 0px 2px 2px #1717172d;
-            border-radius: 10px;
+            border-radius: 3px;
             margin-bottom: 5px;
             overflow: hidden;
             position: relative;
             .date {
                 width: 100%;
-                background: green;
+                background: linear-gradient(20deg, #012615 25%, #0c5037 30%, #012615 14%, #05A66B 81%, #05A66A 6%);;
                 color: white;
-                border-radius: 10px;
+                border-radius: 3px;
                 position: absolute;
                 p  {
                     font-size: 3vw;
@@ -131,8 +131,8 @@
                 position: absolute;
                 bottom: 0;
                 left: 0;
-                background: green;
-                border-radius: 0px 10px;
+                background: #02734A;
+                border-radius: 0px 3px;
                 padding: 0px 10px;
                 p {
                     font-size: 3vw;
@@ -144,8 +144,8 @@
                 position: absolute;
                 bottom: 0;
                 right: 0;
-                background: green;
-                border-radius: 10px 0px;
+                background: #02734A;
+                border-radius: 3px 0px;
                 padding: 0px 10px;
                 p {
                     font-size: 3vw;
