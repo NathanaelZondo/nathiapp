@@ -23,14 +23,23 @@ export class ProfilePage implements OnInit {
   constructor(public router: Router) { }
 
   ngOnInit() {
-
-    setTimeout(() => {
-      this.db.collection('members').doc(firebase.auth().currentUser.uid).get().then(res => {
+ this.db.collection('members').doc(firebase.auth().currentUser.uid).get().then(res => {
+   console.log(res);
+   
         this.profile.form.fullName = res.data().form.fullName
         this.profile.form.phoneNumber= res.data().form.phoneNumber
         this.profile.form.role= res.data().form.role
         this.profile.status= res.data().status
+        console.log(res.data().form.role);
+        
+        if (res.data().form.role == 'teamManager') {
+          this.getManagerTournaments()
+        } else {
+          this.getVendorTournaments()
+        }
       })
+    setTimeout(() => {
+     
     }, 500);
   }
   fitElementToParent(el, padding) {
@@ -47,7 +56,38 @@ export class ProfilePage implements OnInit {
       this.timeout = setTimeout(anime.set(el, { scale: ratio }), 10);
     }, 500);
   }
-
+  getManagerTournaments() {
+    this.db.collection('newTournaments').get().then(res => {
+      res.forEach(tourns => {
+        this.db.collection('newTournaments').doc(tourns.id).collection('teamApplications').where('TeamObject.uid','==',firebase.auth().currentUser.uid).get().then(snap => {
+          snap.forEach(doc => {
+            if(doc.exists) {
+              this.tournaments.push(tourns.data())
+            }
+          })
+          console.log(this.tournaments);
+          
+        })
+      })
+      
+    })
+  }
+  getVendorTournaments() {
+    this.db.collection('newTournaments').get().then(res => {
+      res.forEach(tourns => {
+        this.db.collection('newTournaments').doc(tourns.id).collection('vendorApplications').where('TeamObject.uid','==',firebase.auth().currentUser.uid).get().then(snap => {
+          snap.forEach(doc => {
+            if(doc.exists) {
+              this.tournaments.push(tourns.data())
+            }
+          })
+          console.log(this.tournaments);
+          
+        })
+      })
+      
+    })
+  }
   sphereAnimation = (() => {
 
     var sphereEl = document.getElementsByClassName('sphere');

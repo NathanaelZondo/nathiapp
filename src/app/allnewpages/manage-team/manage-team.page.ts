@@ -13,7 +13,7 @@ export class ManageTeamPage implements OnInit {
   isTeam = false;
   isNotTeam = false;
   db = firebase.firestore();
-  display = {}
+  display = {} as any
   isPlayer = false;
   players = []
   noTeam = document.getElementsByClassName('noTeam')

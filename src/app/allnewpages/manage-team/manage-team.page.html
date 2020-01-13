@@ -31,6 +31,14 @@
         <p>{{display.region}}</p>
         <p>{{display.tel}}</p>
       </div>
+      <div class="logos">
+        <img *ngIf="!display.teamJerseyIMG"  src="https://www.terra-institute.eu/wp-content/uploads/2015/09/black-white.png">
+        <img *ngIf="!display.teamLogo"  src="https://www.terra-institute.eu/wp-content/uploads/2015/09/black-white.png" >
+        <img *ngIf="!display.goalKeeperJerseyIMG"  src="https://www.terra-institute.eu/wp-content/uploads/2015/09/black-white.png" >
+      <img *ngIf="display.teamJerseyIMG"  src="{{display.teamJerseyIMG}}">
+      <img *ngIf="display.teamLogo"  src="{{display.teamLogo}}">
+      <img *ngIf="display.goalKeeperJerseyIMG"  src="{{display.goalKeeperJerseyIMG}}">
+      </div>
     </div>
   </div>
   <div class="teamList" *ngIf="isTeam">
