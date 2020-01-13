@@ -1,260 +1,378 @@
-.backB {
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-.goalScorers {
-    position: absolute;
-    bottom: 0;
-    top: 50%;
-    left: 0;
-    right: 0;
-    background: #014023;
-}
-.playerInfo {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: none;
-    align-items: center;
-    background: rgba(1, 27, 0, 0.274);
-    z-index: 20;
-
-    .playerData {
-        width: 80%;
-        // height: 80%;
-        background: white;
-        border-radius: 10px;
-        border-top: solid 2px #05A66B;
-        border-bottom: solid 2px #05A66B;
-        margin: auto;
-        box-shadow: 0px 0px 5px #17171796;
-        overflow: hidden;
-
-        .image {
-            width: 100%;
-            height: 45vw;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-
-        .details {
-            width: 100%;
-            height: 60%;
-            padding: 10px;
-
-            .clos {
-                width: 100%;
-                text-align: center;
-            }
-        }
-    }
-}
-
-.teamInfo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #17171762;
-    display: none;
-    align-items: center;
-    z-index: 25;
-
-    .teamData {
-        margin: auto;
-        width: 60%;
-        /* height: 70%; */
-        background: white;
-        border-radius: 10px;
-        border-top: solid 2px #05A66B;
-        border-bottom: solid 2px #05A66B;
-        position: relative;
-        padding: 20% 5px 5px 5px;
-        text-align: center;
-
-        .goalKeeperJersey {
-            position: absolute;
-            width: 20vw;
-            height: 20vw;
-            top: -9%;
-            left: -3%;
-            border-radius: 200px;
-            overflow: hidden;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-
-        .teamLogo {
-            position: absolute;
-            width: 30vw;
-            height: 30vw;
-            top: -17%;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 200px;
-            overflow: hidden;
-            z-index: 21;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-
-        .playerJersey {
-            position: absolute;
-            width: 20vw;
-            height: 20vw;
-            top: -9%;
-            right: -3%;
-            border-radius: 200px;
-            overflow: hidden;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-    }
-}
-
-.matchDetails {
+.container {
     width: 100%;
-    height: auto;
-    background: #012615;
-    color: white;
-
-    .match {
-        display: flex;
-        padding: 50px 10px 10px 10px;
-
-        .homeTeam {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    .backB {
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+    .goalScorers {
+        position: absolute;
+        bottom: 0;
+        top: 50%;
+        left: 0;
+        right: 0;
+        background: #014023e0;
+        backdrop-filter: blur(5px);
+        border-radius: 10px 10px 0px 0px;
+         transform: translateY(0vh);
+         transition: 0.3s;
+        transition-timing-function: ease-in-out;
+        .title {
+            text-align: center;
+            padding: 10px;
+            height: 10%;
+            display: flex;
+            align-items: center;
+            p {
+                font-size: 3vw;
+                color: white;
+                margin: 0 auto;
+            }
+        }
+        .list {
+            width: 100%;
+            height: 90%;
+            background: white;
+            border-radius: 10px 10px 0px 0px;
+            display: flex;
+            position: relative;
+            .t {
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                p {
+                    margin: auto;
+                    background: white;
+                    padding: 5px 10px;
+                    border-radius: 0px 0px 10px 10px;
+                    box-shadow: 0px 2px 2px #1717172f;
+                    font-size: 3.3vw;
+                }
+            }
+            .home, .away {
+                flex-basis: 50%;
+                padding: 6vw 10px 10px 10px;
+                overflow-y: auto;
+            }
+        }
+    }
+    .goalScorers-hide {
+        position: absolute;
+        bottom: 0;
+        top: 50%;
+        left: 0;
+        right: 0;
+        background: #014023e0;
+        backdrop-filter: blur(5px);
+        border-radius: 10px 10px 0px 0px;
+        transform: translateY(44.3vh);
+        transition: 0.3s;
+        transition-timing-function: ease-in-out;
+        .title {
+            text-align: center;
+            padding: 10px;
+            height: 10%;
+            display: flex;
+            align-items: center;
+            p {
+                font-size: 3vw;
+                color: white;
+                margin: 0 auto;
+            }
+        }
+        .list {
+            width: 100%;
+            height: 90%;
+            background: white;
+            border-radius: 10px 10px 0px 0px;
+            display: flex;
+            position: relative;
+            .t {
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                p {
+                    margin: auto;
+                    background: white;
+                    padding: 5px 10px;
+                    border-radius: 0px 0px 10px 10px;
+                    box-shadow: 0px 2px 2px #1717172f;
+                    font-size: 3.3vw;
+                }
+            }
+            .home, .away {
+                flex-basis: 50%;
+                padding: 6vw 10px 10px 10px;
+                overflow-y: auto;
+            }
+        }
+    }
+    .goalScorers::after {
+        width: 90px;
+        height: auto;
+        background: white;
+    }
+    .playerInfo {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: none;
+        align-items: center;
+        background: rgba(1, 27, 0, 0.274);
+        z-index: 20;
+    
+        .playerData {
+            width: 80%;
+            // height: 80%;
+            background: white;
+            border-radius: 10px;
+            border-top: solid 2px #05A66B;
+            border-bottom: solid 2px #05A66B;
+            margin: auto;
+            box-shadow: 0px 0px 5px #17171796;
+            overflow: hidden;
+    
+            .image {
+                width: 100%;
+                height: 45vw;
+    
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+    
+            .details {
+                width: 100%;
+                height: 60%;
+                padding: 10px;
+    
+                .clos {
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    
+    .teamInfo {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #17171762;
+        display: none;
+        align-items: center;
+        z-index: 25;
+    
+        .teamData {
+            margin: auto;
+            width: 60%;
+            /* height: 70%; */
+            background: white;
+            border-radius: 10px;
+            border-top: solid 2px #05A66B;
+            border-bottom: solid 2px #05A66B;
+            position: relative;
+            padding: 20% 5px 5px 5px;
+            text-align: center;
+    
+            .goalKeeperJersey {
+                position: absolute;
+                width: 20vw;
+                height: 20vw;
+                top: -9%;
+                left: -3%;
+                border-radius: 200px;
+                overflow: hidden;
+    
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+    
+            .teamLogo {
+                position: absolute;
+                width: 30vw;
+                height: 30vw;
+                top: -17%;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 200px;
+                overflow: hidden;
+                z-index: 21;
+    
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+    
+            .playerJersey {
+                position: absolute;
+                width: 20vw;
+                height: 20vw;
+                top: -9%;
+                right: -3%;
+                border-radius: 200px;
+                overflow: hidden;
+    
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+    
+    .matchDetails {
+        width: 100%;
+        height: auto;
+        // background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 13, 6, 0.76))), url(bg.svg), #012615;
+        background: linear-gradient(rgba(0, 13, 6, 0.76)), url(../../../assets/bg.svg), #012615;
+        background-position: 151% 21%;
+        background-repeat: no-repeat;
+        color: white;
+        // position: relative;
+        border-radius: 0px 0px 10px 10px;
+    
+        .match {
+            display: flex;
+            padding: 50px 10px 10px 10px;
+    
+            .homeTeam {
+                flex-basis: 40%;
+                text-align: center;
+    
+                .image {
+                    border-radius: 200px;
+                    overflow: hidden;
+                    width: 28vw;
+                    height: 28vw;
+                    margin: auto;
+                }
+    
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+        }
+    
+        .matchD{
+            flex-basis: 20%;
+            text-align: center;
+    
+            p {
+                font-size: 3.5vw;
+            }
+    
+            h3 {
+                font-size: 5vw;
+            }
+        }
+    
+        .awayTeam {
             flex-basis: 40%;
             text-align: center;
-
+    
             .image {
                 border-radius: 200px;
                 overflow: hidden;
                 width: 28vw;
                 height: 28vw;
                 margin: auto;
+    
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
             }
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
+    
+    
         }
     }
-
-    .matchDetails {
-        flex-basis: 20%;
-        text-align: center;
-
-        p {
-            font-size: 3.5vw;
-        }
-
-        h3 {
-            font-size: 5vw;
-        }
-    }
-
-    .awayTeam {
-        flex-basis: 40%;
-        text-align: center;
-
-        .image {
-            border-radius: 200px;
-            overflow: hidden;
-            width: 28vw;
-            height: 28vw;
-            margin: auto;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-
-
-    }
-}
-
-.data {
-    position: absolute;
-
-    height: 64%;
-    left: 0;
-    right: 0;
-    display: flex;
-
-    .playerList {
-        flex-basis: 100%;
+    
+    .data {
         position: absolute;
-        top: 0;
+    
+        height: 64%;
         left: 0;
         right: 0;
-        bottom: 0;
         display: flex;
-
-        .homePlayers,
-        .awayPlayers {
-            flex-basis: 50%;
-            height: 100%;
-            overflow-y: auto;
-            padding: 10px;
-
-            .card {
-                width: 100%;
-                margin: 0px auto 5px auto;
-                background: #05A66B;
-                color: white;
+    
+        .playerList {
+            flex-basis: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+    
+            .homePlayers,
+            .awayPlayers {
+                flex-basis: 50%;
+                height: 100%;
+                overflow-y: auto;
                 padding: 10px;
-                border-radius: 5px;
-                box-shadow: 0px 2px 2px #17171723;
-                position: relative;
-
-                p {
-                    font-size: 3vw;
-                    margin: 0;
-                }
-
-                .position {
-                    position: absolute;
-                    bottom: 0;
-                    right: 5px;
-
+    
+                .card {
+                    width: 100%;
+                    margin: 0px auto 5px auto;
+                    background: #05A66B;
+                    color: white;
+                    padding: 10px;
+                    border-radius: 5px;
+                    box-shadow: 0px 2px 2px #17171723;
+                    position: relative;
+    
                     p {
-                        font-size: 2vw;
+                        font-size: 3vw;
+                        margin: 0;
+                    }
+    
+                    .position {
+                        position: absolute;
+                        bottom: 0;
+                        right: 5px;
+    
+                        p {
+                            font-size: 2vw;
+                        }
                     }
                 }
             }
+    
         }
-
-    }
-
-    .summary {
-        flex-basis: 100%;
-        background: none;
-        display: flex;
-        justify-content: space-evenly;
-        text-align: center;
+    
+        .summary {
+            flex-basis: 100%;
+            background: none;
+            display: flex;
+            justify-content: space-evenly;
+            text-align: center;
+        }
     }
 }
