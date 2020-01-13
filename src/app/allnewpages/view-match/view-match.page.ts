@@ -15,6 +15,7 @@ export class ViewMatchPage implements OnInit {
   playerDetailsDiv = document.getElementsByClassName('playerInfo')
   viewTeam = false;
   teamDetailsDiv = document.getElementsByClassName('teamInfo')
+  viewStatistics = false;
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>BACK END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   viewingMatch = null
@@ -151,6 +152,8 @@ export class ViewMatchPage implements OnInit {
     })
 
   }
+  viewStats(){this.viewStatistics=!this.viewStatistics}
+  
   player(side, state, p) {
     console.log(p);
     if (p != null) {

@@ -1,4 +1,5 @@
 <ion-content>
+<div class="container">
     <div class="playerInfo animated" [ngClass]="{'bounceInDown':viewPlayer,'bounceOutUp':!viewPlayer}">
         <div class="playerData">
             <div class="image">
@@ -63,7 +64,7 @@
     {{object.TeamObject.teamName}}
         </div>
     </div>
-    <div class="matchDetails">
+    <div class="matchD">
         <p>v</p>
         <h3>{{object.score}} : {{object.ascore}}</h3>
         <p>{{object.mins}}:{{object.secs}}</p>
@@ -131,7 +132,24 @@
         </div>
     </div>
 </div>
-<div class="goalScorers">
-    
+<div  [ngClass]="{'goalScorers': viewStatistics, 'goalScorers-hide':!viewStatistics}" >
+    <div class="title" (click)="viewStats()">
+        <p>Statistics</p>
+    </div>
+    <div class="list">
+        <div class="t">
+            <p>Home</p>
+            <p>Away</p>
+        </div>
+        <div class="home">
+            <div class="card">
+
+            </div>
+        </div>
+        <div class="away">
+            
+        </div>
+    </div>
+</div>
 </div>
 </ion-content>
