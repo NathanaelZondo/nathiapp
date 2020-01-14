@@ -21,6 +21,7 @@ export class RegisterpagePage implements OnInit {
   registrationForm
   smsSent
   confirmationResult = ''
+  email=null
   inputCode
   fullName
   uid
@@ -30,6 +31,7 @@ export class RegisterpagePage implements OnInit {
   Profile = {
     number: '',
     fullName: '',
+    email: null,
     uid: '',
     role: ''
 
@@ -52,6 +54,7 @@ export class RegisterpagePage implements OnInit {
       phoneNumber: [this.phoneNumber, Validators.compose([Validators.required])],
       fullName: ['', Validators.required],
       role: ['', Validators.required],
+      email: ['',[Validators.required,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]]
     })
 
   }
