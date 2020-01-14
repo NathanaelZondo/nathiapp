@@ -23,7 +23,9 @@ export class AddTeamPage implements OnInit {
     teamJerseyIMG: '',
     goalKeeperJerseyIMG: '',
     uid: firebase.auth().currentUser.uid,
-    teamManagerInfo: null
+    teamManagerInfo: null,
+    managerEmail : '',
+    managerName : ''
   }
   loaderHolder = null
   addTeamForm: FormGroup;
@@ -35,6 +37,7 @@ export class AddTeamPage implements OnInit {
   GJerseyImage
   TjerseyImage
   isEditing = false;
+  userObj = {}
   constructor(
     private formBuilder: FormBuilder,
     private camera: Camera ,
@@ -54,6 +57,7 @@ export class AddTeamPage implements OnInit {
   }
 
   ngOnInit() { 
+    this.getMember();
     this.activatedRoute.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.isEditing = this.router.getCurrentNavigation().extras.state.isEditing
@@ -61,6 +65,18 @@ export class AddTeamPage implements OnInit {
         console.log(this.isEditing, this.teamNode);
       }
     });
+   }
+   getMember(){
+     firebase.auth().onAuthStateChanged( user =>{
+       if(user){
+         this.db.collection('members').doc(user.uid).get().then( doc =>{
+          if(doc.exists){
+            this.teamNode.managerEmail = doc.data().form.email
+            this.teamNode.managerName = doc.data().form.fullName
+          }
+         })
+       }
+     })
    }
   async createTeam(addTeamForm: FormGroup): Promise<void> {
 
@@ -83,12 +99,13 @@ if (!addTeamForm.valid) {
       
       
       parseInt(this.teamNode.tel)
-      this.teamNode.teamManagerInfo = this.passServie.profile
+      // this.teamNode.teamManagerInfo = this.userObj
+      // this.teamNode.managerEmail = this.userObj.form.email
       const user = this.db.collection('Teams').doc(firebase.auth().currentUser.uid).set(this.teamNode)
       
       // upon success...
       user.then(async() => {
-        this.router.navigateByUrl('manage-team')
+        this.router.navigateByUrl('tabs')
         const toast = await this.toastController.create({
           message: 'User Team added.',
           duration: 2000,

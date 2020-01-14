@@ -144,7 +144,7 @@ export class RegisterpagePage implements OnInit {
 
   async alert(form) {
     const alert = await this.alertController.create({
-      header: 'Verfication code',
+      header: 'Verification code',
       // subHeader: 'Enter verification code',
       backdropDismiss: false,
       inputs: [
@@ -163,7 +163,7 @@ export class RegisterpagePage implements OnInit {
           this.ngZone.run(() => {
             firebase.auth().onAuthStateChanged(res => {
               if (res.uid) {
-                this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting' })
+                this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting',firstEmailRecieved : 'no' })
                 console.log('see ', res.uid);
               }
             })
