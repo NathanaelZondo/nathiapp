@@ -303,6 +303,6 @@ this.playerNode.playerNumber = i.docdata.playerNumber
 
   }
   done() {
-    this.navctrl.pop()
+    this.navctrl.navigateBack('tabs/manageTeam')
   }
 }
