@@ -34,8 +34,11 @@ export class AddTeamPage implements OnInit {
   isuploading: false
   uploadprogress = 0;
   logoImage
+  logoProgress = 0
   GJerseyImage
+  jerseyProgress = 0
   TjerseyImage
+  teamProgress = 0
   isEditing = false;
   userObj = {}
   constructor(
@@ -152,7 +155,7 @@ if (!addTeamForm.valid) {
       const upload = UserImage.putString(image, 'data_url');
       upload.on('state_changed', snapshot => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        this.uploadprogress = progress;
+        this.logoProgress = progress;
         if (progress == 100) {
           this.isuploading = false;
         }
@@ -161,8 +164,6 @@ if (!addTeamForm.valid) {
         upload.snapshot.ref.getDownloadURL().then(downUrl => {
           this.teamNode.teamLogo = downUrl;
           console.log('Image downUrl', downUrl);
-
-
         })
       })
     }, err => {

@@ -16,7 +16,8 @@
 <div class="imageUploads">
   <div class="backimage">
     <p>Team Logo</p>
-    <img src="{{GJerseyImage}}" alt="" class="bimage">
+    <img src="{{logoImage}}" alt="" class="bimage">
+  <ion-progress-bar color="primary" value="{{logoProgress/100}}"></ion-progress-bar>
     <div class="btn">
       <ion-button (click)="selectLogoImage()">
         <ion-icon name="logo-polymer"></ion-icon>
@@ -26,6 +27,7 @@
   <div class="backimage" >
     <p>Team Jersey</p>
     <img src="{{TjerseyImage}}" alt="" class="bimage">
+  <ion-progress-bar color="primary" value="{{teamProgress/100}}"></ion-progress-bar>
     <div class="btn">
         <ion-button (click)="teamJersey()">
             <ion-icon name="shirt"></ion-icon>
@@ -35,6 +37,7 @@
   <div class="backimage" >
     <p>GoalKeeper Jersey</p>
     <img src="{{GJerseyImage}}" alt="" class="bimage">
+    <ion-progress-bar color="primary" value="{{jerseyProgress/100}}"></ion-progress-bar>
     <div class="btn">
         <ion-button (click)="GoalKeeperJersey()">
             <ion-icon name="shirt"></ion-icon>
