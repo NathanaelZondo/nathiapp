@@ -3,7 +3,7 @@
     <div class="playerInfo animated" [ngClass]="{'bounceInDown':viewPlayer,'bounceOutUp':!viewPlayer}">
         <div class="playerData">
             <div class="image">
-                <img *ngIf="!playerViewed.palyerImage"  src="https://go-gae-image-api-example-dot-gae-lab-001.appspot.com/img?f=img-api-example/2.jpg" alt="">
+                <img *ngIf="!playerViewed.palyerImage"  src="../../../assets/nathi_noImage.png" alt="">
             <img *ngIf="playerViewed.palyerImage"  src="{{playerViewed.palyerImage}}" alt="">
             </div>
             <div class="details">
@@ -25,13 +25,13 @@
     <div class="teamInfo animated" [ngClass]="{'bounceInDown':viewTeam,'bounceOutUp':!viewTeam}">
         <div class="teamData">
             <div class="goalKeeperJersey image">
-                <img src="http://sc02.alicdn.com/kf/HTB1xgo.SFXXXXa5XXXXq6xXFXXX4/Latest-design-Fashion-sublimation-men-Soccer-Jersey.jpg" alt="">
+                <img src="../../../assets/nathi_noImage.png" alt="">
             </div>
             <div class="teamLogo m-image">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIMOnVMZR5Ohj-ObYrhQuXtKrtZoClQL540zYTkVvuISSl6g_b&s" alt="">
+                <img src="../../../assets/nathi_noImage.png" alt="">
             </div>
             <div class="playerJersey image">
-                <img src="https://sc01.alicdn.com/kf/H8adb8626e20e4fc7b30c60716187c0bb3/customize-sublimation-soccer-sports-wear-design-your.jpg_350x350.jpg" alt="">
+                <img src="../../../assets/nathi_noImage.png" alt="">
             </div>
             <div class="information">
                 <h1>Team Name</h1>
@@ -57,7 +57,7 @@
 <div class="match" >
     <div class="homeTeam">
         <div class="image" (click)="team('home','open')">
-            <img *ngIf="!object.TeamObject.teamLogo"  src="https://go-gae-image-api-example-dot-gae-lab-001.appspot.com/img?f=img-api-example/2.jpg" alt="">
+            <img *ngIf="!object.TeamObject.teamLogo"  src="../../../assets/nathi_noImage.png" alt="">
             <img *ngIf="object.TeamObject.teamLogo"  [src]="object.TeamObject.teamLogo" alt="No Logo">
         </div>
         <div class="teamName">
@@ -71,7 +71,7 @@
     </div>
     <div class="awayTeam">
         <div class="image" (click)="team('home','open')">
-            <img *ngIf="!object.aTeamObject.teamLogo"  src="https://go-gae-image-api-example-dot-gae-lab-001.appspot.com/img?f=img-api-example/2.jpg" alt="">
+            <img *ngIf="!object.aTeamObject.teamLogo"  src="../../../assets/nathi_noImage.png" alt="">
             <img *ngIf="object.aTeamObject.teamLogo"  [src]="object.aTeamObject.teamLogo" alt ="No Logo">
         </div>
         <div class="teamName">
