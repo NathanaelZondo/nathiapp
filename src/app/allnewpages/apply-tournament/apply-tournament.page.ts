@@ -89,7 +89,7 @@ export class ApplyTournamentPage implements OnInit {
 
   async applyForTournament(value) {
     console.log('item', value)
-    if (!this.userObj && this.passService.role == 'teamManager') {
+    if (this.teamState == false) {
       console.log('you dont have a team');
       const alert = await this.alertController.create({
         header: 'No Players/Team',
@@ -127,7 +127,8 @@ export class ApplyTournamentPage implements OnInit {
                 this.db.collection('newTournaments').doc(value.docid).collection('vendorApplications').doc(firebase.auth().currentUser.uid).set({
                  vendorobject :  this.vendorObj,
                   refNumber: r,
-                  status: 'awaiting'
+                  status: 'awaiting',
+                  TournamentID : value.docid
                 }).then(res => {
                   this.db.collection('newTournaments').doc(value.docid).update({
                     vendorTotalApplications: firebase.firestore.FieldValue.increment(1)
@@ -136,12 +137,13 @@ export class ApplyTournamentPage implements OnInit {
                   this.checkForTournaments();
                   console.log('lets see', value.doc.formInfo.tournamentName, some);
                 })
-              } else
+              } else if( this.teamState == true){
                 this.db.collection('newTournaments').doc(value.docid).collection('teamApplications').doc(firebase.auth().currentUser.uid).set({
                   TeamObject: this.userObj,
                   refNumber: r,
                   status: 'awaiting',
-                  clientNotified : 'no'
+                  clientNotified : 1,
+                  TournamentID : value.docid
                 }).then(res => {
                   this.db.collection('newTournaments').doc(value.docid).update({
                     totalApplications: firebase.firestore.FieldValue.increment(1)
@@ -152,6 +154,8 @@ export class ApplyTournamentPage implements OnInit {
 
                 })
               console.log('Confirm Okay');
+              }
+                
             }
           }
         ]
@@ -237,21 +241,24 @@ export class ApplyTournamentPage implements OnInit {
     })
   }
   geTeamProfile() {
-    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').get().then(res => {
+    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then(res => {
       console.log(res);
-
-      if (res.size > 0) {
-        this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then(res => {
-          this.userObj = res.data()
-        })
-        this.teamState = true
-        console.log('got team', res);
-
-      } else {
-        this.teamState = false
-        console.log('no team');
-
-      }
+      if(res.exists){
+        console.log('team  exist');
+  this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').get().then( doc =>{
+          if(doc.size > 0){
+  this.userObj = res.data();
+  this.teamState = true
+  console.log('team PLAYERS exist');
+}
+  })
+  
+}else{
+  this.teamState = false
+  console.log('no team exist');
+  
+}
+  
     })
   }
   getProfile() {
