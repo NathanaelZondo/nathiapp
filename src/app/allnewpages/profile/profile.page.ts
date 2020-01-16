@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import anime from 'animejs/lib/anime.es.js';
 import * as firebase from 'firebase'
+import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -20,26 +21,26 @@ export class ProfilePage implements OnInit {
     status: "awaitin"
   }
   tournaments = []
-  constructor(public router: Router) { }
+  constructor(public router: Router, private alertCtrl: AlertController) { }
 
   ngOnInit() {
- this.db.collection('members').doc(firebase.auth().currentUser.uid).get().then(res => {
-   console.log(res);
-   
-        this.profile.form.fullName = res.data().form.fullName
-        this.profile.form.phoneNumber= res.data().form.phoneNumber
-        this.profile.form.role= res.data().form.role
-        this.profile.status= res.data().status
-        console.log(res.data().form.role);
-        
-        if (res.data().form.role == 'teamManager') {
-          this.getManagerTournaments()
-        } else {
-          this.getVendorTournaments()
-        }
-      })
+    this.db.collection('members').doc(firebase.auth().currentUser.uid).get().then(res => {
+      console.log(res);
+
+      this.profile.form.fullName = res.data().form.fullName
+      this.profile.form.phoneNumber = res.data().form.phoneNumber
+      this.profile.form.role = res.data().form.role
+      this.profile.status = res.data().status
+      console.log(res.data().form.role);
+
+      if (res.data().form.role == 'teamManager') {
+        this.getManagerTournaments()
+      } else {
+        this.getVendorTournaments()
+      }
+    })
     setTimeout(() => {
-     
+
     }, 500);
   }
   fitElementToParent(el, padding) {
@@ -59,33 +60,33 @@ export class ProfilePage implements OnInit {
   getManagerTournaments() {
     this.db.collection('newTournaments').get().then(res => {
       res.forEach(tourns => {
-        this.db.collection('newTournaments').doc(tourns.id).collection('teamApplications').where('TeamObject.uid','==',firebase.auth().currentUser.uid).get().then(snap => {
+        this.db.collection('newTournaments').doc(tourns.id).collection('teamApplications').where('TeamObject.uid', '==', firebase.auth().currentUser.uid).get().then(snap => {
           snap.forEach(doc => {
-            if(doc.exists) {
+            if (doc.exists) {
               this.tournaments.push(tourns.data())
             }
           })
           console.log(this.tournaments);
-          
+
         })
       })
-      
+
     })
   }
   getVendorTournaments() {
     this.db.collection('newTournaments').get().then(res => {
       res.forEach(tourns => {
-        this.db.collection('newTournaments').doc(tourns.id).collection('vendorApplications').where('TeamObject.uid','==',firebase.auth().currentUser.uid).get().then(snap => {
+        this.db.collection('newTournaments').doc(tourns.id).collection('vendorApplications').where('TeamObject.uid', '==', firebase.auth().currentUser.uid).get().then(snap => {
           snap.forEach(doc => {
-            if(doc.exists) {
+            if (doc.exists) {
               this.tournaments.push(tourns.data())
             }
           })
           console.log(this.tournaments);
-          
+
         })
       })
-      
+
     })
   }
   sphereAnimation = (() => {
@@ -161,10 +162,24 @@ export class ProfilePage implements OnInit {
   back() {
     this.router.navigateByUrl('home')
   }
-  signout() {
-    firebase.auth().signOut().then(() => {
-      this.router.navigateByUrl('tabs/home').catch(err => {
-      })
+  async signout() {
+    const alerter = await this.alertCtrl.create({
+      header: 'Sign Out',
+      message: "You're signing out, proceed?",
+      buttons: [{
+        text: 'No',
+        role: 'cancel'
+      }, {
+        text: 'Yes',
+        handler: () => {
+          firebase.auth().signOut().then(() => {
+            this.router.navigateByUrl('tabs/home').catch(err => {
+            })
+          })
+        }
+      }]
     })
+    alerter.present()
+
   }
 }

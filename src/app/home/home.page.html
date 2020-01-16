@@ -64,7 +64,7 @@
       </div>
       <div class="cardList">
           <div class="lazyCard" loading="lazy" *ngIf="upcoming.length==0" ><h1>No Tournaments</h1></div>
-        <div class="card blue" *ngFor="let item of upcoming" (click)="viewTournament(item)" >
+        <div class="card blue" *ngFor="let item of upcoming"  >
           <div class="title">
             <h5>{{item.formInfo.tournamentName}}</h5>
           </div>

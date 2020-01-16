@@ -58,6 +58,7 @@ if (val.data().approved == true) {
 
 
     firebase.firestore().collection('newTournaments').where("state", '==', 'inprogress').onSnapshot(res => {
+      this.inprogress = []
       res.forEach(val => {
         this.inprogress.push({ ...{ doc_id: val.id }, ...val.data() });
         console.log("inprog", this.inprogress)
@@ -66,6 +67,7 @@ if (val.data().approved == true) {
 
 
     firebase.firestore().collection('newTournaments').where("state", '==', 'finished').onSnapshot(res => {
+      this.finished =[]
       res.forEach(val => {
         this.finished.push({ ...{ doc_id: val.id }, ...val.data() });
         console.log("here")
