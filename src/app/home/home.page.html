@@ -43,8 +43,11 @@
                </div>
             </div>
             <div class="sponsors">
-              <div>
-                <img *ngFor="let s of item.sponsors" src="{{s.sponsorImage}}" width="30px">
+              <div *ngFor="let s of item.sponsors">
+                <img src="../../assets/nathi_noImage.png" *ngIf="!s.sponsorImage"  alt="">
+                <div *ngIf="s.sponsorImage">
+                  <img src="{{s.sponsorImage}}" width="30px">
+                </div>
               </div>
             </div>
           </div>
