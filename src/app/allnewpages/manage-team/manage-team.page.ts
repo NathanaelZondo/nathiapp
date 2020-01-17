@@ -18,6 +18,7 @@ export class ManageTeamPage implements OnInit {
   players = []
   noTeam = document.getElementsByClassName('noTeam')
   createTeam = false;
+  profile = false
     constructor(  public renderer: Renderer2,  private formBuilder: FormBuilder, public router : Router,public navctrl : NavController) { 
    
       
@@ -44,7 +45,7 @@ export class ManageTeamPage implements OnInit {
       this.router.navigateByUrl('add-player');
     }
   getTeam(){
-    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then(res =>{
+    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).onSnapshot(res =>{
       if(res.exists){
        console.log('data',res.data());
        this.isTeam = true;
@@ -76,6 +77,16 @@ export class ManageTeamPage implements OnInit {
     } else {
       this.playerMore = i
     }
+  }
+  checkProfile(){
+    this.db.collection('members').doc(firebase.auth().currentUser.uid).onSnapshot(res =>{
+      if(res.data().status == 'awaiting'){
+        console.log('no profile');
+        
+      }else{
+        this.profile = true
+      }
+    })
   }
 }
 
