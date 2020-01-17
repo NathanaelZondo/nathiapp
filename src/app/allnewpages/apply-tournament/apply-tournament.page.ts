@@ -24,6 +24,7 @@ export class ApplyTournamentPage implements OnInit {
     image: ''
   }
   role = ''
+  userProfile = false
   constructor(public pass: PassInformationServiceService,
     public alertController: AlertController,
     public authService: AuthServiceService,
@@ -47,6 +48,7 @@ export class ApplyTournamentPage implements OnInit {
     //this.getUserProfile();
     this.geTeamProfile();
     this.getProfile();
+    this.checkProfile()
     setTimeout(() => {
       console.log('blah bal', this.userObj);
     }, 1000);
@@ -277,5 +279,14 @@ export class ApplyTournamentPage implements OnInit {
   routerToProfile(){
     this.router.navigateByUrl('tabs/profile')
   }
-
+  checkProfile() {
+    this.db.collection('members').doc(firebase.auth().currentUser.uid).onSnapshot(res =>{
+      if(res.data().status == 'awaiting'){
+        console.log('no profile');
+        
+      }else{
+        this.userProfile = true
+      }
+    })
+  }
 }

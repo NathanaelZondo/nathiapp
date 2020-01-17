@@ -37,6 +37,7 @@ export class ManageTeamPage implements OnInit {
     }
     ngOnInit() {
       this.getTeam();
+      this.checkProfile()
     }
     addTeam(){
       this.router.navigateByUrl('add-team');
@@ -44,7 +45,7 @@ export class ManageTeamPage implements OnInit {
     addPlayer(){
       this.router.navigateByUrl('add-player');
     }
-  getTeam(){
+  getTeam() {
     this.db.collection('Teams').doc(firebase.auth().currentUser.uid).onSnapshot(res =>{
       if(res.exists){
        console.log('data',res.data());
@@ -78,7 +79,7 @@ export class ManageTeamPage implements OnInit {
       this.playerMore = i
     }
   }
-  checkProfile(){
+  checkProfile() {
     this.db.collection('members').doc(firebase.auth().currentUser.uid).onSnapshot(res =>{
       if(res.data().status == 'awaiting'){
         console.log('no profile');

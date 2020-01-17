@@ -49,7 +49,10 @@
               </div>
               <!--  -->
               <div class="applied"   >
-                <ion-button  shape="round" slot="end" (click)="applyForTournament(x)" *ngIf="x.isApplied == false">Apply</ion-button>
+                <ion-button  shape="round" slot="end" (click)="applyForTournament(x)" *ngIf="x.isApplied == false&&userProfile">Apply</ion-button>
+                <ion-button disabled="true"  shape="round" *ngIf="!userProfile" >
+                  Waiting for approval
+                </ion-button>
               </div>
               <div class="applied" *ngIf="x.isApplied == true">
                 <p *ngIf="x.application.status == 'awaiting'"> Your application is still being processed</p>

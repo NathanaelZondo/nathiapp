@@ -1,15 +1,24 @@
 <ion-content>
+  <!-- <div class="profile animated" [ngClass]="{'fadeIn':!profile,'fadeOutUp':profile}">
+    <div class="center">
+      
+    </div>
+  </div> -->
   <div class="noTeam animated" [ngClass]="{'fadeIn':!isTeam,'fadeOutUp':isTeam}">
     <div class="c" *ngIf="!createTeam">
       <h1>Checking</h1>
       <ion-spinner color="light" name="bubbles"></ion-spinner>
     </div>
-    <div class="c" *ngIf="createTeam">
+    <div class="c" *ngIf="createTeam&&profile">
       <h1>Please Create a Team</h1>
       <p><sub>You need a team to participate in a tournament.</sub></p>
       <ion-button  shape="round" color="success" (click)="addTeam()">
         Add Team
       </ion-button>
+    </div>
+    <div class="a"  *ngIf="createTeam&&!profile">
+      <h1>Approval</h1>
+      <p>Please be patient as your profile is being checked for approval.</p>
     </div>
   </div>
   <div class="head" *ngIf="isTeam">
