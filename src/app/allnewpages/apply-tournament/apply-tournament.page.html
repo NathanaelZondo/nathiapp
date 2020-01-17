@@ -47,11 +47,11 @@
                 <p>Application Closing Date: {{x.doc.formInfo.applicationClosing | date}}</p>
                 <p>Vendors {{x.doc.approvedVendors.length}}</p>
               </div>
-              <!-- *ngIf="x.isApplied == false" -->
+              <!--  -->
               <div class="applied"   >
-                <ion-button  shape="round" slot="end" (click)="applyForTournament(x)">Apply</ion-button>
+                <ion-button  shape="round" slot="end" (click)="applyForTournament(x)" *ngIf="x.isApplied == false">Apply</ion-button>
               </div>
-              <!-- <div class="applied" *ngIf="x.isApplied == true">
+              <div class="applied" *ngIf="x.isApplied == true">
                 <p *ngIf="x.application.status == 'awaiting'"> Your application is still being processed</p>
                 <p *ngIf="x.application.status == 'accepted'"> Application is being conditionally approved, please use <br>
                   <span>{{x.application.refNumber}}</span> <br> as your reference number to pay</p>
@@ -59,7 +59,7 @@
                 </p>
                 <p  *ngIf="x.application.status == 'declined'" style="background: red;color: rgb(255, 223, 223);"> Application for this tournament is unsuccessful.  
                 </p>
-              </div> -->
+              </div>
             </div>
           </div>
          </div>
