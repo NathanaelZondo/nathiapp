@@ -172,7 +172,7 @@ export class ApplyTournamentPage implements OnInit {
       isApplied: false,
       application: null
     }
-    this.db.collection('newTournaments').where('approved', '==', true).get().then(res => {
+    this.db.collection('newTournaments').where('approved', '==', true).onSnapshot(res => {
       if (!res.empty) {
         this.applytournaments = []
         res.forEach(document => {

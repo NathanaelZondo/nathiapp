@@ -24,24 +24,23 @@ export class ProfilePage implements OnInit {
   constructor(public router: Router, private alertCtrl: AlertController) { }
 
   ngOnInit() {
-    this.db.collection('members').doc(firebase.auth().currentUser.uid).get().then(res => {
-      console.log(res);
-
-      this.profile.form.fullName = res.data().form.fullName
-      this.profile.form.phoneNumber = res.data().form.phoneNumber
-      this.profile.form.role = res.data().form.role
-      this.profile.status = res.data().status
-      console.log(res.data().form.role);
-
-      if (res.data().form.role == 'teamManager') {
-        this.getManagerTournaments()
-      } else {
-        this.getVendorTournaments()
-      }
+    firebase.auth().onAuthStateChanged(user => {
+      this.db.collection('members').doc(user.uid).get().then(res => {
+        console.log(res);
+  
+        this.profile.form.fullName = res.data().form.fullName
+        this.profile.form.phoneNumber = res.data().form.phoneNumber
+        this.profile.form.role = res.data().form.role
+        this.profile.status = res.data().status
+        console.log(res.data().form.role);
+  
+        if (res.data().form.role == 'teamManager') {
+          this.getManagerTournaments()
+        } else {
+          this.getVendorTournaments()
+        }
+      })
     })
-    setTimeout(() => {
-
-    }, 500);
   }
   fitElementToParent(el, padding) {
     // window.addEventListener('resize');

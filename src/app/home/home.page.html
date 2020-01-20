@@ -46,7 +46,7 @@
               <div *ngFor="let s of item.sponsors">
                 <img src="../../assets/nathi_noImage.png" *ngIf="!s.sponsorImage"  alt="">
                 <div *ngIf="s.sponsorImage">
-                  <img src="{{s.sponsorImage}}" width="30px">
+                  <img  src="{{s.sponsorImage}}" width="30px">
                 </div>
               </div>
             </div>
@@ -83,8 +83,9 @@
                </div>
             </div>
             <div class="sponsors">
-              <div>
-                <img *ngFor="let s of item.sponsors" src="{{s.sponsorImage}}" width="30px">
+              <div *ngFor="let s of item.sponsors">
+                <img *ngIf="!s.sponsorImage"  src="../../assets/bluebg.jpg" alt="">
+                <img  *ngIf="s.sponsorImage"  src="{{s.sponsorImage}}" width="30px">
               </div>
             </div>
           </div>
@@ -119,8 +120,9 @@
              </div>
             </div>
             <div class="sponsors">
-              <div>
-              <img *ngFor="let s of item.sponsors" src="{{s}}" width="30px">
+              <div *ngFor="let s of item.sponsors">
+              <img *ngIf="!s.sponsorImage"  src="../../assets/bluebg.jpg" alt="">
+              <img *ngIf="s.sponsorImage" src="{{s.sponsorImage}}" width="30px">
               </div>
             </div>
           </div>
