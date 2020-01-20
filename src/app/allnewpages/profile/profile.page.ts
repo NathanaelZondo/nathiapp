@@ -21,6 +21,7 @@ export class ProfilePage implements OnInit {
     status: "awaitin"
   }
   tournaments = []
+  participatingTourn = []
   constructor(public router: Router, private alertCtrl: AlertController) { }
 
   ngOnInit() {
@@ -59,13 +60,13 @@ export class ProfilePage implements OnInit {
   getManagerTournaments() {
     this.db.collection('newTournaments').get().then(res => {
       res.forEach(tourns => {
-        this.db.collection('newTournaments').doc(tourns.id).collection('teamApplications').where('TeamObject.uid', '==', firebase.auth().currentUser.uid).get().then(snap => {
+        this.db.collection('newTournaments').doc(tourns.id).collection('teamApplications').where('TeamObject.uid', '==', firebase.auth().currentUser.uid). where('status','==','paid').get().then(snap => {
           snap.forEach(doc => {
             if (doc.exists) {
               this.tournaments.push(tourns.data())
             }
           })
-          console.log(this.tournaments);
+          console.log('lets see',this.tournaments);
 
         })
       })
@@ -181,4 +182,21 @@ export class ProfilePage implements OnInit {
     alerter.present()
 
   }
+
+//   getParticipatingTournaments(){
+// this.db.collection('newTournaments').where('approved','==','true').onSnapshot(res =>{
+//   this.participatingTourn = []
+//   res.forEach(doc =>{
+//     this.db.collection('newTournaments').doc(doc.id).collection('teamApplications').where('uid', '==', firebase.auth().currentUser.uid).where('status','==','paid').onSnapshot(docx =>{
+   
+//        if(docx.size>0) {
+//         this.participatingTourn.push(doc.data())
+//         console.log('details',this.participatingTourn);
+        
+//        }
+//     })
+
+//   })
+// })
+//   }
 }

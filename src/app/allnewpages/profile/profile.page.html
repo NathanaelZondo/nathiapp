@@ -39,16 +39,14 @@
     </div>
     <div class="card green" *ngFor="let t of tournaments" >
       <div class="title">
-        <h5>Msansi Championship Tournament</h5>
+        <h5>{{t.formInfo.tournamentName}}</h5>
       </div>
       <div class="info">
         <div class="details">
           <div>
-            <p>Participants</p>
-            <p>FNB Stadium</p>
-            <p>27 Jul, 2019 to 5 Oct, 2019</p>
-            <p>R 200.00 fee</p>
-            <p>Top 32</p>
+            <p>Participants : {{t.formInfo.type}}</p>
+            <p>Staduim : {{t.formInfo.location}} </p>
+            <p>{{t.formInfo.startDate | date}} to {{t.formInfo.endDate | date}}</p>
             <p>2 Vendors</p>
            </div>
         </div>

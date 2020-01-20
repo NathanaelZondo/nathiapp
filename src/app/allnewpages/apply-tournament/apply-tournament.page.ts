@@ -201,7 +201,7 @@ export class ApplyTournamentPage implements OnInit {
               }
             })
           } else if (this.passService.role == 'teamManager') {
-            this.db.collection('newTournaments').doc(document.id).collection('teamApplications').doc(firebase.auth().currentUser.uid).get().then(res => {
+            this.db.collection('newTournaments').doc(document.id).collection('teamApplications').doc(firebase.auth().currentUser.uid).onSnapshot(res => {
               console.log('applied tournaments', res.data());
               
               if (res.exists) {
@@ -243,11 +243,11 @@ export class ApplyTournamentPage implements OnInit {
     })
   }
   geTeamProfile() {
-    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then(res => {
+    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).onSnapshot(res => {
       console.log(res);
       if(res.exists){
         console.log('team  exist');
-  this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').get().then( doc =>{
+  this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').onSnapshot( doc =>{
           if(doc.size > 0){
   this.userObj = res.data();
   this.teamState = true
@@ -264,7 +264,7 @@ export class ApplyTournamentPage implements OnInit {
     })
   }
   getProfile() {
-    firebase.firestore().collection('members').doc(firebase.auth().currentUser.uid).get().then(res => {
+    firebase.firestore().collection('members').doc(firebase.auth().currentUser.uid).onSnapshot(res => {
       this.vendorObj = res.data()
       console.log('vendor',this.vendorObj);
       
