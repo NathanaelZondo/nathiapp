@@ -34,6 +34,11 @@
         }
     }
 }
+ion-item {
+  --background: rgba(51, 117, 117, 0) !important;
+  --color: rgb(26, 26, 26) !important;
+  
+}
 .close {
     position: absolute;
     top: 0;

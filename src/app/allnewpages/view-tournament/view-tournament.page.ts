@@ -12,7 +12,16 @@ import { PassInformationServiceService } from 'src/app/service/pass-information-
 export class ViewTournamentPage implements OnInit {
   viewedTournament = null
   tournMatches = []
+  match = {
+    type1:[],// 1
+    type2: [],// 2
+    type4: [], // 8
+    type8: [], // 16
+    type16: [], // 32
+    winner: {}
+  }
   db = firebase.firestore()
+  category = null
   constructor(public pass:PassInformationServiceService,public navCtrl: NavController, private activatedRoute: ActivatedRoute,private router: Router) { }
 tournid ;
   ngOnInit() {
@@ -24,24 +33,102 @@ tournid ;
         console.log(this.viewedTournament);
         this.pass.tournid =this.viewedTournament.doc_id;
         this.tournid =this.viewedTournament.doc_id;
-        this.db.collection('MatchFixtures').where('tournid','==',this.viewedTournament.doc_id).orderBy("matchdate", "desc").get().then(res => {
+        if(this.viewedTournament.state=='finished') {
+          // finnished matches
+          this.db.collection('PlayedMatches').where('tournid','==',this.viewedTournament.doc_id).orderBy("matchdate", "desc").get().then(res => {
         
-          this.tournMatches = []
-          res.forEach(doc => {
-            this.tournMatches.push(doc.data())
+            this.tournMatches = []
+            res.forEach(doc => {
+              // CHECK WICH MATCH TYPE IS WHICH AND PUSH IT INTO THE RESPECTIVE ARRAY
+              if(doc.data().type=='16') {
+                this.match.type16.push(doc.data())
+              } else if (doc.data().type=='8') {
+                this.match.type8.push(doc.data())
+              } else if (doc.data().type=='4') {
+                this.match.type4.push(doc.data())
+              } else if (doc.data().type=='2') {
+                this.match.type2.push(doc.data())
+              } else if (doc.data().type=='1') {
+                this.match.type1.push(doc.data())
+                if(doc.data().score>=1) {
+                  this.match.winner = doc.data().TeamObject
+                } else {
+                  this.match.winner = doc.data().aTeamObject
+                }
+              }
+            })
+            this.checkMatches()
+            console.log(this.match);
+
+          }).catch(err => {console.log(err);})
+        } else {
+          // these are upcoming ur inplay matches
+          this.db.collection('MatchFixtures').where('tournid','==',this.viewedTournament.doc_id).orderBy("matchdate", "desc").get().then(res => {
+        
+            this.tournMatches = []
+            res.forEach(doc => {
+              if(doc.data().type=='16') {
+                this.match.type16.push(doc.data())
+              } else if (doc.data().type=='8') {
+                this.match.type8.push(doc.data())
+              } else if (doc.data().type=='4') {
+                this.match.type4.push(doc.data())
+              } else if (doc.data().type=='2') {
+                this.match.type2.push(doc.data())
+              } else if (doc.data().type=='1') {
+                this.match.type1.push(doc.data())
+                if(doc.data().score>=1) {
+                  this.match.winner = doc.data().TeamObject
+                } else {
+                  this.match.winner = doc.data().aTeamObject
+                }
+              }
+            })
+            this.checkMatches()
+            console.log(this.tournMatches);
+            
+          }).catch(err => {
+            console.log(err);
+            
           })
-          console.log(this.tournMatches);
-          
-        }).catch(err => {
-          console.log(err);
-          
-        })
+        }
       }});
   }
-
+checkMatches() {
+  if (this.match.type16.length>0) {
+    this.tournMatches = this.match.type16
+    this.category = 'top32'
+  } else if (this.match.type8.length>0) {
+    this.tournMatches = this.match.type8
+    this.category = 'top16'
+  } else {
+    this.tournMatches = this.match.type4
+    this.category = 'top8'
+  }
+}
   goBack() {
     this.router.navigate(['tabs'])
     this.viewedTournament = null
+  }
+  segmentChanged(ev) {
+    let event = ev.detail.value;
+    switch (event) {
+      case 'top32':
+        this.tournMatches = this.match.type16
+        break;
+        case 'top16':
+          this.tournMatches = this.match.type8
+          break;
+          case 'top8':
+            this.tournMatches = this.match.type4
+        break;
+        case 'top4':
+          this.tournMatches = this.match.type2
+        break;
+        case 'top1':
+          this.tournMatches = this.match.type1
+        break;
+    }
   }
   viewMatch(match) {
 
