@@ -21,22 +21,22 @@
     </ion-tab-button>
 
     <ion-tab-button tab="profile" *ngIf="role == 'teamManager'||role=='vendor'" class="segment-item" >
-      <ion-icon name="person"></ion-icon>
+      <ion-icon src="../../assets/noun_profile_570687.svg"></ion-icon>
       <!-- <ion-label>Profile</ion-label> -->
     </ion-tab-button>
 
     <ion-tab-button routerLink="/login"  *ngIf="role == 'user'" class="segment-item" >
-      <ion-icon name="log-in"></ion-icon>
+      <ion-icon src="../../assets/noun_Login_86790.svg"></ion-icon>
       <!-- <ion-label>Login</ion-label> -->
     </ion-tab-button>
 
     <ion-tab-button routerLink="/registerpage" *ngIf="role == 'user'" class="segment-item" >
-      <ion-icon name="person"></ion-icon>
+      <ion-icon src="../../assets/noun_register_2773678.svg"></ion-icon>
       <!-- <ion-label>Register</ion-label> -->
     </ion-tab-button>
 
     <ion-tab-button tab="faqs" class="segment-item" >
-      <ion-icon name="information-circle" ></ion-icon>
+      <ion-icon style="transform: translateY(-4px) !important;" name="help-circle" ></ion-icon>
       <!-- <ion-label>FAQs</ion-label> -->
     </ion-tab-button>
   <!-- </ion-card> -->
