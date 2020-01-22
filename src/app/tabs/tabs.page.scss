@@ -10,6 +10,9 @@
         color: rgb(51, 51, 51) !important;
     }
 }
+ion-icon {
+    transform: scale(1.6) !important;
+  }
 .segment-card::after {
     content: "";
     position: fixed;
