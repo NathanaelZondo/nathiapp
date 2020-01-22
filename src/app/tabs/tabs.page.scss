@@ -1,14 +1,27 @@
 .segment-card {
     display: flex;
     overflow-x: scroll;
-    background: linear-gradient(#000D06,#012615);
+    // background: linear-gradient(#000D06,#012615);
     
     .segment-item {
         display: inline-block !important;
         min-width: 100px !important;
         width: auto !important;
-        color: rgb(96, 233, 183) !important;
+        color: rgb(209, 253, 237) !important;
     }
+}
+.segment-card::after {
+    content: ">";
+    position: fixed;
+    top: 30%;
+    right: 0;
+    bottom: 30%;
+    width: 20px;
+    /* height: 26px; */
+    z-index: 900;
+    background: #ffffff6b;
+    color: white;
+    border-radius: 200px;
 }
 .hydrated {
     visibility: inherit;

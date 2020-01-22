@@ -1,22 +1,23 @@
-<ion-tabs>
+<ion-tabs (ionScroll)="onScroll($event)">
 
-  <ion-tab-bar slot="bottom">
-    <ion-card no-padding no-margin class="no-border-radius segment-card">
-      
+  <ion-tab-bar slot="bottom" >
+    <ion-card #scroller no-padding no-margin class="no-border-radius segment-card"  (ionScroll)="onScroll($event)">
+       
 
-    <ion-tab-button tab="home" class="segment-item" >
-      <ion-icon name="home"></ion-icon>
+    <ion-tab-button tab="home" class="segment-item" (ionScroll)="onScroll($event)" >
+    
+      <ion-icon src="../../assets/noun_Ball_2578364.svg"></ion-icon>
       <ion-label>Tournaments</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="applyTournament" *ngIf="role == 'teamManager'||role=='vendor'"  class="segment-item" >
-      <ion-icon name="filing"></ion-icon>
-      <ion-label>Apply Tournament</ion-label>
+      <ion-icon src="../../assets/noun_tournament_2387029.svg"></ion-icon>
+      <ion-label>Apply</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="manageTeam" class="segment-item" *ngIf="role == 'teamManager'">
-      <ion-icon name="people"></ion-icon>
-      <ion-label>Manage Team</ion-label>
+      <ion-icon src="../../assets/noun_group_2578343.svg"></ion-icon>
+      <ion-label>My Team</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="profile" *ngIf="role == 'teamManager'||role=='vendor'" class="segment-item" >

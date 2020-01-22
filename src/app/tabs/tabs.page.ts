@@ -1,12 +1,14 @@
-import { Component, OnInit, NgZone, Renderer2 } from '@angular/core';
+import { Component, OnInit, NgZone, Renderer2, ViewChild } from '@angular/core';
 import * as firebase from 'firebase';
 import { PassInformationServiceService } from '../service/pass-information-service.service';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.page.html',
   styleUrls: ['./tabs.page.scss'],
 })
 export class TabsPage implements OnInit {
+
   role = 'user'
   object: {
     o: {
@@ -55,5 +57,9 @@ export class TabsPage implements OnInit {
         this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
         break;
     }
+  }
+  onScroll(ev) {
+    console.log(ev);
+    
   }
 }
