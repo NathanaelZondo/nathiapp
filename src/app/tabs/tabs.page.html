@@ -1,45 +1,45 @@
 <ion-tabs (ionScroll)="onScroll($event)">
 
   <ion-tab-bar slot="bottom" >
-    <ion-card #scroller no-padding no-margin class="no-border-radius segment-card"  (ionScroll)="onScroll($event)">
+    <!-- <ion-card #scroller no-padding no-margin class="no-border-radius segment-card"  (ionScroll)="onScroll($event)"> -->
        
 
     <ion-tab-button tab="home" class="segment-item" (ionScroll)="onScroll($event)" >
     
       <ion-icon src="../../assets/noun_Ball_2578364.svg"></ion-icon>
-      <ion-label>Tournaments</ion-label>
+      <!-- <ion-label>Tournaments</ion-label> -->
     </ion-tab-button>
 
     <ion-tab-button tab="applyTournament" *ngIf="role == 'teamManager'||role=='vendor'"  class="segment-item" >
       <ion-icon src="../../assets/noun_tournament_2387029.svg"></ion-icon>
-      <ion-label>Apply</ion-label>
+      <!-- <ion-label>Apply</ion-label> -->
     </ion-tab-button>
 
     <ion-tab-button tab="manageTeam" class="segment-item" *ngIf="role == 'teamManager'">
       <ion-icon src="../../assets/noun_group_2578343.svg"></ion-icon>
-      <ion-label>My Team</ion-label>
+      <!-- <ion-label>My Team</ion-label> -->
     </ion-tab-button>
 
     <ion-tab-button tab="profile" *ngIf="role == 'teamManager'||role=='vendor'" class="segment-item" >
       <ion-icon name="person"></ion-icon>
-      <ion-label>Profile</ion-label>
+      <!-- <ion-label>Profile</ion-label> -->
     </ion-tab-button>
 
     <ion-tab-button routerLink="/login"  *ngIf="role == 'user'" class="segment-item" >
       <ion-icon name="log-in"></ion-icon>
-      <ion-label>Login</ion-label>
+      <!-- <ion-label>Login</ion-label> -->
     </ion-tab-button>
 
     <ion-tab-button routerLink="/registerpage" *ngIf="role == 'user'" class="segment-item" >
       <ion-icon name="person"></ion-icon>
-      <ion-label>Register</ion-label>
+      <!-- <ion-label>Register</ion-label> -->
     </ion-tab-button>
 
     <ion-tab-button tab="faqs" class="segment-item" >
       <ion-icon name="information-circle" ></ion-icon>
-      <ion-label>FAQs</ion-label>
+      <!-- <ion-label>FAQs</ion-label> -->
     </ion-tab-button>
-  </ion-card>
+  <!-- </ion-card> -->
   </ion-tab-bar>
 
 </ion-tabs>

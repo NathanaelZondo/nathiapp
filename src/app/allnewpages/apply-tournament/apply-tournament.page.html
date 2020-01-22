@@ -14,7 +14,7 @@
     <div class="header">
      
       <div class="text">
-        <p>Apply Tournament</p>
+        <h4>Apply Tournament</h4>
       </div>
     </div>
     <div class="t-list">
@@ -47,7 +47,7 @@
               </div>
               <!--  -->
               <div class="applied"   >
-                <ion-button  shape="round" slot="end" (click)="applyForTournament(x)" *ngIf="x.isApplied == false&&userProfile">Apply</ion-button>
+                <ion-button size="small"  shape="round" slot="end" (click)="applyForTournament(x)" *ngIf="x.isApplied == false&&userProfile">Apply</ion-button>
                 <ion-button disabled="true"  shape="round" *ngIf="!userProfile" >
                   Waiting for approval
                 </ion-button>

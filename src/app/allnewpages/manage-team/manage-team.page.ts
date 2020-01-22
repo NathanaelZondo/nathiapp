@@ -19,6 +19,7 @@ export class ManageTeamPage implements OnInit {
   noTeam = document.getElementsByClassName('noTeam')
   createTeam = false;
   profile = false
+  enlarge = null
     constructor(  public renderer: Renderer2,  private formBuilder: FormBuilder, public router : Router,public navctrl : NavController) { 
    
       
@@ -88,6 +89,13 @@ export class ManageTeamPage implements OnInit {
         this.profile = true
       }
     })
+  }
+  enlargeImage(image){    
+    if(this.enlarge == image) {
+      this.enlarge = null
+    } else {
+      this.enlarge = image;
+    }
   }
 }
 

@@ -29,7 +29,7 @@
         margin: 0 auto;
         display: flex;
         align-items: center;
-        padding: 0px 22px;">{{display.teamName}} <ion-button color="light" fill="clear" (click)="editTean()">
+        padding: 0px 22px;">{{display.teamName}} <ion-button color="dark" fill="clear" (click)="editTean()">
           <ion-icon name="create"></ion-icon>
           
         </ion-button></h5>
@@ -38,22 +38,29 @@
     <div class="details">
       <div class="d">
         <p>{{display.region}}</p>
-        <p>{{display.tel}}</p>
+        <p style="font-size: 2.5vw;">{{display.tel}}</p>
       </div>
       <div class="logos">
-        <img *ngIf="!display.teamJerseyIMG"  src="https://www.terra-institute.eu/wp-content/uploads/2015/09/black-white.png">
-        <img *ngIf="!display.teamLogo"  src="https://www.terra-institute.eu/wp-content/uploads/2015/09/black-white.png" >
-        <img *ngIf="!display.goalKeeperJerseyIMG"  src="https://www.terra-institute.eu/wp-content/uploads/2015/09/black-white.png" >
-      <img *ngIf="display.teamJerseyIMG"  src="{{display.teamJerseyIMG}}">
-      <img *ngIf="display.teamLogo"  src="{{display.teamLogo}}">
-      <img *ngIf="display.goalKeeperJerseyIMG"  src="{{display.goalKeeperJerseyIMG}}">
+        
+       
+        
+        <div class="img" [ngClass]="{'team':enlarge=='team','normal':enlarge!='team'}"  (click)="enlargeImage('team')"><img *ngIf="!display.teamJerseyIMG"  src="https://www.terra-institute.eu/wp-content/uploads/2015/09/black-white.png"><img *ngIf="display.teamJerseyIMG"  src="{{display.teamJerseyIMG}}"></div>
+
+
+        <div class="img" [ngClass]="{'logo':enlarge=='logo','normal':enlarge!='logo'}" (click)="enlargeImage('logo')"> <img *ngIf="!display.teamLogo"  src="https://www.terra-institute.eu/wp-content/uploads/2015/09/black-white.png" ><img *ngIf="display.teamLogo"  src="{{display.teamLogo}}"></div>
+
+
+        <div class="img" [ngClass]="{'keeper':enlarge=='keeper','normal':enlarge!='keeper'}" (click)="enlargeImage('keeper')"><img *ngIf="!display.goalKeeperJerseyIMG"  src="https://www.terra-institute.eu/wp-content/uploads/2015/09/black-white.png" ><img *ngIf="display.goalKeeperJerseyIMG"  src="{{display.goalKeeperJerseyIMG}}"></div>
+      
+      
+      
       </div>
     </div>
   </div>
   <div class="teamList" *ngIf="isTeam">
     <div class="label">
-      <p>Squad</p>
-      <ion-button style="margin: 0;" size="small" shape="round" (click)="addPlayer()"> Manage </ion-button>
+     <div class="l"> <p>Squad</p>
+      <ion-button style="margin: 0;" size="small" shape="round" (click)="addPlayer()"> Manage </ion-button></div>
     </div>
     <div class="list">
 
@@ -72,7 +79,7 @@
             src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=50">
           <div class="details">
             <div>
-              <p style="font-size: 4vw;"><b>{{i.fullName}}</b></p>
+              <p style="font-size: 4vw; text-transform: uppercase; margin: 0;"><b>{{i.fullName}}</b></p>
               <p>{{i.playerPosition}}</p>
             </div>
           </div>
