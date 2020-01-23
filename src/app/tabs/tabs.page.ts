@@ -18,7 +18,8 @@ export class TabsPage implements OnInit {
     }
   }
   status
-  tabElement = document.getElementsByTagName('ion-tab-bar')
+  tabElement = document.getElementsByTagName('ion-tab-bar');
+  activePage = 'home'
   constructor(public ngZone: NgZone, public passService: PassInformationServiceService,public renderer: Renderer2) { }
 
   ngOnInit() {
@@ -44,6 +45,9 @@ export class TabsPage implements OnInit {
         }
       })
     })
+  }
+  active(page) {
+    this.activePage = page;
   }
   hideTabs(cmd) {
     switch (cmd) {

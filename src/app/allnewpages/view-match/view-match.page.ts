@@ -43,6 +43,7 @@ export class ViewMatchPage implements OnInit {
   match = [];
   tournament
   object: any = {};
+  teamSide = 'home'
   corner = 0;
   cornerstats = [];
   acorner = 0;
@@ -176,7 +177,7 @@ export class ViewMatchPage implements OnInit {
           playerPosition: null,
           previousTeam: null
         }
-      }, 1000);
+      }, 500);
     }
     switch (state) {
       case 'open':
@@ -205,26 +206,34 @@ export class ViewMatchPage implements OnInit {
     }
   }
   team(side, state) {
+    
+    
     switch (state) {
       case 'open':
         if (side == 'home') {
+          this.teamSide = side
           this.viewTeam = true;
           this.renderer.setStyle(this.teamDetailsDiv[0], 'display', 'flex')
         } else {
+          this.teamSide = side
           this.viewTeam = true;
           this.renderer.setStyle(this.teamDetailsDiv[0], 'display', 'flex')
         }
         break;
       case 'close':
         if (side == 'home') {
+          
           this.viewTeam = false;
           setTimeout(() => {
             this.renderer.setStyle(this.teamDetailsDiv[0], 'display', 'none')
+            this.teamSide = null
           }, 500);
         } else {
+          
           this.viewTeam = false;
           setTimeout(() => {
             this.renderer.setStyle(this.teamDetailsDiv[0], 'display', 'none')
+            this.teamSide = null
           }, 500);
         }
         break;

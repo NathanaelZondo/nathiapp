@@ -23,22 +23,51 @@
     </div>
 
     <div class="teamInfo animated" [ngClass]="{'bounceInDown':viewTeam,'bounceOutUp':!viewTeam}">
-        <div class="teamData">
+        <div class="teamData" *ngIf="teamSide=='home'" >
             <div class="goalKeeperJersey image">
-                <img src="../../../assets/nathi_noImage.png" alt="">
+                <img *ngIf="object.TeamObject.goalKeeperJerseyIMG" src="{{object.TeamObject.goalKeeperJerseyIMG}}" alt="">
+                <img *ngIf="!object.TeamObject.goalKeeperJerseyIMG"  src="../../../assets/nathi_noImage.png" alt="">
             </div>
             <div class="teamLogo m-image">
-                <img src="../../../assets/nathi_noImage.png" alt="">
+                <img *ngIf="object.TeamObject.teamLogo" src="{{object.TeamObject.teamLogo}}" alt="">
+                <img *ngIf="!object.TeamObject.teamLogo"  src="../../../assets/nathi_noImage.png" alt="">
             </div>
             <div class="playerJersey image">
-                <img src="../../../assets/nathi_noImage.png" alt="">
+                <img *ngIf="object.TeamObject.teamJerseyIMG" src="{{object.TeamObject.teamJerseyIMG}}" alt="">
+                <img *ngIf="!object.TeamObject.teamJerseyIMG"  src="../../../assets/nathi_noImage.png" alt="">
             </div>
             <div class="information">
-                <h1>Team Name</h1>
+                <h1>{{object.TeamObject.teamName}}</h1>
                 <hr>
-                <p>Coach: Caster Semenya</p>
-                <p>0123654789</p>
-                <p>Based in Johannesburg</p>
+                <p>Coach: {{object.TeamObject.coachName}}</p>
+                <p> {{object.TeamObject.tel}}</p>
+                <p>Based in  {{object.TeamObject.region}}</p>
+                <div class="clos">
+                    <ion-button shape="round" (click)="team('away', 'close', null)">
+                        Close
+                    </ion-button>
+                </div>
+            </div>
+        </div>
+        <div class="teamData" *ngIf="teamSide=='away'">
+            <div class="goalKeeperJersey image">
+                <img *ngIf="object.aTeamObject.goalKeeperJerseyIMG"  src="{{object.aTeamObject.goalKeeperJerseyIMG}}" alt="">
+                <img *ngIf="!object.aTeamObject.goalKeeperJerseyIMG" src="../../../assets/nathi_noImage.png" alt="">
+            </div>
+            <div class="teamLogo m-image">
+                <img *ngIf="object.aTeamObject.teamLogo"  src="{{object.aTeamObject.teamLogo}}" alt="">
+                <img *ngIf="!object.aTeamObject.teamLogo" src="../../../assets/nathi_noImage.png" alt="">
+            </div>
+            <div class="playerJersey image">
+                <img *ngIf="object.aTeamObject.teamJerseyIMG" src="{{object.aTeamObject.teamJerseyIMG}}" alt="">
+                <img *ngIf="!object.aTeamObject.teamJerseyIMG" src="../../../assets/nathi_noImage.png" alt="">
+            </div>
+            <div class="information">
+                <h1>{{object.aTeamObject.teamName}}</h1>
+                <hr>
+                <p>Coach: {{object.aTeamObject.coachName}}</p>
+                <p> {{object.aTeamObject.tel}}</p>
+                <p>Based in  {{object.aTeamObject.region}}</p>
                 <div class="clos">
                     <ion-button shape="round" (click)="team('away', 'close', null)">
                         Close
@@ -70,7 +99,7 @@
         <p>{{object.mins}}:{{object.secs}}</p>
     </div>
     <div class="awayTeam">
-        <div class="image" (click)="team('home','open')">
+        <div class="image" (click)="team('away','open')">
             <img *ngIf="!object.aTeamObject.teamLogo"  src="../../../assets/nathi_noImage.png" alt="">
             <img *ngIf="object.aTeamObject.teamLogo"  [src]="object.aTeamObject.teamLogo" alt ="No Logo">
         </div>
@@ -134,7 +163,7 @@
 </div>
 <div  [ngClass]="{'goalScorers': viewStatistics, 'goalScorers-hide':!viewStatistics}" >
     <div class="title" (click)="viewStats()">
-        <p>Statistics</p>
+        <p>Statistics <sup>(GOALS)</sup></p>
     </div>
     <div class="list">
         <div class="t">
@@ -142,28 +171,30 @@
             <p>Away</p>
         </div>
         <div class="home">
-            <div class="card" *ngIf="arr.length==0" >
-                <p>No Information</p>
+            <div class="card" *ngIf="!object.goal" >
+                <p style="padding:10px;
+                ;">No Information</p>
             </div>
-            <div class="card" *ngFor="let item of arr" >
+            <div class="card" *ngFor="let item of object.goal" >
                 <div class="name">
-                    <p>Robust Sekejuay</p>
+                <p>{{item.goalscorer}}</p>
                 </div>
                 <div class="time">
-                    <p>14:00</p>
+                <p>{{item.scoretime}}</p>
                 </div>
             </div>
         </div>
         <div class="away">
-            <div class="card" *ngIf="arr.length==0" >
-                <p>No Information</p>
+            <div class="card" *ngIf="!object.agoal" >
+                <p style="padding: 10px;
+                ;">No Information</p>
             </div>
-            <div class="card" *ngFor="let item of arr" >
+            <div class="card" *ngFor="let item of object.agoal" >
                 <div class="name">
-                    <p>Robust Sekejuay</p>
+                    <p>{{item.goalscorer}}</p>
                 </div>
                 <div class="time">
-                    <p>14:00</p>
+                    <p>{{item.scoretime}}</p>
                 </div>
             </div>
         </div>

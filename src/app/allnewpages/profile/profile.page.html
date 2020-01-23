@@ -10,7 +10,8 @@
                 <div class="slant">
                     <div class="g">
                       <p *ngIf="!profile.form.fullName" >Unable to get Profile</p>
-                        <h1 style="color: black;">{{profile.form.fullName}}</h1>
+                        <h1 style="color: black;    font-size: 9vw !important;
+                        margin-bottom: 50px;">{{profile.form.fullName}}</h1>
                         <p>{{profile.form.phoneNumber}}</p>
                         <p *ngIf="profile.form.role=='teamManager'" >Team Manager</p>
                         <p *ngIf="profile.form.role=='vendor'" >Vendor</p>
@@ -53,7 +54,6 @@
 <img style="width: 100%;height: 100%;object-fit: cover;" *ngIf="!item.sponsorImage"  src="https://image.flaticon.com/icons/png/512/95/95019.png" alt="">
             <img *ngIf="item.sponsorImage" style="width: 100%;height: 100%;object-fit: cover;"  src="{{item.sponsorImage}}" alt="">
             </div>
-            
           <!-- <img src="https://seeklogo.com/images/M/MTN-logo-459AAF9482-seeklogo.com.png" width="30px"  alt=""> -->
           </div>
         </div>

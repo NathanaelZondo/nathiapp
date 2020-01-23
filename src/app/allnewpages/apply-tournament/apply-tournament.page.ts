@@ -173,8 +173,8 @@ export class ApplyTournamentPage implements OnInit {
       application: null
     }
     this.db.collection('newTournaments').where('approved', '==', true).onSnapshot(res => {
+      this.applytournaments = []
       if (!res.empty) {
-        this.applytournaments = []
         res.forEach(document => {
           console.log('data', document.data());
           console.log('res', this.applytournaments);
@@ -202,6 +202,7 @@ export class ApplyTournamentPage implements OnInit {
             })
           } else if (this.passService.role == 'teamManager') {
             this.db.collection('newTournaments').doc(document.id).collection('teamApplications').doc(firebase.auth().currentUser.uid).onSnapshot(res => {
+              this.applytournaments = []
               console.log('applied tournaments', res.data());
               
               if (res.exists) {

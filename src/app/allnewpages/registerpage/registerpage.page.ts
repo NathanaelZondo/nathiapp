@@ -145,7 +145,7 @@ export class RegisterpagePage implements OnInit {
   async alert(form) {
     const alert = await this.alertController.create({
       header: 'Verification code',
-      // subHeader: 'Enter verification code',
+      message:  `Code will be sent to <b>${form.phoneNumber}</b>`,
       backdropDismiss: false,
       inputs: [
         {
@@ -213,7 +213,7 @@ export class RegisterpagePage implements OnInit {
     // console.log('Loading dismissed!');
   }
   close() {
-    this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
+    // this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
     this.route.navigateByUrl('tabs');
   }
 }

@@ -108,7 +108,7 @@
                     padding: 5px 10px;
                     border-radius: 0px 0px 10px 10px;
                     box-shadow: 0px 2px 2px #1717172f;
-                    font-size: 3.3vw;
+                    font-size: 3vw;
                 }
             }
             .home, .away {
@@ -273,7 +273,7 @@
         width: 100%;
         height: auto;
         // background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 13, 6, 0.76))), url(bg.svg), #012615;
-        background: linear-gradient(rgba(0, 13, 6, 0.76)), url(../../../assets/bg.svg), #012615;
+        background: linear-gradient(rgba(0, 13, 6, 0.76)), url(../../../assets/bendedFootballField.svg), #012615;
         background-position: 151% 21%;
         background-repeat: no-repeat;
         color: white;
@@ -374,8 +374,9 @@
                     position: relative;
     
                     p {
-                        font-size: 3vw;
+                        font-size: 4vw;
                         margin: 0;
+                        text-transform: uppercase;
                     }
     
                     .position {
@@ -384,7 +385,8 @@
                         right: 5px;
     
                         p {
-                            font-size: 2vw;
+                            color: rgb(223, 223, 223);
+                            font-size: 3vw;
                         }
                     }
                 }

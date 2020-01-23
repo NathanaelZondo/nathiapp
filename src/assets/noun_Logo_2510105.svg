@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" version="1.1" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;" viewBox="0 0 333 416.25" x="0px" y="0px" fill-rule="evenodd" clip-rule="evenodd">
+  <defs>
+    <style type="text/css">
+   
+    .fil0 {fill:white}
+   
+  </style>
+  </defs>
+  <g>
+    <g>
+      <path class="fil0" d="M215 64c38,18 65,57 65,103 0,62 -51,113 -113,113 -19,0 -37,-5 -52,-13 6,1 13,2 19,2l0 0 0 0 0 0 0 0c33,0 62,-13 84,-35 21,-21 34,-51 34,-83l0 0 0 0 0 0 0 0c0,-33 -13,-62 -34,-84 -1,-1 -2,-2 -3,-3z" />
+      <path class="fil0" d="M236 186c-6,16 -14,30 -26,41 -19,19 -46,31 -76,31l0 0 0 0 0 0 0 0c-16,0 -32,-3 -46,-10 -20,-19 -33,-46 -34,-76 4,6 8,11 13,16 21,22 51,35 84,35l0 0 0 0 0 0 0 0c32,0 62,-13 83,-35 1,0 1,-1 2,-2z" />
+      <path class="fil0" d="M167 54c4,0 8,0 12,0 -24,5 -45,16 -62,33 -21,21 -34,51 -34,83l0 0 0 0 0 0 0 0c0,7 0,13 2,20 -4,-3 -7,-6 -11,-9 -8,-8 -14,-18 -20,-28 7,-56 55,-99 113,-99z" />
+    </g>
+  </g>
+</svg>

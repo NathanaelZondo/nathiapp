@@ -1,8 +1,52 @@
+.indicator {
+    height: 3px;
+    position: absolute;
+    width: 5vw;
+    background: #000D06;
+    bottom: 56px;
+    left: 0;
+    border-radius: 200px;
+    transform-origin: center;
+    transition: 0.3s;
+    transition-timing-function: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    transform: translateX(7.4vw);
+}
+
+.home0 {
+    transform: translateX(7.4vw);
+    transition: 0.3s;
+    transition-timing-function: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.apply {
+    transform: translateX(27.1vw);
+    transition: 0.3s;
+    transition-timing-function: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.team {
+    transform: translateX(47.3vw);
+    transition: 0.3s;
+    transition-timing-function: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.profile {
+    transform: translateX(67.5vw);
+    transition: 0.3s;
+    transition-timing-function: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.faq {
+    transform: translateX(87.2vw);
+    transition: 0.3s;
+    transition-timing-function: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
 .segment-card {
     display: flex;
     overflow-x: scroll;
     // background: linear-gradient(#000D06,#012615);
-    
+
     .segment-item {
         display: inline-block !important;
         min-width: 100px !important;
@@ -10,9 +54,11 @@
         color: rgb(51, 51, 51) !important;
     }
 }
+
 ion-icon {
-    transform: scale(1.6) !important;
-  }
+    transform: scale(1.3) translateY(2px) !important;
+}
+
 .segment-card::after {
     content: "";
     position: fixed;
@@ -26,6 +72,7 @@ ion-icon {
     color: rgb(73, 73, 73);
     border-radius: 8px 0px 0px 8px;
 }
+
 .segment-card::before {
     content: "";
     position: fixed;
@@ -39,11 +86,22 @@ ion-icon {
     color: rgb(37, 37, 37);
     border-radius: 0px 8px 8px 0px;
 }
+
 .hydrated {
     visibility: inherit;
     // background: radial-gradient(black, transparent),rgb(0, 27, 0);
 }
+ion-tab-button {
+    box-shadow: -6px -6px 8px 0 rgb(255, 255, 255), 6px 6px 8px 0 rgb(217, 210, 200);
+    background: #EFEEEE;
+    border: 1px solid rgba(255, 255, 255, 0.54);
+    border-radius: 12px;
+    margin: 0px 5px !important;
+    height: 90%;
+}
 ion-tab-bar {
-    // background: red !important;
+    background: #EFEEEE !important;
     // height: 0 !important;
+    border: none !important;
+    padding: 2px 0px;
 }
