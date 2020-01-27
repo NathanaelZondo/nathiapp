@@ -146,7 +146,7 @@ export class ApplyTournamentPage implements OnInit {
                     vendorTotalApplications: firebase.firestore.FieldValue.increment(1)
                   })
                   this.presentLoading();
-                  this.checkForTournaments();
+                  // this.checkForTournaments();
                   console.log('lets see', value.doc.formInfo.tournamentName, some);
                 })
               } else if (this.teamState == true) {
@@ -161,7 +161,7 @@ export class ApplyTournamentPage implements OnInit {
                     totalApplications: firebase.firestore.FieldValue.increment(1)
                   })
                   this.presentLoading();
-                  this.checkForTournaments();
+                  // this.checkForTournaments();
                   console.log('lets see', value.doc.formInfo.tournamentName, some);
 
                 })
@@ -182,7 +182,7 @@ export class ApplyTournamentPage implements OnInit {
       isApplied: false,
       application: null
     }
-    this.applytournaments = []
+    
     this.db.collection('newTournaments').where('approved', '==', true).where("state", "==", "newTournament").onSnapshot(res => {
       this.applytournaments = []
       if (!res.empty) {
