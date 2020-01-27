@@ -62,6 +62,9 @@ export class ViewMatchPage implements OnInit {
   homeplayers = [];
   awayplayers = [];
   constructor(public pass: PassInformationServiceService, public navCtrl: NavController, private route: ActivatedRoute, private router: Router, public renderer: Renderer2) {
+
+
+    // this.doRefresh();
     this.homeplayers = [];
     this.awayplayers = [];
     this.match = this.pass.currentmatch;
@@ -152,7 +155,11 @@ export class ViewMatchPage implements OnInit {
     })
 
   }
-
+  doRefresh(event){
+      setTimeout(()=>{
+// event.target.complete();
+      },2000)
+  }
   // leave it alone
   viewStats(){this.viewStatistics=!this.viewStatistics}
 
@@ -231,6 +238,7 @@ export class ViewMatchPage implements OnInit {
     }
   }
   ngOnInit() {
+    this.doRefresh(1)
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.match = this.router.getCurrentNavigation().extras.state.parms
