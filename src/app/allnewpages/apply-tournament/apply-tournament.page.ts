@@ -25,6 +25,7 @@ export class ApplyTournamentPage implements OnInit {
   }
   role = ''
   userProfile = false
+  loggedInUser = null
   constructor(public pass: PassInformationServiceService,
     public alertController: AlertController,
     public authService: AuthServiceService,
@@ -44,21 +45,30 @@ export class ApplyTournamentPage implements OnInit {
   }
 
   ngOnInit() {
-    this.checkForTournaments();
-    //this.getUserProfile();
-    this.geTeamProfile();
-    this.getProfile();
-    this.checkProfile()
-    setTimeout(() => {
-      console.log('blah bal', this.userObj);
-    }, 1000);
-    this.store.keys().then(res => {
-      res.forEach(element => {
-        this.storageKeys.push(element);
-      });
-      console.log(this.storageKeys);
+    firebase.auth().onAuthStateChanged(user => {
+      firebase.auth().updateCurrentUser(user).then(res => {
+        this.loggedInUser = user
+        this.checkForTournaments();
+        setTimeout(() => {
+          this.checkForTournaments();
+        }, 1000);
+        //this.getUserProfile();
+        this.geTeamProfile();
+        this.getProfile();
+        this.checkProfile()
+        setTimeout(() => {
+          console.log('blah bal', this.userObj);
+        }, 1000);
+        this.store.keys().then(res => {
+          res.forEach(element => {
+            this.storageKeys.push(element);
+          });
+          console.log(this.storageKeys);
 
+        })
+      })
     })
+
 
   }
   ionViewWillLeave() {
@@ -91,7 +101,7 @@ export class ApplyTournamentPage implements OnInit {
 
   async applyForTournament(value) {
     console.log('item', value)
-    if (this.teamState == false) {
+    if (this.teamState == false&&this.role=='teamManager') {
       console.log('you dont have a team');
       const alert = await this.alertController.create({
         header: 'No Players/Team',
@@ -126,11 +136,11 @@ export class ApplyTournamentPage implements OnInit {
               let r = Math.random().toString(36).substring(7).toUpperCase();
               let some = r
               if (this.role == 'vendor') {
-                this.db.collection('newTournaments').doc(value.docid).collection('vendorApplications').doc(firebase.auth().currentUser.uid).set({
-                 vendorobject :  this.vendorObj,
+                this.db.collection('newTournaments').doc(value.docid).collection('vendorApplications').doc(this.loggedInUser.uid).set({
+                  vendorobject: this.vendorObj,
                   refNumber: r,
                   status: 'awaiting',
-                  TournamentID : value.docid
+                  TournamentID: value.docid
                 }).then(res => {
                   this.db.collection('newTournaments').doc(value.docid).update({
                     vendorTotalApplications: firebase.firestore.FieldValue.increment(1)
@@ -139,13 +149,13 @@ export class ApplyTournamentPage implements OnInit {
                   this.checkForTournaments();
                   console.log('lets see', value.doc.formInfo.tournamentName, some);
                 })
-              } else if( this.teamState == true){
-                this.db.collection('newTournaments').doc(value.docid).collection('teamApplications').doc(firebase.auth().currentUser.uid).set({
+              } else if (this.teamState == true) {
+                this.db.collection('newTournaments').doc(value.docid).collection('teamApplications').doc(this.loggedInUser.uid).set({
                   TeamObject: this.userObj,
                   refNumber: r,
                   status: 'awaiting',
-                  clientNotified : 1,
-                  TournamentID : value.docid
+                  clientNotified: 1,
+                  TournamentID: value.docid
                 }).then(res => {
                   this.db.collection('newTournaments').doc(value.docid).update({
                     totalApplications: firebase.firestore.FieldValue.increment(1)
@@ -155,9 +165,9 @@ export class ApplyTournamentPage implements OnInit {
                   console.log('lets see', value.doc.formInfo.tournamentName, some);
 
                 })
-              console.log('Confirm Okay');
+                console.log('Confirm Okay');
               }
-                
+
             }
           }
         ]
@@ -172,7 +182,8 @@ export class ApplyTournamentPage implements OnInit {
       isApplied: false,
       application: null
     }
-    this.db.collection('newTournaments').where('approved', '==', true).onSnapshot(res => {
+    this.applytournaments = []
+    this.db.collection('newTournaments').where('approved', '==', true).where("state", "==", "newTournament").onSnapshot(res => {
       this.applytournaments = []
       if (!res.empty) {
         res.forEach(document => {
@@ -180,7 +191,7 @@ export class ApplyTournamentPage implements OnInit {
           console.log('res', this.applytournaments);
 
           if (this.passService.role == 'vendor') {
-            this.db.collection('newTournaments').doc(document.id).collection('vendorApplications').doc(firebase.auth().currentUser.uid).get().then(res => {
+            this.db.collection('newTournaments').doc(document.id).collection('vendorApplications').doc(this.loggedInUser.uid).get().then(res => {
               console.log('applied tournaments', res.data());
               if (res.exists) {
                 obj = {
@@ -201,10 +212,10 @@ export class ApplyTournamentPage implements OnInit {
               }
             })
           } else if (this.passService.role == 'teamManager') {
-            this.db.collection('newTournaments').doc(document.id).collection('teamApplications').doc(firebase.auth().currentUser.uid).onSnapshot(res => {
+            this.db.collection('newTournaments').doc(document.id).collection('teamApplications').doc(this.loggedInUser.uid).onSnapshot(res => {
               this.applytournaments = []
               console.log('applied tournaments', res.data());
-              
+
               if (res.exists) {
                 obj = {
                   docid: document.id,
@@ -222,53 +233,53 @@ export class ApplyTournamentPage implements OnInit {
                 }
                 this.applytournaments.push(obj)
                 console.log('arrat', obj);
-                
+
               }
 
             })
-//             this.db.collection('newTournaments').doc(document.id).collection('teamApplications').doc(firebase.auth().currentUser.uid).onSnapshot(res => {
-// // this.applyForTournament = []
-//      if(res.exists){
-//        console.log('my document', res.data().status);
-//        if(res.data().status == 'paid'){
+            //             this.db.collection('newTournaments').doc(document.id).collection('teamApplications').doc(this.loggedInUser.uid).onSnapshot(res => {
+            // // this.applyForTournament = []
+            //      if(res.exists){
+            //        console.log('my document', res.data().status);
+            //        if(res.data().status == 'paid'){
 
-//         this.applytournaments.pop
-//          console.log('its done');
-         
-//        }
-//      }
-//             })
+            //         this.applytournaments.pop
+            //          console.log('its done');
+
+            //        }
+            //      }
+            //             })
           }
         })
       }
     })
   }
   geTeamProfile() {
-    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).onSnapshot(res => {
+    this.db.collection('Teams').doc(this.loggedInUser.uid).onSnapshot(res => {
       console.log(res);
-      if(res.exists){
+      if (res.exists) {
         console.log('team  exist');
-  this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').onSnapshot( doc =>{
-          if(doc.size > 0){
-  this.userObj = res.data();
-  this.teamState = true
-  console.log('team PLAYERS exist');
-}
-  })
-  
-}else{
-  this.teamState = false
-  console.log('no team exist');
-  
-}
-  
+        this.db.collection('Teams').doc(this.loggedInUser.uid).collection('Players').onSnapshot(doc => {
+          if (doc.size > 0) {
+            this.userObj = res.data();
+            this.teamState = true
+            console.log('team PLAYERS exist');
+          }
+        })
+
+      } else {
+        this.teamState = false
+        console.log('no team exist');
+
+      }
+
     })
   }
   getProfile() {
-    firebase.firestore().collection('members').doc(firebase.auth().currentUser.uid).onSnapshot(res => {
+    firebase.firestore().collection('members').doc(this.loggedInUser.uid).onSnapshot(res => {
       this.vendorObj = res.data()
-      console.log('vendor',this.vendorObj);
-      
+      console.log('vendor', this.vendorObj);
+
       this.profile.fullName = res.data().form.fullName;
       if (res.data().form.role == 'vendor') {
         this.role = 'vendor';
@@ -277,15 +288,15 @@ export class ApplyTournamentPage implements OnInit {
       }
     })
   }
-  routerToProfile(){
+  routerToProfile() {
     this.router.navigateByUrl('tabs/profile')
   }
   checkProfile() {
-    this.db.collection('members').doc(firebase.auth().currentUser.uid).onSnapshot(res =>{
-      if(res.data().status == 'awaiting'){
+    this.db.collection('members').doc(this.loggedInUser.uid).onSnapshot(res => {
+      if (res.data().status == 'awaiting') {
         console.log('no profile');
-        
-      }else{
+
+      } else {
         this.userProfile = true
       }
     })

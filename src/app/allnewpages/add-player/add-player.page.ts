@@ -13,11 +13,12 @@ import { Router } from '@angular/router';
 export class AddPlayerPage implements OnInit {
   players = []
   date
+  
   playerNode = {
     fullName: '',
     palyerImage: '',
     DOB : '',
-    previousTeam : '',
+    previousTeam : 'none',
     DateCreated : null,
     DateEdited : null,
     playerPosition: '',

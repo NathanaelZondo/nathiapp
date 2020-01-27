@@ -66,7 +66,6 @@ export class RegisterpagePage implements OnInit {
     //   }
     // });
   }
-
   requestCode() {
     // this.phoneNumber = this.registrationForm.get('phoneNumber').value
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
@@ -172,6 +171,9 @@ export class RegisterpagePage implements OnInit {
             this.route.navigateByUrl('/tabs');
           })
         }
+      }, {
+        text: 'Change Number',
+        role:'cancel'
       }]
     });
     await alert.present();
