@@ -13,11 +13,12 @@ import { Router } from '@angular/router';
 export class AddPlayerPage implements OnInit {
   players = []
   date
+  
   playerNode = {
     fullName: '',
     palyerImage: '',
     DOB : '',
-    previousTeam : '',
+    previousTeam : 'none',
     DateCreated : null,
     DateEdited : null,
     playerPosition: '',
@@ -77,6 +78,7 @@ export class AddPlayerPage implements OnInit {
     //   { type: 'required', message: 'Achievements is required.' }
     // ],
   };
+  dater = null
   constructor(
     private formBuilder: FormBuilder,
     private camera: Camera,
@@ -102,6 +104,7 @@ export class AddPlayerPage implements OnInit {
 
   }
   ngOnInit() {
+   
 this.getTeam()
   }
   back(){
@@ -124,8 +127,10 @@ this.playerNode.playerPosition = i.docdata.playerPosition
 this.playerNode.previousTeam = i.docdata.previousTeam
 this.playerNode.playerNumber = i.docdata.playerNumber
   }
-  remove(){
-    this.Achievements.removeAt(this.Achievements.length - 1)
+  remove(index){
+    console.log(this.addPlayerForm.get('Achievements'));
+    
+    this.Achievements.removeAt(index)
   }
  async editPlayer(){
     const load = await this.loadingController.create({

@@ -18,7 +18,7 @@ export class ViewTournamentPage implements OnInit {
     type4: [], // 8
     type8: [], // 16
     type16: [], // 32
-    winner: {}
+    winner: {} as any
   }
   db = firebase.firestore()
   category = null
@@ -38,6 +38,14 @@ tournid ;
           this.db.collection('PlayedMatches').where('tournid','==',this.viewedTournament.doc_id).orderBy("matchdate", "desc").get().then(res => {
         
             this.tournMatches = []
+            this.match = {
+              type1:[],// 1
+              type2: [],// 2
+              type4: [], // 8
+              type8: [], // 16
+              type16: [], // 32
+              winner: {}
+            }
             res.forEach(doc => {
               // CHECK WICH MATCH TYPE IS WHICH AND PUSH IT INTO THE RESPECTIVE ARRAY
               if(doc.data().type=='16') {
@@ -66,6 +74,14 @@ tournid ;
           this.db.collection('MatchFixtures').where('tournid','==',this.viewedTournament.doc_id).orderBy("matchdate", "desc").get().then(res => {
         
             this.tournMatches = []
+            this.match = {
+              type1:[],// 1
+              type2: [],// 2
+              type4: [], // 8
+              type8: [], // 16
+              type16: [], // 32
+              winner: {}
+            }
             res.forEach(doc => {
               if(doc.data().type=='16') {
                 this.match.type16.push(doc.data())
@@ -85,7 +101,7 @@ tournid ;
               }
             })
             this.checkMatches()
-            console.log(this.tournMatches);
+            console.log(this.match);
             
           }).catch(err => {
             console.log(err);
@@ -101,9 +117,15 @@ checkMatches() {
   } else if (this.match.type8.length>0) {
     this.tournMatches = this.match.type8
     this.category = 'top16'
-  } else {
+  } else if (this.match.type4.length>0) {
     this.tournMatches = this.match.type4
     this.category = 'top8'
+  } else if (this.match.type2.length>0) {
+    this.tournMatches = this.match.type2
+    this.category = 'top4'
+  } else {
+    this.tournMatches = this.match.type1
+    this.category = 'top2'
   }
 }
   goBack() {

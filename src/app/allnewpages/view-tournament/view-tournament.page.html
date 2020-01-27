@@ -1,7 +1,7 @@
 <ion-content>
   <div class="header">
     <div class="backb">
-      <ion-fab-button size="small" (click)="goBack()">
+      <ion-fab-button size="small"  color="light" (click)="goBack()">
         <ion-icon name="arrow-back"></ion-icon>
       </ion-fab-button>
     </div>
@@ -23,8 +23,8 @@
         <p>Sponsors </p>
       </div>
       <div class="arrSponsors">
-        <div class="image" *ngFor="let v of viewedTournament.approvedVendors">
-          <img src="{{v}}">
+        <div class="image" *ngFor="let v of viewedTournament.sponsors">
+          <img src="{{v.sponsorImage}}">
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
     </div>
     <div class="list">
       <div class="matcher" *ngIf="tournMatches.length==0">
-        <p style="margin: auto;text-align: center;">No Matches</p>
+        <p style="margin: auto;text-align: center;">Next division is being setup</p>
       </div>
       <div class="match" *ngFor="let m of tournMatches" (click)="viewMatch(m)">
         <div class="date">
@@ -69,7 +69,7 @@
           </div>
           <div class="vs">
             <p *ngIf="viewedTournament.state!='finished'">v</p>
-            <p *ngIf="viewedTournament.state=='finished'">{{m.score}}:{{m.ascore}}</p>
+            <p *ngIf="viewedTournament.state=='finished'">{{m.score}} FT {{m.ascore}}</p>
           </div>
           <div class="away">
             <p>{{m.aTeamObject.teamName}}</p>

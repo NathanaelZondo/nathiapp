@@ -6,11 +6,14 @@
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: rgb(255, 255, 255);
   }
-  
+  .closer {
+      position: absolute;
+      
+  }
 .container {
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.438)),url(../../../assets/add-team.jpg);
+    background: radial-gradient(transparent, #000000e8),linear-gradient(45deg, #05a66b 50%, #00794b00 50%),linear-gradient(40deg, orange 50%, #00794b00 50%),linear-gradient(37deg, #f2545445 50%, #00794b 50%);
     background-size: cover;
     text-align: center;
     overflow-y: auto;
@@ -25,8 +28,9 @@
         align-items: center;
         .closer {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 5px;
+      left: 5px;
+      z-index: 300;
         }
         .text {
             flex-basis: 100%;
@@ -41,21 +45,27 @@
         justify-content: space-evenly;
         justify-items: center;
         padding: 20px 0px;
-            width: 90vw;
+        width: 90vw;
         .backimage {
             color: white;
+            width: 30%;
             p {
                 font-size: 3vw;
             }
         }
     }
     .form {
+        .text-label {
+            .text {
+                color: white !important;
+            }
+        }
         form {
             .sc-ion-input-md, .native-input, ion-input  {
-                background: green;
+                // background: green;
                 color: white;
-                margin: 3px 0px;
-                border-radius: 100px;
+                // margin: 3px 0px;
+                // border-radius: 100px;
                 text-align: left;
             }
             .error {
