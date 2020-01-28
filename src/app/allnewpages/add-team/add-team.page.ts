@@ -108,7 +108,7 @@ if (!addTeamForm.valid) {
       
       // upon success...
       user.then(async() => {
-        this.router.navigateByUrl('tabs')
+        this.router.navigateByUrl('manage-team')
         const toast = await this.toastController.create({
           message: 'Success.',
           duration: 2000,
