@@ -32,15 +32,16 @@ export class AppComponent {
   ) {
     
     this.initializeApp();
-    this.fcm.getToken().then(token => {
-      this.token = token
-      console.log('token',token);
-      firebase.firestore().collection('testToken').add({
-        token: token,
-        timeStamp : new Date
-      })
-      });
-    
+    this.ngZone.run(() =>{
+      this.fcm.getToken().then(token => {
+        this.token = token
+        console.log('token',token);
+        firebase.firestore().collection('testToken').add({
+          token: token,
+          timeStamp : new Date
+        })
+        });
+    })
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (!user) {
         this.router.navigateByUrl("/tabs");
@@ -49,13 +50,13 @@ export class AppComponent {
         unsubscribe();
       } else {
 this.ngZone.run(()=>{
-  if(this.token != null) {
+  // if(this.token != null) {
     firebase.firestore().collection('members').doc(user.uid).update({
       Token : this.token
     })
     this.router.navigateByUrl("/tabs");
     console.log('logged in');
-  }
+  // }
   unsubscribe();
 })
   }
