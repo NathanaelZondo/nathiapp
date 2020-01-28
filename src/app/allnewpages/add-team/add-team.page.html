@@ -16,17 +16,22 @@
 <div class="imageUploads">
   <div class="backimage">
     <p>Team Logo</p>
-    <img src="{{logoImage}}" alt="" class="bimage">
+    <div class="img">
+      <img src="{{logoImage}}" alt="" class="bimage">
+    </div>
   <ion-progress-bar color="primary" value="{{logoProgress/100}}"></ion-progress-bar>
     <div class="btn">
       <ion-button (click)="selectLogoImage()">
-        <ion-icon name="logo-polymer"></ion-icon>
+        <ion-icon style="transform: scale(1.7) translateY(2px);" src="../../../assets/noun_Logo_2510105.svg"></ion-icon>
       </ion-button>
     </div>
   </div>
   <div class="backimage" >
     <p>Team Jersey</p>
-    <img src="{{TjerseyImage}}" alt="" class="bimage">
+    <div class="img">
+      <img src="{{TjerseyImage}}" alt="" class="bimage">
+    </div>
+    
   <ion-progress-bar color="primary" value="{{teamProgress/100}}"></ion-progress-bar>
     <div class="btn">
         <ion-button (click)="teamJersey()">
@@ -36,7 +41,10 @@
   </div>
   <div class="backimage" >
     <p>GoalKeeper Jersey</p>
-    <img src="{{GJerseyImage}}" alt="" class="bimage">
+    <div class="img">
+      <img src="{{GJerseyImage}}" alt="" class="bimage">
+    </div>
+    
     <ion-progress-bar color="primary" value="{{jerseyProgress/100}}"></ion-progress-bar>
     <div class="btn">
         <ion-button (click)="GoalKeeperJersey()">
@@ -57,8 +65,11 @@
   </div>
   <form [formGroup]="addTeamForm">
 
-      <ion-input type="text" formControlName="teamName" [(ngModel)]="teamNode.teamName" ngDefaultControl
-        placeholder="Team Name"></ion-input>
+      <ion-item>
+        <ion-label  position="floating">Team Name</ion-label>
+        <ion-input type="text" formControlName="teamName" [(ngModel)]="teamNode.teamName" ngDefaultControl
+        ></ion-input>
+      </ion-item>
 
     <div class="error" *ngFor="let validate of validation_messages.teamName">
       <div class="messages" style="color:red"
@@ -66,10 +77,11 @@
         <p>{{validate.message}}</p>
       </div>
     </div>
-
+    <ion-item>
+      <ion-label  position="floating">Coach Name</ion-label>
       <ion-input type="text" formControlName="coachName" [(ngModel)]="teamNode.coachName" ngDefaultControl
-        placeholder="Coach name"></ion-input>
-
+        ></ion-input>
+    </ion-item>
     <div class="error" *ngFor="let validate of validation_messages.coachName">
       <div class="messages" style="color:red"
         *ngIf="addTeamForm.get('coachName').hasError(validate.type) && (addTeamForm.get('coachName').dirty || addTeamForm.get('coachName').touched)">
@@ -77,9 +89,12 @@
       </div>
     </div>
     <!-- / ================================ -->
-
-      <ion-input type="text" formControlName="region" [(ngModel)]="teamNode.region" ngDefaultControl
-        placeholder="Region"></ion-input>
+      <ion-item>
+        <ion-label  position="floating" >Region</ion-label>
+        <ion-input type="text" formControlName="region" [(ngModel)]="teamNode.region" ngDefaultControl
+        ></ion-input>
+      </ion-item>
+    
 
     <div class="error" *ngFor="let validate of validation_messages.region">
       <div class="messages" style="color:red"
@@ -89,9 +104,12 @@
     </div>
     <!-- /
          -->
-
-      <ion-input type="tel" maxLength="10" formControlName="tel" [(ngModel)]="teamNode.tel"
-        placeholder="Contact Number"></ion-input>
+         <ion-item>
+           <ion-label position="floating">Contact Number</ion-label>
+           <ion-input type="tel" maxLength="10" formControlName="tel" [(ngModel)]="teamNode.tel"
+        ></ion-input>
+         </ion-item>
+      
 
     <div class="error" *ngFor="let validate of validation_messages.tel">
       <div class="messages" style="color:red"

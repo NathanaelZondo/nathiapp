@@ -1,12 +1,14 @@
-import { Component, OnInit, NgZone, Renderer2 } from '@angular/core';
+import { Component, OnInit, NgZone, Renderer2, ViewChild } from '@angular/core';
 import * as firebase from 'firebase';
 import { PassInformationServiceService } from '../service/pass-information-service.service';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.page.html',
   styleUrls: ['./tabs.page.scss'],
 })
 export class TabsPage implements OnInit {
+
   role = 'user'
   object: {
     o: {
@@ -16,7 +18,8 @@ export class TabsPage implements OnInit {
     }
   }
   status
-  tabElement = document.getElementsByTagName('ion-tab-bar')
+  tabElement = document.getElementsByTagName('ion-tab-bar');
+  activePage = 'home'
   constructor(public ngZone: NgZone, public passService: PassInformationServiceService,public renderer: Renderer2) { }
 
   ngOnInit() {
@@ -43,6 +46,9 @@ export class TabsPage implements OnInit {
       })
     })
   }
+  active(page) {
+    this.activePage = page;
+  }
   hideTabs(cmd) {
     switch (cmd) {
       case 'login':
@@ -55,5 +61,9 @@ export class TabsPage implements OnInit {
         this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
         break;
     }
+  }
+  onScroll(ev) {
+    console.log(ev);
+    
   }
 }

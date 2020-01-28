@@ -55,7 +55,11 @@ const routes: Routes = [
   {
     path: 'view-match',
     loadChildren: () => import('./allnewpages/view-match/view-match.module').then( m => m.ViewMatchPageModule)
+  },  {
+    path: 'onboarding',
+    loadChildren: () => import('./allnewpages/onboarding/onboarding.module').then( m => m.OnboardingPageModule)
   },
+
   
 
 

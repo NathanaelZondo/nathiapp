@@ -1,25 +1,34 @@
 <ion-content>
+  <!-- (ionRefresh)="doRefresh($event)" -->
+  
+  <div class="refreshe">
+    <!-- <ion-refresher slot="fixed" >
+    <ion-refresher-content
+    slot="fixed" pullFactor="0.5" pullMin="0" pullMax="0"
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher> -->
+</div>
   <div class="head">
 <div class="title">
   <h4><b>Nathis's </b>Tournaments</h4>
 </div>
-<div class="button">
-  <ion-button  fill="clear"  color="light">
-    <ion-icon name=""></ion-icon>
-  </ion-button>
-</div>
 <div class="button"  *ngIf="!accountRole" >
-  <ion-button fill="clear" color="light">
-    <ion-spinner color="light" name="bubbles"></ion-spinner>
-  </ion-button>
+    <ion-spinner style="margin: 0 !important;" color="light" name="lines"></ion-spinner>
 </div>
   </div>
   
   <div class="tournaments">
     <div class="inprogress">
       <div class="tite">
+        <div class="decor">
+          <div class="line"></div>
+        </div>
         <div class="text">
-          <p>Inprogress</p>
+          <p>Active</p>
         </div>
         <div class="decor">
           <div class="line"></div>
@@ -34,17 +43,19 @@
           <div class="info">
             <div class="details">
               <div>
-                <p>{{item.formInfo.type}} Participants</p>
+                <p style="font-size: 4vw !important;"><b>Top {{item.formInfo.type}} - <span style="color: orangered;">R {{item.formInfo.joiningFee}}.00 fee</span></b></p>
                 <p>{{item.formInfo.location}}</p>
-                <p>{{item.formInfo.startDate | date}} to {{item.formInfo.endDate | date}}</p>
-                <p>R {{item.formInfo.joiningFee}}.00 fee</p>
-                <p>Top {{item.formInfo.type}}</p>
-                <p>{{item.approvedVendors.length}} Vendors</p>
+                <p> Starts - {{item.formInfo.startDate | date}} <br> Ends - {{item.formInfo.endDate | date}}</p>
+                
+                <p style="color: rgb(170, 170, 170);">{{item.approvedVendors.length}} Vendors</p>
                </div>
             </div>
             <div class="sponsors">
-              <div>
-                <img *ngFor="let s of item.sponsors" src="{{s.sponsorImage}}" width="30px">
+              <div *ngFor="let s of item.sponsors">
+                <img src="../../assets/nathi_noImage.png" *ngIf="!s.sponsorImage"  alt="">
+                <div *ngIf="s.sponsorImage">
+                  <img  src="{{s.sponsorImage}}" width="30px">
+                </div>
               </div>
             </div>
           </div>
@@ -55,6 +66,9 @@
 
     <div class="upcomming">
       <div class="tite">
+        <div class="decor">
+          <div class="line"></div>
+        </div>
         <div class="text">
           <p>UpComing</p>
         </div>
@@ -71,17 +85,17 @@
           <div class="info">
             <div class="details">
               <div>
-                <p>{{item.formInfo.type}} Participants</p>
+                <p style="font-size: 4vw !important;"><b>Top {{item.formInfo.type}} - <span style="color: orangered;">R {{item.formInfo.joiningFee}}.00 fee</span></b></p>
                 <p>{{item.formInfo.location}}</p>
-                <p>{{item.formInfo.startDate | date}} to {{item.formInfo.endDate | date}}</p>
-                <p>R {{item.formInfo.joiningFee}}.00 fee</p>
-                <p>Top {{item.formInfo.type}}</p>
-                <p>{{item.approvedVendors.length}} Vendors</p>
+                <p> Starts - {{item.formInfo.startDate | date}} <br> Ends - {{item.formInfo.endDate | date}}</p>
+                
+                <p style="color: rgb(170, 170, 170);">{{item.approvedVendors.length}} Vendors</p>
                </div>
             </div>
             <div class="sponsors">
-              <div>
-                <img *ngFor="let s of item.sponsors" src="{{s.sponsorImage}}" width="30px">
+              <div *ngFor="let s of item.sponsors">
+                <img *ngIf="!s.sponsorImage"  src="../../assets/bluebg.jpg" alt="">
+                <img  *ngIf="s.sponsorImage"  src="{{s.sponsorImage}}" width="30px">
               </div>
             </div>
           </div>
@@ -91,8 +105,11 @@
     
     <div class="finnished">
       <div class="tite">
+        <div class="decor">
+          <div class="line"></div>
+        </div>
         <div class="text">
-          <p>Finnished</p>
+          <p>History</p>
         </div>
         <div class="decor">
           <div class="line"></div>
@@ -106,18 +123,18 @@
           </div>
           <div class="info">
             <div class="details">
-             <div>
-              <p>{{item.formInfo.type}} Participants</p>
-              <p>{{item.formInfo.location}}</p>
-              <p>{{item.formInfo.startDate | date}} to {{item.formInfo.endDate | date}}</p>
-              <p>R {{item.formInfo.joiningFee}}.00 fee</p>
-              <p>Top {{item.formInfo.type}}</p>
-              <p>{{item.approvedVendors.length}} Vendors</p>
-             </div>
+              <div>
+                <p style="font-size: 4vw !important;"><b>Top {{item.formInfo.type}} - <span style="color: orangered;">R {{item.formInfo.joiningFee}}.00 fee</span></b></p>
+                <p>{{item.formInfo.location}}</p>
+                <p>Ended - {{item.formInfo.endDate | date}}</p>
+                
+                <p style="color: rgb(170, 170, 170);">{{item.approvedVendors.length}} Vendors</p>
+               </div>
             </div>
             <div class="sponsors">
-              <div>
-              <img *ngFor="let s of item.sponsors" src="{{s}}" width="30px">
+              <div *ngFor="let s of item.sponsors">
+              <img *ngIf="!s.sponsorImage"  src="../../assets/bluebg.jpg" alt="">
+              <img *ngIf="s.sponsorImage" src="{{s.sponsorImage}}" width="30px">
               </div>
             </div>
           </div>

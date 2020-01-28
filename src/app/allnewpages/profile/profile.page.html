@@ -10,7 +10,8 @@
                 <div class="slant">
                     <div class="g">
                       <p *ngIf="!profile.form.fullName" >Unable to get Profile</p>
-                        <h3>{{profile.form.fullName}}</h3>
+                        <h1 style="color: black;    font-size: 9vw !important;
+                        margin-bottom: 50px;">{{profile.form.fullName}}</h1>
                         <p>{{profile.form.phoneNumber}}</p>
                         <p *ngIf="profile.form.role=='teamManager'" >Team Manager</p>
                         <p *ngIf="profile.form.role=='vendor'" >Vendor</p>
@@ -26,9 +27,6 @@
             </div>
 </div>
 <div class="tournaments">
-  <div class="tTitle">
-    <p>Tournaments</p>
-  </div>
   <div class="tourns">
     <div class="lazyCard" loading="lazy"  *ngIf="tournaments.length==0"  ><div class="t">
       <h1>NO TOURNAMENTS</h1>
@@ -39,23 +37,24 @@
     </div>
     <div class="card green" *ngFor="let t of tournaments" >
       <div class="title">
-        <h5>Msansi Championship Tournament</h5>
+        <h5>{{t.formInfo.tournamentName}}</h5>
       </div>
       <div class="info">
         <div class="details">
           <div>
-            <p>Participants</p>
-            <p>FNB Stadium</p>
-            <p>27 Jul, 2019 to 5 Oct, 2019</p>
-            <p>R 200.00 fee</p>
-            <p>Top 32</p>
+            <!-- <p>Participants : {{t.formInfo.type}}</p> -->
+            <p style="font-size: 3.8vw; font-weight: bolder;">Staduim : {{t.formInfo.location}} </p>
+            <p> Starts {{t.formInfo.startDate | date}} <br> Ends {{t.formInfo.endDate | date}}</p>
             <p>2 Vendors</p>
            </div>
         </div>
         <div class="sponsors">
           <div>
-            <img src="https://i1.wp.com/themediaonline.co.za/wp-content/uploads/2018/07/Absa_Logo_Primary_Identity_RGB_Passion-01.jpg?fit=1890%2C1890" width="30px" alt="">
-          <img src="https://seeklogo.com/images/M/MTN-logo-459AAF9482-seeklogo.com.png" width="30px"  alt="">
+            <div class="img" style="width: 30px;height: 30px;" *ngFor="let item of t.sponsors" >
+<img style="width: 100%;height: 100%;object-fit: cover;" *ngIf="!item.sponsorImage"  src="https://image.flaticon.com/icons/png/512/95/95019.png" alt="">
+            <img *ngIf="item.sponsorImage" style="width: 100%;height: 100%;object-fit: cover;"  src="{{item.sponsorImage}}" alt="">
+            </div>
+          <!-- <img src="https://seeklogo.com/images/M/MTN-logo-459AAF9482-seeklogo.com.png" width="30px"  alt=""> -->
           </div>
         </div>
       </div>

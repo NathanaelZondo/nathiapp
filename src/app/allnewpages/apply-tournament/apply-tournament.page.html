@@ -14,13 +14,13 @@
     <div class="header">
      
       <div class="text">
-        <p>Apply Tournament</p>
+        <h4>Apply Tournament</h4>
       </div>
     </div>
     <div class="t-list">
       <div class="label">
         <div class="t">
-          <p><sub><b>New Tournaments</b></sub></p>
+          <p><sub><b>New&nbsp;&nbsp;Tournaments</b></sub></p>
         </div>
         <div class="line">
           <div class="l"></div>
@@ -38,28 +38,29 @@
             </div>
             <div class="details">
               <div class="v">
-                <p>Participants {{x.doc.formInfo.type}}</p>
-                <p>{{x.doc.formInfo.location}}</p>
+                <p style="font-size: 4vw !important;font-weight: bolder;">Top  {{x.doc.formInfo.type}} - <span style="color: orangered;">R {{x.doc.formInfo.joiningFee}}.00 fee</span></p>
+                <p style="font-weight: bold;">Application Closing Date: {{x.doc.formInfo.applicationClosing | date}}</p>
                 <hr>
-                <p>{{x.doc.formInfo.startDate | date}} to {{x.doc.formInfo.endDate | date}}</p>
-                <p>R {{x.doc.formInfo.joiningFee}}.00 fee</p>
-                <p>Top 32</p>
-                <p>Application Closing Date: {{x.doc.formInfo.applicationClosing | date}}</p>
-                <p>Vendors {{x.doc.approvedVendors.length}}</p>
+                <p>{{x.doc.formInfo.location}} - <span> From {{x.doc.formInfo.startDate | date}} to {{x.doc.formInfo.endDate | date}}</span></p>
+                
+                <p style="color: rgb(173, 173, 173);">Vendors {{x.doc.approvedVendors.length}}</p>
               </div>
-              <!-- *ngIf="x.isApplied == false" -->
+              <!--  -->
               <div class="applied"   >
-                <ion-button  shape="round" slot="end" (click)="applyForTournament(x)">Apply</ion-button>
+                <ion-button size="small"  shape="round" slot="end" (click)="applyForTournament(x)" *ngIf="x.isApplied == false&&userProfile">Apply</ion-button>
+                <ion-button disabled="true"  shape="round" *ngIf="!userProfile" >
+                  Waiting for approval
+                </ion-button>
               </div>
-              <!-- <div class="applied" *ngIf="x.isApplied == true">
+              <div class="applied" *ngIf="x.isApplied == true">
                 <p *ngIf="x.application.status == 'awaiting'"> Your application is still being processed</p>
                 <p *ngIf="x.application.status == 'accepted'"> Application is being conditionally approved, please use <br>
-                  <span>{{x.application.refNumber}}</span> <br> as your reference number to pay</p>
+                  <span >{{x.application.refNumber}}</span> <br> as your reference number to pay</p>
                   <p (click) = "routerToProfile()" *ngIf="x.application.status == 'paid'"> Application is approved  <br> please go to your profile to view tournament, 
                 </p>
                 <p  *ngIf="x.application.status == 'declined'" style="background: red;color: rgb(255, 223, 223);"> Application for this tournament is unsuccessful.  
                 </p>
-              </div> -->
+              </div>
             </div>
           </div>
          </div>

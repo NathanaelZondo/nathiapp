@@ -29,7 +29,7 @@
       <ion-list>
         <ion-radio-group formControlName="role"  [(ngModel)]="role">
           <ion-list-header>
-            <ion-label style="color: white;">Register as:</ion-label>
+            <ion-label style="color: rgb(46, 46, 46); font-weight: bolder;">Register as:</ion-label>
           </ion-list-header>
     
           <ion-item style="border-radius: 10px;
@@ -46,10 +46,11 @@
           </ion-item>
         </ion-radio-group>
       </ion-list>
-      <!--  -->
-    <ion-button id="sign-in-button" [disabled]="!registrationForm.valid"  type="submit" class="form-buttons"  >
-      Sign In
+      <p style="width: 90%; margin: auto; text-align: center; padding: 10px;">By clicking Sign Up, you agree to our <span style="color: rgb(77, 184, 255);text-decoration: underline;">Terms</span> and <span style="color: rgb(77, 184, 255);text-decoration: underline;">Data Policy</span>. You may receive Notifications from us.</p>
+    <ion-button shape="round" id="sign-in-button" [disabled]="!registrationForm.valid"  type="submit" class="form-buttons"  >
+      Sign Up
     </ion-button>
+    
     </form>
     </div>
   

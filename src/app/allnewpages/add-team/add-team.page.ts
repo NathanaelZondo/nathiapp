@@ -33,11 +33,11 @@ export class AddTeamPage implements OnInit {
   storage = firebase.storage().ref();
   isuploading: false
   uploadprogress = 0;
-  logoImage
+  logoImage =null
   logoProgress = 0
-  GJerseyImage
+  GJerseyImage =null
   jerseyProgress = 0
-  TjerseyImage
+  TjerseyImage=null
   teamProgress = 0
   isEditing = false;
   userObj = {}
@@ -110,9 +110,8 @@ if (!addTeamForm.valid) {
       user.then(async() => {
         this.router.navigateByUrl('tabs')
         const toast = await this.toastController.create({
-          message: 'User Team added.',
+          message: 'Success.',
           duration: 2000,
-
         });
         toast.present();
      
@@ -164,6 +163,7 @@ if (!addTeamForm.valid) {
         upload.snapshot.ref.getDownloadURL().then(downUrl => {
           this.teamNode.teamLogo = downUrl;
           console.log('Image downUrl', downUrl);
+          this.logoProgress =0
         })
       })
     }, err => {
@@ -194,7 +194,7 @@ if (!addTeamForm.valid) {
       const upload = UserImage.putString(image, 'data_url');
       upload.on('state_changed', snapshot => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        this.uploadprogress = progress;
+        this.teamProgress = progress;
         if (progress == 100) {
           this.isuploading = false;
         }
@@ -203,7 +203,7 @@ if (!addTeamForm.valid) {
         upload.snapshot.ref.getDownloadURL().then(downUrl => {
           this.teamNode.teamJerseyIMG = downUrl;
           console.log('Image downUrl', downUrl);
-
+          this.teamProgress =0
 
         })
       })
@@ -237,17 +237,16 @@ if (!addTeamForm.valid) {
       const upload = UserImage.putString(image, 'data_url');
       upload.on('state_changed', snapshot => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        this.uploadprogress = progress;
+        this.jerseyProgress = progress;
         if (progress == 100) {
           this.isuploading = false;
         }
       }, err => {
       }, () => {
         upload.snapshot.ref.getDownloadURL().then(downUrl => {
-          this.teamNode.teamJerseyIMG = downUrl;
+          this.teamNode.goalKeeperJerseyIMG = downUrl;
           console.log('Image downUrl', downUrl);
-
-
+          this.jerseyProgress = 0
         })
       })
     }, err => {

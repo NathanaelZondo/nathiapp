@@ -1,52 +1,89 @@
 <ion-content>
-<div class="header">
-  <div class="backb">
-    <ion-fab-button size="small" (click)="goBack()">
-      <ion-icon name="arrow-back"></ion-icon>
-    </ion-fab-button>
-  </div>
-  <div class="info">
-  <div class="t"> <span>{{viewedTournament.formInfo.tournamentName}}</span>
-    <hr>
-    <p>Participants {{viewedTournament.formInfo.type}}</p>
-    <p>{{viewedTournament.formInfo.location}}</p>
-    <p>{{viewedTournament.formInfo.startDate | date}} to {{viewedTournament.formInfo.endDate | date}}</p>
-    <p>R {{viewedTournament.formInfo.joiningFee}}.00 fee</p>
-    <p>Top: {{viewedTournament.formInfo.type}}</p>
-    <p>Food Stalls {{viewedTournament.approvedVendors.length}}</p></div>
-  </div>
-  <div class="sponsors">
-    <div class="sTitle">
-      <p>Sponsors </p>
+  <div class="header">
+    <div class="backb">
+      <ion-fab-button size="small"  color="light" (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-fab-button>
     </div>
-    <div class="arrSponsors">
-      <div class="image" *ngFor="let v of viewedTournament.approvedVendors" >
-        <img src="{{v}}">
+    <div class="info">
+      <div class="t"> <span>{{viewedTournament.formInfo.tournamentName}}</span>
+        <hr>
+        <p>{{viewedTournament.formInfo.location}}</p>
+        <p *ngIf="viewedTournament.state!='finished'">{{viewedTournament.formInfo.startDate | date}} to {{viewedTournament.formInfo.endDate | date}}</p>
+        <p *ngIf="viewedTournament.state=='finished'">Ended {{viewedTournament.formInfo.endDate | date}}</p>
+        <p>R {{viewedTournament.formInfo.joiningFee}}.00 fee</p>
+        <p>Top: {{viewedTournament.formInfo.type}}</p>
+        <p *ngIf="viewedTournament.approvedVendors.length>0&&viewedTournament.state!='finished'" >Food will be sold</p>
+        <p *ngIf="viewedTournament.approvedVendors.length==0&&viewedTournament.state!='finished'" >No Food Sold</p>
+      <p *ngIf="viewedTournament.state=='finished'"><i>Winner <b>{{match.winner.teamName}}</b> </i></p>
+      </div>
+    </div>
+    <div class="sponsors">
+      <div class="sTitle">
+        
+      </div>
+      <div class="arrSponsors">
+        <div class="image" *ngFor="let v of viewedTournament.sponsors">
+          <img src="{{v.sponsorImage}}">
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="matches"   >
-  <div class="mTitle">
-    <div class="label"><p>Matches</p></div>
-    <div class="line"><div class="l"></div></div>
-  </div>
-  <div class="list">
-    <div class="matcher" *ngIf="tournMatches.length==0" >
-<p style="margin: auto;text-align: center;">No Matches</p>
-    </div>
-    <div class="match" *ngFor="let m of tournMatches" (click)="viewMatch(m)">
-      <div class="date">
-        <p>{{m.matchdate | date}}</p>
+  <div class="matches">
+    <div class="mTitle">
+      <div class="label">
+        <p>Matches</p>
       </div>
-      <div class="details">
-        <div class="home"><p>{{m.TeamObject.teamName}}</p></div><div class="vs"><p>v</p></div><div class="away"><p>{{m.aTeamObject.teamName}}</p></div>
+      <div class="line">
+        <div class="l"></div>
       </div>
- 
-        <div class="homeF"><p>Home</p></div>
-        <div class="awayF"><p>Away</p></div>
-   
+      <ion-segment scrollable="true" [(ngModel)]="category" (ionChange)="segmentChanged($event)">
+        <ion-segment-button *ngIf="match.type16.length>0" mode="ios" value="top32" color="primary">
+          <ion-label>Top 32</ion-label>
+        </ion-segment-button>
+        <ion-segment-button *ngIf="match.type8.length>0" mode="ios" value="top16">
+          <ion-label>Top 16</ion-label>
+        </ion-segment-button>
+        <ion-segment-button *ngIf="match.type4.length>0" mode="ios" value="top8">
+          <ion-label>Top 8</ion-label>
+        </ion-segment-button>
+        <ion-segment-button mode="ios" value="top4">
+          <ion-label>Semi-Final</ion-label>
+        </ion-segment-button>
+        <ion-segment-button mode="ios" value="top1">
+          <ion-label>Final</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    <div class="list">
+      <div class="matcher" *ngIf="tournMatches.length==0">
+        <p style="margin: auto;text-align: center;">Next division is being setup</p>
+      </div>
+      <div class="match" *ngFor="let m of tournMatches" (click)="viewMatch(m)">
+        <div class="date">
+          <p>{{m.matchdate | date}} - {{m.matchdate | date:'shortTime'}}</p>
+        </div>
+        <div class="details">
+          <div class="home">
+            <p>{{m.TeamObject.teamName}}</p>
+          </div>
+          <div class="vs">
+            <p *ngIf="viewedTournament.state!='finished'">v</p>
+            <p *ngIf="viewedTournament.state=='finished'">{{m.score}} FT {{m.ascore}}</p>
+          </div>
+          <div class="away">
+            <p>{{m.aTeamObject.teamName}}</p>
+          </div>
+        </div>
+
+        <div class="homeF">
+          <p>Home</p>
+        </div>
+        <div class="awayF">
+          <p>Away</p>
+        </div>
+
+      </div>
     </div>
   </div>
-</div>
 </ion-content>

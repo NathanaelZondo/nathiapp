@@ -17,7 +17,7 @@ import { FCM } from '@ionic-native/fcm/ngx';
 export class AppComponent {
   role
   //  profile = {} as Profile 
-   token
+   token =null
    o
 
   constructor(
@@ -49,11 +49,13 @@ export class AppComponent {
         unsubscribe();
       } else {
 this.ngZone.run(()=>{
-  firebase.firestore().collection('members').doc(user.uid).update({
-    Token : this.token
-  })
-  this.router.navigateByUrl("/tabs");
-  console.log('logged in');
+  if(this.token != null) {
+    firebase.firestore().collection('members').doc(user.uid).update({
+      Token : this.token
+    })
+    this.router.navigateByUrl("/tabs");
+    console.log('logged in');
+  }
   unsubscribe();
 })
   }

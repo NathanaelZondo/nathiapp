@@ -21,31 +21,32 @@ export class ProfilePage implements OnInit {
     status: "awaitin"
   }
   tournaments = []
+  participatingTourn = []
+  loggedInUser = null
   constructor(public router: Router, private alertCtrl: AlertController) { }
 
   ngOnInit() {
-    this.db.collection('members').doc(firebase.auth().currentUser.uid).get().then(res => {
-      console.log(res);
+    firebase.auth().onAuthStateChanged(user => {
+      firebase.auth().updateCurrentUser(user).then(() => {
+        this.loggedInUser = user
+        this.db.collection('members').doc(this.loggedInUser.uid).get().then(res => {
+          console.log(res);
+          this.profile.form.fullName = res.data().form.fullName
+          this.profile.form.phoneNumber = res.data().form.phoneNumber
+          this.profile.form.role = res.data().form.role
+          this.profile.status = res.data().status
+          console.log(res.data().form.role);
 
-      this.profile.form.fullName = res.data().form.fullName
-      this.profile.form.phoneNumber = res.data().form.phoneNumber
-      this.profile.form.role = res.data().form.role
-      this.profile.status = res.data().status
-      console.log(res.data().form.role);
-
-      if (res.data().form.role == 'teamManager') {
-        this.getManagerTournaments()
-      } else {
-        this.getVendorTournaments()
-      }
+          if (res.data().form.role == 'teamManager') {
+            this.getManagerTournaments()
+          } else {
+            this.getVendorTournaments()
+          }
+        })
+      })
     })
-    setTimeout(() => {
-
-    }, 500);
   }
   fitElementToParent(el, padding) {
-    // window.addEventListener('resize');
-
     if (this.timeout) clearTimeout(this.timeout);
     anime.set(el, { scale: 1 });
     var pad = padding || 0;
@@ -60,33 +61,29 @@ export class ProfilePage implements OnInit {
   getManagerTournaments() {
     this.db.collection('newTournaments').get().then(res => {
       res.forEach(tourns => {
-        this.db.collection('newTournaments').doc(tourns.id).collection('teamApplications').where('TeamObject.uid', '==', firebase.auth().currentUser.uid).get().then(snap => {
+        this.db.collection('newTournaments').doc(tourns.id).collection('teamApplications').where('TeamObject.uid', '==', this.loggedInUser.uid).where('status', '==', 'paid').get().then(snap => {
           snap.forEach(doc => {
             if (doc.exists) {
               this.tournaments.push(tourns.data())
             }
           })
-          console.log(this.tournaments);
-
+          console.log('lets see', this.tournaments);
         })
       })
-
     })
   }
   getVendorTournaments() {
     this.db.collection('newTournaments').get().then(res => {
       res.forEach(tourns => {
-        this.db.collection('newTournaments').doc(tourns.id).collection('vendorApplications').where('TeamObject.uid', '==', firebase.auth().currentUser.uid).get().then(snap => {
+        this.db.collection('newTournaments').doc(tourns.id).collection('vendorApplications').where('TeamObject.uid', '==', this.loggedInUser.uid).get().then(snap => {
           snap.forEach(doc => {
             if (doc.exists) {
               this.tournaments.push(tourns.data())
             }
           })
           console.log(this.tournaments);
-
         })
       })
-
     })
   }
   sphereAnimation = (() => {
@@ -175,6 +172,8 @@ export class ProfilePage implements OnInit {
           firebase.auth().signOut().then(() => {
             this.router.navigateByUrl('tabs/home').catch(err => {
             })
+          }).catch(err => {
+            console.log(err);
           })
         }
       }]
@@ -182,4 +181,21 @@ export class ProfilePage implements OnInit {
     alerter.present()
 
   }
+
+  //   getParticipatingTournaments(){
+  // this.db.collection('newTournaments').where('approved','==','true').onSnapshot(res =>{
+  //   this.participatingTourn = []
+  //   res.forEach(doc =>{
+  //     this.db.collection('newTournaments').doc(doc.id).collection('teamApplications').where('uid', '==', this.loggedInUser.uid).where('status','==','paid').onSnapshot(docx =>{
+
+  //        if(docx.size>0) {
+  //         this.participatingTourn.push(doc.data())
+  //         console.log('details',this.participatingTourn);
+
+  //        }
+  //     })
+
+  //   })
+  // })
+  //   }
 }

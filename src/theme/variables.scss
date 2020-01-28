@@ -68,18 +68,24 @@
 }
 ion-item {
   --background: rgba(51, 117, 117, 0);
-  --color: rgb(255, 255, 255);
+  --color: rgb(241, 241, 241);
   
 }
+// font-family: 'Roboto', sans-serif;
+// font-family: 'Open Sans', sans-serif;
 * {
-  font-family: 'Nunito', sans-serif !important;
+  font-family: 'Roboto', sans-serif !important;
 }
 h1,h2,h3,h4,h5 {
-  font-family: 'Libre Franklin', sans-serif;
+  font-family: 'Open Sans', sans-serif !important;
   font-weight: bold !important;
+  font-size: 4.6vw !important;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 a, span, p, ion-label {
-  font-family: 'Roboto Condensed', sans-serif !important;
+  font-family: 'Open Sans', sans-serif !important;
+  
 }
 ion-segment-button {
   --color-activated: white;
@@ -91,4 +97,11 @@ ion-segment-button {
 ion-loading {
   // --background: #000D06;
   --spinner-color: white;
+}
+ion-tab-button {
+  --background	: none !important;
+  --background-focused: none !important;
+  --color: orange !important;
+  --color-selected: #000D06 !important;
+  --ripple-color: #012615;
 }

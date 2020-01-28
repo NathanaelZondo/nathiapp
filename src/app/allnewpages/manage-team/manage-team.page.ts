@@ -18,9 +18,9 @@ export class ManageTeamPage implements OnInit {
   players = []
   noTeam = document.getElementsByClassName('noTeam')
   createTeam = false;
+  profile = false
+  enlarge = null
     constructor(  public renderer: Renderer2,  private formBuilder: FormBuilder, public router : Router,public navctrl : NavController) { 
-   
-      
     }
     editTean() {
       const parms: NavigationExtras  = {
@@ -35,7 +35,13 @@ export class ManageTeamPage implements OnInit {
       this.navctrl.pop()
     }
     ngOnInit() {
+      firebase.auth().onAuthStateChanged(user => {
+        firebase.auth().updateCurrentUser(user).then(res => {
       this.getTeam();
+      this.checkProfile()
+        })
+      })
+      
     }
     addTeam(){
       this.router.navigateByUrl('add-team');
@@ -43,8 +49,9 @@ export class ManageTeamPage implements OnInit {
     addPlayer(){
       this.router.navigateByUrl('add-player');
     }
-  getTeam(){
-    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then(res =>{
+  getTeam() {
+    
+    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).onSnapshot(res =>{
       if(res.exists){
        console.log('data',res.data());
        this.isTeam = true;
@@ -75,6 +82,23 @@ export class ManageTeamPage implements OnInit {
       this.playerMore = null
     } else {
       this.playerMore = i
+    }
+  }
+  checkProfile() {
+    this.db.collection('members').doc(firebase.auth().currentUser.uid).onSnapshot(res =>{
+      if(res.data().status == 'awaiting'){
+        console.log('no profile');
+        
+      }else{
+        this.profile = true
+      }
+    })
+  }
+  enlargeImage(image){    
+    if(this.enlarge == image) {
+      this.enlarge = null
+    } else {
+      this.enlarge = image;
     }
   }
 }

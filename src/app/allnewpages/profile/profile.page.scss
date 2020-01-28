@@ -7,9 +7,9 @@
     position: relative;
     width: 100%;
     height: 50%;
-    background: linear-gradient(#05A66B),url('https://images.unsplash.com/photo-1554331587-285152b85ce1?ixlib=rb-1.2.1&w=1000&q=80');
-    background-size: cover;
-    background-attachment: fixed;
+    background: url(../../../assets/footer_curves.svg);
+    background-size: 100% 177%;
+    // background-attachment: fixed;
     color: white;
     border-radius: 0px 0px 20px 20px;
     .head {
@@ -34,11 +34,11 @@
       /* width: 90vw; */
       /* height: 88%; */
       border-radius: 10px;
-      box-shadow: 0px 3px 3px #17171777;
+      // box-shadow: 0px 3px 3px #17171777;
       overflow: hidden;
       z-index: 500;
         .slant {
-          backdrop-filter: blur(10px);
+          // backdrop-filter: blur(10px);
           position: absolute;
           top: 15%;
           left: 0%;
@@ -48,7 +48,7 @@
           box-shadow: 0px 3px 3px #1717173b;
           overflow: hidden;
           z-index: 600;
-          background: rgba(0, 13, 6, 0.568);
+          // background: rgba(0, 13, 6, 0.568);
           display: -webkit-box;
           display: flex;
           -webkit-box-align: center;
@@ -80,7 +80,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(#05A66B),url('https://images.unsplash.com/photo-1554331587-285152b85ce1?ixlib=rb-1.2.1&w=1000&q=80');
+    background: none;
     background-attachment: fixed;
     background-size: cover;
     border-radius: 12px 20px 0px 0px;
@@ -106,8 +106,8 @@
   bottom: 0%;
   right: 5%;
   left: 5%;
-  overflow-x: auto;
-  overflow-y: hidden;
+  // overflow-x: auto;
+  overflow-y: visible;
   z-index: 700;
   border-radius: 10px 10px 0px 0px;
   color: white;
@@ -161,12 +161,13 @@
   }
   .card {
     border-radius: 10px;
-    padding: 5px;
+    padding: 15px;
     width: 96%;
-    background: #05A66B;
-    height: 72%;
+    background: linear-gradient(rgba(255, 255, 255, 0.712)),url(../../../assets/profileCard.svg) no-repeat, white;
+    background-size: 112% 100%;
+    max-height: 72%;
     margin: 0px auto 5px auto;
-    color: white;
+    color: rgb(0, 0, 0);
     .title {
         text-align: center;
         h5 {
@@ -222,6 +223,48 @@
     }
     }
   }
+}
+.tournaments::before {
+  content: "";
+  top: 0;
+  left: 9px;
+  right: 9px;
+  background: #523500;
+  z-index: 6000;
+  position: absolute;
+  height: 14px;
+  -webkit-transform: translateY(-8px);
+  transform: translateY(-14px);
+  align-content: center;
+  text-align: center;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.tournaments::after {
+  content: "APPLIED TOURNAMENTS";
+  top: 0;
+  left: 10px;
+  right: 10px;
+  background: linear-gradient(0deg, orange, #a26800);
+  z-index: 7000;
+  position: absolute;
+  height: 35px;
+  -webkit-clip-path: polygon(5% 100%, 95% 100%, 100% 0, 0 0);
+  clip-path: polygon(5% 100%, 95% 100%, 100% 0, 0 0);
+  -webkit-transform: translateY(-8px);
+  transform: translateY(-14px);
+  align-content: center;
+  text-align: center;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
 }
 .animation-wrapper {
   width: 50%;

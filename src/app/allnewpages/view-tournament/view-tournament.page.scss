@@ -1,7 +1,16 @@
+ion-segment-button {
+    --color-activated: rgb(34, 34, 34) !important;
+    --color: rgba(54, 54, 54, 0.445) !important;
+    --color-checked: rgb(34, 34, 34) !important;
+    --border-color:#05A66B !important;
+    --indicator-color-checked:#05A66B !important;
+    --padding-end: 10px;
+    --padding-start: 10px;
+  }
 .header {
     width: 100%;
     height: 40%;
-    background: linear-gradient(rgba(0, 13, 6, 0.76)), url(../../../assets/bg.svg),#012615;
+    background: linear-gradient(rgba(16, 15, 0, 0.7)), url(../../../assets/bendedFootballField.svg),#012615;
     background-position: 151% 21%;
     background-repeat: no-repeat;
     color: white;
@@ -20,6 +29,10 @@
         align-items: center;
         .t {
             margin: auto;
+            span {
+                font-size: 10vw;
+                text-transform: uppercase;
+            }
         }
         span {
             font-weight:bold;
@@ -73,7 +86,7 @@
             }
         }
         .line {
-            flex-basis: 90%;
+            flex-basis: 40vw;
             .l {
                 width: 100%;
                 height: 1px;
@@ -103,9 +116,10 @@
                 color: white;
                 border-radius: 3px;
                 position: absolute;
+                padding: 1vw 10px;
                 p  {
                     font-size: 3vw;
-                    margin: 3px;
+                    margin: 0px;
                 }
             }
             .details {
@@ -123,7 +137,7 @@
                     flex-basis: 45%;
                 }
                 p { 
-                    margin: 7vw 0px 5vw 0px;
+                    margin: 8vw 0px 6.8vw 0px;
                     font-size: 3vw;
                 }
             }
@@ -159,14 +173,14 @@
             min-height: 50px;
             margin:10px auto;
             box-shadow: 0px 2px 2px #1717172d;
-            border-radius: 10px;
+            border-radius: 3px;
             margin-bottom: 5px;
             overflow: hidden;
             position: relative;
             display: flex;
             align-items: center;
             text-align: center;
-            background: rgb(255, 220, 220);
+            background: linear-gradient(45deg, #02734a 10%, transparent 10%), linear-gradient(45deg, transparent 90%, #05a66b 90%);
         }
     }
 }

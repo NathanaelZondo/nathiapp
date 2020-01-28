@@ -86,7 +86,9 @@ if (val.data().approved == true) {
   ionViewWillLeave() {
     console.log('will leave');
 
-    this.popover1.dismiss();
+    if (this.popover1) {
+      this.popover1.dismiss();
+    }
   }
   /*
   getToken(){

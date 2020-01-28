@@ -7,6 +7,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { async } from 'q';
 import { Router } from '@angular/router';
+import { FCM } from '@ionic-native/fcm/ngx';
 declare var window
 @Component({
   selector: 'app-registerpage',
@@ -36,6 +37,7 @@ export class RegisterpagePage implements OnInit {
     role: ''
 
   }
+  token
   constructor(
     public authService: AuthServiceService,
     public formBuilder: FormBuilder,
@@ -43,9 +45,14 @@ export class RegisterpagePage implements OnInit {
     public route: Router,
     public loadingController: LoadingController,
     public ngZone: NgZone,
-    public renderer: Renderer2
+    public renderer: Renderer2,
+    public fcm : FCM,
+    private zone : NgZone
 
   ) {
+
+
+    
     this.smsSent = false
 
     firebase.auth().languageCode = 'en';
@@ -59,6 +66,11 @@ export class RegisterpagePage implements OnInit {
 
   }
   ngOnInit() {
+    this.zone.run(()=>{
+      this.fcm.getToken().then( token =>{
+        this.token = token
+      })
+    })
     // firebase.auth().onAuthStateChanged(res => {
     //   if (res) {
     //     this.profileService.storeAdmin(res);
@@ -66,7 +78,6 @@ export class RegisterpagePage implements OnInit {
     //   }
     // });
   }
-
   requestCode() {
     // this.phoneNumber = this.registrationForm.get('phoneNumber').value
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
@@ -145,7 +156,7 @@ export class RegisterpagePage implements OnInit {
   async alert(form) {
     const alert = await this.alertController.create({
       header: 'Verification code',
-      // subHeader: 'Enter verification code',
+      message:  `Code will be sent to <b>${form.phoneNumber}</b>`,
       backdropDismiss: false,
       inputs: [
         {
@@ -163,7 +174,7 @@ export class RegisterpagePage implements OnInit {
           this.ngZone.run(() => {
             firebase.auth().onAuthStateChanged(res => {
               if (res.uid) {
-                this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting',firstEmailRecieved : 'no' })
+                this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting',firstEmailRecieved : 'no' ,Token : this.token})
                 console.log('see ', res.uid);
               }
             })
@@ -172,6 +183,9 @@ export class RegisterpagePage implements OnInit {
             this.route.navigateByUrl('/tabs');
           })
         }
+      }, {
+        text: 'Change Number',
+        role:'cancel'
       }]
     });
     await alert.present();
@@ -213,7 +227,7 @@ export class RegisterpagePage implements OnInit {
     // console.log('Loading dismissed!');
   }
   close() {
-    this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
+    // this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
     this.route.navigateByUrl('tabs');
   }
 }
