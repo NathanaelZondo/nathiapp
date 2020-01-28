@@ -21,14 +21,18 @@ export class ProfilePage implements OnInit {
     status: "awaitin"
   }
   tournaments = []
+  vendorTournaments = []
   participatingTourn = []
   loggedInUser = null
   constructor(public router: Router, private alertCtrl: AlertController) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+  ionViewWillEnter(){
     firebase.auth().onAuthStateChanged(user => {
       firebase.auth().updateCurrentUser(user).then(() => {
         this.loggedInUser = user
+        console.log(this.loggedInUser);
+        
         this.db.collection('members').doc(this.loggedInUser.uid).get().then(res => {
           console.log(res);
           this.profile.form.fullName = res.data().form.fullName
@@ -74,14 +78,16 @@ export class ProfilePage implements OnInit {
   }
   getVendorTournaments() {
     this.db.collection('newTournaments').get().then(res => {
+      this.vendorTournaments = []
       res.forEach(tourns => {
-        this.db.collection('newTournaments').doc(tourns.id).collection('vendorApplications').where('TeamObject.uid', '==', this.loggedInUser.uid).get().then(snap => {
+        this.db.collection('newTournaments').doc(tourns.id).collection('vendorApplications').where('uid', '==', this.loggedInUser.uid).get().then(snap => {
+         
           snap.forEach(doc => {
             if (doc.exists) {
-              this.tournaments.push(tourns.data())
+              this.vendorTournaments.push(tourns.data())
             }
           })
-          console.log(this.tournaments);
+          console.log(this.vendorTournaments);
         })
       })
     })

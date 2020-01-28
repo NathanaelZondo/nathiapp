@@ -53,15 +53,21 @@
                   Waiting for approval
                 </ion-button>
               </div>
+              <div class="applied d" *ngIf="x.isApplied == true&&x.application.status == 'accepted'">
+                <p style="position: unset; background: none !important;backdrop-filter: none !important;margin: auto;" *ngIf="x.application.status == 'accepted'" > <b style="    font-size: 5vw;">FEE REQUIRED</b> <br> Please use <br>
+                  <span style="font-size: 9vw !important;" >{{x.application.refNumber}}</span> <br> as your reference number to pay. <br>
+                Further instructions in your email
+                </p>
+              </div>
               <div class="applied" *ngIf="x.isApplied == true">
-                <p *ngIf="x.application.status == 'awaiting'"> Your application is still being processed</p>
-                <p *ngIf="x.application.status == 'accepted'"> Application is being conditionally approved, please use <br>
-                  <span >{{x.application.refNumber}}</span> <br> as your reference number to pay</p>
-                  <p (click) = "routerToProfile()" *ngIf="x.application.status == 'paid'"> Application is approved  <br> please go to your profile to view tournament, 
+                <p *ngIf="x.application.status == 'awaiting'"> Your application is being processed.</p>
+                
+                  <p (click) = "routerToProfile()" *ngIf="x.application.status == 'paid'"> Application is approved  <br> please go to <u>your profile</u> to view tournament 
                 </p>
                 <p  *ngIf="x.application.status == 'declined'" style="background: red;color: rgb(255, 223, 223);"> Application for this tournament is unsuccessful.  
                 </p>
               </div>
+              
             </div>
           </div>
          </div>

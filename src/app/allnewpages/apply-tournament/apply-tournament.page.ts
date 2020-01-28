@@ -140,7 +140,8 @@ export class ApplyTournamentPage implements OnInit {
                   vendorobject: this.vendorObj,
                   refNumber: r,
                   status: 'awaiting',
-                  TournamentID: value.docid
+                  TournamentID: value.docid,
+                  uid: this.loggedInUser.uid
                 }).then(res => {
                   this.db.collection('newTournaments').doc(value.docid).update({
                     vendorTotalApplications: firebase.firestore.FieldValue.increment(1)

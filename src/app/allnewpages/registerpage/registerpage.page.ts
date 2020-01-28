@@ -35,7 +35,6 @@ export class RegisterpagePage implements OnInit {
     email: null,
     uid: '',
     role: ''
-
   }
   token
   constructor(
@@ -50,9 +49,6 @@ export class RegisterpagePage implements OnInit {
     private zone : NgZone
 
   ) {
-
-
-    
     this.smsSent = false
 
     firebase.auth().languageCode = 'en';
@@ -61,7 +57,7 @@ export class RegisterpagePage implements OnInit {
       phoneNumber: [this.phoneNumber, Validators.compose([Validators.required])],
       fullName: ['', Validators.required],
       role: ['', Validators.required],
-      email: ['',[Validators.required,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]]
+      email: ['',[Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]]
     })
 
   }
@@ -165,6 +161,11 @@ export class RegisterpagePage implements OnInit {
           placeholder: 'Enter code'
         }],
       buttons: [{
+        text: 'Change Number',
+        handler:()=> {
+          window.recaptchaVerifier.clear()
+        }
+      },{
         text: 'Submit',
         role: 'submit',
         cssClass: 'secondary',
@@ -173,19 +174,23 @@ export class RegisterpagePage implements OnInit {
           this.logins(result.code);
           this.ngZone.run(() => {
             firebase.auth().onAuthStateChanged(res => {
-              if (res.uid) {
-                this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting',firstEmailRecieved : 'no' ,Token : this.token})
-                console.log('see ', res.uid);
+              if (this.token) {
+                if (res.uid) {
+                  this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting',firstEmailRecieved : 'no' ,Token : this.token})
+                  console.log('see ', res.uid);
+                }
+              } else {
+                if (res.uid) {
+                  this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting',firstEmailRecieved : 'no'})
+                  console.log('see ', res.uid);
+                }
               }
             })
             this.presentLoading()
-            this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
+            // this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
             this.route.navigateByUrl('/tabs');
           })
         }
-      }, {
-        text: 'Change Number',
-        role:'cancel'
       }]
     });
     await alert.present();
