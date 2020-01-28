@@ -193,6 +193,7 @@ export class ApplyTournamentPage implements OnInit {
           if (this.passService.role == 'vendor') {
             this.db.collection('newTournaments').doc(document.id).collection('vendorApplications').doc(this.loggedInUser.uid).get().then(res => {
               console.log('applied tournaments', res.data());
+              this.applytournaments = []
               if (res.exists) {
                 obj = {
                   docid: document.id,
