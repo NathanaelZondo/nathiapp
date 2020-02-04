@@ -4,7 +4,7 @@
 <div class="div">
   <div class="title">
     <div class="closer">
-<ion-fab-button (click)="back()" style="margin: 0;" size="small" color="light">
+<ion-fab-button (click)="back()" *ngIf="isEditing"  style="margin: 0;" size="small" color="light">
   <ion-icon name="arrow-back"></ion-icon>
 </ion-fab-button>
       </div>

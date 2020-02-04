@@ -1,88 +1,105 @@
 <ion-content>
-  <div class="header">
-    <div class="backb">
-      <ion-fab-button size="small"  color="light" (click)="goBack()">
+  <div class="oneData animated fadeInDown faster">
+<div class="shad animated fadeIn delayer1">
+  <div class="title">
+    <div class="backer">
+      <ion-fab-button (click)="goBack()" size="small" color="light">
         <ion-icon name="arrow-back"></ion-icon>
       </ion-fab-button>
     </div>
-    <div class="info">
-      <div class="t"> <span>{{viewedTournament.formInfo.tournamentName}}</span>
-        <hr>
-        <p>{{viewedTournament.formInfo.location}}</p>
-        <p *ngIf="viewedTournament.state!='finished'">{{viewedTournament.formInfo.startDate | date}} to {{viewedTournament.formInfo.endDate | date}}</p>
-        <p *ngIf="viewedTournament.state=='finished'">Ended {{viewedTournament.formInfo.endDate | date}}</p>
-        <p>R {{viewedTournament.formInfo.joiningFee}}.00 fee</p>
-        <p>Top: {{viewedTournament.formInfo.type}}</p>
-        <p *ngIf="viewedTournament.approvedVendors.length>0&&viewedTournament.state!='finished'" >Food will be sold</p>
-        <p *ngIf="viewedTournament.approvedVendors.length==0&&viewedTournament.state!='finished'" >No Food Sold</p>
-      <p *ngIf="viewedTournament.state=='finished'"><i>Winner <b>{{match.winner.teamName}}</b> </i></p>
-      </div>
-    </div>
-    <div class="sponsors">
-      <div class="sTitle">
-        
-      </div>
-      <div class="arrSponsors">
-        <div class="image" *ngFor="let v of viewedTournament.sponsors">
-          <img src="{{v.sponsorImage}}">
-        </div>
-      </div>
-    </div>
+    <ion-button class="animated fadeIn" *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='checking'"  size="small" color="success" disabled='true' fill='clear'>
+      <ion-spinner name="lines"></ion-spinner>
+    </ion-button>
+    <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='no'}"  *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='no'"  size="small" color="success" (click)="applyForTournament()">
+      Apply
+    </ion-button>
+    <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='yes'}" *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='yes'"  size="small" color="success" disabled='true'>
+      Already Applied
+    </ion-button>
+    <ion-button class="animated fadeIn slow" *ngIf="viewedTournament.state=='finished'"  size="small" color="success">
+      {{match.winner.teamName}} won
+    </ion-button>
   </div>
-  <div class="matches">
-    <div class="mTitle">
-      <div class="label">
-        <p>Matches</p>
-      </div>
-      <div class="line">
-        <div class="l"></div>
-      </div>
-      <ion-segment scrollable="true" [(ngModel)]="category" (ionChange)="segmentChanged($event)">
-        <ion-segment-button *ngIf="match.type16.length>0" mode="ios" value="top32" color="primary">
-          <ion-label>Top 32</ion-label>
-        </ion-segment-button>
-        <ion-segment-button *ngIf="match.type8.length>0" mode="ios" value="top16">
-          <ion-label>Top 16</ion-label>
-        </ion-segment-button>
-        <ion-segment-button *ngIf="match.type4.length>0" mode="ios" value="top8">
-          <ion-label>Top 8</ion-label>
-        </ion-segment-button>
-        <ion-segment-button mode="ios" value="top4">
-          <ion-label>Semi-Final</ion-label>
-        </ion-segment-button>
-        <ion-segment-button mode="ios" value="top1">
-          <ion-label>Final</ion-label>
-        </ion-segment-button>
-      </ion-segment>
+    <div class="data">
+    <h1>{{viewedTournament.formInfo.tournamentName}}</h1>
+      <p id="desc" style="font-size: 3vw;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Asperiores earum aperiam accusamus perspiciatis at obcaecati quos porro sapiente autem provident temporibus iste facilis ratione recusandae, ducimus facere delectus aut? Doloremque.</p>
     </div>
-    <div class="list">
-      <div class="matcher" *ngIf="tournMatches.length==0">
-        <p style="margin: auto;text-align: center;">Next division is being setup</p>
+    <div class="more">
+      <div class="date">
+        <ion-icon src="../../../assets/noun_date_2080425.svg"></ion-icon>
+        <p>{{viewedTournament.formInfo.startDate | date}}</p>
       </div>
-      <div class="match" *ngFor="let m of tournMatches" (click)="viewMatch(m)">
-        <div class="date">
-          <p>{{m.matchdate | date}} - {{m.matchdate | date:'shortTime'}}</p>
+      <div class="location">
+        <ion-icon src="../../../assets/noun_Location_3076235.svg"></ion-icon>
+        <p>{{viewedTournament.formInfo.location}}</p>
+      </div>
+    </div>
+</div>
+      <div class="participants animated fadeIn delayer2 fast">
+        <div class="pTitle">
+          <h4 >Participants</h4>
         </div>
-        <div class="details">
-          <div class="home">
-            <p>{{m.TeamObject.teamName}}</p>
-          </div>
-          <div class="vs">
-            <p *ngIf="viewedTournament.state!='finished'">v</p>
-            <p *ngIf="viewedTournament.state=='finished'">{{m.score}} FT {{m.ascore}}</p>
-          </div>
-          <div class="away">
-            <p>{{m.aTeamObject.teamName}}</p>
+        <div class="plist">
+          <div class="img animated fadeInLeft" *ngFor="let item of participants" >
+            <img src="{{item.teamLogo}}" alt="">
           </div>
         </div>
+        <div class="dSegms">
+          <div class="filters animated fadeIn faster">
 
-        <div class="homeF">
-          <p>Home</p>
-        </div>
-        <div class="awayF">
-          <p>Away</p>
-        </div>
+            <ion-button *ngIf="match.type16.length>0"  class="filters animated fadeIn faster" [ngClass]="{'selected':filterBy=='top32'}" color="dark" (click)="segmentChanged('top32')"
+                style="font-size: 3vw;" size="small" fill="clear" >
+                Top 32
+            </ion-button>
 
+            <ion-button *ngIf="match.type8.length>0" class="filters animated fadeIn faster" [ngClass]="{'selected':filterBy=='top16'}" color="dark" (click)="segmentChanged('top16')"
+                style="font-size: 3vw;" size="small" fill="clear" >
+                Top 16
+            </ion-button>
+
+            <ion-button *ngIf="match.type4.length>0" class="filters animated fadeIn faster" [ngClass]="{'selected':filterBy=='top8'}" color="dark" (click)="segmentChanged('top8')"
+                style="font-size: 3vw;" size="small" fill="clear" >
+                Top 8
+            </ion-button>
+
+            <ion-button *ngIf="match.type2.length>0" class="filters animated fadeIn faster" [ngClass]="{'selected':filterBy=='top4'}" color="dark" (click)="segmentChanged('top4')" style="font-size: 3vw;"
+                size="small" fill="clear" >
+                Semi-Final
+            </ion-button>
+
+            <ion-button *ngIf="match.type1.length>0" class="filters animated fadeIn faster" [ngClass]="{'selected':filterBy=='top1'}" color="dark" (click)="segmentChanged('top1')" style="font-size: 3vw;"
+                size="small" fill="clear" >
+                Final
+            </ion-button>
+            <h1 style="margin: auto; text-align: center;" class="filters animated fadeIn faster" *ngIf="filterBy=='nothing'" >
+              Next Division is being setup
+            </h1>
+        </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="threeData">
+    <div class="matchs animated fadeIn delayer1">
+      <div class="matchList">
+        <div class="m animated fadeInRight delayer2" [ngClass]="{'nMargin':tournMatches.length>1,'cMargin':tournMatches.length==1}" *ngFor="let item of tournMatches" (click)="viewMatch(item)" >
+          <div class="mStatus">
+            <ion-button size="small" shape="round"  color="danger" >
+              Live Now
+            </ion-button>
+          </div>
+          <div class="teams">
+            <div class="h"><div class="img"><img src="{{item.TeamObject.teamLogo}}" alt=""></div></div>
+            <div class="v"><p>11:22</p></div>
+            <!-- [ngStyle]="{'background': 'url(' + sampImg + ') no-repeat 0 0 / cover'}" -->
+            <div class="a" ><div class="img"><img src="{{item.aTeamObject.teamLogo}}" alt=""></div></div>
+          </div>
+          <div class="data">
+            <h5>{{viewedTournament.formInfo.location}}</h5>
+            <p>{{item.matchdate | date:'MMM dd'}} - {{item.matchdate | date:'shortTime'}}</p>
+          </div>
+          <div class="line"></div>
+        </div>
       </div>
     </div>
   </div>

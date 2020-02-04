@@ -64,6 +64,7 @@ export class ProfilePage implements OnInit {
   }
   getManagerTournaments() {
     this.db.collection('newTournaments').get().then(res => {
+      this.tournaments = []
       res.forEach(tourns => {
         this.db.collection('newTournaments').doc(tourns.id).collection('teamApplications').where('TeamObject.uid', '==', this.loggedInUser.uid).where('status', '==', 'paid').get().then(snap => {
           snap.forEach(doc => {

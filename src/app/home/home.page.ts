@@ -21,10 +21,16 @@ export class HomePage {
   role
   user
   token
-  inprogress = []
-  upcoming = []
-  finished = []
+  skeleton = [1,2,3,4,5,6,7]
+  viewTournaments = []
+  tourn = {
+    inprogres: [],
+    upcoming: [],
+    finished: []
+  }
   accountRole = null
+  filterBy = 'comingUp'
+  loadFilter = false;
   constructor(public router: Router,
     public popoverController: PopoverController,
     public pass: PassInformationServiceService,
@@ -32,44 +38,46 @@ export class HomePage {
     public splashScreen: SplashScreen,
     // private oneSignal: OneSignal,
     public ngZone: NgZone) {
-    this.upcoming = [];
+    this.tourn.upcoming = [];
     // this.router.navigate(['tournament']);
     // console.log('uid',firebase.auth().currentUser.uid);
     // this.getUserProfile()
     // this.user = firebase.auth().currentUser.uid
 
     firebase.firestore().collection('newTournaments').where("state", '==', 'newTournament').onSnapshot(res => {
-      this.upcoming = []
+      this.tourn.upcoming = []
       res.forEach(val => {
-       
-if (val.data().approved == true) {
-           console.log("here", this.upcoming)
-  this.upcoming.push({ ...{ doc_id: val.id }, ...val.data() });
 
-  if (this.upcoming.length == undefined) {
-    this.upcoming = [];
-  }
-  else {
-    // this.upcoming.push({ ...{ doc_id: val.id }, ...val.data() });
-  }
-}
+        if (val.data().approved == true) {
+          console.log("here", this.tourn.upcoming)
+          this.tourn.upcoming.push({ ...{ doc_id: val.id }, ...val.data() });
+
+          if (this.tourn.upcoming.length == undefined) {
+            this.tourn.upcoming = [];
+          }
+          else {
+            // this.upcoming.push({ ...{ doc_id: val.id }, ...val.data() });
+          }
+        }
       })
+      this.skeleton = []
+      this.viewTournaments = this.tourn.upcoming
     })
 
 
     firebase.firestore().collection('newTournaments').where("state", '==', 'inprogress').onSnapshot(res => {
-      this.inprogress = []
+      this.tourn.inprogres = []
       res.forEach(val => {
-        this.inprogress.push({ ...{ doc_id: val.id }, ...val.data() });
-        console.log("inprog", this.inprogress)
+        this.tourn.inprogres.push({ ...{ doc_id: val.id }, ...val.data() });
+        console.log("inprog", this.tourn.inprogres)
       })
     })
 
 
     firebase.firestore().collection('newTournaments').where("state", '==', 'finished').onSnapshot(res => {
-      this.finished =[]
+      this.tourn.finished = []
       res.forEach(val => {
-        this.finished.push({ ...{ doc_id: val.id }, ...val.data() });
+        this.tourn.finished.push({ ...{ doc_id: val.id }, ...val.data() });
         console.log("here")
       })
     })
@@ -160,5 +168,36 @@ if (val.data().approved == true) {
     };
     // passes nav params
     this.router.navigate(['view-tournament'], navigationExtras);
+  }
+  filter(by) {
+    if (this.filterBy != by) {
+      this.loadFilter = true
+      this.filterBy = by
+      console.log(this.filterBy);
+
+      switch (by) {
+        case 'comingUp':
+
+          setTimeout(() => {
+            this.viewTournaments = this.tourn.upcoming
+            this.loadFilter = false
+          }, 100);
+          break;
+        case 'inProgress':
+
+          setTimeout(() => {
+            this.viewTournaments = this.tourn.inprogres
+            this.loadFilter = false
+          }, 100);
+          break;
+        case 'results':
+
+          setTimeout(() => {
+            this.viewTournaments = this.tourn.finished
+            this.loadFilter = false
+          }, 100);
+          break;
+      }
+    }
   }
 }

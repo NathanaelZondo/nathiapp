@@ -9,6 +9,8 @@ import { PassInformationServiceService } from './service/pass-information-servic
 import * as firebase from 'firebase';
 import {config} from './firebaseConfig'
 import { FCM } from '@ionic-native/fcm/ngx';
+import { NativeStorage } from "@ionic-native/native-storage/ngx";
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -28,7 +30,8 @@ export class AppComponent {
     private pass : PassInformationServiceService,
     public ngZone: NgZone,
     private alertCtrl: AlertController,
-    private fcm : FCM
+    private fcm : FCM,
+    private nativeStorage: NativeStorage
   ) {
     
     this.initializeApp();
@@ -41,28 +44,42 @@ export class AppComponent {
           timeStamp : new Date
         })
         });
-    })
-    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-      if (!user) {
-        this.router.navigateByUrl("/tabs");
-        console.log('not logged in');
+        this.runProcesses()
         
-        unsubscribe();
-      } else {
-this.ngZone.run(()=>{
-  // if(this.token != null) {
-    firebase.firestore().collection('members').doc(user.uid).update({
-      Token : this.token
     })
-    this.router.navigateByUrl("/tabs");
-    console.log('logged in');
-  // }
-  unsubscribe();
-})
   }
-    });
+  runProcesses() {
+    this.nativeStorage.getItem('doneOnboarding').then( res => {
+      if (res == true) {
+        const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+          if (!user) {
+            this.router.navigateByUrl("/tabs");
+  
+            unsubscribe();
+  
+          } else {
+      this.ngZone.run(()=>{
+      // if(this.token != null) {
+        firebase.firestore().collection('members').doc(user.uid).update({
+          Token : this.token
+        })
+        this.router.navigateByUrl("/tabs");
+        console.log('logged in');
+      // }
+      unsubscribe();
+      })
+      }
+        });
+      } else {
+        this.router.navigateByUrl("onboarding");
+      }
+    }, err => {
+      console.log('component error ', err);
+      
+      this.router.navigateByUrl("/tabs");
+      // this.router.navigateByUrl("onboarding");
+    })
   }
-
   initializeApp() {
 
     this.platform.ready().then(() => {
@@ -71,10 +88,8 @@ this.ngZone.run(()=>{
        }
       this.statusBar.styleLightContent();
       this.statusBar.backgroundColorByHexString('#387336')
-
+       
     });
-
-
   }
 
 

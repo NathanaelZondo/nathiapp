@@ -44,8 +44,8 @@
           <p><sub>*NOTE: You must have a team first.</sub></p>
         </div>
       </div>
-      <div *ngIf="profile.form.role=='teamManager'">
-        <div class="card green" *ngFor="let t of tournaments">
+      <div class="card green" *ngIf="profile.form.role=='teamManager'">
+        <div  *ngFor="let t of tournaments">
           <div class="title">
             <h5>{{t.formInfo.tournamentName}}</h5>
           </div>

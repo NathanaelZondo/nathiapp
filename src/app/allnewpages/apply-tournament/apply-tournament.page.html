@@ -49,8 +49,8 @@
               <div class="applied"   >
                 <!--  -->
                 <ion-button size="small"  shape="round" slot="end" *ngIf="x.isApplied == false&&userProfile" (click)="applyForTournament(x)" >Apply</ion-button>
-                <ion-button disabled="true"  shape="round" *ngIf="!userProfile" >
-                  Waiting for approval
+                <ion-button size="small" disabled="true"  shape="round" *ngIf="!userProfile" >
+                  Pending profile approval
                 </ion-button>
               </div>
               <div class="applied d" *ngIf="x.isApplied == true&&x.application.status == 'accepted'">

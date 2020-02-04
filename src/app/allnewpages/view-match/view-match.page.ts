@@ -1,5 +1,5 @@
-import { NavController } from '@ionic/angular';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { NavController, IonSlides } from '@ionic/angular';
+import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import * as firebase from 'firebase'
 import { PassInformationServiceService } from 'src/app/service/pass-information-service.service';
@@ -9,13 +9,15 @@ import { PassInformationServiceService } from 'src/app/service/pass-information-
   styleUrls: ['./view-match.page.scss'],
 })
 export class ViewMatchPage implements OnInit {
+  @ViewChild('slides',{static: true}) slides: IonSlides
   segmentVal = 'lineup'
-  arr = []
+  arr = [1,2,3,4,5,6,7,8,9,0,1]
   viewPlayer = false;
   playerDetailsDiv = document.getElementsByClassName('playerInfo')
   viewTeam = false;
   teamDetailsDiv = document.getElementsByClassName('teamInfo')
   viewStatistics = false;
+  
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>BACK END>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   viewingMatch = null
@@ -38,12 +40,12 @@ export class ViewMatchPage implements OnInit {
 
   // stores the team being viewed
   teamViewed = null
-
+  open
   db = firebase.firestore()
   match = [];
   tournament
   object: any = {};
-  teamSide = 'home'
+  teamSide = {} as any
   corner = 0;
   cornerstats = [];
   acorner = 0;
@@ -102,14 +104,6 @@ export class ViewMatchPage implements OnInit {
           console.log(this.redstats, this.red)
         }
 
-
-
-
-
-
-
-
-
         if (this.object.stats[r].aoffsides != undefined) {
 
           this.aoffsidestats.push(this.object.stats[r]);
@@ -153,6 +147,8 @@ export class ViewMatchPage implements OnInit {
         this.awayplayers.push(val.data())
 
       })
+      console.log('player here' , this.awayplayers);
+      
     })
 
   }
@@ -162,9 +158,12 @@ export class ViewMatchPage implements OnInit {
       },2000)
   }
   // leave it alone
-  viewStats(){this.viewStatistics=!this.viewStatistics}
+  viewStats(){
+    this.viewStatistics=!this.viewStatistics
+    
+  }
 
-  player(side, state, p) {
+  player(state, p) {
     console.log(p);
     if (p != null) {
       this.playerViewed = p
@@ -188,43 +187,23 @@ export class ViewMatchPage implements OnInit {
     }
     switch (state) {
       case 'open':
-        if (side == 'home') {
-          this.viewPlayer = true;
-          this.renderer.setStyle(this.playerDetailsDiv[0], 'display', 'flex')
-        } else {
-          this.viewPlayer = true;
-          this.renderer.setStyle(this.playerDetailsDiv[0], 'display', 'flex')
-
-        }
+        this.viewPlayer = true;
         break;
       case 'close':
-        if (side == 'home') {
-          this.viewPlayer = false;
-          setTimeout(() => {
-            this.renderer.setStyle(this.playerDetailsDiv[0], 'display', 'none')
-          }, 500);
-        } else {
-          this.viewPlayer = false;
-          setTimeout(() => {
-            this.renderer.setStyle(this.playerDetailsDiv[0], 'display', 'none')
-          }, 500);
-        }
+        this.viewPlayer = false;
         break;
     }
   }
   team(side, state) {
-    
-    
     switch (state) {
       case 'open':
         if (side == 'home') {
-          this.teamSide = side
+          this.teamSide = this.object.TeamObject
           this.viewTeam = true;
-          this.renderer.setStyle(this.teamDetailsDiv[0], 'display', 'flex')
+          console.log(this.teamSide)
         } else {
-          this.teamSide = side
+          this.teamSide = this.object.aTeamObject
           this.viewTeam = true;
-          this.renderer.setStyle(this.teamDetailsDiv[0], 'display', 'flex')
         }
         break;
       case 'close':
@@ -232,21 +211,19 @@ export class ViewMatchPage implements OnInit {
           
           this.viewTeam = false;
           setTimeout(() => {
-            this.renderer.setStyle(this.teamDetailsDiv[0], 'display', 'none')
-            this.teamSide = null
+            this.teamSide = {}
           }, 500);
         } else {
-          
           this.viewTeam = false;
           setTimeout(() => {
-            this.renderer.setStyle(this.teamDetailsDiv[0], 'display', 'none')
-            this.teamSide = null
+            this.teamSide = {}
           }, 500);
         }
         break;
     }
   }
   ngOnInit() {
+    this.slides.lockSwipes(true)
     this.doRefresh(1)
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -259,8 +236,20 @@ export class ViewMatchPage implements OnInit {
       }
     });
   }
+  ionSlideWillChange() {
+
+  }
   segmentChanged(ev) {
-    console.log(ev.detail.value)
+    this.segmentVal = ev
+    if (this.segmentVal=='lineup') {
+      this.slides.lockSwipes(false)
+      this.slides.slideTo(0)
+      this.slides.lockSwipes(true)
+    } else {
+      this.slides.lockSwipes(false)
+      this.slides.slideTo(1)
+      this.slides.lockSwipes(true)
+    }
   }
   goBack() {
     let navigationExtras: NavigationExtras = {

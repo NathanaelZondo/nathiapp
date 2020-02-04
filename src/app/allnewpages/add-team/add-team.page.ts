@@ -41,6 +41,28 @@ export class AddTeamPage implements OnInit {
   teamProgress = 0
   isEditing = false;
   userObj = {}
+  validation_messages = {
+    'teamName': [
+      { type: 'required', message: 'Name is required.' },
+      { type: 'minlength', message: 'Name must be at least 4 characters long.' },
+      { type: 'maxlength', message: 'Name cannot be more than 25 characters long.' },
+      { type: 'pattern', message: 'Name must not contain numbers or special characters.' },
+      { type: 'validUsername', message: 'Your username has already been taken.' }
+    ],
+    'coachName': [
+      { type: 'required', message: 'Location is required.' },
+      { type: 'minlength', message: 'Location must be at least 4 characters long.' },
+      { type: 'maxlength', message: 'Location cannot be more than 25 characters long.' },
+      { type: 'pattern', message: 'Location must not contain numbers and special characters.' },
+      { type: 'validUsername', message: 'Location has already been taken.' }
+    ],
+    'region': [
+      { type: 'required', message: 'Team region is required.' }
+    ],
+    'tel': [
+      { type: 'required', message: 'Contact details are required.' }
+    ],
+  };
   constructor(
     private formBuilder: FormBuilder,
     private camera: Camera ,
@@ -99,8 +121,7 @@ if (!addTeamForm.valid) {
       });
       this.loaderHolder.present();
       }
-      
-      
+
       parseInt(this.teamNode.tel)
       // this.teamNode.teamManagerInfo = this.userObj
       // this.teamNode.managerEmail = this.userObj.form.email
@@ -108,7 +129,12 @@ if (!addTeamForm.valid) {
       
       // upon success...
       user.then(async() => {
-        this.router.navigateByUrl('manage-team')
+        if (this.isEditing) {
+          this.router.navigateByUrl('tabs/manageTeam')
+        }else { 
+          this.router.navigateByUrl('manage-team')
+        }
+        
         const toast = await this.toastController.create({
           message: 'Success.',
           duration: 2000,
@@ -254,28 +280,7 @@ if (!addTeamForm.valid) {
     })
   }  
 
-  validation_messages = {
-    'teamName': [
-      { type: 'required', message: 'Name is required.' },
-      { type: 'minlength', message: 'Name must be at least 4 characters long.' },
-      { type: 'maxlength', message: 'Name cannot be more than 25 characters long.' },
-      { type: 'pattern', message: 'Name must not contain numbers or special characters.' },
-      { type: 'validUsername', message: 'Your username has already been taken.' }
-    ],
-    'coachName': [
-      { type: 'required', message: 'Location is required.' },
-      { type: 'minlength', message: 'Location must be at least 4 characters long.' },
-      { type: 'maxlength', message: 'Location cannot be more than 25 characters long.' },
-      { type: 'pattern', message: 'Location must not contain numbers and special characters.' },
-      { type: 'validUsername', message: 'Location has already been taken.' }
-    ],
-    'region': [
-      { type: 'required', message: 'Team region is required.' }
-    ],
-    'tel': [
-      { type: 'required', message: 'Contact details are required.' }
-    ],
-  };
+
   back() {
     
     this.router.navigateByUrl('tabs/manageTeam')
