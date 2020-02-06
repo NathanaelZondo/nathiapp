@@ -16,13 +16,13 @@ export class LoginPage implements OnInit {
   db = firebase.firestore()
   registrationForm
   phoneNumber = ''
-   lastNum = ''
-   password = ''
+  lastNum = ''
+  password = ''
   smsSent
   confirmationResult = ''
   inputCode
-  fullName 
-  uid 
+  fullName
+  uid
   role
   loginLoader
   showPassword = false
@@ -32,26 +32,26 @@ export class LoginPage implements OnInit {
     public authService: AuthServiceService,
     public formBuilder: FormBuilder,
     public alertController: AlertController,
-    public route :Router,
-    public loadingController : LoadingController
-  ) { 
+    public route: Router,
+    public loadingController: LoadingController
+  ) {
     this.registrationForm = formBuilder.group({
       phoneNumber: [this.phoneNumber, Validators.compose([Validators.required])],
-      password: [this.password, Validators.compose([Validators.required,Validators.minLength(6)])],
+      password: [this.password, Validators.compose([Validators.required, Validators.minLength(6)])],
     })
   }
   async presentLoading() {
     this.loginLoader = await this.loadingController.create({
-   
+
       message: 'Please wait...',
       translucent: true,
-     
+      duration: 2000
     });
     return await this.loginLoader.present();
   }
   ngOnInit() {
   }
-  togglePass():void {
+  togglePass(): void {
     this.showPassword = !this.showPassword
     if (this.showPassword) {
       this.passwordToggleIcon = 'eye-off'
@@ -59,126 +59,135 @@ export class LoginPage implements OnInit {
       this.passwordToggleIcon = 'eye'
     }
   }
-  async requestCode(){
-    // this.phoneNumber = this.registrationForm.get('phoneNumber').value
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-    console.log(window.recaptchaVerifier);
-    let appVerifier = window.recaptchaVerifier
-    return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
-      if(result.success === true){
-        console.log(result);
-        this.confirmationResult = result.result
-        console.log(this.confirmationResult);
 
-      }
+  addUser(form) {
+    let email = form.phoneNumber+'@mail.com'
+    firebase.auth().signInWithEmailAndPassword(email, form.password).then(()=>{
+      this.presentLoading()
+      this.route.navigate(['tabs'])
     })
   }
-  logins(code){
-    if(this.confirmationResult !== ''){
-      return this.authService.login(code, this.confirmationResult).then(result => {
-        this.loginLoader.dismiss();
-        this.route.navigateByUrl('/tabs');
-      })
-    }
-  }
-​
-  addUser(form){
-    // this.phoneNumber = this.registrationForm.get('phoneNumber').value
-    // this.fullName = this.registrationForm.get('fullName').value
-    // this.role = this.registrationForm.get('role').value
-    this.presentLoading();
-    let number =  this.phoneNumber.substr(1)
-    this.lastNum = '+' + 27 + number;
-    console.log(number, ' s',);
-this.phoneNumber = form.phoneNumber
-    console.log('object',this.lastNum );
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-      size: 'invisible',
-      callback: (response) => {
-        console.log('checking here');
-      },
-      'expired-callback': () => {
-        console.log('capcha expired');
-        
-      }
-    });
-    console.log(window.recaptchaVerifier);
-    let appVerifier = window.recaptchaVerifier
-    return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
-      if(result.success === true){
-        console.log(result);
-        this.confirmationResult = result.result
-        console.log(this.confirmationResult);
-        setTimeout(() => {
-          console.log('dismaissed loader');
-          
-          this.loginLoader.dismiss();
-        }, 500);
-       this.alert(form);
-      
-      } else {
-        this.loginLoader.dismiss()
-        const alert = await this.alertController.create({
-          header: 'Login Unsuccessful',
-          // subHeader: 'Enter verification code',
-          message: result.result.message,
-          backdropDismiss: false,
-          buttons: [{
-            text: 'Okay',
-            cssClass: 'success',
-            handler: () => {
-              this.route.navigate(['tabs/home'])
-            }
-          }]
-        });
-        await alert.present();
-      }
-    })
-  }
-​
-  async alert(form){
-    const alert = await this.alertController.create({
-      header: 'Verification code',
-      backdropDismiss: false,
-      inputs: [
-        {
-          name: 'code',
-          type: 'tel',
-          placeholder: 'Enter code'
-        }],
-      buttons: [{
-        text: 'Submit',
-        role: 'submit',
-        cssClass: 'secondary',
-        handler: (result) => {
-          console.log(result.code);
-          this.logins(result.code)
-//           firebase.auth().onAuthStateChanged(res =>{
   
-//             if(res.uid ){
-// this.db.collection('members').doc(res.uid).set({form})
-//               console.log('see ',res.uid);
-//             }
-//           })
-          
-        }
-      }]
-    });
-    await alert.present();
-  }
-​
-  login(){
-    this.phoneNumber = this.registrationForm.get('phoneNumber').value
-        console.log(this.phoneNumber)
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-    console.log(window.recaptchaVerifier);
-    let appVerifier = window.recaptchaVerifier
-    firebase.auth().signInWithPhoneNumber(String(this.lastNum), appVerifier).then(confirmationResult => {
-      window.confirmationResult = confirmationResult;  
-    }).catch((error) => {
-      console.log(error)
-    });
-  }
+  //   async requestCode(){
+  //     // this.phoneNumber = this.registrationForm.get('phoneNumber').value
+  //     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+  //     console.log(window.recaptchaVerifier);
+  //     let appVerifier = window.recaptchaVerifier
+  //     return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
+  //       if(result.success === true){
+  //         console.log(result);
+  //         this.confirmationResult = result.result
+  //         console.log(this.confirmationResult);
+
+  //       }
+  //     })
+  //   }
+  //   logins(code){
+  //     if(this.confirmationResult !== ''){
+  //       return this.authService.login(code, this.confirmationResult).then(result => {
+  //         this.loginLoader.dismiss();
+  //         this.route.navigateByUrl('/tabs');
+  //       })
+  //     }
+  //   }
+  // ​
+  //   addUser(form){
+  //     // this.phoneNumber = this.registrationForm.get('phoneNumber').value
+  //     // this.fullName = this.registrationForm.get('fullName').value
+  //     // this.role = this.registrationForm.get('role').value
+  //     this.presentLoading();
+  //     let number =  this.phoneNumber.substr(1)
+  //     this.lastNum = '+' + 27 + number;
+  //     console.log(number, ' s',);
+  // this.phoneNumber = form.phoneNumber
+  //     console.log('object',this.lastNum );
+  //     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+  //       size: 'invisible',
+  //       callback: (response) => {
+  //         console.log('checking here');
+  //       },
+  //       'expired-callback': () => {
+  //         console.log('capcha expired');
+
+  //       }
+  //     });
+  //     console.log(window.recaptchaVerifier);
+  //     let appVerifier = window.recaptchaVerifier
+  //     return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
+  //       if(result.success === true){
+  //         console.log(result);
+  //         this.confirmationResult = result.result
+  //         console.log(this.confirmationResult);
+  //         setTimeout(() => {
+  //           console.log('dismaissed loader');
+
+  //           this.loginLoader.dismiss();
+  //         }, 500);
+  //        this.alert(form);
+
+  //       } else {
+  //         this.loginLoader.dismiss()
+  //         const alert = await this.alertController.create({
+  //           header: 'Login Unsuccessful',
+  //           // subHeader: 'Enter verification code',
+  //           message: result.result.message,
+  //           backdropDismiss: false,
+  //           buttons: [{
+  //             text: 'Okay',
+  //             cssClass: 'success',
+  //             handler: () => {
+  //               this.route.navigate(['tabs/home'])
+  //             }
+  //           }]
+  //         });
+  //         await alert.present();
+  //       }
+  //     })
+  //   }
+  // ​
+  //   async alert(form){
+  //     const alert = await this.alertController.create({
+  //       header: 'Verification code',
+  //       backdropDismiss: false,
+  //       inputs: [
+  //         {
+  //           name: 'code',
+  //           type: 'tel',
+  //           placeholder: 'Enter code'
+  //         }],
+  //       buttons: [{
+  //         text: 'Submit',
+  //         role: 'submit',
+  //         cssClass: 'secondary',
+  //         handler: (result) => {
+  //           console.log(result.code);
+  //           this.logins(result.code)
+  // //           firebase.auth().onAuthStateChanged(res =>{
+
+  // //             if(res.uid ){
+  // // this.db.collection('members').doc(res.uid).set({form})
+  // //               console.log('see ',res.uid);
+  // //             }
+  // //           })
+
+  //         }
+  //       }]
+  //     });
+  //     await alert.present();
+  //   }
+  // ​
+  //   login(){
+  //     this.phoneNumber = this.registrationForm.get('phoneNumber').value
+  //         console.log(this.phoneNumber)
+  //     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+  //     console.log(window.recaptchaVerifier);
+  //     let appVerifier = window.recaptchaVerifier
+  //     firebase.auth().signInWithPhoneNumber(String(this.lastNum), appVerifier).then(confirmationResult => {
+  //       window.confirmationResult = confirmationResult;  
+  //     }).catch((error) => {
+  //       console.log(error)
+  //     });
+  //   }
   toReg() {
     this.route.navigate(['registerpage'])
   }

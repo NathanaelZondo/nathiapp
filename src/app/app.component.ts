@@ -45,7 +45,7 @@ export class AppComponent {
         })
         });
         this.runProcesses()
-        
+        this.checkForTeamAndPlayers();
     })
   }
   runProcesses() {
@@ -59,13 +59,25 @@ export class AppComponent {
   
           } else {
       this.ngZone.run(()=>{
-      // if(this.token != null) {
+        firebase.auth().onAuthStateChanged(user =>{
+          firebase.firestore().collection('Teams').doc(user.uid).get().then(res =>{
+            firebase.firestore().collection('Teams').doc(user.uid).collection('Players').get().then( players =>{
+              if(!res.exists){
+                this.router.navigateByUrl("/add-team")
+            }else if(res.exists && players.empty == true ){
+              this.router.navigateByUrl("/add-player")
+            }
+            else{
+              this.router.navigateByUrl("/tabs")
+            }
+            })
+        
+          })
+        })
         firebase.firestore().collection('members').doc(user.uid).update({
           Token : this.token
         })
-        this.router.navigateByUrl("/tabs");
-        console.log('logged in');
-      // }
+     
       unsubscribe();
       })
       }
@@ -79,6 +91,25 @@ export class AppComponent {
       this.router.navigateByUrl("/tabs");
       // this.router.navigateByUrl("onboarding");
     })
+  }
+  checkForTeamAndPlayers(){
+
+    firebase.auth().onAuthStateChanged(user =>{
+      firebase.firestore().collection('Teams').doc(user.uid).get().then(res =>{
+        firebase.firestore().collection('Teams').doc(user.uid).collection('Players').get().then( players =>{
+          if(!res.exists){
+            this.router.navigateByUrl("/add-team")
+        }else if(res.exists && players.empty == true ){
+          this.router.navigateByUrl("/add-player")
+        }
+        else{
+          this.router.navigateByUrl("/tabs")
+        }
+        })
+    
+      })
+    })
+ 
   }
   initializeApp() {
 
