@@ -128,8 +128,9 @@ export class AddPlayerPage implements OnInit {
       }
       this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').onSnapshot(res => {
         this.players = []
-        this.arr = []
+        
         if (!res.empty) {
+          this.arr = []
           res.forEach(doc => {
             obj = {
               docid: doc.id,
@@ -147,7 +148,7 @@ export class AddPlayerPage implements OnInit {
     })
   }
   back() {
-    this.navctrl.pop()
+    this.navctrl.navigateBack('tabs/manageTeam')
   }
   get Achievements() {
     return this.addPlayerForm.get('Achievements') as FormArray

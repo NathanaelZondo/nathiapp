@@ -22,7 +22,7 @@ export class AddTeamPage implements OnInit {
     teamLogo: '',
     teamJerseyIMG: '',
     goalKeeperJerseyIMG: '',
-    uid: firebase.auth().currentUser.uid,
+    uid: '',
     teamManagerInfo: null,
     managerEmail : '',
     managerName : ''
@@ -47,6 +47,7 @@ export class AddTeamPage implements OnInit {
   tJerseyText = 'Upload Image'
 
   isEditing = false;
+  teamExists = false
   userObj = {}
   validation_messages = {
     'teamName': [
@@ -324,8 +325,17 @@ if (!addTeamForm.valid) {
     this.isEditing  = false
   }
   ngOnInit() { 
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.teamNode.uid = user.uid
+        this.db.collection('Teams').doc(this.teamNode.uid).get().then(team => {
+          if (team.exists) {
+            this.teamExists = true
+          }
+        })
+      }
+    })
 
-    
     this.getMember();
     this.activatedRoute.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {

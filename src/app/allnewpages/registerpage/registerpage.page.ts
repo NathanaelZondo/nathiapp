@@ -77,8 +77,11 @@ export class RegisterpagePage implements OnInit {
     //   }
     // });
   }
-  addUser(form){
-
+  async addUser(form){
+    const loading = await this.loadingController.create({
+      message: 'Registering',
+    });
+    await loading.present();
     let email = form.phoneNumber+'@mail.com';
 firebase.auth().createUserWithEmailAndPassword(email ,form.password).then((newUserCredential: firebase.auth.UserCredential) => {
   firebase.firestore().doc(`/members/${newUserCredential.user.uid}`).set({
@@ -88,26 +91,22 @@ firebase.auth().createUserWithEmailAndPassword(email ,form.password).then((newUs
     firstEmailRecieved : 'no' ,
     // Token : this.token,
     dateCreated : new Date
-    }).then(()=>{
-      this.presentLoading();
+    }).then(async ()=>{
+      await loading.dismiss();
       this.route.navigateByUrl('/add-team');
     })
 
 })
-.catch(error => {
-  console.error(error);
-  throw new Error(error);
+.catch(async error => {
+  let alerter = await this.alertController.create({
+    header: 'Oops',
+    message: error.message,
+  })
+  await alerter.present()
+  // console.error(error);
+  // throw new Error(error);
 });
   }
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      message: 'Registering',
-      duration: 2000
-    });
-    await loading.present();
-  }
-
-  
   togglePass():void {
     this.showPassword = !this.showPassword
     if (this.showPassword) {

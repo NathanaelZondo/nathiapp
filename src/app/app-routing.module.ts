@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'tabs', pathMatch: 'full' },
+  { path: '', redirectTo: '', pathMatch: 'full' },
   { path: 'tabs', loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)},
   {
     path: 'home',
@@ -55,7 +55,8 @@ const routes: Routes = [
   {
     path: 'view-match',
     loadChildren: () => import('./allnewpages/view-match/view-match.module').then( m => m.ViewMatchPageModule)
-  },  {
+  },
+  {
     path: 'onboarding',
     loadChildren: () => import('./allnewpages/onboarding/onboarding.module').then( m => m.OnboardingPageModule)
   },

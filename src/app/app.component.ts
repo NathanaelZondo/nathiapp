@@ -54,9 +54,7 @@ export class AppComponent {
         const unsubscribe = firebase.auth().onAuthStateChanged(user => {
           if (!user) {
             this.router.navigateByUrl("/tabs");
-  
             unsubscribe();
-  
           } else {
       this.ngZone.run(()=>{
         firebase.auth().onAuthStateChanged(user =>{
@@ -67,7 +65,7 @@ export class AppComponent {
             }else if(res.exists && players.empty == true ){
               this.router.navigateByUrl("/add-player")
             }
-            else{
+            else {
               this.router.navigateByUrl("/tabs")
             }
             })
@@ -88,26 +86,33 @@ export class AppComponent {
     }, err => {
       console.log('component error ', err);
       
-      this.router.navigateByUrl("/tabs");
+      // this.router.navigateByUrl("/tabs");
       // this.router.navigateByUrl("onboarding");
     })
   }
   checkForTeamAndPlayers(){
 
     firebase.auth().onAuthStateChanged(user =>{
-      firebase.firestore().collection('Teams').doc(user.uid).get().then(res =>{
-        firebase.firestore().collection('Teams').doc(user.uid).collection('Players').get().then( players =>{
-          if(!res.exists){
-            this.router.navigateByUrl("/add-team")
-        }else if(res.exists && players.empty == true ){
-          this.router.navigateByUrl("/add-player")
-        }
-        else{
-          this.router.navigateByUrl("/tabs")
-        }
+      if (user) {
+        firebase.firestore().collection('Teams').doc(user.uid).get().then(res =>{
+          firebase.firestore().collection('Teams').doc(user.uid).collection('Players').get().then( players =>{
+            if(!res.exists){
+              this.router.navigateByUrl("/add-team")
+          }else if(res.exists && players.empty == true ){
+            console.log('no player');
+            
+            this.router.navigateByUrl("/add-player")
+          }
+          else{
+            this.router.navigateByUrl("/tabs")
+          }
+          })
+      
         })
-    
-      })
+      } else {
+        this.router.navigateByUrl("/tabs")
+      }
+
     })
  
   }

@@ -36,14 +36,7 @@ profile = {}
   setUser(val){
     this.user = val;
     console.log('User form Provider', this.user);
-    // firebase.firestore().collection('members').doc(this.user).get().then(res =>{
-    //   this.role = res.data().form.role;
-    //   this.profile = res.data()
 
-    //    console.log('role',this.role);
-    //    console.log('document',this.profile);
-       
-    // })
   }
 getProfile(){
 return this.profile
