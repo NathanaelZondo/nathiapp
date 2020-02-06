@@ -1,25 +1,30 @@
 ion-item {
     --background: rgba(255, 255, 255, 0);
     --color: rgb(37, 37, 37) !important;
-    
-  }
-  ion-list {
+
+}
+
+ion-list {
     background: none !important;
     color: rgb(24, 24, 24) !important;
 }
+
 .bended {
     position: fixed;
     bottom: 0px;
     width: 100vw;
+    display: none;
 }
+
 .container {
     width: 100%;
     height: 100%;
-    background: url(../../../assets/footer_curves.svg) no-repeat, linear-gradient(145deg, #05a66b 10%, transparent 10%), linear-gradient(134deg, #e0b500 10%, transparent 10%), linear-gradient(157deg, #e0b500 10%, transparent 10%), radial-gradient(rgba(0, 0, 0, 0), #3777606e);
+    background: url(../../../assets/lr/SVG/Register.svg), radial-gradient(rgba(0,0,0,.12), #8afde878);
     background-size: 100% auto;
     background-position: 100% 100%;
     display: flex;
     align-items: center;
+
     .recaptcha-container {
         position: absolute;
         top: 0;
@@ -27,6 +32,7 @@ ion-item {
         left: 0;
         right: 0;
     }
+
     form {
         text-align: center;
         color: rgb(34, 34, 34);
@@ -34,28 +40,35 @@ ion-item {
         max-height: 90vh;
         margin: auto;
         backdrop-filter: blur(50px);
-        background: #efeeee6e;
+        background-color: rgba(242, 246, 248, 0.39);
+        background: filter-gradient(#f2f6f8, #e0eff9, horizontal);
+        background: background-image(linear-gradient(left, rgba(242, 246, 248, 0.39) 0%, rgba(216, 225, 231, 0.47) 50%, rgba(181, 198, 208, 0.47) 53%, rgba(224, 239, 249, 0.51) 82%, rgba(224, 239, 249, 0.53) 96%, rgba(224, 239, 249, 0.54) 100%));
         border-radius: 10px;
         // box-shadow: 0px 3px 3px #17171738;
-        box-shadow: -6px -6px 8px 0 #ffffff80, 6px 6px 8px 0 #0000002e;
+        box-shadow: inset 2px 2px 3px 0 #0000002e;
         overflow-y: auto;
         border: solid 1px #ffffff7d;
-        p {
+        padding: 20px 0px;
+        p { 
             font-size: 3vw;
         }
+
         hr {
             background: rgba(255, 255, 255, 0.411);
         }
+
         .button {
             margin: 10px 0px;
         }
     }
 }
+
 ion-item {
-  --background: rgba(51, 117, 117, 0) !important;
-  --color: rgb(26, 26, 26) !important;
-  
+    --background: rgba(51, 117, 117, 0) !important;
+    --color: rgb(26, 26, 26) !important;
+
 }
+
 .close {
     position: absolute;
     top: 0;
