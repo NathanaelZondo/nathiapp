@@ -77,6 +77,37 @@ export class RegisterpagePage implements OnInit {
     //   }
     // });
   }
+  addUser(form){
+
+    let email = form.phoneNumber+'@mail.com';
+firebase.auth().createUserWithEmailAndPassword(email ,form.password).then((newUserCredential: firebase.auth.UserCredential) => {
+  firebase.firestore().doc(`/members/${newUserCredential.user.uid}`).set({
+    form ,
+    loginEmail : email,
+    status: '',
+    firstEmailRecieved : 'no' ,
+    // Token : this.token,
+    dateCreated : new Date
+    }).then(()=>{
+      this.presentLoading();
+      this.route.navigateByUrl('/add-team');
+    })
+
+})
+.catch(error => {
+  console.error(error);
+  throw new Error(error);
+});
+  }
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Registering',
+      duration: 2000
+    });
+    await loading.present();
+  }
+
+  
   togglePass():void {
     this.showPassword = !this.showPassword
     if (this.showPassword) {
@@ -85,163 +116,153 @@ export class RegisterpagePage implements OnInit {
       this.passwordToggleIcon = 'eye'
     }
   }
-  requestCode() {
-    // this.phoneNumber = this.registrationForm.get('phoneNumber').value
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-    console.log(window.recaptchaVerifier);
-    let appVerifier = window.recaptchaVerifier
-    return this.authService.requestLogin(this.lastNum, appVerifier).then(result => {
-      if (result.success === true) {
-        console.log(result);
-        this.confirmationResult = result.result
-        console.log(this.confirmationResult);
-      }
-    })
-  }
-  logins(code) {
-    if (this.confirmationResult !== '') {
-      return this.authService.login(code, this.confirmationResult).then(result => {
-        console.log(result);
-      })
-    }
-  }
+  // requestCode() {
+  //   // this.phoneNumber = this.registrationForm.get('phoneNumber').value
+  //   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+  //   console.log(window.recaptchaVerifier);
+  //   let appVerifier = window.recaptchaVerifier
+  //   return this.authService.requestLogin(this.lastNum, appVerifier).then(result => {
+  //     if (result.success === true) {
+  //       console.log(result);
+  //       this.confirmationResult = result.result
+  //       console.log(this.confirmationResult);
+  //     }
+  //   })
+  // }
+  // logins(code) {
+  //   if (this.confirmationResult !== '') {
+  //     return this.authService.login(code, this.confirmationResult).then(result => {
+  //       console.log(result);
+  //     })
+  //   }
+  // }
 
-  addUser(form) {
-    this.presentLoading2()
+  // addUser(form) {
+  //   this.presentLoading2()
 
-    let number = this.phoneNumber.substr(1)
-    this.lastNum = '+' + 27 + number;
-    console.log(number, ' s');
+  //   let number = this.phoneNumber.substr(1)
+  //   this.lastNum = '+' + 27 + number;
+  //   console.log(number, ' s');
 
-    // this.phoneNumber = this.registrationForm.get('phoneNumber').value
-    this.fullName = this.registrationForm.get('fullName').value
-    this.role = this.registrationForm.get('role').value
+  //   // this.phoneNumber = this.registrationForm.get('phoneNumber').value
+  //   this.fullName = this.registrationForm.get('fullName').value
+  //   this.role = this.registrationForm.get('role').value
 
-    // this.lastNum = form.phoneNumber
-    console.log('object', this.lastNum);
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-      size: 'invisible',
-      callback: (response) => {
-        console.log('checking here');
-      },
-      'expired-callback': () => {
+  //   // this.lastNum = form.phoneNumber
+  //   console.log('object', this.lastNum);
+  //   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+  //     size: 'invisible',
+  //     callback: (response) => {
+  //       console.log('checking here');
+  //     },
+  //     'expired-callback': () => {
 
-      }
-    });
-    console.log(window.recaptchaVerifier);
-    let appVerifier = window.recaptchaVerifier
-    return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
-      if (result.success === true) {
-        console.log(result);
-        this.confirmationResult = result.result
-        console.log(this.confirmationResult);
+  //     }
+  //   });
+  //   console.log(window.recaptchaVerifier);
+  //   let appVerifier = window.recaptchaVerifier
+  //   return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
+  //     if (result.success === true) {
+  //       console.log(result);
+  //       this.confirmationResult = result.result
+  //       console.log(this.confirmationResult);
 
-        this.alert(form);
+  //       this.alert(form);
 
-      } else {
-        console.log(result);
-        const alert = await this.alertController.create({
-          header: 'Register Unsuccessful',
-          // subHeader: 'Enter verification code',
-          message: result.result.message,
-          backdropDismiss: false,
-          buttons: [{
-            text: 'Okay',
-            cssClass: 'success',
-            handler: () => {
-              this.route.navigate(['tabs/home'])
-            }
-          }]
-        });
-        await alert.present();
-      }
-    })
+  //     } else {
+  //       console.log(result);
+  //       const alert = await this.alertController.create({
+  //         header: 'Register Unsuccessful',
+  //         // subHeader: 'Enter verification code',
+  //         message: result.result.message,
+  //         backdropDismiss: false,
+  //         buttons: [{
+  //           text: 'Okay',
+  //           cssClass: 'success',
+  //           handler: () => {
+  //             this.route.navigate(['tabs/home'])
+  //           }
+  //         }]
+  //       });
+  //       await alert.present();
+  //     }
+  //   })
 
-    // this.route.navigateByUrl('add-team')
-  }
+  //   // this.route.navigateByUrl('add-team')
+  // }
 
-  async alert(form) {
-    const alert = await this.alertController.create({
-      header: 'Verification code',
-      message:  `Code will be sent to <b>${form.phoneNumber}</b>`,
-      backdropDismiss: false,
-      inputs: [
-        {
-          name: 'code',
-          type: 'text',
-          placeholder: 'Enter code'
-        }],
-      buttons: [{
-        text: 'Change Number',
-        handler:()=> {
-          window.recaptchaVerifier.clear()
-        }
-      },{
-        text: 'Submit',
-        role: 'submit',
-        cssClass: 'secondary',
-        handler: (result) => {
-          console.log(result.code);
-          this.logins(result.code);
-          this.ngZone.run(() => {
-            firebase.auth().onAuthStateChanged(res => {
-              if (this.token) {
-                if (res.uid) {
-                  this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting',firstEmailRecieved : 'no' ,Token : this.token})
-                  console.log('see ', res.uid);
-                }
-              } else {
-                if (res.uid) {
-                  this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting',firstEmailRecieved : 'no'})
-                  console.log('see ', res.uid);
-                }
-              }
-            })
-            this.presentLoading()
-            // this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
-            this.route.navigateByUrl('/tabs');
-          })
-        }
-      }]
-    });
-    await alert.present();
-  }
+  // async alert(form) {
+  //   const alert = await this.alertController.create({
+  //     header: 'Verification code',
+  //     message:  `Code will be sent to <b>${form.phoneNumber}</b>`,
+  //     backdropDismiss: false,
+  //     inputs: [
+  //       {
+  //         name: 'code',
+  //         type: 'text',
+  //         placeholder: 'Enter code'
+  //       }],
+  //     buttons: [{
+  //       text: 'Change Number',
+  //       handler:()=> {
+  //         window.recaptchaVerifier.clear()
+  //       }
+  //     },{
+  //       text: 'Submit',
+  //       role: 'submit',
+  //       cssClass: 'secondary',
+  //       handler: (result) => {
+  //         console.log(result.code);
+  //         this.logins(result.code);
+  //         this.ngZone.run(() => {
+  //           firebase.auth().onAuthStateChanged(res => {
+  //             if (this.token) {
+  //               if (res.uid) {
+  //                 this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting',firstEmailRecieved : 'no' ,Token : this.token})
+  //                 console.log('see ', res.uid);
+  //               }
+  //             } else {
+  //               if (res.uid) {
+  //                 this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting',firstEmailRecieved : 'no'})
+  //                 console.log('see ', res.uid);
+  //               }
+  //             }
+  //           })
+  //           this.presentLoading()
+  //           // this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
+  //           this.route.navigateByUrl('/tabs');
+  //         })
+  //       }
+  //     }]
+  //   });
+  //   await alert.present();
+  // }
 
-  login() {
-    this.phoneNumber = this.registrationForm.get('phoneNumber').value
-    console.log(this.phoneNumber)
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-    console.log(window.recaptchaVerifier);
-    let appVerifier = window.recaptchaVerifier
-    firebase.auth().signInWithPhoneNumber(String(this.phoneNumber), appVerifier).then(confirmationResult => {
-      window.confirmationResult = confirmationResult;
-    }).catch((error) => {
-      console.log(error)
-    });
-  }
+  // login() {
+  //   this.phoneNumber = this.registrationForm.get('phoneNumber').value
+  //   console.log(this.phoneNumber)
+  //   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+  //   console.log(window.recaptchaVerifier);
+  //   let appVerifier = window.recaptchaVerifier
+  //   firebase.auth().signInWithPhoneNumber(String(this.phoneNumber), appVerifier).then(confirmationResult => {
+  //     window.confirmationResult = confirmationResult;
+  //   }).catch((error) => {
+  //     console.log(error)
+  //   });
+  // }
 
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      message: 'Loging In',
-      duration: 2000
-    });
-    await loading.present();
 
-    // const { role, data } = await loading.onDidDismiss();
+  // async presentLoading2() {
+  //   const loading = await this.loadingController.create({
+  //     message: 'Please wait',
+  //     duration: 3000
+  //   });
+  //   await loading.present();
 
-    // console.log('Loading dismissed!');
-  }
-  async presentLoading2() {
-    const loading = await this.loadingController.create({
-      message: 'Please wait',
-      duration: 3000
-    });
-    await loading.present();
+  //   // const { role, data } = await loading.onDidDismiss();
 
-    // const { role, data } = await loading.onDidDismiss();
-
-    // console.log('Loading dismissed!');
-  }
+  //   // console.log('Loading dismissed!');
+  // }
   close() {
     // this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
     this.route.navigateByUrl('tabs');

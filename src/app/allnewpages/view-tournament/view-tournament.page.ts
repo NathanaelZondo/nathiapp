@@ -162,9 +162,14 @@ if (user) {
     });
   }
   getPlayedMatches() {
+    // let obj = {
+    //   data : {},
+    //   id : ''
+    // } 
     this.db.collection('PlayedMatches').where('tournid', '==', this.viewedTournament.doc_id).orderBy("matchdate", "desc").get().then(res => {
       res.forEach(doc => {
         this.tempArray.push(doc.data())
+
         // CHECK WICH MATCH TYPE IS WHICH AND PUSH IT INTO THE RESPECTIVE ARRAY
         if (doc.data().type == '16') { // 32
           this.match.type16.push(doc.data())

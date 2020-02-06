@@ -324,6 +324,8 @@ if (!addTeamForm.valid) {
     this.isEditing  = false
   }
   ngOnInit() { 
+
+    
     this.getMember();
     this.activatedRoute.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
