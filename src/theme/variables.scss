@@ -6,13 +6,13 @@
   font-family: 'Muller';
   font-style: normal;
   font-weight: normal;
-  src: url('../assets/fonts/Mosk.TTF');
+  src: url('../assets/fonts/nevis.ttf');
 }
 @font-face {
   font-family: 'Muller Bold';
   font-style: normal;
   font-weight: normal;
-  src: url('../assets/fonts/Mosk.TTF');
+  src: url('../assets/fonts/nevis.ttf');
 }
 @font-face {
   font-family: 'Neou';
@@ -93,6 +93,9 @@
   --ion-color-gray-tint: #d1d1d1;
   --home-filter-height: 40px;
   --ion-font-family: 'Muller' !important;
+
+  --drop-shadow: 0px 3px 5px #17171741;
+  --radius: 0px 0px 20px 20px;
 }
 * {
   font-family: 'Muller Bold';
@@ -149,7 +152,12 @@ a, span, p, ion-label, ion-button,ion-card-title {
 ion-card-subtitle {
   font-family: 'Muller' !important;
   font-weight: bold;
-  font-size: 4vw;
+  font-size: 3.3vw;
+}
+ion-card-content {
+  p {
+    font-size: 3.3vw !important;
+  }
 }
 ion-segment-button {
   --color-activated: white;

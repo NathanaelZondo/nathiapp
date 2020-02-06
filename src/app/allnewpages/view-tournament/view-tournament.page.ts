@@ -36,7 +36,7 @@ export class ViewTournamentPage implements OnInit {
     fullName: '',
     image: ''
   }
-  role = ''
+  role = 'user'
   userProfile = false
   loggedInUser = null
   constructor(public pass: PassInformationServiceService, public navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, public loadingController: LoadingController, public store: NativeStorage, public passService: PassInformationServiceService, public alertController: AlertController, public renderer: Renderer2) { }
@@ -45,26 +45,30 @@ export class ViewTournamentPage implements OnInit {
     this.tournMatches = []
     // receives nav params
     firebase.auth().onAuthStateChanged(user => {
-      firebase.auth().updateCurrentUser(user).then(res => {
-        this.loggedInUser = user
-        setTimeout(() => {
-          this.checkForTournaments();
-        }, 1000);
-        //this.getUserProfile();
-        this.geTeamProfile();
-        this.getProfile();
-        this.checkProfile()
-        setTimeout(() => {
-          console.log('blah bal', this.userObj);
-        }, 1000);
-        this.store.keys().then(res => {
-          res.forEach(element => {
-            this.storageKeys.push(element);
-          });
-          console.log(this.storageKeys);
+if (user) {
+  firebase.auth().updateCurrentUser(user).then(res => {
+    this.loggedInUser = user
+    setTimeout(() => {
+      this.checkForTournaments();
+    }, 1000);
+    //this.getUserProfile();
+    this.geTeamProfile();
+    this.getProfile();
+    this.checkProfile()
+    setTimeout(() => {
+      console.log('blah bal', this.userObj);
+    }, 1000);
+    this.store.keys().then(res => {
+      res.forEach(element => {
+        this.storageKeys.push(element);
+      });
+      console.log(this.storageKeys);
 
-        })
-      })
+    })
+  })
+} else {
+  this.applytournaments = 'no'
+}
     })
 
 
@@ -357,15 +361,22 @@ export class ViewTournamentPage implements OnInit {
   }
   getProfile() {
     firebase.firestore().collection('members').doc(this.loggedInUser.uid).onSnapshot(res => {
-      this.vendorObj = res.data()
-      console.log('vendor', this.vendorObj);
+if(res.exists) {
+  this.vendorObj = res.data()
+  console.log('vendor', this.vendorObj);
 
-      this.profile.fullName = res.data().form.fullName;
-      if (res.data().form.role == 'vendor') {
-        this.role = 'vendor';
-      } else {
-        this.role = 'teamManager';
-      }
+  this.profile.fullName = res.data().form.fullName;
+  if (res.data().form.role == 'vendor') {
+    this.role = 'vendor';
+  } else {
+    this.role = 'teamManager';
+  }
+} else {
+    this.role = 'user'
+    this.applytournaments = 'no'
+    console.log(this.applytournaments, ' 373');
+    
+  }
     })
   }
   //  generates images for the participants section

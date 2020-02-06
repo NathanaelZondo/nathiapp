@@ -4,7 +4,7 @@
     <div class="title">
         <div class="tContent">
             <div class="s">
-                <ion-button *ngIf="accountRole=='user'"  size="small" color="success">
+                <ion-button *ngIf="accountRole=='user'"  size="small" color="success" (click)="login()">
                     Sign In or Sign Up
                 </ion-button>
             </div>
@@ -49,7 +49,7 @@
                     </ion-fab-button>
                 </div>
                 <ion-card-header>
-                <ion-card-title style="font-weight: bolder;font-family: Muller;">{{t.formInfo.tournamentName}}</ion-card-title>
+                <ion-card-title style="font-weight: bolder;font-family: Muller; font-size: 5vw !important;">{{t.formInfo.tournamentName}}</ion-card-title>
                     <ion-card-subtitle style="font-family: Muller;"><b>{{t.formInfo.location}}</b>  {{t.formInfo.startDate | date:'MMM dd'}} - {{t.formInfo.startDate | date:'shortTime'}}</ion-card-subtitle>
                 </ion-card-header>
                 <hr style="background: rgb(236, 236, 236);margin: 0;">

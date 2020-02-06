@@ -37,6 +37,8 @@ export class RegisterpagePage implements OnInit {
     role: ''
   }
   token
+  showPassword = false
+  passwordToggleIcon = 'eye'
   constructor(
     public authService: AuthServiceService,
     public formBuilder: FormBuilder,
@@ -57,7 +59,8 @@ export class RegisterpagePage implements OnInit {
       phoneNumber: [this.phoneNumber, Validators.compose([Validators.required])],
       fullName: ['', Validators.required],
       role: ['', Validators.required],
-      email: ['',[Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]]
+      email: ['',[Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
+      password: [this.password, Validators.compose([Validators.required,Validators.minLength(6)])],
     })
 
   }
@@ -73,6 +76,14 @@ export class RegisterpagePage implements OnInit {
     //     this.route.navigateByUrl('home', { skipLocationChange: true });
     //   }
     // });
+  }
+  togglePass():void {
+    this.showPassword = !this.showPassword
+    if (this.showPassword) {
+      this.passwordToggleIcon = 'eye-off'
+    } else {
+      this.passwordToggleIcon = 'eye'
+    }
   }
   requestCode() {
     // this.phoneNumber = this.registrationForm.get('phoneNumber').value
@@ -234,5 +245,8 @@ export class RegisterpagePage implements OnInit {
   close() {
     // this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
     this.route.navigateByUrl('tabs');
+  }
+  goLogin() {
+    this.route.navigate(['login'])
   }
 }

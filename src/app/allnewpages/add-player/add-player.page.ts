@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import * as firebase from 'firebase';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -11,33 +11,39 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-player.page.scss'],
 })
 export class AddPlayerPage implements OnInit {
-  players = []
+  players: any = []
+  arr: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 9]
   date
-  
+  viewPlayer = {} as any
+  selectedId = null
   playerNode = {
     fullName: '',
     palyerImage: '',
-    DOB : '',
-    previousTeam : 'none',
-    DateCreated : null,
-    DateEdited : null,
+    DOB: '',
+    previousTeam: 'none',
+    DateCreated: null,
+    DateEdited: null,
     playerPosition: '',
-    playerNumber : '',
+    playerNumber: '',
     height: '',
     Achievements: []
   }
-  buttonChange = false
+  editMode = false
+  editForm = document.getElementsByClassName('dFH')
+  buttonChange = 'add'
   addPlayerForm: FormGroup;
   db = firebase.firestore();
   storage = firebase.storage().ref();
   isuploading: false
   uploadprogress = 0;
+  loadingProcess = false;
+  imageProgressText = 'Upload Image'
   logoImage
   GJerseyImage
   TjerseyImage
   counter: number;
   documentID
-  
+
   position = [
     { value: 'Goalkeeper', label: '1 Goalkeeper' },
     { value: 'Right Fullback', label: '2 Right Fullback' },
@@ -85,7 +91,8 @@ export class AddPlayerPage implements OnInit {
     public loadingController: LoadingController,
     private router: Router,
     public toastController: ToastController,
-    public navctrl  : NavController) {
+    public renderer: Renderer2,
+    public navctrl: NavController) {
 
     let v = new Date
     this.date = v.getFullYear() - 8
@@ -95,7 +102,7 @@ export class AddPlayerPage implements OnInit {
       previousTeam: new FormControl('', Validators.required),
       height: new FormControl('', Validators.compose([Validators.required])),
       playerPosition: new FormControl('', Validators.compose([Validators.required])),
-      playerNumber : new FormControl('', Validators.compose([Validators.required])),
+      playerNumber: new FormControl('', Validators.compose([Validators.required,Validators.max(100)])),
       //  Achievements: new FormControl('', Validators.compose([Validators.required])), 
       Achievements: this.formBuilder.array([
         this.formBuilder.control('')
@@ -103,11 +110,43 @@ export class AddPlayerPage implements OnInit {
     });
 
   }
-  ngOnInit() {
-   
-this.getTeam()
+  viewInfo(p, i) {
+    this.selectedId = i
+    this.viewPlayer = p
+    console.log(p, this.selectedId)
   }
-  back(){
+  getTeam() {
+
+    let obj = {
+      docid: null,
+      docdata: null
+    }
+    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then(res => {
+      if (res.exists) {
+        console.log(res.data());
+
+      }
+      this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').onSnapshot(res => {
+        this.players = []
+        this.arr = []
+        if (!res.empty) {
+          res.forEach(doc => {
+            obj = {
+              docid: doc.id,
+              docdata: doc.data()
+            }
+            this.players.push(obj)
+            console.log('players', this.players);
+
+            // this.isPlayer = true
+          })
+          this.viewPlayer = this.players[0]
+          console.log(this.viewPlayer)
+        }
+      })
+    })
+  }
+  back() {
     this.navctrl.pop()
   }
   get Achievements() {
@@ -116,46 +155,77 @@ this.getTeam()
   addNew() {
     this.Achievements.push(this.formBuilder.control(''));
   }
-  edit(i){
-console.log('ccc',i);
-this.buttonChange = true
-this.documentID = i.docid
-this.playerNode.fullName = i.docdata.fullName
-this.playerNode.DOB = i.docdata.DOB
-this.playerNode.height = i.docdata.height
-this.playerNode.playerPosition = i.docdata.playerPosition
-this.playerNode.previousTeam = i.docdata.previousTeam
-this.playerNode.playerNumber = i.docdata.playerNumber
+  add() {
+    this.dFH('open')
+    this.buttonChange = 'add'
+    this.editMode = true
   }
-  remove(index){
+  close() {
+    this.addPlayerForm.reset()
+    this.dFH('close')
+    this.buttonChange = 'add'
+    this.editMode = false
+  }
+  edit(i) {
+    this.dFH('open')
+    this.editMode = true
+    console.log('ccc', i);
+    this.buttonChange = 'edit'
+    this.documentID = i.docid
+    this.playerNode.fullName = i.docdata.fullName
+    this.playerNode.DOB = i.docdata.DOB
+    this.playerNode.height = i.docdata.height
+    this.playerNode.playerPosition = i.docdata.playerPosition
+    this.playerNode.previousTeam = i.docdata.previousTeam
+    this.playerNode.playerNumber = i.docdata.playerNumber
+    this.playerNode.palyerImage = i.docdata.palyerImage
+  }
+  remove(index) {
     console.log(this.addPlayerForm.get('Achievements'));
-    
+
     this.Achievements.removeAt(index)
   }
- async editPlayer(){
+  dFH(cmd) {
+    switch (cmd) {
+      case 'open':
+        this.renderer.setStyle(this.editForm[0],'display','flex');
+        break;
+        case 'close':
+          setTimeout(() => {
+            this.renderer.setStyle(this.editForm[0],'display','none')
+          }, 500);
+          break;
+    }
+  }
+  async editPlayer() {
+    this.loadingProcess = true;
     const load = await this.loadingController.create({
       message: 'Creating Your Player..'
     });
     const user = this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(this.documentID).set(this.playerNode)
 
     // upon success...
-    user.then(async() => {
-      this.buttonChange = false
+    user.then(async () => {
+      this.editMode = false
+      this.dFH('close')
+      this.buttonChange = 'add'
+    
+    this.loadingProcess = false;
       this.addPlayerForm.reset()
       console.log(this.addPlayerForm);
-      
+
       this.playerNode = {
         fullName: '',
         palyerImage: '',
-        DOB : '',
-        previousTeam : '',
-        DateCreated : null,
-        DateEdited : null,
+        DOB: '',
+        previousTeam: '',
+        DateCreated: null,
+        DateEdited: null,
         playerPosition: '',
         height: '',
         Achievements: [],
-        playerNumber : ''
-        
+        playerNumber: ''
+
       }
       this.router.navigateByUrl('add-player')
       const toast = await this.toastController.create({
@@ -167,6 +237,7 @@ this.playerNode.playerNumber = i.docdata.playerNumber
       load.dismiss();
       // catch any errors.
     }).catch(async err => {
+      this.loadingProcess = false;
       const toast = await this.toastController.create({
         message: 'Error creating Team.',
         duration: 2000
@@ -176,6 +247,7 @@ this.playerNode.playerNumber = i.docdata.playerNumber
     })
   }
   async createTeam(addPlayerForm: FormGroup): Promise<void> {
+    this.loadingProcess = true;
     if (!addPlayerForm.valid) {
       addPlayerForm.value
     }
@@ -198,19 +270,23 @@ this.playerNode.playerNumber = i.docdata.playerNumber
       const user = this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc().set(this.playerNode)
 
       // upon success...
-      user.then(async() => {
+      user.then(async () => {
+        this.buttonChange = 'add'
+    this.editMode = false
+    this.loadingProcess = false
+    this.dFH('close')
         this.addPlayerForm.reset()
         this.playerNode = {
           fullName: '',
           palyerImage: '',
-          DOB : '',
-          previousTeam : '',
-          DateCreated : null,
-          DateEdited : null,
+          DOB: '',
+          previousTeam: '',
+          DateCreated: null,
+          DateEdited: null,
           playerPosition: '',
           height: '',
           Achievements: [],
-          playerNumber : ''
+          playerNumber: ''
         }
         this.router.navigateByUrl('add-player')
         const toast = await this.toastController.create({
@@ -222,6 +298,7 @@ this.playerNode.playerNumber = i.docdata.playerNumber
         load.dismiss();
         // catch any errors.
       }).catch(async err => {
+        this.loadingProcess = false
         const toast = await this.toastController.create({
           message: 'Error creating Team.',
           duration: 2000
@@ -233,37 +310,7 @@ this.playerNode.playerNumber = i.docdata.playerNumber
 
   }
 
-  getTeam(){
-  
-    let obj ={
-      docid: null,
-      docdata : null
-    }
-      this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then(res =>{
-        if(res.exists){
-         console.log(res.data());
-       
-        //  this.display = res.data();
-         
-        //  this.isNotTeam = false;
-        }
-        this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').onSnapshot(res =>{
-          this.players = []
-          if(!res.empty){
-            res.forEach(doc =>{
-               obj ={
-                docid: doc.id,
-                docdata : doc.data()
-              }
-    this.players.push(obj)
-    console.log('players', this.players);
-    
-              // this.isPlayer = true
-            })
-          }
-        })
-      })
-    }
+
   //Functions to upload images
   async selectImage() {
     let option: CameraOptions = {
@@ -290,12 +337,20 @@ this.playerNode.playerNumber = i.docdata.playerNumber
       upload.on('state_changed', snapshot => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         this.uploadprogress = progress;
+        if (progress > 0) {
+          this.imageProgressText = 'Uploading...'
+        } else if (progress > 50) {
+          this.imageProgressText = 'Halfway There...'
+        } else if (progress == 100) {
+          this.imageProgressText = 'Finnishing Upload'
+        }
         if (progress == 100) {
           this.isuploading = false;
         }
       }, err => {
       }, () => {
         upload.snapshot.ref.getDownloadURL().then(downUrl => {
+          this.imageProgressText = 'Done'
           this.playerNode.palyerImage = downUrl;
           console.log('Image downUrl', downUrl);
 
@@ -308,6 +363,11 @@ this.playerNode.playerNumber = i.docdata.playerNumber
 
   }
   done() {
-    this.navctrl.navigateBack('tabs/manageTeam')
+    this.buttonChange = 'add'
+    this.editMode = false
+  }
+  ngOnInit() {
+
+    this.getTeam()
   }
 }

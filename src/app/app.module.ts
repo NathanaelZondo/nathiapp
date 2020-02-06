@@ -11,11 +11,20 @@ import { AppRoutingModule } from './app-routing.module';
 import * as firebase from 'firebase';
 import {config} from '../app/firebaseConfig'
 import { FCM } from '@ionic-native/fcm/ngx';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 firebase.initializeApp(config);
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,    NgCircleProgressModule.forRoot({
+    // set defaults here
+    radius: 100,
+    outerStrokeWidth: 16,
+    innerStrokeWidth: 8,
+    outerStrokeColor: "#78C000",
+    innerStrokeColor: "#C7E596",
+    animationDuration: 300,
+  })],
   providers: [
     StatusBar,
     SplashScreen,

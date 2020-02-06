@@ -16,10 +16,10 @@ export class ManageTeamPage implements OnInit {
   display = {} as any
   isPlayer = false;
   players = []
-  noTeam = document.getElementsByClassName('noTeam')
   createTeam = false;
   profile = false
   enlarge = null
+  arr :any = [1,2,3,4,5,6,7,8,9,0,1]
     constructor(  public renderer: Renderer2,  private formBuilder: FormBuilder, public router : Router,public navctrl : NavController) { 
     }
     editTean() {
@@ -44,7 +44,13 @@ export class ManageTeamPage implements OnInit {
       
     }
     addTeam(){
-      this.router.navigateByUrl('add-team');
+      const parms: NavigationExtras  = {
+        state: {
+          isEditing: true,
+          data: this.display 
+        }
+      }
+      this.router.navigateByUrl('add-team',parms)
     }
     addPlayer(){
       this.router.navigateByUrl('add-player');
@@ -55,9 +61,6 @@ export class ManageTeamPage implements OnInit {
       if(res.exists){
        console.log('data',res.data());
        this.isTeam = true;
-       setTimeout(() => {
-        this.renderer.setStyle(this.noTeam[0],'display','none')
-       }, 500);
        this.display = res.data();
        
       //  this.isNotTeam = false;
@@ -71,8 +74,10 @@ export class ManageTeamPage implements OnInit {
             this.players.push(doc.data());
             console.log('players', this.players);
 
-            this.isPlayer = true;
+            
           });
+          this.isPlayer = true;
+          this.arr = this.players
         }
       });
     });

@@ -10,12 +10,7 @@
       <h4><b>Nathi's </b>Tournaments</h4> 
       <p>Registration</p>
       <hr>
-      <ion-item  style="border-radius: 10px;
-      margin: 2px 0px;">
-        <ion-label position="floating">Phone Number</ion-label>
-        <ion-input formControlName="phoneNumber" type="tel" [(ngModel)]="phoneNumber"></ion-input>
-      </ion-item>
-      
+
      <ion-item  style="border-radius: 10px;
      margin: 2px 0px;">
         <ion-label position="floating">Full Name</ion-label>
@@ -25,6 +20,25 @@
      margin: 2px 0px;">
         <ion-label position="floating">Email</ion-label>
       <ion-input formControlName="email" type="text" [(ngModel)]="email"></ion-input>
+     </ion-item>
+     <hr>
+     <ion-item  style="border-radius: 10px;
+     margin: 2px 0px;">
+       <ion-label position="floating">Phone Number</ion-label>
+       <ion-input formControlName="phoneNumber" type="tel" [(ngModel)]="phoneNumber"></ion-input>
+     </ion-item>
+
+     <ion-item style="background: none;color: rgb(0, 0, 0);border-radius: 5px;">
+       <ion-label position="floating" style="color: rgb(24, 24, 24);">Password</ion-label>
+       <div class="pass" style="width: 100%;display: flex;align-items: center;position: relative;">
+         <ion-input    style="border-bottom: solid 2px white;color: rgb(34, 34, 34)" formControlName="password" [type]="showPassword ? 'text':'password'" [(ngModel)]="password"></ion-input>
+         <div class="htt" *ngIf="password" [ngClass]="{'animated fadeIn':password!=''}" style="position: absolute;top: 0;bottom: 0;right: 0;display: flex; align-items: center;z-index: 300;">
+           <ion-button  fill="clear" size="small" (click)="togglePass()">
+         <ion-icon slot="icon-only" [name]="passwordToggleIcon"></ion-icon>
+       </ion-button>
+         </div>
+       
+       </div>
      </ion-item>
       <ion-list>
         <ion-radio-group formControlName="role"  [(ngModel)]="role">
@@ -47,10 +61,13 @@
         </ion-radio-group>
       </ion-list>
       <p style="width: 90%; margin: auto; text-align: center; padding: 10px;">By clicking Sign Up, you agree to our <span style="color: rgb(77, 184, 255);text-decoration: underline;">Terms</span> and <span style="color: rgb(77, 184, 255);text-decoration: underline;">Data Policy</span>. You may receive Notifications from us.</p>
+      <ion-button shape="round" fill="clear" id="sign-in-button" (click)="goLogin()" >
+        Sign In
+      </ion-button>
     <ion-button shape="round" id="sign-in-button" [disabled]="!registrationForm.valid"  type="submit" class="form-buttons"  >
       Sign Up
     </ion-button>
-    
+
     </form>
     </div>
   

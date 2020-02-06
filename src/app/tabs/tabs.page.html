@@ -20,15 +20,6 @@
       <!-- <ion-label>Profile</ion-label> -->
     </ion-tab-button>
 
-    <ion-tab-button routerLink="/login"  *ngIf="role == 'user'" class="segment-item" (click)="active('login')">
-      <ion-icon src="../../assets/noun_Login_86790.svg"></ion-icon>
-      <!-- <ion-label>Login</ion-label> -->
-    </ion-tab-button>
-
-    <ion-tab-button routerLink="/registerpage" *ngIf="role == 'user'" class="segment-item" (click)="active('register')">
-      <ion-icon src="../../assets/noun_register_2773678.svg"></ion-icon>
-      <!-- <ion-label>Register</ion-label> -->
-    </ion-tab-button>
 
     <ion-tab-button tab="faqs" class="segment-item" (click)="active('faq')" >
       <ion-icon src="../../assets/noun_FAQ_1272960.svg" ></ion-icon>

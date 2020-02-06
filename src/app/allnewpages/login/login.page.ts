@@ -1,3 +1,4 @@
+import { FaqsPageModule } from './../faqs/faqs.module';
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -16,7 +17,7 @@ export class LoginPage implements OnInit {
   registrationForm
   phoneNumber = ''
    lastNum = ''
-  password
+   password = ''
   smsSent
   confirmationResult = ''
   inputCode
@@ -24,6 +25,8 @@ export class LoginPage implements OnInit {
   uid 
   role
   loginLoader
+  showPassword = false
+  passwordToggleIcon = 'eye'
   public recaptchaVerifier: firebase.auth.RecaptchaVerifier
   constructor(
     public authService: AuthServiceService,
@@ -34,7 +37,7 @@ export class LoginPage implements OnInit {
   ) { 
     this.registrationForm = formBuilder.group({
       phoneNumber: [this.phoneNumber, Validators.compose([Validators.required])],
-     
+      password: [this.password, Validators.compose([Validators.required,Validators.minLength(6)])],
     })
   }
   async presentLoading() {
@@ -47,6 +50,14 @@ export class LoginPage implements OnInit {
     return await this.loginLoader.present();
   }
   ngOnInit() {
+  }
+  togglePass():void {
+    this.showPassword = !this.showPassword
+    if (this.showPassword) {
+      this.passwordToggleIcon = 'eye-off'
+    } else {
+      this.passwordToggleIcon = 'eye'
+    }
   }
   async requestCode(){
     // this.phoneNumber = this.registrationForm.get('phoneNumber').value
@@ -167,6 +178,9 @@ this.phoneNumber = form.phoneNumber
     }).catch((error) => {
       console.log(error)
     });
+  }
+  toReg() {
+    this.route.navigate(['registerpage'])
   }
   close() {
     this.route.navigateByUrl('tabs');
