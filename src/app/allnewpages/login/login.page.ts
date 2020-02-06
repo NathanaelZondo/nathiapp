@@ -65,6 +65,8 @@ export class LoginPage implements OnInit {
     firebase.auth().signInWithEmailAndPassword(email, form.password).then(()=>{
       this.presentLoading()
       this.route.navigate(['tabs'])
+    }).catch( err =>{
+      
     })
   }
   
