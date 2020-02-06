@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, NavController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PassInformationServiceService } from 'src/app/service/pass-information-service.service';
 
@@ -78,7 +78,8 @@ export class AddTeamPage implements OnInit {
     private router: Router,
     public toastController: ToastController,
     public passServie : PassInformationServiceService,
-     private activatedRoute: ActivatedRoute ) {
+     private activatedRoute: ActivatedRoute,
+     private nav : NavController  ) {
     this.addTeamForm = this.formBuilder.group({
       teamName: new FormControl('', Validators.required),
       // location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(30)])),
@@ -133,7 +134,7 @@ if (!addTeamForm.valid) {
         if (this.isEditing) {
           this.router.navigateByUrl('tabs/manageTeam')
         }else { 
-          this.router.navigateByUrl('manage-team')
+          this.nav.navigateRoot('/manage-team')
         }
         
         const toast = await this.toastController.create({
