@@ -1,158 +1,375 @@
-* {
-    color: white !important;
+.creator {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 40;
 }
+
+ion-item {
+    --background: rgba(51, 117, 117, 0);
+    --color: black;
+
+}
+
 .error {
     .messages {
         background: rgba(255, 0, 0, 0.068);
-    color: red;
-    padding: 10px;
-    border-radius: 10px;
-    margin: 5px;
-    p {
-        color: red !important;
-        margin: 0;
-        padding: 0;
-    }
-    }
-    
-}
-.container {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    background: radial-gradient(transparent, #000000e8),linear-gradient(45deg, #05a66b 50%, #00794b00 50%),linear-gradient(40deg, orange 50%, #00794b00 50%),linear-gradient(37deg, #f2545445 50%, #00794b 50%);
-    background-size: cover;
-    .title {
-        color: white;
-        text-align: center;
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        backdrop-filter: blur(10px);
-        z-index: 300;
-        display: flex;
-        align-items: center;
-        .back {
-            padding: 0px 5px;
+        color: red;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 5px;
+
+        p {
+            color: red !important;
+            margin: 0;
+            padding: 0 10px;
+            font-size: 3vw;
         }
-        .t {
-            flex-basis: 100%;
-            text-align: center;
-             p {
-                 margin: 0;
-             }
-        }
-    }
-    .squadPreview {
-        margin-top: 43px;
-        width: 100vw;
-        height: 25%;
-        display: flex;
-        padding: 5px;
-        overflow: auto hidden;
-        .nopplayer {
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-            border: dashed 2px white;
-            display: flex;
-            align-items: center;
-            .p {
-                margin: auto;
-                text-align: center;
-                p {
-                    margin: 0px auto;
-                    width: 80%;
-                }
-            }
-        }
-        .card {
-            min-width: 300px;
-            height: 100%;
-            background: white;
-            border-radius: 10px;
-            margin: 0px 3px;
-            color: black !important;
-            position: relative;
-            overflow: hidden;
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .details {
-                border-radius: 10px;
-                padding: 15px;
-                position: absolute;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                backdrop-filter: blur(10px);
-                display: flex;
-                align-items: center;
-                overflow-y: auto;
-                color: #757575 !important;
-                background: rgba(255, 255, 255, 0.336);
-                .d {
-                    
-                    h5 {
-                        text-shadow: 0px 1px 2px #17171731;
-                    }
-                    p {
-                        font-size: 3vw;
-                        text-shadow: 0px 1px 2px #17171731;
-                        margin: 0;
-                    }
-                }
-            }
-        }
-    }
-    .backimage {
-        display: flex;
-        align-items: center;
-        .bimage, .btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 200px;
-            margin: auto;
-            display: flex;
-            align-items: center;
-        }
-        img {
-            outline: none;
-        }
-    }
-    form {
-        padding-right: 17px;
-    }
-    .achievements {
-        // background: rgba(0, 128, 0, 0.253);
-        position: relative;
-        padding-bottom: 15px;
-        margin-bottom: 25px;
-        .btn {
-            position: absolute;
-            bottom: -25px;
-            right: 0;
-        }
-        .closer {
-            position: absolute;
-            top: 7px;
-            right: 0;
-            z-index: 900;
-        }
-        
     }
 
 }
-.subButton::after {
-content: "";
-position: absolute;
-bottom: 0;
-right: 0;
-height: 2px;
-width: 5vw;
-border-radius: 200px;
-z-index: 200;
+
+.achievements {
+    // background: rgba(0, 128, 0, 0.253);
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+
+    .btn {
+        position: absolute;
+        bottom: -25px;
+        right: 0;
+    }
+
+    .closer {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        z-index: 900;
+        transform: translateY(-50%);
+    }
+
+}
+
+.editor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.253);
+    display: flex;
+    align-items: center;
+    z-index: 200;
+    transition: 0.3s;
+    transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    opacity: 1;
+
+    .formet {
+        margin: auto;
+        width: 90vw;
+        height: 90vh;
+        border-radius: 20px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: relative;
+        padding-top: 20px;
+        background: whitesmoke;
+
+        .titler {
+            text-align: center;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 10%;
+            display: flex;
+            align-items: center;
+            background: white;
+            z-index: 2000;
+            p {
+                margin: 5px auto;
+            }
+        }
+        .subButton {
+            text-align: center;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: white;
+        }
+        .former {
+            width: 90%;
+            margin: 10% auto 0% auto;
+            height: 90%;
+            overflow-y: auto;
+            padding: 5% 5% 12% 5%;
+            background: whitesmoke;
+        }
+    }
+}
+
+.editor-hide {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.253);
+    display: flex;
+    align-items: center;
+    z-index: 200;
+    transition: 0.3s;
+    transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    opacity: 0;
+    transform: scale(.5);
+
+    .formet {
+        margin: auto;
+        width: 90vw;
+        height: 90vh;
+        border-radius: 20px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        position: relative;
+        padding-top: 20px;
+        background: whitesmoke;
+
+        .titler {
+            height: 20%;
+            text-align: center;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+
+            p {
+                margin: 5px auto;
+            }
+        }
+
+        .former {
+            height: 60%;
+            width: 90%;
+            margin: auto;
+
+            .subButton {
+                height: 20%;
+            }
+        }
+    }
+}
+.imager {
+    width: 100%;
+    height: 48vw;
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--drop-shadow);
+    position: relative;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .imagePicker {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: whitesmoke;
+        border-radius: 20px 0px;
+    }
+}
+.selected {
+    transform: scale(.3);
+    transition: 0.3s;
+    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+    opacity: .9;
+}
+
+.topPart {
+    .head {
+        display: flex;
+        align-items: center;
+
+        .hTitle {
+            flex-basis: 100%;
+            text-align: center;
+            padding-right: 50px;
+
+            p {
+                margin: 0;
+                font-family: "Neou" !important;
+                font-size: 4vw;
+                text-transform: uppercase;
+            }
+        }
+    }
+
+    .shad {
+        box-shadow: var(--drop-shadow);
+        border-radius: var(--radius);
+        display: flex;
+        align-content: center;
+
+        .pInfo {
+            margin: auto;
+            width: 90%;
+            padding: 5px !important;
+            h1 {
+                font-size: 10vw !important;
+                margin: 10px 0px !important;
+            }
+
+            p {
+                font-size: 3.6vw !important;
+                margin: 0 !important;
+            }
+
+            b {
+                opacity: .7;
+            }
+        }
+    }
+
+    .former {
+        width: 90%;
+        background: #0BBB72;
+        margin: auto;
+        border-radius: var(--radius);
+        padding: 5px 10px;
+        overflow-y: auto;
+        box-shadow: var(--drop-shadow), inset 0px 3px 3px #17171742;
+        .fList {
+            
+        }
+        .playerCard {
+            width: 100%;
+            margin: 10px auto;
+            .image {
+                width: 100%;
+                height: 45vw;
+                background: whitesmoke;
+                border-radius: 20px;
+                box-shadow: var(--drop-shadow);
+                overflow: hidden;
+                position: relative;
+
+                .edit {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    z-index: 10;
+                }
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .name {
+                width: 80%;
+                margin: auto;
+                box-shadow: var(--drop-shadow);
+                padding: 10px;
+                text-align: center;
+                background: whitesmoke;
+                border-radius: var(--radius);
+
+                p {
+                    margin: 0;
+                    text-align: center;
+
+                }
+            }
+        }
+    }
+
+    @media only screen and (min-height: 500px) {
+        .former {
+            width: 90%;
+            background: #0BBB72;
+            margin: auto;
+            height: 58vh;
+            border-radius: var(--radius);
+            padding: 5px 10px;
+            overflow-y: auto;
+        }
+    }
+
+    @media only screen and (min-height: 568px) {
+        .former {
+            width: 90%;
+            background: #0BBB72;
+            margin: auto;
+            height: 62vh;
+            border-radius: var(--radius);
+            padding: 5px 10px;
+            overflow-y: auto;
+        }
+    }
+
+    @media only screen and (min-height: 667px) {
+        .former {
+            width: 90%;
+            background: #0BBB72;
+            margin: auto;
+            height: 64vh;
+            border-radius: var(--radius);
+            padding: 5px 10px;
+            overflow-y: auto;
+        }
+    }
+
+    @media only screen and (min-height: 736px) {
+        .former {
+            width: 90%;
+            background: #0BBB72;
+            margin: auto;
+            height: 66vh;
+            border-radius: var(--radius);
+            padding: 5px 10px;
+            overflow-y: auto;
+        }
+    }
+
+    @media only screen and (min-height: 812px) {
+        .former {
+            width: 90%;
+            background: #0BBB72;
+            margin: auto;
+            height: 71vh;
+            border-radius: var(--radius);
+            padding: 5px 10px;
+            overflow-y: auto;
+        }
+    }
+
+    @media only screen and (min-height: 823px) {
+        .former {
+            width: 90%;
+            background: #0BBB72;
+            margin: auto;
+            height: 70vh;
+            border-radius: var(--radius);
+            padding: 5px 10px;
+            overflow-y: auto;
+        }
+    }
+
+    @media only screen and (min-height: 1024px) {
+        .former {
+            width: 90%;
+            background: #0BBB72;
+            margin: auto;
+            height: 69vh;
+            border-radius: var(--radius);
+            padding: 5px 10px;
+            overflow-y: auto;
+        }
+    }
+
 }

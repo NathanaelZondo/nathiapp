@@ -10,13 +10,16 @@
     <ion-button class="animated fadeIn" *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='checking'"  size="small" color="success" disabled='true' fill='clear'>
       <ion-spinner name="lines"></ion-spinner>
     </ion-button>
-    <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='no'}"  *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='no'"  size="small" color="success" (click)="applyForTournament()">
+    <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='no'}"  *ngIf="role=='user'"  size="small" color="danger" >
+      Sign In or Sign Up
+    </ion-button>
+    <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='no'}"  *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='no'&&role!='user'"  size="small" color="success" (click)="applyForTournament()">
       Apply
     </ion-button>
-    <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='yes'}" *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='yes'"  size="small" color="success" disabled='true'>
+    <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='yes'}" *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='yes'&&role!='user'"  size="small" color="success" disabled='true'>
       Already Applied
     </ion-button>
-    <ion-button class="animated fadeIn slow" *ngIf="viewedTournament.state=='finished'"  size="small" color="success">
+    <ion-button class="animated fadeIn slow" *ngIf="viewedTournament.state=='finished'&&role!=='user'"  size="small" color="success">
       {{match.winner.teamName}} won
     </ion-button>
   </div>

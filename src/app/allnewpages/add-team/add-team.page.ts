@@ -33,12 +33,19 @@ export class AddTeamPage implements OnInit {
   storage = firebase.storage().ref();
   isuploading: false
   uploadprogress = 0;
+
   logoImage =null
+  logoText = 'Upload Image'
   logoProgress = 0
+
   GJerseyImage =null
   jerseyProgress = 0
+  gJerseyText = 'Upload Image'
+
   TjerseyImage=null
   teamProgress = 0
+  tJerseyText = 'Upload Image'
+
   isEditing = false;
   userObj = {}
   validation_messages = {
@@ -81,16 +88,7 @@ export class AddTeamPage implements OnInit {
     });
   }
 
-  ngOnInit() { 
-    this.getMember();
-    this.activatedRoute.queryParams.subscribe(() => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.isEditing = this.router.getCurrentNavigation().extras.state.isEditing
-        this.teamNode = this.router.getCurrentNavigation().extras.state.data
-        console.log(this.isEditing, this.teamNode);
-      }
-    });
-   }
+
    getMember(){
      firebase.auth().onAuthStateChanged( user =>{
        if(user){
@@ -98,6 +96,8 @@ export class AddTeamPage implements OnInit {
           if(doc.exists){
             this.teamNode.managerEmail = doc.data().form.email
             this.teamNode.managerName = doc.data().form.fullName
+            console.log(this.teamNode);
+            
           }
          })
        }
@@ -158,6 +158,7 @@ if (!addTeamForm.valid) {
 
   //Functions to upload images
   async selectLogoImage() {
+    this.teamNode.teamLogo =''
     let option: CameraOptions = {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
@@ -181,6 +182,14 @@ if (!addTeamForm.valid) {
       upload.on('state_changed', snapshot => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         this.logoProgress = progress;
+        // upload progress state
+        if (progress > 0) {
+          this.logoText = 'Uploading...'
+        } else if (progress > 50) {
+          this.logoText = 'Halfway There...'
+        } else if (progress == 100) {
+          this.logoText = 'Finnishing Upload'
+        }
         if (progress == 100) {
           this.isuploading = false;
         }
@@ -188,6 +197,7 @@ if (!addTeamForm.valid) {
       }, () => {
         upload.snapshot.ref.getDownloadURL().then(downUrl => {
           this.teamNode.teamLogo = downUrl;
+          this.logoText = 'Done'
           console.log('Image downUrl', downUrl);
           this.logoProgress =0
         })
@@ -198,6 +208,7 @@ if (!addTeamForm.valid) {
   }  
 
   async teamJersey() {
+    this.teamNode.teamJerseyIMG =''
     let option: CameraOptions = {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
@@ -221,6 +232,16 @@ if (!addTeamForm.valid) {
       upload.on('state_changed', snapshot => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         this.teamProgress = progress;
+        if (progress > 0) {
+          this.tJerseyText = 'Uploading...'
+        } else if (progress > 50) {
+          this.tJerseyText = 'Halfway There...'
+        } else if (progress == 100) {
+          this.tJerseyText = 'Finnishing Upload'
+        }
+        if (progress == 100) {
+          this.isuploading = false;
+        }
         if (progress == 100) {
           this.isuploading = false;
         }
@@ -228,6 +249,7 @@ if (!addTeamForm.valid) {
       }, () => {
         upload.snapshot.ref.getDownloadURL().then(downUrl => {
           this.teamNode.teamJerseyIMG = downUrl;
+          this.tJerseyText = 'Done'
           console.log('Image downUrl', downUrl);
           this.teamProgress =0
 
@@ -238,6 +260,7 @@ if (!addTeamForm.valid) {
     })
   }  
   async GoalKeeperJersey() {
+    this.teamNode.goalKeeperJerseyIMG =''
     let option: CameraOptions = {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
@@ -264,12 +287,26 @@ if (!addTeamForm.valid) {
       upload.on('state_changed', snapshot => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         this.jerseyProgress = progress;
+        if (progress > 0) {
+          this.gJerseyText = 'Uploading...'
+        } else if (progress > 50) {
+          this.gJerseyText = 'Halfway There...'
+        } else if (progress == 100) {
+          this.gJerseyText = 'Finnishing Upload'
+        }
+        if (progress == 100) {
+          this.isuploading = false;
+        }
+        if (progress == 100) {
+          this.isuploading = false;
+        }
         if (progress == 100) {
           this.isuploading = false;
         }
       }, err => {
       }, () => {
         upload.snapshot.ref.getDownloadURL().then(downUrl => {
+          this.gJerseyText = 'Done'
           this.teamNode.goalKeeperJerseyIMG = downUrl;
           console.log('Image downUrl', downUrl);
           this.jerseyProgress = 0
@@ -286,4 +323,14 @@ if (!addTeamForm.valid) {
     this.router.navigateByUrl('tabs/manageTeam')
     this.isEditing  = false
   }
+  ngOnInit() { 
+    this.getMember();
+    this.activatedRoute.queryParams.subscribe(() => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.isEditing = this.router.getCurrentNavigation().extras.state.isEditing
+        this.teamNode = this.router.getCurrentNavigation().extras.state.data
+        console.log(this.isEditing, this.teamNode);
+      }
+    });
+   }
 }

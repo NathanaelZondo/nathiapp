@@ -28,7 +28,7 @@ export class HomePage {
     upcoming: [],
     finished: []
   }
-  accountRole = null
+  accountRole = 'user'
   filterBy = 'comingUp'
   loadFilter = false;
   constructor(public router: Router,
@@ -199,5 +199,8 @@ export class HomePage {
           break;
       }
     }
+  }
+  login() {
+    this.router.navigate(['login'])
   }
 }

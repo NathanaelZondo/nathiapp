@@ -112,7 +112,8 @@ ion-button {
             .long-text {
                 display: inline-block;
                 width: 100%;
-                white-space: nowrap;
+                height: 13vw;
+                white-space: pre-line;
                 overflow: hidden !important;
                 text-overflow: ellipsis;
             }
