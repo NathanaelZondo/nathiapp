@@ -5,6 +5,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase'
+import { Button } from 'protractor';
+import { async } from '@angular/core/testing';
 declare var window
 @Component({
   selector: 'app-login',
@@ -65,10 +67,15 @@ export class LoginPage implements OnInit {
     firebase.auth().signInWithEmailAndPassword(email, form.password).then(()=>{
       this.presentLoading()
       this.route.navigate(['tabs'])
-    }).catch( err =>{
-      console.log(err);
-      
+    }).catch(async err =>{
+      const alert = await this.alertController.create({
+        header : 'WARNING',
+        message : err,
+        buttons: ['OK']
+      });
+     await alert.present();
     })
+    
   }
   
   //   async requestCode(){
