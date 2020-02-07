@@ -50,7 +50,9 @@ ion-item {
     }
 
 }
+.dFH {
 
+}
 .editor {
     position: fixed;
     top: 0;
@@ -58,7 +60,6 @@ ion-item {
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.253);
-    display: flex;
     align-items: center;
     z-index: 200;
     transition: 0.3s;
@@ -118,7 +119,6 @@ ion-item {
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.253);
-    display: flex;
     align-items: center;
     z-index: 200;
     transition: 0.3s;

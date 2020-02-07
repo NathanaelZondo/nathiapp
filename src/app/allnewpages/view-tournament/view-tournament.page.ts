@@ -36,45 +36,56 @@ export class ViewTournamentPage implements OnInit {
     fullName: '',
     image: ''
   }
-  role = 'user'
+  role = ''
   userProfile = false
   loggedInUser = null
+  application = {
+    TeamObject: {},
+    TournamentID: "",
+    clientNotified: null,
+    refNumber: "",
+    status: "new"
+  } as any
   constructor(public pass: PassInformationServiceService, public navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, public loadingController: LoadingController, public store: NativeStorage, public passService: PassInformationServiceService, public alertController: AlertController, public renderer: Renderer2) { }
   tournid;
   ngOnInit() {
     this.tournMatches = []
     // receives nav params
     firebase.auth().onAuthStateChanged(user => {
-if (user) {
-  firebase.auth().updateCurrentUser(user).then(res => {
-    this.loggedInUser = user
-    setTimeout(() => {
-      this.checkForTournaments();
-    }, 1000);
-    //this.getUserProfile();
-    this.geTeamProfile();
-    this.getProfile();
-    this.checkProfile()
-    setTimeout(() => {
-      console.log('blah bal', this.userObj);
-    }, 1000);
-    this.store.keys().then(res => {
-      res.forEach(element => {
-        this.storageKeys.push(element);
-      });
-      console.log(this.storageKeys);
+      if (user) {
+        firebase.auth().updateCurrentUser(user).then(res => {
+          this.loggedInUser = user
+          setTimeout(() => {
 
-    })
-  })
-} else {
-  this.applytournaments = 'no'
-}
+          }, 0);
+          //this.getUserProfile();
+          this.geTeamProfile();
+          this.getProfile();
+          this.checkProfile()
+          setTimeout(() => {
+            console.log('blah bal', this.userObj);
+          }, 1000);
+          this.store.keys().then(res => {
+            res.forEach(element => {
+              this.storageKeys.push(element);
+            });
+            console.log(this.storageKeys);
+
+          })
+        })
+      } else {
+        this.role = 'user'
+        this.applytournaments = 'no'
+      }
     })
 
 
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.viewedTournament = this.router.getCurrentNavigation().extras.state.parms
+        setTimeout(() => {
+          this.checkForTournaments();
+        }, 500);
         console.log(this.viewedTournament);
         this.pass.tournid = this.viewedTournament.doc_id;
         this.tournid = this.viewedTournament.doc_id;
@@ -321,6 +332,8 @@ if (user) {
     if (this.role == 'teamManager') {
       this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).collection('teamApplications').doc(this.loggedInUser.uid).get().then(res => {
         console.log(res);
+        this.application = res.data()
+        console.log(this.application);
 
         if (res.exists) {
           setTimeout(() => {
@@ -366,22 +379,22 @@ if (user) {
   }
   getProfile() {
     firebase.firestore().collection('members').doc(this.loggedInUser.uid).onSnapshot(res => {
-if(res.exists) {
-  this.vendorObj = res.data()
-  console.log('vendor', this.vendorObj);
+      if (res.exists) {
+        this.vendorObj = res.data()
+        console.log('vendor', this.vendorObj);
 
-  this.profile.fullName = res.data().form.fullName;
-  if (res.data().form.role == 'vendor') {
-    this.role = 'vendor';
-  } else {
-    this.role = 'teamManager';
-  }
-} else {
-    this.role = 'user'
-    this.applytournaments = 'no'
-    console.log(this.applytournaments, ' 373');
-    
-  }
+        this.profile.fullName = res.data().form.fullName;
+        if (res.data().form.role == 'vendor') {
+          this.role = 'vendor';
+        } else {
+          this.role = 'teamManager';
+        }
+      } else {
+        this.role = 'user'
+        this.applytournaments = 'no'
+        console.log(this.applytournaments, ' 373');
+
+      }
     })
   }
   //  generates images for the participants section
@@ -518,7 +531,7 @@ if(res.exists) {
       }
     };
     // passes nav params
-    this.router.navigate(['view-match'],navigationExtras);
+    this.router.navigate(['view-match'], navigationExtras);
   }
   async presentLoading(cmd, state) {
     let loader = await this.loadingController.create({
@@ -568,16 +581,16 @@ if(res.exists) {
           let ionLoader = document.getElementsByTagName('ion-loading')
           console.log(ionLoader);
           for (let i = 0; i < ionLoader.length; i++) {
-            this.renderer.setStyle(ionLoader[i],'display','none');
-            
+            this.renderer.setStyle(ionLoader[i], 'display', 'none');
+
           }
           // was trying to find why is wasnt dismissing
         }).catch(err => {
           let ionLoader = document.getElementsByTagName('ion-loading')
           console.log(ionLoader);
           for (let i = 0; i < ionLoader.length; i++) {
-            this.renderer.setStyle(ionLoader[i],'display','none');
-            
+            this.renderer.setStyle(ionLoader[i], 'display', 'none');
+
           }
         })
         break;

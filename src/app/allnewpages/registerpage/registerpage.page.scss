@@ -7,6 +7,34 @@ ion-item {
     background: none !important;
     color: rgb(24, 24, 24) !important;
 }
+.profileImage {
+    background: rgba(255, 255, 255, 0.014);
+    position: relative;
+    border-radius: 20px;
+    width: 70%;
+    margin: auto;
+    ion-button {
+        margin: 0 !important;
+    }
+    .imgC {
+        width: 47vw;
+        height: 47vw;
+        margin: auto;
+        border-radius: 200px;
+        overflow: hidden;
+        border: solid 1px rgba(245, 245, 245, 0.582);
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    .picker {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
 .container {
     width: 100%;
     height: 100%;

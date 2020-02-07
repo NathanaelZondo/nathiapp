@@ -46,7 +46,7 @@ export class AppComponent {
         })
         });
         this.runProcesses()
-        this.checkForTeamAndPlayers();
+        // this.checkForTeamAndPlayers();
     })
   }
   runProcesses() {
@@ -59,20 +59,28 @@ export class AppComponent {
           } else {
       this.ngZone.run(()=>{
         firebase.auth().onAuthStateChanged(user =>{
-          firebase.firestore().collection('Teams').doc(user.uid).get().then(res =>{
-            firebase.firestore().collection('Teams').doc(user.uid).collection('Players').get().then( players =>{
-              if(!res.exists){
-
-                this.router.navigateByUrl("/add-team")
-            }else if(res.exists && players.empty == true ){
-              this.router.navigateByUrl("/add-player")
-            }
-            else {
-              this.router.navigateByUrl("/tabs")
-            }
+          if (user) {
+            firebase.firestore().collection('Teams').doc(user.uid).get().then(res =>{
+              firebase.firestore().collection('Teams').doc(user.uid).collection('Players').get().then( players =>{
+                if(!res.exists){
+                  this.router.navigateByUrl("/add-team")
+                  this.presentAlert()
+              }else if(res.exists && players.empty == true ){
+                console.log('no player');
+                
+                this.router.navigateByUrl("/add-player");
+                this.presentAlert1()
+              }
+              else{
+                this.router.navigateByUrl("/tabs")
+              }
+              })
+          
             })
-        
-          })
+          } else {
+            this.router.navigateByUrl("/tabs")
+          }
+    
         })
         firebase.firestore().collection('members').doc(user.uid).update({
           Token : this.token
@@ -89,7 +97,7 @@ export class AppComponent {
       console.log('component error ', err);
       
       // this.router.navigateByUrl("/tabs");
-      // this.router.navigateByUrl("onboarding");
+      this.router.navigateByUrl("onboarding");
     })
   }
   checkForTeamAndPlayers(){
