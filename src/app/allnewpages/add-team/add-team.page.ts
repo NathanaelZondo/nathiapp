@@ -132,9 +132,9 @@ if (!addTeamForm.valid) {
       // upon success...
       user.then(async() => {
         if (this.isEditing) {
-          this.router.navigateByUrl('tabs/manageTeam')
+          this.router.navigateByUrl('add-player')
         }else { 
-          this.nav.navigateRoot('/manage-team')
+          this.nav.navigateRoot('/add-player')
         }
         
         const toast = await this.toastController.create({

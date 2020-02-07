@@ -31,7 +31,8 @@ export class AppComponent {
     public ngZone: NgZone,
     private alertCtrl: AlertController,
     private fcm : FCM,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    public alertController: AlertController
   ) {
     
     this.initializeApp();
@@ -61,6 +62,7 @@ export class AppComponent {
           firebase.firestore().collection('Teams').doc(user.uid).get().then(res =>{
             firebase.firestore().collection('Teams').doc(user.uid).collection('Players').get().then( players =>{
               if(!res.exists){
+
                 this.router.navigateByUrl("/add-team")
             }else if(res.exists && players.empty == true ){
               this.router.navigateByUrl("/add-player")
@@ -98,10 +100,12 @@ export class AppComponent {
           firebase.firestore().collection('Teams').doc(user.uid).collection('Players').get().then( players =>{
             if(!res.exists){
               this.router.navigateByUrl("/add-team")
+              this.presentAlert()
           }else if(res.exists && players.empty == true ){
             console.log('no player');
             
             this.router.navigateByUrl("/add-player")
+            this.presentAlert1()
           }
           else{
             this.router.navigateByUrl("/tabs")
@@ -128,7 +132,23 @@ export class AppComponent {
     });
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'No Team found',
+      message: 'In order for you to be able to apply for tournaments, you must add your team details',
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
+  async presentAlert1() {
+    const alert = await this.alertController.create({
+      header: 'No Players found',
+      message: 'In order for you to be able to apply for tournaments, you must add your team players',
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
 }
 
