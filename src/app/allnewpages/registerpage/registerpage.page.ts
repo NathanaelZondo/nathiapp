@@ -8,6 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { async } from 'q';
 import { Router } from '@angular/router';
 import { FCM } from '@ionic-native/fcm/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 declare var window
 @Component({
   selector: 'app-registerpage',
@@ -27,7 +28,11 @@ export class RegisterpagePage implements OnInit {
   fullName
   uid
   role
+  profileImage = 'https://avatarfiles.alphacoders.com/855/85557.png'
+  imageProgress = 0
+  imageText = 'Profile Image'
   db = firebase.firestore()
+  storage = firebase.storage().ref();
   public recaptchaVerifier: firebase.auth.RecaptchaVerifier
   Profile = {
     number: '',
@@ -48,7 +53,8 @@ export class RegisterpagePage implements OnInit {
     public ngZone: NgZone,
     public renderer: Renderer2,
     public fcm : FCM,
-    private zone : NgZone
+    private zone : NgZone,
+    private camera: Camera
 
   ) {
     this.smsSent = false
@@ -88,6 +94,7 @@ firebase.auth().createUserWithEmailAndPassword(email ,form.password).then((newUs
     form ,
     loginEmail : email,
     status: '',
+    profileImage: this.profileImage,
     firstEmailRecieved : 'no' ,
     // Token : this.token,
     dateCreated : new Date
@@ -114,6 +121,52 @@ firebase.auth().createUserWithEmailAndPassword(email ,form.password).then((newUs
     } else {
       this.passwordToggleIcon = 'eye'
     }
+  }
+  async getImage() {
+    
+    let option: CameraOptions = {
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      quality: 90,
+      targetHeight : 600,
+      targetWidth : 600,
+      correctOrientation: true,
+      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
+    }
+    await this.camera.getPicture(option).then(res => {
+      this.profileImage=''
+      console.log(res);
+      const image = `data:image/jpeg;base64,${res}`;
+
+      const filename = Math.floor(Date.now() / 1000);
+      let file = firebase.auth().currentUser.uid + filename + '.jpg';
+      const UserImage = this.storage.child(file);
+
+      const upload = UserImage.putString(image, 'data_url');
+      upload.on('state_changed', snapshot => {
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        this.imageProgress = progress;
+        // upload progress state
+        if (progress > 0) {
+          this.imageText = 'Uploading...'
+        } else if (progress > 50) {
+          this.imageText = 'Halfway There...'
+        } else if (progress == 100) {
+          this.imageText = 'Finnishing Upload'
+        }
+      }, err => {
+      }, () => {
+        upload.snapshot.ref.getDownloadURL().then(downUrl => {
+          this.profileImage = downUrl;
+          this.imageText = 'Done'
+          console.log('Image downUrl', downUrl);
+          this.imageProgress =0
+        })
+      })
+    }, err => {
+      console.log("Something went wrong: ", err);
+    })
   }
   // requestCode() {
   //   // this.phoneNumber = this.registrationForm.get('phoneNumber').value

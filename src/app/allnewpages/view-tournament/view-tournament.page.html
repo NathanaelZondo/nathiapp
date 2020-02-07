@@ -7,25 +7,40 @@
         <ion-icon name="arrow-back"></ion-icon>
       </ion-fab-button>
     </div>
-    <ion-button class="animated fadeIn" *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='checking'"  size="small" color="success" disabled='true' fill='clear'>
+
+
+    <ion-button class="animated fadeIn" *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='checking'&&!role"  size="small" color="success" disabled='true' fill='clear'>
       <ion-spinner name="lines"></ion-spinner>
     </ion-button>
-    <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='no'}"  *ngIf="role=='user'"  size="small" color="danger" >
+
+
+    <ion-button class="animated" [ngClass]="{'bounceIn':viewedTournament.state=='newTournament'&&applytournaments=='no'}"  *ngIf="role=='user'"  size="small" color="danger" >
       Sign In or Sign Up
     </ion-button>
-    <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='no'}"  *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='no'&&role!='user'"  size="small" color="success" (click)="applyForTournament()">
+
+
+    <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='no'}"  *ngIf="viewedTournament.state=='newTournament'&&!application&&applytournaments=='no'"  size="small" color="success" (click)="applyForTournament()">
       Apply
     </ion-button>
-    <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='yes'}" *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='yes'&&role!='user'"  size="small" color="success" disabled='true'>
-      Already Applied
+
+
+    <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments!='checking'}" *ngIf="application.status=='awaiting'&&applytournaments!='checking'"  size="small" color="success" disabled='true'>
+      Application Pending
     </ion-button>
+
+
+    <ion-button class="animated" [ngClass]="{'bounceIn':application.status=='accepted'&&applytournaments!='checking'}" *ngIf="application.status=='accepted'&&applytournaments!='checking'"  size="small" color="success" disabled='true'>
+      Application Accepted
+    </ion-button>
+
+
     <ion-button class="animated fadeIn slow" *ngIf="viewedTournament.state=='finished'&&role!=='user'"  size="small" color="success">
       {{match.winner.teamName}} won
     </ion-button>
   </div>
     <div class="data">
     <h1>{{viewedTournament.formInfo.tournamentName}}</h1>
-      <p id="desc" style="font-size: 3vw;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Asperiores earum aperiam accusamus perspiciatis at obcaecati quos porro sapiente autem provident temporibus iste facilis ratione recusandae, ducimus facere delectus aut? Doloremque.</p>
+      <p id="desc" style="font-size: 3vw;">{{viewedTournament.formInfo.bio}}.</p>
     </div>
     <div class="more">
       <div class="date">

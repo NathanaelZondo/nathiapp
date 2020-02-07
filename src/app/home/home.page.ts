@@ -180,21 +180,39 @@ export class HomePage {
 
           setTimeout(() => {
             this.viewTournaments = this.tourn.upcoming
+            
             this.loadFilter = false
+            if (this.tourn.upcoming.length == 0) {
+              this.skeleton = [1,2,3,4,5,6,7]
+            } else {
+              this.skeleton = []
+            }
           }, 100);
           break;
         case 'inProgress':
 
           setTimeout(() => {
             this.viewTournaments = this.tourn.inprogres
+            
             this.loadFilter = false
+            if (this.tourn.inprogres.length == 0) {
+              this.skeleton = [1,2,3,4,5,6,7]
+            } else {
+              this.skeleton = []
+            }
           }, 100);
           break;
         case 'results':
 
           setTimeout(() => {
             this.viewTournaments = this.tourn.finished
+            
             this.loadFilter = false
+            if (this.tourn.finished.length == 0) {
+              this.skeleton = [1,2,3,4,5,6,7]
+            } else {
+              this.skeleton = []
+            }
           }, 100);
           break;
       }

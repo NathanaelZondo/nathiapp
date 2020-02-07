@@ -9,8 +9,24 @@
   <form  [formGroup]="registrationForm" (ngSubmit)="addUser(registrationForm.value)">
       <h4><b>Nathi's </b>Tournaments</h4> 
       <p>Registration</p>
-      <hr>
-
+      <div class="profileImage">
+        <div class="imgC" *ngIf="profileImage">
+          <img   src="{{profileImage}}" alt="">
+        </div>
+        <circle-progress *ngIf="!profileImage" 
+        [percent]="[imageProgress]"
+        [animation]="true"
+        [responsive]="true"
+        [titleFontSize]="50"
+        [subtitleFontSize]="20"
+        [subtitle]="[imageText]"
+      ></circle-progress>
+        <div class="picker">
+          <ion-fab-button (click)="getImage()" size="small" shape="round" color="success">
+            <ion-icon  name="camera"></ion-icon>
+          </ion-fab-button>
+        </div>
+      </div>
      <ion-item  style="border-radius: 10px;
      margin: 2px 0px;">
         <ion-label position="floating">Full Name</ion-label>
@@ -21,7 +37,7 @@
         <ion-label position="floating">Email</ion-label>
       <ion-input formControlName="email" type="email" [(ngModel)]="email"></ion-input>
      </ion-item>
-     <hr>
+
      <ion-item  style="border-radius: 10px;
      margin: 2px 0px;">
        <ion-label position="floating">Phone Number</ion-label>

@@ -121,6 +121,7 @@ export class AddPlayerPage implements OnInit {
       docid: null,
       docdata: null
     }
+ 
     this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then(res => {
       if (res.exists) {
         console.log(res.data());
@@ -144,6 +145,15 @@ export class AddPlayerPage implements OnInit {
           this.viewPlayer = this.players[0]
           console.log(this.viewPlayer)
         }
+        this.db.collection('members').doc(firebase.auth().currentUser.uid).get().then(res =>{
+          console.log('data', res.data());
+          
+          if(res.data().status === '' && this.players.length > 2){
+            this.db.collection('members').doc(firebase.auth().currentUser.uid).update({
+              status: 'awaiting'
+            })
+          }
+        })
       })
     })
   }
@@ -368,7 +378,9 @@ export class AddPlayerPage implements OnInit {
     this.editMode = false
   }
   ngOnInit() {
-
+    setTimeout(() => {
+      this.renderer.setStyle(this.editForm[0],'display','none')
+    }, 500);
     this.getTeam()
   }
 }

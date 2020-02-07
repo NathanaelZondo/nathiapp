@@ -66,6 +66,7 @@ export class LoginPage implements OnInit {
       this.presentLoading()
       this.route.navigate(['tabs'])
     }).catch( err =>{
+      console.log(err);
       
     })
   }
