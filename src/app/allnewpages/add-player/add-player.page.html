@@ -167,7 +167,7 @@
       <div class="playerCard animated fadeInUp" *ngFor="let item of players;let i = index" (click)="viewInfo(item, i)"
         [ngClass]="{'bounceIn':selectedId==i}">
         <div class="image">
-          <img src="../../../assets/add-team.jpg" alt="">
+          <img src="{{item.profileImage}}" alt="">
           <div class="edit">
             <ion-fab-button size="small" color="success" (click)="edit(item)">
               <ion-icon name="create"></ion-icon>

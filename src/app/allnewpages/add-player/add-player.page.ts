@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@ang
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { LoadingController, ToastController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
-
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 @Component({
   selector: 'app-add-player',
   templateUrl: './add-player.page.html',
@@ -92,7 +92,8 @@ export class AddPlayerPage implements OnInit {
     private router: Router,
     public toastController: ToastController,
     public renderer: Renderer2,
-    public navctrl: NavController) {
+    public navctrl: NavController,
+    public splashScreen: SplashScreen,) {
 
     let v = new Date
     this.date = v.getFullYear() - 8
@@ -148,7 +149,7 @@ export class AddPlayerPage implements OnInit {
         this.db.collection('members').doc(firebase.auth().currentUser.uid).get().then(res =>{
           console.log('data', res.data());
           
-          if(res.data().status === '' && this.players.length > 2){
+          if(res.data().status === '' && this.players.length > 0){
             this.db.collection('members').doc(firebase.auth().currentUser.uid).update({
               status: 'awaiting'
             })
@@ -378,6 +379,9 @@ export class AddPlayerPage implements OnInit {
     this.editMode = false
   }
   ngOnInit() {
+    setTimeout(() => {
+      this.splashScreen.hide()
+    }, 3000);
     setTimeout(() => {
       this.renderer.setStyle(this.editForm[0],'display','none')
     }, 500);

@@ -34,7 +34,8 @@ export class ViewTournamentPage implements OnInit {
   vendorObj = {}
   profile = {
     fullName: '',
-    image: ''
+    image: '',
+    status: 'awaiting'
   }
   role = ''
   userProfile = false
@@ -258,69 +259,94 @@ export class ViewTournamentPage implements OnInit {
 
       await alert.present();
     } else {
-      const alert = await this.alertController.create({
-        header: 'Apply for ' + this.viewedTournament.formInfo.tournamentName + '?',
-        message: 'This tournament costs <b>R' + this.viewedTournament.formInfo.joiningFee + '.00</b> to participate in <br> <hr> Proceed?',
-        buttons: [
-          {
-            text: 'Yes',
-            handler: () => {
-              this.presentLoading('p', false);
-              let r = Math.random().toString(36).substring(7).toUpperCase();
-              let some = r
-              if (this.role == 'vendor') {
-                this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).collection('vendorApplications').doc(this.loggedInUser.uid).set({
-                  vendorobject: this.vendorObj,
-                  refNumber: r,
-                  status: 'awaiting',
-                  TournamentID: this.viewedTournament.doc_id,
-                  uid: this.loggedInUser.uid
-                }).then(res => {
-                  this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).update({
-                    vendorTotalApplications: firebase.firestore.FieldValue.increment(1)
-                  }).then(r => {
-                    this.presentLoading('d', true);
-                  })
-
-                  console.log('lets see', this.viewedTournament.formInfo.tournamentName, some);
-                }).catch(err => {
-                  this.presentLoading('d', false);
-                })
-              } else if (this.teamState == true) {
-                this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).collection('teamApplications').doc(this.loggedInUser.uid).set({
-                  TeamObject: this.userObj,
-                  refNumber: r,
-                  status: 'awaiting',
-                  clientNotified: 1,
-                  TournamentID: this.viewedTournament.doc_id
-                }).then(res => {
-                  this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).update({
-                    totalApplications: firebase.firestore.FieldValue.increment(1)
-                  }).then(r => {
-                    console.log('should dismiss');
-
-                    this.presentLoading('d', true);
-                  }).catch(err => {
-                    this.presentLoading('d', false);
-                  })
-                  console.log('lets see', this.viewedTournament.formInfo.tournamentName, some);
-
-                }).catch(err => {
-                  this.presentLoading('d', false);
-                })
-              }
-
-            }
-          },
-          {
-            text: 'No',
-            role: 'cancel',
-            cssClass: 'secondary',
-          }
-        ]
-      });
-      await alert.present();
+      if (this.profile.status == 'awaiting') {
+        let alerter = await this.alertController.create({
+          header: 'Profile Approval',
+          message: 'Your profile has not been approved yet. Until then you cannot apply for tournaments.',
+          buttons: [{
+            text: 'Okay',
+            role: 'cancel'
+          }]
+        })
+        await alerter.present()
+      } else if(this.profile.status == 'Blocked') {
+        let alerter = await this.alertController.create({
+          header: 'Blocked Account',
+          message: 'Your account has been blocked.',
+          buttons: [{
+            text: 'Okay',
+            role: 'cancel'
+          }]
+        })
+        await alerter.present()
+      } else {
+        this.apply()
+      }
     }
+  }
+  async apply () {
+    const alert = await this.alertController.create({
+      header: 'Apply for ' + this.viewedTournament.formInfo.tournamentName + '?',
+      message: 'This tournament costs <b>R' + this.viewedTournament.formInfo.joiningFee + '.00</b> to participate in <br> <hr> Proceed?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.presentLoading('p', false);
+            let r = Math.random().toString(36).substring(7).toUpperCase();
+            let some = r
+            if (this.role == 'vendor') {
+              this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).collection('vendorApplications').doc(this.loggedInUser.uid).set({
+                vendorobject: this.vendorObj,
+                refNumber: r,
+                status: 'awaiting',
+                TournamentID: this.viewedTournament.doc_id,
+                uid: this.loggedInUser.uid
+              }).then(res => {
+                this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).update({
+                  vendorTotalApplications: firebase.firestore.FieldValue.increment(1)
+                }).then(r => {
+                  this.presentLoading('d', true);
+                })
+
+                console.log('lets see', this.viewedTournament.formInfo.tournamentName, some);
+              }).catch(err => {
+                this.presentLoading('d', false);
+              })
+            } else if (this.teamState == true) {
+              this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).collection('teamApplications').doc(this.loggedInUser.uid).set({
+                TeamObject: this.userObj,
+                refNumber: r,
+                status: 'awaiting',
+                clientNotified: 1,
+                TournamentID: this.viewedTournament.doc_id
+              }).then(res => {
+                this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).update({
+                  totalApplications: firebase.firestore.FieldValue.increment(1)
+                }).then(r => {
+                  console.log('should dismiss');
+
+                  this.presentLoading('d', true);
+                }).catch(err => {
+                  this.presentLoading('d', false);
+                })
+                console.log('lets see', this.viewedTournament.formInfo.tournamentName, some);
+
+              }).catch(err => {
+                this.presentLoading('d', false);
+              })
+            }
+
+          }
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
+        }
+      ]
+    });
+    await alert.present();
   }
   checkForTournaments() {
     console.log(this.applytournaments);
@@ -394,6 +420,7 @@ export class ViewTournamentPage implements OnInit {
         console.log('vendor', this.vendorObj);
 
         this.profile.fullName = res.data().form.fullName;
+        this.profile.status = res.data().status;
         if (res.data().form.role == 'vendor') {
           this.role = 'vendor';
         } else {
@@ -406,6 +433,9 @@ export class ViewTournamentPage implements OnInit {
 
       }
     })
+  }
+  login() {
+    this.router.navigate(['login'])
   }
   //  generates images for the participants section
   generateParticipants(type) {

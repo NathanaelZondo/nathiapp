@@ -1,7 +1,7 @@
 .container {
     width: 100vw;
     height: 100vh;
-    background: rgb(247, 247, 247);
+    background: whitesmoke;
     position: relative;
 
     .title {
@@ -40,11 +40,18 @@
         bottom: 0vh;
         position: absolute;
         color: white;
-        background: #0BBB72;
+        border: solid 1px #19d48f;
+        background: linear-gradient(0deg, #087141, #009e56);
         border-radius: 30px 30px 0px 0px;
         z-index: 3;
         overflow: hidden;
-
+        ol {
+            padding-left: 10px !important;
+        }
+        li {
+            font-size: 3vw !important;
+            text-align: left !important;
+        }
         .h {
             padding: 10px;
             text-align: center;
@@ -85,6 +92,11 @@ ion-slides {
         border-radius: 10px;
         padding: 0px 10px;
         position: relative;
+        .sTitle {
+            h1 {
+                font-size: 8vw !important;
+            }
+        
         p {
             font-size: 3vw;
         }
@@ -104,9 +116,21 @@ ion-slides {
             right: 0;
             bottom: 0;
         }
+
+        }
         .instructions {
-            // position: relative;
-            // background: red;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            div {
+                width: 70%;
+                margin: auto;
+            }
+            p {
+                font-size: 3.5vw !important;
+                margin: auto;
+                text-align: center;
+            }
         }
         .btns {
             position: absolute;

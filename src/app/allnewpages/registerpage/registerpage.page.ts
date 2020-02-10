@@ -4,7 +4,7 @@ import { UserCredential } from 'src/app/Models/user';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
 import * as firebase from 'firebase'
 import { AlertController, LoadingController } from '@ionic/angular';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { async } from 'q';
 import { Router } from '@angular/router';
 import { FCM } from '@ionic-native/fcm/ngx';
@@ -20,7 +20,7 @@ export class RegisterpagePage implements OnInit {
   phoneNumber = ''
   lastNum = ''
   password
-  registrationForm
+  registrationForm: FormGroup
   smsSent
   confirmationResult = ''
   email=null
@@ -105,11 +105,24 @@ firebase.auth().createUserWithEmailAndPassword(email ,form.password).then((newUs
 
 })
 .catch(async error => {
-  let alerter = await this.alertController.create({
-    header: 'Oops',
-    message: error.message,
-  })
-  await alerter.present()
+  console.log(error)
+  await loading.dismiss();
+  if(error.code =='auth/email-already-in-use'){
+    let alerter = await this.alertController.create({
+      header: 'Oops',
+      message: 'This number has already has an account,if you forgot please click the forgot password button to reset your password',
+      buttons : ['OK']
+    })
+    await alerter.present()
+  }else{
+    let alerter = await this.alertController.create({
+      header: 'Oops',
+      message: error.message,
+      buttons : ['OK']
+    })
+    await alerter.present()
+  }
+  
   // console.error(error);
   // throw new Error(error);
 });
@@ -140,7 +153,7 @@ firebase.auth().createUserWithEmailAndPassword(email ,form.password).then((newUs
       const image = `data:image/jpeg;base64,${res}`;
 
       const filename = Math.floor(Date.now() / 1000);
-      let file = firebase.auth().currentUser.uid + filename + '.jpg';
+      let file =  filename + '.jpg';
       const UserImage = this.storage.child(file);
 
       const upload = UserImage.putString(image, 'data_url');
