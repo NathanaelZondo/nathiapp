@@ -158,7 +158,9 @@ if (!addTeamForm.valid) {
       })
     }
   }
-
+   multiply(a: number, b: number) {
+    return a + b;
+  }
   //Functions to upload images
   async selectLogoImage() {
     this.teamNode.teamLogo =''
