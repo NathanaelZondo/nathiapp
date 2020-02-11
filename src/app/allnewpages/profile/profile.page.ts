@@ -19,8 +19,7 @@ export class ProfilePage implements OnInit {
     form: {
       fullName: null,
       phoneNumber: null,
-      email: null,
-      role: null
+      email: null
     },
     status: "awaitin",
     profileImage: 'https://avatarfiles.alphacoders.com/855/85557.png'
@@ -41,7 +40,6 @@ export class ProfilePage implements OnInit {
     this.profileForm = this.formBuilder.group({
       phoneNumber: [this.profile.form.phoneNumber, Validators.compose([Validators.required])],
       fullName: [this.profile.form.fullName, Validators.required],
-      role: [this.profile.form.role, Validators.required],
       email: [this.profile.form.email,[Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]]
     })
   }
@@ -109,10 +107,11 @@ export class ProfilePage implements OnInit {
         this.db.collection('members').doc(this.loggedInUser.uid).get().then(res => {
           this.profile.form.fullName = res.data().form.fullName
           this.profile.form.phoneNumber = res.data().form.phoneNumber
-          this.profile.form.role = res.data().form.role
           this.profile.status = res.data().status
           this.profile.form.email = res.data().form.email
-          this.profile.profileImage = res.data().profileImage
+          if (res.data().profileImage) {
+            this.profile.profileImage = res.data().profileImage
+          }
 
           if (res.data().form.role == 'teamManager') {
             this.getManagerTournaments()
@@ -140,13 +139,16 @@ export class ProfilePage implements OnInit {
       this.tournaments = []
       res.forEach(tourns => {
         this.db.collection('newTournaments').doc(tourns.id).collection('teamApplications').where('TeamObject.uid', '==', this.loggedInUser.uid).where('status', '==', 'paid').get().then(snap => {
-          snap.forEach(doc => {
-            if (doc.exists) {
-              this.tournaments.push(tourns.data())
-            }  else {
-              this.skeleton = [1,1,2,3,4,5,6,7,8]
-            }
-          })
+          this.skeleton = []
+          if (snap.size > 0) {
+            snap.forEach(doc => {
+              if (doc.exists) {
+                this.tournaments.push(tourns.data())
+              }
+            })
+          } else {
+            this.skeleton = [1,1,2,3,4,5,6,7,8]
+          }
         })
       })
     })

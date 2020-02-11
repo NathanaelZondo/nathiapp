@@ -13,20 +13,20 @@
         </div>
         <div class="sl">
             <div class="nexter animated" [ngClass]="{'slideOutRight faster':hideNext}" >
-                <ion-button size="small" fill="clear" color="light" shape="round" (click)="nextSlide()">
+                <ion-button fill="outline" color="light" shape="round" (click)="nextSlide()">
                     <ion-icon slot="end" name="arrow-forward"></ion-icon>
                     Next
                 </ion-button>
             </div>
             <div class="skipper animated" [ngClass]="{'slideOutLeft faster':hideNext}">
-                <ion-button size="small" fill="clear" color="light" shape="round" (click)="skip()">
+                <ion-button fill="clear" color="light" shape="round" (click)="skip()">
                     Skip
                 </ion-button>
             </div>
             <ion-slides #slides [options]="slideOpts" (ionSlideWillChange)="getSlide($event)" (ionSlideDidChange)="getSlide($event)" mode="md" pager="md">
                 <ion-slide >
                    <div class="sTitle">
-                    <h1 style="font-size: 5vw;">Begining Stages</h1>
+                    <h1 >Begining Stages</h1>
                    </div>
                    <div class="instructions">
                     <p>The following screens will help you understand the processes of the app, please click Next to begin.</p>
@@ -42,33 +42,39 @@
                 </ion-slide>
                 <ion-slide >
                     <div class="sTitle">
-                        <h4 style="font-size: 3.7vw;" >Team Manager</h4>
+                        <h1 style="font-size: 3.7vw;" >Team Manager</h1>
                        </div>
                        <div class="instructions">
-                        <p>If you register as a team manager, your account and your team will need to be approved by the admin before you can apply to any tournaments.</p>
-                        <p style="font-weight: bold;text-align: left;">Become a Team Manager: </p>
-                        <ol>
-                            <li>Register as a Team Manager</li>
-                            <li>Add Team Information</li>
-                            <li>Add Players for the Team</li>
-                            <li>Wait for Approval and once approved</li>
-                            <li>View Upcoming tournaments to apply for them.</li>
-                        </ol>
+<div>
+    <p>If you register as a team manager, your account and your team will need to be approved by the admin before you can apply to any tournaments.</p>
+    <br>
+    <p style="font-weight: bold;text-align: left;">Become a Team Manager: </p>
+    <ol>
+        <li>Register as a Team Manager</li>
+        <li>Add Team Information</li>
+        <li>Add Players for the Team</li>
+        <li>Wait for Approval and once approved</li>
+        <li>View Upcoming tournaments to apply for them.</li>
+    </ol>
+</div>
                        </div>
                 </ion-slide>
                 <ion-slide >
                     <div class="sTitle">
-                        <h4 style="font-size: 3.7vw;" >Vedor</h4>
+                        <h1 style="font-size: 3.7vw;" >Vedor</h1>
                        </div>
                        <div class="instructions">
-                        <p>Registering as a Vendor means that you will only apply for tournaments to sell. <br>
-                        </p>
-                        <p style="font-weight: bold;text-align: left;">Become a Vendor: </p>
-                        <ol>
-                            <li>Register as a Vendor</li>
-                            <li>Wait for Approval and once approved</li>
-                            <li>View Upcoming tournaments to apply for them.</li>
-                        </ol>
+<div>
+    <p>Registering as a Vendor means that you will only apply for tournaments to sell. <br>
+    </p>
+    <br>
+    <p style="font-weight: bold;text-align: left;">Become a Vendor: </p>
+    <ol>
+        <li>Register as a Vendor</li>
+        <li>Wait for Approval and once approved</li>
+        <li>View Upcoming tournaments to apply for them.</li>
+    </ol>
+</div>
                        </div>
                 </ion-slide>
                 <ion-slide >
@@ -85,7 +91,7 @@
                         </ion-button>
                         <ion-button shape="round" fill="outline" color="light" (click)="sign('up')">
                             Sign Up
-                        </ion-button>
+                        </ion-button> <br>
                         <ion-button shape="round" color="light"  fill="clear" shape="round" (click)="sign('home')">
                             Explore
                         </ion-button>

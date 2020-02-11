@@ -5,7 +5,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { LoadingController, ToastController, NavController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PassInformationServiceService } from 'src/app/service/pass-information-service.service';
-
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 @Component({
   selector: 'app-add-team',
   templateUrl: './add-team.page.html',
@@ -79,7 +79,8 @@ export class AddTeamPage implements OnInit {
     public toastController: ToastController,
     public passServie : PassInformationServiceService,
      private activatedRoute: ActivatedRoute,
-     private nav : NavController  ) {
+     private nav : NavController,
+    public splashScreen: SplashScreen,  ) {
     this.addTeamForm = this.formBuilder.group({
       teamName: new FormControl('', Validators.required),
       // location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(30)])),
@@ -134,7 +135,7 @@ if (!addTeamForm.valid) {
         if (this.isEditing) {
           this.router.navigateByUrl('add-player')
         }else { 
-          this.nav.navigateRoot('/add-player')
+          this.router.navigateByUrl('add-player')
         }
         
         const toast = await this.toastController.create({
@@ -327,7 +328,7 @@ if (!addTeamForm.valid) {
     this.router.navigateByUrl('tabs/manageTeam')
     this.isEditing  = false
   }
-  ngOnInit() { 
+  ngOnInit() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.teamNode.uid = user.uid
@@ -335,6 +336,9 @@ if (!addTeamForm.valid) {
           if (team.exists) {
             this.teamExists = true
           }
+          setTimeout(() => {
+      this.splashScreen.hide()
+    }, 3000);
         })
       }
     })

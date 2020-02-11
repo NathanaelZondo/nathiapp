@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonSlides, NavController } from '@ionic/angular';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 @Component({
   selector: 'app-onboarding',
   templateUrl: './onboarding.page.html',
@@ -102,9 +102,13 @@ export class OnboardingPage implements OnInit {
       }
     }
   }
-  constructor(public navCtrl: NavController,private router: Router, private activatedRoute: ActivatedRoute,private nativeStorage: NativeStorage) { }
+  constructor(public navCtrl: NavController,private router: Router, private activatedRoute: ActivatedRoute,private nativeStorage: NativeStorage,
+    public splashScreen: SplashScreen,) { }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.splashScreen.hide()
+    }, 3000);
     this.slides.lockSwipes(true)
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {

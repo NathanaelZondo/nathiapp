@@ -1,7 +1,7 @@
 import { FaqsPageModule } from './../faqs/faqs.module';
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase'
@@ -16,7 +16,7 @@ declare var window
 export class LoginPage implements OnInit {
 
   db = firebase.firestore()
-  registrationForm
+  registrationForm: FormGroup
   phoneNumber = ''
   lastNum = ''
   password = ''
@@ -71,7 +71,12 @@ export class LoginPage implements OnInit {
       const alert = await this.alertController.create({
         header : 'WARNING',
         message : err,
-        buttons: ['OK']
+        buttons: [{
+          text: 'Okay',
+          handler: () => {
+            this.registrationForm.reset()
+          }
+        }]
       });
      await alert.present();
     })
