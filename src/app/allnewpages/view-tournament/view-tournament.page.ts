@@ -49,6 +49,7 @@ export class ViewTournamentPage implements OnInit {
   constructor(public pass: PassInformationServiceService, public navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, public loadingController: LoadingController, public store: NativeStorage, public passService: PassInformationServiceService, public alertController: AlertController, public renderer: Renderer2) { }
   tournid;
   ngOnInit() {
+
     this.tournMatches = []
     // receives nav params
     firebase.auth().onAuthStateChanged(user => {
@@ -171,6 +172,10 @@ export class ViewTournamentPage implements OnInit {
         }
       }
     });
+  }
+  go(){
+    let palceid= 'ChIJvTzwy6VBToYRUO9MFjcwjFE'
+    return window.location.href = 'https://www.google.com/maps/place/?q=place_id:'+palceid;
   }
   getPlayedMatches() {
     // let obj = {

@@ -48,8 +48,11 @@
         <p>{{viewedTournament.formInfo.startDate | date}}</p>
       </div>
       <div class="location">
-        <ion-icon src="../../../assets/noun_Location_3076235.svg"></ion-icon>
-        <p>{{viewedTournament.formInfo.location}}</p>
+        <ion-button (click)="go()" fill="clear" size="small">
+  <ion-icon src="../../../assets/noun_Location_3076235.svg"  ></ion-icon>
+        </ion-button>
+      
+        <p>{{viewedTournament.address.address}}</p>
       </div>
     </div>
 </div>
