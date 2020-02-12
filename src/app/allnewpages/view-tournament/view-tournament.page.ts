@@ -58,6 +58,7 @@ export class ViewTournamentPage implements OnInit {
   */
 
   ngOnInit() {
+
     this.tournMatches = []
     // receives nav params
     firebase.auth().onAuthStateChanged(user => {
@@ -188,8 +189,10 @@ export class ViewTournamentPage implements OnInit {
       }
     });
   }
-
-  // gets the matches for the finished tournament
+  go(){
+    let palceid= 'ChIJvTzwy6VBToYRUO9MFjcwjFE'
+    return window.location.href = 'https://www.google.com/maps/place/?q=place_id:'+palceid;
+  }
   getPlayedMatches() {
     // let obj = {
     //   data : {},

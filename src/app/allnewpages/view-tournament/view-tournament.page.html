@@ -70,9 +70,12 @@
           {{match.winner.teamName}} <ion-skeleton-text *ngIf="!match.winner.teamName"  animated style="width: 20vw"></ion-skeleton-text> won
         </ion-button>
       </div>
-      <div class="data">
-        <h1>{{viewedTournament.formInfo.tournamentName}}</h1>
-        <p id="desc" style="font-size: 3vw;">{{viewedTournament.formInfo.bio}}.</p>
+      <div class="location">
+        <ion-button (click)="go()" fill="clear" size="small">
+  <ion-icon src="../../../assets/noun_Location_3076235.svg"  ></ion-icon>
+        </ion-button>
+      
+        <p>{{viewedTournament.address.address}}</p>
       </div>
       <div class="more">
         <div class="date">
