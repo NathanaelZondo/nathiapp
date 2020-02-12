@@ -22,6 +22,7 @@
                 font-size: 15vw !important;
                 margin: 0;
                 text-transform: uppercase;
+                font-family: 'Nasal' !important;
             }
 
             p {
@@ -29,6 +30,7 @@
                 font-size: 3vw;
                 letter-spacing: 3vw;
                 text-transform: uppercase;
+                font-family: 'Neou' !important;
             }
         }
     }
@@ -123,7 +125,7 @@ ion-slides {
             align-items: center;
             text-align: center;
             div {
-                width: 70%;
+                width: 97.3%;
                 margin: auto;
             }
             p {
@@ -135,9 +137,8 @@ ion-slides {
         .btns {
             position: absolute;
             bottom: 0;
-            left: 0;
-            right: 0;
-
+            left: -20px;
+            right: -20px;
         }
     }
     .modifier {

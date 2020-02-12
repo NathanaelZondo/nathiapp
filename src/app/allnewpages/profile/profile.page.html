@@ -3,49 +3,44 @@
     <div class="image">
 
     </div>
-    <form  [formGroup]="profileForm" (ngSubmit)="edit(profileForm.value)">
-      <h4>My Profile</h4> 
-     <p></p>
+    <form [formGroup]="profileForm" (ngSubmit)="edit(profileForm.value)">
+      <h4>My Profile</h4>
+      <p></p>
       <div class="profileImage">
         <div class="imgC" *ngIf="profile.profileImage">
-          <img   src="{{profile.profileImage}}" alt="">
+          <img src="{{profile.profileImage}}" alt="">
         </div>
-        <circle-progress *ngIf="!profile.profileImage" 
-        [percent]="[imageProgress]"
-        [animation]="true"
-        [responsive]="true"
-        [titleFontSize]="50"
-        [subtitleFontSize]="20"
-        [subtitle]="[imageText]"
-      ></circle-progress>
+        <circle-progress *ngIf="!profile.profileImage" [percent]="[imageProgress]" [animation]="true"
+          [responsive]="true" [titleFontSize]="50" [subtitleFontSize]="20" [subtitle]="[imageText]"></circle-progress>
         <div class="picker">
           <ion-fab-button (click)="getImage()" size="small" shape="round" color="success">
-            <ion-icon  name="camera"></ion-icon>
+            <ion-icon name="camera"></ion-icon>
           </ion-fab-button>
         </div>
       </div>
-     <ion-item  style="border-radius: 10px;
+      <ion-item style="border-radius: 10px;
      margin: 2px 0px;">
         <ion-label position="floating">Full Name</ion-label>
-      <ion-input formControlName="fullName" type="text" [(ngModel)]="profile.form.fullName"></ion-input>
-     </ion-item>
-     <ion-item  style="border-radius: 10px;
+        <ion-input formControlName="fullName" type="text" [(ngModel)]="profile.form.fullName"></ion-input>
+      </ion-item>
+      <ion-item style="border-radius: 10px;
      margin: 2px 0px;">
         <ion-label position="floating">Email</ion-label>
-      <ion-input formControlName="email" type="email" [(ngModel)]="profile.form.email"></ion-input>
-     </ion-item>
+        <ion-input formControlName="email" type="email" [(ngModel)]="profile.form.email"></ion-input>
+      </ion-item>
 
-     <ion-item  style="border-radius: 10px;
+      <ion-item style="border-radius: 10px;
      margin: 2px 0px;">
-       <ion-label position="floating">Phone Number</ion-label>
-       <ion-input formControlName="phoneNumber" type="tel" [(ngModel)]="profile.form.phoneNumber"></ion-input>
-     </ion-item>
-      <ion-button shape="round" size="small" id="sign-in-button" fill="clear"   (click)="openEdit('close')" >
+        <ion-label position="floating">Phone Number</ion-label>
+        <ion-input formControlName="phoneNumber" type="tel" [(ngModel)]="profile.form.phoneNumber"></ion-input>
+      </ion-item>
+      <ion-button shape="round" size="small" id="sign-in-button" fill="clear" (click)="openEdit('close')">
         Close
       </ion-button>
-    <ion-button shape="round" size="small" id="sign-in-button" [disabled]="!profileForm.valid"  type="submit" class="form-buttons"  >
-      Save
-    </ion-button>
+      <ion-button shape="round" size="small" id="sign-in-button" [disabled]="!profileForm.valid" type="submit"
+        class="form-buttons">
+        Save
+      </ion-button>
 
     </form>
   </div>
@@ -55,7 +50,8 @@
         <ion-icon name="log-out"></ion-icon>
       </ion-fab-button>
 
-      <p>Team Manager - 0312654987</p>
+      <p *ngIf="role=='teamManager'" >Team Manager</p>
+      <p *ngIf="role=='vendor'">Vendor</p>
       <ion-fab-button color="success" size="small" (click)="openEdit('open')">
         <ion-icon name="create"></ion-icon>
       </ion-fab-button>
@@ -73,30 +69,55 @@
     </div>
   </div>
   <div class="tournlist">
-      <div class="tList">
-        <ion-card style="opacity: .4 !important;" *ngFor="let item of skeleton" >
-          <div  class="ion-padding custom-skeleton" >
-              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-              <ion-skeleton-text animated></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
-              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-            </div>
-            <br><br>
-      </ion-card>
-      <ion-card class="animated" [ngClass]="{'fadeOut faster':loadFilter,'fadeInUp faster':!loadFilter}"  mode="ios" *ngFor="let t of tournaments" >
+    <div class="tList">
+      <div class="appliedT">
+        <p style="font-size: 76%;">Tournaments participating in</p>
+      </div>
+      <div *ngIf="tournaments.length == 0">
+        <ion-card style="opacity: .4 !important;" *ngFor="let item of skeleton">
+          <div class="ion-padding custom-skeleton">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </div>
+          <br><br>
+        </ion-card>
+      </div>
+
+      <ion-card class="animated" [ngClass]="{'fadeOut faster':loadFilter,'fadeInUp faster':!loadFilter}" mode="ios"
+        *ngFor="let t of tournaments">
         <ion-card-header>
-        <ion-card-title style="font-weight: bolder;font-family: Muller; font-size: 5vw !important;">{{t.formInfo.tournamentName}}</ion-card-title>
-            <ion-card-subtitle style="font-family: Muller;"><b>{{t.formInfo.location}}</b>  {{t.formInfo.startDate | date:'MMM dd'}} - {{t.formInfo.startDate | date:'shortTime'}}</ion-card-subtitle>
+          <ion-card-title style="font-weight: bolder;font-family: Muller; font-size: 5vw !important;">
+            {{t.formInfo.tournamentName}}</ion-card-title>
+          <ion-card-subtitle style="font-family: Muller; color: orangered;"><b>{{t.formInfo.location}}</b>
+            {{t.formInfo.startDate | date:'MMM dd'}} - {{t.formInfo.startDate | date:'shortTime'}}</ion-card-subtitle>
         </ion-card-header>
         <hr style="background: rgb(236, 236, 236);margin: 0;">
-        <ion-card-content >
-            
-            <div class="long-text">
-                <p style="margin: 0 ; font-family: Muller;">{{t.formInfo.bio}}</p>
-            </div>
+        <ion-card-content>
+
+          <div class="long-text">
+            <p style="margin: 0 ; font-family: Muller;">{{t.formInfo.bio}}</p>
+          </div>
         </ion-card-content>
-    </ion-card>
-      </div>
+      </ion-card>
+      <ion-card class="animated" [ngClass]="{'fadeOut faster':loadFilter,'fadeInUp faster':!loadFilter}" mode="ios"
+        *ngFor="let t of vendorTournaments">
+        <ion-card-header>
+          <ion-card-title style="font-weight: bolder;font-family: Muller; font-size: 5vw !important;">
+            {{t.formInfo.tournamentName}}</ion-card-title>
+          <ion-card-subtitle style="font-family: Muller;"><b>{{t.formInfo.location}}</b>
+            {{t.formInfo.startDate | date:'MMM dd'}} - {{t.formInfo.startDate | date:'shortTime'}}</ion-card-subtitle>
+        </ion-card-header>
+        <hr style="background: rgb(236, 236, 236);margin: 0;">
+        <ion-card-content>
+
+          <div class="long-text">
+            <p style="margin: 0 ; font-family: Muller;">{{t.formInfo.bio}}</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
 </ion-content>

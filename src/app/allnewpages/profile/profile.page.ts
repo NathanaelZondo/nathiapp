@@ -24,7 +24,7 @@ export class ProfilePage implements OnInit {
     status: "awaitin",
     profileImage: 'https://avatarfiles.alphacoders.com/855/85557.png'
   }
-  skeleton = [1,1,2,3,4,5,6,7,8]
+  skeleton = [1,1]
   tournaments = []
   vendorTournaments = []
   participatingTourn = []
@@ -34,6 +34,7 @@ export class ProfilePage implements OnInit {
   imageText = 'Uploade Image'
   editProfile = document.getElementsByClassName('editProfile')
   editMode = false
+  role = null
   constructor(public router: Router, private alertCtrl: AlertController,public formBuilder: FormBuilder,private camera: Camera, public renderer: Renderer2, public toastCtrl: ToastController, public loadingCtrl: LoadingController) { }
 
   ngOnInit() {
@@ -109,13 +110,18 @@ export class ProfilePage implements OnInit {
           this.profile.form.phoneNumber = res.data().form.phoneNumber
           this.profile.status = res.data().status
           this.profile.form.email = res.data().form.email
+          this.role = res.data().form.role
           if (res.data().profileImage) {
             this.profile.profileImage = res.data().profileImage
           }
 
           if (res.data().form.role == 'teamManager') {
+            console.log('Manager');
+            
             this.getManagerTournaments()
           } else {
+            console.log('Vendor');
+            
             this.getVendorTournaments()
           }
         })
@@ -136,18 +142,21 @@ export class ProfilePage implements OnInit {
   // }
   getManagerTournaments() {
     this.db.collection('newTournaments').get().then(res => {
-      this.tournaments = []
+      this.tournaments = [] 
       res.forEach(tourns => {
         this.db.collection('newTournaments').doc(tourns.id).collection('teamApplications').where('TeamObject.uid', '==', this.loggedInUser.uid).where('status', '==', 'paid').get().then(snap => {
-          this.skeleton = []
+          
           if (snap.size > 0) {
+            this.skeleton = []
+            console.log('cealr skel');
+            
             snap.forEach(doc => {
               if (doc.exists) {
                 this.tournaments.push(tourns.data())
               }
             })
           } else {
-            this.skeleton = [1,1,2,3,4,5,6,7,8]
+            this.skeleton = [1,1]
           }
         })
       })
@@ -159,11 +168,16 @@ export class ProfilePage implements OnInit {
       res.forEach(tourns => {
         this.db.collection('newTournaments').doc(tourns.id).collection('vendorApplications').where('uid', '==', this.loggedInUser.uid).get().then(snap => {
          
-          snap.forEach(doc => {
-            if (doc.exists) {
-              this.vendorTournaments.push(tourns.data())
-            }
-          })
+          if (res.size > 0 ) {
+            this.skeleton = []
+            snap.forEach(doc => {
+              if (doc.exists) {
+                this.vendorTournaments.push(tourns.data())
+              }
+            })
+          } else {
+            this.skeleton = [1,1]
+          }
         })
       })
     })

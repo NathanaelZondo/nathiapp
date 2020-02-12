@@ -1,14 +1,26 @@
 ion-item {
     --background: rgba(255, 255, 255, 0);
-    --color: rgb(37, 37, 37) !important;
-    
+    --color: rgb(255, 255, 255) !important;
+    ion-input {
+        color: white !important;
+    }
+    ion-label {
+        color: white !important;
+    }
   }
   ion-list {
     background: none !important;
-    color: rgb(24, 24, 24) !important;
+    color: rgb(255, 255, 255) !important;
+    
+}
+ion-list-header {
+    color:  white !important;
+    ion-label {
+        color: white !important;
+    }
 }
 .profileImage {
-    background: rgba(255, 255, 255, 0.014);
+    background: rgba(151, 151, 151, 0);
     position: relative;
     border-radius: 20px;
     width: 70%;
@@ -35,14 +47,48 @@ ion-item {
         right: 0;
     }
 }
+.bended {
+    position: fixed;
+    bottom: 1vh;
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    border-radius: var(--radius);
+    box-shadow: var(--drop-shadow);
+    background: linear-gradient(#0BBB72,rgb(13, 134, 84));
+    text-align: center;
+    color: white;
+    padding-top: 15px;
+    h1 {
+        font-size:12vw !important;
+        font-family: 'Nasal' !important;
+        margin: 0;
+    }
+    p {
+        margin: 0 !important;
+        font-family: 'Neou' !important;
+        letter-spacing: 2px;
+        font-size: 3vw;
+    }
+}
 .container {
     width: 100%;
     height: 100%;
-    background: url(../../../assets/lr/SVG/Register.svg), radial-gradient(rgba(0,0,0,.12), #8afde878);
+    
     background-size: 100% auto;
     background-position: 100% 100%;
     display: flex;
     align-items: center;
+    display: flex;
+    position: absolute;
+top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    color: white;
     .recaptcha-container {
         position: absolute;
         top: 0;
@@ -53,20 +99,39 @@ ion-item {
     }
     form {
         text-align: center;
-        color: rgb(63, 63, 63) !important;
+        color: rgb(252, 252, 252) !important;
         width: 90%;
         margin: auto;
-        backdrop-filter: blur(50px);
+        // backdrop-filter: blur(50px);
         border-radius: 10px;
         box-shadow: 0px 3px 3px #17171738;
-        max-height: 90vh;
+        max-height: 70vh;
         border-radius: 10px;
         // box-shadow: 0px 3px 3px #17171738;
         box-shadow: -2px -2px 3px 0 #0000001c, 2px 2px 3px 0 #0000001c;
         overflow-y: auto;
         border: solid 1px #ffffff7d;
-        background: #efeeee6e;
-        
+        background:#1E1F28;
+        position: relative;
+        ion-slides {
+            width: 100%;
+            height: 70vh;
+        }
+        ion-slide {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto !important;
+            .btns {
+                display: flex;
+            }
+        }
+        .hedr {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            text-align: center;
+        }
         p {
             font-size: 3vw;
         }

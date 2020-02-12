@@ -2,7 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import * as firebase from 'firebase';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { LoadingController, ToastController, NavController } from '@ionic/angular';
+import { LoadingController, ToastController, NavController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 @Component({
@@ -93,7 +93,8 @@ export class AddPlayerPage implements OnInit {
     public toastController: ToastController,
     public renderer: Renderer2,
     public navctrl: NavController,
-    public splashScreen: SplashScreen,) {
+    public splashScreen: SplashScreen,
+    private alertCtrl: AlertController) {
 
     let v = new Date
     this.date = v.getFullYear() - 8
@@ -128,7 +129,7 @@ export class AddPlayerPage implements OnInit {
         console.log(res.data());
 
       }
-      this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').onSnapshot(res => {
+      this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').onSnapshot(async res => {
         this.players = []
         
         if (!res.empty) {
@@ -145,6 +146,18 @@ export class AddPlayerPage implements OnInit {
           })
           this.viewPlayer = this.players[0]
           console.log(this.viewPlayer)
+        } else {
+          let alerter = await this.alertCtrl.create({
+            header: 'No Players',
+            message: 'Please complete the registration process by providing players for your team. Click on the bottom right button to start adding players. A minimum of 11 players are required.',
+            buttons:[{
+              text: 'Okay',
+              handler: () => {
+                this.add()
+              }
+            }]
+          })
+          await alerter.present()
         }
         this.db.collection('members').doc(firebase.auth().currentUser.uid).get().then(res =>{
           console.log('data', res.data());

@@ -1,6 +1,7 @@
 <ion-content>
   <div class="bended">
-    <img src="../../../assets/bendedFootballField.svg" alt="">
+   <h1>Nathi's</h1>
+   <p>Tournaments</p>
   </div>
   <div class="close">
     <ion-fab-button size="small" color="light" (click)="close()">
@@ -38,10 +39,10 @@
 
 
       <div class="button">
-        <ion-button shape="round" id="sign-in-button" fill="clear" (click)="toReg()">
+        <ion-button shape="round" id="sign-in-button" color="light" fill="clear" (click)="toReg()">
           Sign Up
         </ion-button>
-        <ion-button shape="round" id="sign-in-button" type="submit" class="form-buttons"
+        <ion-button shape="round" color="success" id="sign-in-button" type="submit" class="form-buttons"
           [disabled]="!registrationForm.valid">
           Sign In
         </ion-button>

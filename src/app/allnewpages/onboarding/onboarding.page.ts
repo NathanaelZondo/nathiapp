@@ -167,6 +167,8 @@ export class OnboardingPage implements OnInit {
             break;
       }
     },err => {
+      console.log('storage err');
+      
       switch (page) {
         case 'up':
           this.navCtrl.navigateRoot('registerpage')

@@ -84,6 +84,19 @@
     border-radius: 20px;
     overflow: hidden auto;
     box-shadow: var(--drop-shadow), -3px -3px 4px white;
+    position: relative;
+    padding-top: 10px;
+    .appliedT {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 5px 0px;
+      p {
+        margin: 0;
+      }
+    }
   }
 }
 ion-list {

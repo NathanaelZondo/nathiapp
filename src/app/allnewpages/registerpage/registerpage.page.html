@@ -1,88 +1,104 @@
 <ion-content>
   <div class="close">
-      <ion-fab-button size="small" color="light" (click)="close()">
-        <ion-icon name="close"></ion-icon>
-      </ion-fab-button>
-    </div>
-    <div class="container">
-      <div id="recaptcha-container"></div>
-  <form  [formGroup]="registrationForm" (ngSubmit)="addUser(registrationForm.value)">
-      <h4><b>Nathi's </b>Tournaments</h4> 
-      <p>Registration</p>
-      <div class="profileImage">
-        <div class="imgC" *ngIf="profileImage">
-          <img   src="{{profileImage}}" alt="">
-        </div>
-        <circle-progress *ngIf="!profileImage" 
-        [percent]="[imageProgress]"
-        [animation]="true"
-        [responsive]="true"
-        [titleFontSize]="50"
-        [subtitleFontSize]="20"
-        [subtitle]="[imageText]"
-      ></circle-progress>
-        <div class="picker">
-          <ion-fab-button (click)="getImage()" size="small" shape="round" color="success">
-            <ion-icon  name="camera"></ion-icon>
-          </ion-fab-button>
-        </div>
+    <ion-fab-button size="small" color="light" (click)="close()">
+      <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </div>
+  <div class="bended">
+    <h1>Nathi's</h1>
+    <p>Tournaments</p>
+  </div>
+  <div class="container">
+    <div id="recaptcha-container"></div>
+    <form [formGroup]="registrationForm" (ngSubmit)="addUser(registrationForm.value)">
+      <!-- slide 1 = number, pass, role -->
+      <!-- slide 2 = image, name, email -->
+      <div class="hedr">
+        <h4><b>Nathi's </b>Tournaments</h4>
+        <p>Registration</p>
+
       </div>
-     <ion-item  style="border-radius: 10px;
-     margin: 2px 0px;">
-        <ion-label position="floating">Full Name</ion-label>
-      <ion-input formControlName="fullName" type="text" [(ngModel)]="fullName"></ion-input>
-     </ion-item>
-     <ion-item  style="border-radius: 10px;
-     margin: 2px 0px;">
-        <ion-label position="floating">Email</ion-label>
-      <ion-input formControlName="email" type="email" [(ngModel)]="email"></ion-input>
-     </ion-item>
 
-     <ion-item  style="border-radius: 10px;
-     margin: 2px 0px;">
-       <ion-label position="floating">Phone Number</ion-label>
-       <ion-input formControlName="phoneNumber" type="tel" [(ngModel)]="phoneNumber"></ion-input>
-     </ion-item>
+      <ion-slides mode="ios" pager="ios" scrollbar="ios">
+        <ion-slide>
+          <ion-item style="border-radius: 10px; margin: 2px 0px;">
+            <ion-label position="floating">Phone Number</ion-label>
+            <ion-input formControlName="phoneNumber" type="tel" [(ngModel)]="phoneNumber"></ion-input>
+          </ion-item>
 
-     <ion-item style="background: none;color: rgb(0, 0, 0);border-radius: 5px;">
-       <ion-label position="floating" style="color: rgb(24, 24, 24);">Password</ion-label>
-       <div class="pass" style="width: 100%;display: flex;align-items: center;position: relative;">
-         <ion-input    style="border-bottom: solid 2px white;color: rgb(34, 34, 34)" formControlName="password" [type]="showPassword ? 'text':'password'" [(ngModel)]="password"></ion-input>
-         <div class="htt" *ngIf="password" [ngClass]="{'animated fadeIn':password!=''}" style="position: absolute;top: 0;bottom: 0;right: 0;display: flex; align-items: center;z-index: 300;">
-           <ion-button  fill="clear" size="small" (click)="togglePass()">
-         <ion-icon slot="icon-only" [name]="passwordToggleIcon"></ion-icon>
-       </ion-button>
-         </div>
-       
-       </div>
-     </ion-item>
-      <ion-list>
-        <ion-radio-group formControlName="role"  [(ngModel)]="role">
-          <ion-list-header>
-            <ion-label style="color: rgb(46, 46, 46); font-weight: bolder;">Register as:</ion-label>
-          </ion-list-header>
-    
+          <ion-item style="background: none;color: rgb(0, 0, 0);border-radius: 5px;">
+            <ion-label position="floating" style="color: rgb(24, 24, 24);">Password</ion-label>
+            <div class="pass" style="width: 100%;display: flex;align-items: center;position: relative;">
+              <ion-input style="border-bottom: solid 2px white;color: rgb(34, 34, 34)" formControlName="password"
+                [type]="showPassword ? 'text':'password'" [(ngModel)]="password"></ion-input>
+              <div class="htt" *ngIf="password" [ngClass]="{'animated fadeIn':password!=''}"
+                style="position: absolute;top: 0;bottom: 0;right: 0;display: flex; align-items: center;z-index: 300;">
+                <ion-button fill="clear" size="small" (click)="togglePass()">
+                  <ion-icon slot="icon-only" [name]="passwordToggleIcon"></ion-icon>
+                </ion-button>
+              </div>
+
+            </div>
+          </ion-item>
+
+          <ion-list>
+            <ion-radio-group formControlName="role" [(ngModel)]="role">
+              <ion-list-header>
+                <ion-label style="color: rgb(46, 46, 46); font-weight: bolder;">Register as:</ion-label>
+              </ion-list-header>
+
+              <ion-item style="border-radius: 10px; margin: 2px 0px;">
+                <ion-label>Team manager</ion-label>
+                <ion-radio slot="start" value="teamManager" checked></ion-radio>
+              </ion-item>
+
+              <ion-item style="border-radius: 10px;margin: 2px 0px;">
+                <ion-label>Vendor</ion-label>
+                <ion-radio slot="start" value="vendor"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </ion-slide>
+        <ion-slide>
+          <div class="profileImage">
+            <div class="imgC" *ngIf="profileImage">
+              <img src="{{profileImage}}" alt="">
+            </div>
+            <circle-progress *ngIf="!profileImage" [percent]="[imageProgress]" [animation]="true" [responsive]="true"
+              [titleFontSize]="50" [subtitleFontSize]="20" [subtitle]="[imageText]"></circle-progress>
+            <div class="picker">
+              <ion-fab-button (click)="getImage()" size="small" shape="round" color="success">
+                <ion-icon name="camera"></ion-icon>
+              </ion-fab-button>
+            </div>
+          </div>
           <ion-item style="border-radius: 10px;
-          margin: 2px 0px;">
-            <ion-label>Team manager</ion-label>
-            <ion-radio slot="start" value="teamManager" checked></ion-radio>
+         margin: 2px 0px;">
+            <ion-label position="floating">Full Name</ion-label>
+            <ion-input formControlName="fullName" type="text" [(ngModel)]="fullName"></ion-input>
           </ion-item>
-    
-          <ion-item style="border-radius: 10px;margin: 2px 0px;">
-            <ion-label>Vendor</ion-label>
-            <ion-radio slot="start" value="vendor"></ion-radio>
+          <ion-item style="border-radius: 10px;
+         margin: 2px 0px;">
+            <ion-label position="floating">Email</ion-label>
+            <ion-input formControlName="email" type="email" [(ngModel)]="email"></ion-input>
           </ion-item>
-        </ion-radio-group>
-      </ion-list>
-      <p style="width: 90%; margin: auto; text-align: center; padding: 10px;">By clicking Sign Up, you agree to our <span style="color: rgb(77, 184, 255);text-decoration: underline;">Terms</span> and <span style="color: rgb(77, 184, 255);text-decoration: underline;">Data Policy</span>. You may receive Notifications from us.</p>
-      <ion-button shape="round" fill="clear" id="sign-in-button" (click)="goLogin()" >
-        Sign In
-      </ion-button>
-    <ion-button shape="round" id="sign-in-button" [disabled]="!registrationForm.valid"  type="submit" class="form-buttons"  >
-      Sign Up
-    </ion-button>
+          <p style="width: 90%; margin: auto; text-align: center; padding: 10px;">By clicking Sign Up, you agree to our
+            <span style="color: rgb(77, 184, 255);text-decoration: underline;">Terms</span> and <span
+              style="color: rgb(77, 184, 255);text-decoration: underline;">Data Policy</span>. You may receive
+            Notifications from us.</p>
+<div class="btns">
+  <ion-button shape="round" color="light" fill="clear" id="sign-in-button" (click)="goLogin()">
+    Sign In
+  </ion-button>
+  <ion-button shape="round" color="success" id="sign-in-button" [disabled]="!registrationForm.valid"
+    type="submit" class="form-buttons">
+    Sign Up
+  </ion-button>
+</div>
+        </ion-slide>
+      </ion-slides>
 
     </form>
-    </div>
-  
+  </div>
+
 </ion-content>

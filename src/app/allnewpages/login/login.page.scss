@@ -11,20 +11,44 @@ ion-list {
 
 .bended {
     position: fixed;
-    bottom: 0px;
-    width: 100vw;
-    display: none;
+    bottom: 1vh;
+    position: absolute;
+    z-index: 9;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    border-radius: var(--radius);
+    box-shadow: var(--drop-shadow);
+    background: linear-gradient(#0BBB72,rgb(13, 134, 84));
+    text-align: center;
+    color: white;
+    padding-top: 15px;
+    h1 {
+        font-size:12vw !important;
+        font-family: 'Nasal' !important;
+        margin: 0 !important;
+    }
+    p {
+        font-family: 'Neou' !important;
+        margin: 0 !important;
+        letter-spacing: 2px;
+        font-size: 3vw;
+    }
 }
 
 .container {
     width: 100%;
     height: 100%;
-    background: url(../../../assets/lr/SVG/Register.svg), radial-gradient(rgba(0,0,0,.12), #8afde878);
     background-size: 100% auto;
     background-position: 100% 100%;
     display: flex;
     align-items: center;
-
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
     .recaptcha-container {
         position: absolute;
         top: 0;
@@ -35,20 +59,19 @@ ion-list {
 
     form {
         text-align: center;
-        color: rgb(34, 34, 34);
+        color: rgb(250, 250, 250);
         width: 90%;
         max-height: 90vh;
         margin: auto;
-        backdrop-filter: blur(50px);
+        // backdrop-filter: blur(50px);
         background-color: rgba(242, 246, 248, 0.39);
-        background: filter-gradient(#f2f6f8, #e0eff9, horizontal);
-        background: background-image(linear-gradient(left, rgba(242, 246, 248, 0.39) 0%, rgba(216, 225, 231, 0.47) 50%, rgba(181, 198, 208, 0.47) 53%, rgba(224, 239, 249, 0.51) 82%, rgba(224, 239, 249, 0.53) 96%, rgba(224, 239, 249, 0.54) 100%));
-        border-radius: 10px;
+        background:#1E1F28;
         // box-shadow: 0px 3px 3px #17171738;
         box-shadow: inset 2px 2px 3px 0 #0000002e;
         overflow-y: auto;
         border: solid 1px #ffffff7d;
         padding: 20px 0px;
+        border-radius: 20px;
         p { 
             font-size: 3vw;
         }
@@ -65,8 +88,13 @@ ion-list {
 
 ion-item {
     --background: rgba(51, 117, 117, 0) !important;
-    --color: rgb(26, 26, 26) !important;
-
+    --color: rgb(238, 238, 238) !important;
+    ion-input {
+        color: white !important;
+    }
+    ion-label {
+        color: white !important;
+    }
 }
 
 .close {

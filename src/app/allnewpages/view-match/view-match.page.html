@@ -3,13 +3,16 @@
     <div class="teamInfo" [ngClass]="{'oTeam':viewTeam,'cTeam':!viewTeam}">
 <div class="images">
     <div class="jersey">
-    <img src="{{teamSide.teamJerseyIMG}}" alt="">
+    <img *ngIf="teamSide.teamJerseyIMG"  src="{{teamSide.teamJerseyIMG}}" alt="">
+    <img *ngIf="!teamSide.teamJerseyIMG"  src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="">
     </div>
     <div class="logo">
-        <img src="{{teamSide.teamLogo}}" alt="">
+        <img *ngIf="teamSide.teamLogo"  src="{{teamSide.teamLogo}}" alt="">
+        <img *ngIf="!teamSide.teamLogo"  src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="">
     </div>
     <div class="keeper">
-        <img src="{{teamSide.goalKeeperJerseyIMG}}" alt="">
+        <img *ngIf="teamSide.goalKeeperJerseyIMG"  src="{{teamSide.goalKeeperJerseyIMG}}" alt="">
+        <img *ngIf="!teamSide.goalKeeperJerseyIMG"  src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="">
     </div>
 </div>
 <div class="t">
@@ -27,7 +30,12 @@
 </div>
     </div>
     <div class="playerInfo" [ngClass]="{'oPlayer':viewPlayer,'cPlayer':!viewPlayer}" >
-        <img src="{{playerViewed.palyerImage}}" alt="">
+        <div class="img">
+            <img *ngIf="playerViewed.palyerImage"  src="{{playerViewed.palyerImage}}" alt="">
+        <img *ngIf="!playerViewed.palyerImage" style=" width: 100%;
+        height: 100%;
+        object-fit: cover;" src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="">
+        </div>
         <div class="det">
         <h1>{{playerViewed.fullName}}</h1>
             <p>{{playerViewed.playerPosition}}</p>
@@ -77,7 +85,8 @@
                         </div>
                     </div>
                     <div class="img">
-                        <img src="{{object.TeamObject.teamLogo}}" alt="">
+                        <img *ngIf="object.TeamObject.teamLogo"  src="{{object.TeamObject.teamLogo}}" alt="">
+                        <img *ngIf="!object.TeamObject.teamLogo"  src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="">
                     </div>
                 </div>
                 <div class="v">
@@ -85,7 +94,8 @@
                 </div>
                 <div class="away" (click)="team('away','open')">
                     <div class="img">
-                        <img src="{{object.aTeamObject.teamLogo}}" alt="">
+                        <img *ngIf="object.aTeamObject.teamLogo"  src="{{object.aTeamObject.teamLogo}}">
+                        <img *ngIf="!object.aTeamObject.teamLogo"  src="https://image.flaticon.com/icons/png/512/14/14611.png">
                     </div>
                     <div class="name">
                         <p>{{object.aTeamObject.teamName}}</p>
@@ -134,7 +144,7 @@
                                 <ion-label>{{item.fullName}}</ion-label>
                                 <ion-avatar>
                                     <img *ngIf="!item.palyerImage"
-                                        src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+                                        src="https://image.flaticon.com/icons/png/512/14/14611.png"
                                         alt="">
                                     <img *ngIf="item.palyerImage" src="{{item.palyerImage}}">
                                 </ion-avatar>
@@ -144,7 +154,7 @@
                             <ion-chip *ngFor="let item of awayplayers" (click)="player('open', item)">
                                 <ion-avatar>
                                     <img *ngIf="!item.palyerImage"
-                                        src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+                                        src="https://image.flaticon.com/icons/png/512/14/14611.png"
                                         alt="">
                                     <img *ngIf="item.palyerImage" src="{{item.palyerImage}}">
                                 </ion-avatar>

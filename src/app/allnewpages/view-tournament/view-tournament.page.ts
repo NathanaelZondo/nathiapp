@@ -13,6 +13,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 export class ViewTournamentPage implements OnInit {
   viewedTournament = null
   tournMatches = []
+  skeleton = [1, 2, 3, 4]
   tempArray = []
   participants = []
   segmentValue = '16'
@@ -47,8 +48,15 @@ export class ViewTournamentPage implements OnInit {
     refNumber: "",
     status: "new"
   } as any
-  constructor(public pass: PassInformationServiceService, public navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, public loadingController: LoadingController, public store: NativeStorage, public passService: PassInformationServiceService, public alertController: AlertController, public renderer: Renderer2) { }
   tournid;
+  constructor(public pass: PassInformationServiceService, public navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, public loadingController: LoadingController, public store: NativeStorage, public passService: PassInformationServiceService, public alertController: AlertController, public renderer: Renderer2) { }
+  /*
+  FOR THE NEW TOURNAMENT
+   get the role of the user
+   check their application status
+   
+  */
+
   ngOnInit() {
     this.tournMatches = []
     // receives nav params
@@ -85,7 +93,7 @@ export class ViewTournamentPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.viewedTournament = this.router.getCurrentNavigation().extras.state.parms
         setTimeout(() => {
-          this.checkForTournaments();
+
         }, 500);
         console.log(this.viewedTournament);
         this.pass.tournid = this.viewedTournament.doc_id;
@@ -93,77 +101,84 @@ export class ViewTournamentPage implements OnInit {
         if (this.viewedTournament.state == 'finished') {
           // finnished matches
           this.db.collection('PlayedMatches').where('tournid', '==', this.viewedTournament.doc_id).orderBy("matchdate", "desc").get().then(res => {
-
-            this.tournMatches = []
-            this.match = {
-              type1: [],// 1
-              type2: [],// 2
-              type4: [], // 8
-              type8: [], // 16
-              type16: [], // 32
-              winner: {}
-            }
-            res.forEach(doc => {
-              this.tempArray.push(doc.data())
-              // CHECK WICH MATCH TYPE IS WHICH AND PUSH IT INTO THE RESPECTIVE ARRAY
-              if (doc.data().type == '16') { // 32
-                this.match.type16.push(doc.data())
-              } else if (doc.data().type == '8') { // 16
-                this.match.type8.push(doc.data())
-              } else if (doc.data().type == '4') { // 8
-                this.match.type4.push(doc.data())
-              } else if (doc.data().type == '2') { // 4
-                this.match.type2.push(doc.data())
-              } else if (doc.data().type == '1') { // 2
-                this.match.type1.push(doc.data())
-                if (doc.data().score >= 1) {
-                  this.match.winner = doc.data().TeamObject
-                } else {
-                  this.match.winner = doc.data().aTeamObject
-                }
+            if (res.size > 0) {
+              this.tournMatches = []
+              this.match = {
+                type1: [],// 1
+                type2: [],// 2
+                type4: [], // 8
+                type8: [], // 16
+                type16: [], // 32
+                winner: {}
               }
-            })
-            this.getPlayedMatches()
-            this.checkMatches()
-            console.log(this.match);
-
+              res.forEach(doc => {
+                this.tempArray.push(doc.data())
+                // CHECK WICH MATCH TYPE IS WHICH AND PUSH IT INTO THE RESPECTIVE ARRAY
+                if (doc.data().type == '16') { // 32
+                  this.match.type16.push(doc.data())
+                } else if (doc.data().type == '8') { // 16
+                  this.match.type8.push(doc.data())
+                } else if (doc.data().type == '4') { // 8
+                  this.match.type4.push(doc.data())
+                } else if (doc.data().type == '2') { // 4
+                  this.match.type2.push(doc.data())
+                } else if (doc.data().type == '1') { // 2
+                  this.match.type1.push(doc.data())
+                  if (doc.data().score >= 1) {
+                    this.match.winner = doc.data().TeamObject
+                  } else {
+                    this.match.winner = doc.data().aTeamObject
+                  }
+                }
+              })
+              // this.getPlayedMatches()
+              this.checkMatches()
+              console.log(this.match);
+            } else {
+              this.filterBy = 'nothing'
+              this.skeleton = [1, 2, 3, 4]
+            }
           }).catch(err => { console.log(err); })
         } else {
           // these are upcoming ur inplay matches
           this.db.collection('MatchFixtures').where('tournid', '==', this.viewedTournament.doc_id).orderBy("matchdate", "desc").get().then(res => {
-
-            this.tournMatches = []
-            this.match = {
-              type1: [],// 1
-              type2: [],// 2
-              type4: [], // 8
-              type8: [], // 16
-              type16: [], // 32
-              winner: {}
-            }
-            res.forEach(doc => {
-              if (doc.data().type == '16') {
-                this.match.type16.push(doc.data())
-
-              } else if (doc.data().type == '8') {
-                this.match.type8.push(doc.data())
-
-              } else if (doc.data().type == '4') {
-                this.match.type4.push(doc.data())
-
-              } else if (doc.data().type == '2') {
-                this.match.type2.push(doc.data())
-              } else if (doc.data().type == '1') {
-                this.match.type1.push(doc.data())
-                if (doc.data().score >= 1) {
-                  this.match.winner = doc.data().TeamObject
-                } else {
-                  this.match.winner = doc.data().aTeamObject
-                }
+            if (res.size > 0) {
+              this.tournMatches = []
+              this.match = {
+                type1: [],// 1
+                type2: [],// 2
+                type4: [], // 8
+                type8: [], // 16
+                type16: [], // 32
+                winner: {}
               }
-            })
-            this.checkMatches()
-            console.log(this.match);
+              res.forEach(doc => {
+                if (doc.data().type == '16') {
+                  this.match.type16.push(doc.data())
+
+                } else if (doc.data().type == '8') {
+                  this.match.type8.push(doc.data())
+
+                } else if (doc.data().type == '4') {
+                  this.match.type4.push(doc.data())
+
+                } else if (doc.data().type == '2') {
+                  this.match.type2.push(doc.data())
+                } else if (doc.data().type == '1') {
+                  this.match.type1.push(doc.data())
+                  if (doc.data().score >= 1) {
+                    this.match.winner = doc.data().TeamObject
+                  } else {
+                    this.match.winner = doc.data().aTeamObject
+                  }
+                }
+              })
+              this.checkMatches()
+              console.log(this.match);
+            } else {
+              this.filterBy = 'nothing'
+              this.skeleton = [1, 2, 3, 4]
+            }
 
           }).catch(err => {
             console.log(err);
@@ -173,6 +188,8 @@ export class ViewTournamentPage implements OnInit {
       }
     });
   }
+
+  // gets the matches for the finished tournament
   getPlayedMatches() {
     // let obj = {
     //   data : {},
@@ -181,7 +198,15 @@ export class ViewTournamentPage implements OnInit {
     this.db.collection('PlayedMatches').where('tournid', '==', this.viewedTournament.doc_id).orderBy("matchdate", "desc").get().then(res => {
       res.forEach(doc => {
         this.tempArray.push(doc.data())
-
+        this.tournMatches = []
+        this.match = {
+          type1: [],// 1
+          type2: [],// 2
+          type4: [], // 8
+          type8: [], // 16
+          type16: [], // 32
+          winner: {}
+        }
         // CHECK WICH MATCH TYPE IS WHICH AND PUSH IT INTO THE RESPECTIVE ARRAY
         if (doc.data().type == '16') { // 32
           this.match.type16.push(doc.data())
@@ -203,8 +228,11 @@ export class ViewTournamentPage implements OnInit {
       console.log(this.match);
     }).catch(err => { console.log(err); })
   }
+
+  // should return defaults in page, * doesn't trigger somehow
   ionViewWillLeave() {
     this.tournMatches = []
+    this.skeleton = [1,2,3,4]
     this.applytournaments = 'checking'
     this.storageKeys.forEach(element => {
       this.store.remove(element).then((res) => {
@@ -219,6 +247,8 @@ export class ViewTournamentPage implements OnInit {
 
     });
   }
+
+  // checks for the user profile's existace
   checkProfile() {
     this.db.collection('members').doc(this.loggedInUser.uid).onSnapshot(res => {
       if (res.data().status == 'awaiting') {
@@ -229,6 +259,8 @@ export class ViewTournamentPage implements OnInit {
       }
     })
   }
+
+  // alerts the user about team, *should never trigger
   async presentTeamCreateAlert() {
     const alert = await this.alertController.create({
       header: 'Alert',
@@ -240,6 +272,7 @@ export class ViewTournamentPage implements OnInit {
     await alert.present();
   }
 
+  // checks before applying for tournament
   async applyForTournament() {
     if (this.teamState == false && this.role == 'teamManager') {
       console.log('you dont have a team');
@@ -269,7 +302,7 @@ export class ViewTournamentPage implements OnInit {
           }]
         })
         await alerter.present()
-      } else if(this.profile.status == 'Blocked') {
+      } else if (this.profile.status == 'Blocked') {
         let alerter = await this.alertController.create({
           header: 'Blocked Account',
           message: 'Your account has been blocked.',
@@ -284,7 +317,9 @@ export class ViewTournamentPage implements OnInit {
       }
     }
   }
-  async apply () {
+
+  // lets user apply for tournament
+  async apply() {
     const alert = await this.alertController.create({
       header: 'Apply for ' + this.viewedTournament.formInfo.tournamentName + '?',
       message: 'This tournament costs <b>R' + this.viewedTournament.formInfo.joiningFee + '.00</b> to participate in <br> <hr> Proceed?',
@@ -348,12 +383,12 @@ export class ViewTournamentPage implements OnInit {
     });
     await alert.present();
   }
+
+  // depends on the role to get the status of application
   checkForTournaments() {
     console.log(this.applytournaments);
 
     this.applytournaments = 'checking'
-    console.log(this.applytournaments);
-
 
     if (this.role == 'teamManager') {
       this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).collection('teamApplications').doc(this.loggedInUser.uid).get().then(async res => {
@@ -392,6 +427,8 @@ export class ViewTournamentPage implements OnInit {
     }
 
   }
+
+  // checks if the logged in user has team profile
   geTeamProfile() {
     this.db.collection('Teams').doc(this.loggedInUser.uid).onSnapshot(res => {
       console.log(res);
@@ -413,6 +450,8 @@ export class ViewTournamentPage implements OnInit {
 
     })
   }
+
+  // gets the role of the currently logged in user
   getProfile() {
     firebase.firestore().collection('members').doc(this.loggedInUser.uid).onSnapshot(res => {
       if (res.exists) {
@@ -423,20 +462,24 @@ export class ViewTournamentPage implements OnInit {
         this.profile.status = res.data().status;
         if (res.data().form.role == 'vendor') {
           this.role = 'vendor';
+          this.checkForTournaments();
         } else {
           this.role = 'teamManager';
+          this.checkForTournaments();
         }
       } else {
         this.role = 'user'
+        this.checkForTournaments();
         this.applytournaments = 'no'
-        console.log(this.applytournaments, ' 373');
-
       }
     })
   }
+
+  // navigates to login
   login() {
     this.router.navigate(['login'])
   }
+
   //  generates images for the participants section
   generateParticipants(type) {
 
@@ -502,26 +545,33 @@ export class ViewTournamentPage implements OnInit {
 
     }
   }
+
+  // checks the division with the highest number of matches
   checkMatches() {
     if (this.match.type16.length > 0) {
+      this.skeleton = []
       this.tournMatches = this.match.type16
       this.filterBy = 'top32'
       console.log('filter by top32');
     } else if (this.match.type8.length > 0) {
+      this.skeleton = []
       this.tournMatches = this.match.type8
       this.filterBy = 'top16'
       console.log('filter by top16');
     } else if (this.match.type4.length > 0) {
+      this.skeleton = []
       this.tournMatches = this.match.type4
       this.filterBy = 'top8'
       console.log('filter by top8');
       this.generateParticipants('8')
     } else if (this.match.type2.length > 0) {
+      this.skeleton = []
       this.tournMatches = this.match.type2
       this.filterBy = 'top4'
       console.log('filter by top4');
       this.generateParticipants('4')
     } else if (this.match.type1.length > 0) {
+      this.skeleton = []
       this.tournMatches = this.match.type1
       this.filterBy = 'top1'
       this.generateParticipants('1')
@@ -529,12 +579,16 @@ export class ViewTournamentPage implements OnInit {
       this.filterBy = 'nothing'
     }
   }
+
+  // clears required properties and navigates to home page
   goBack() {
     this.router.navigate(['tabs'])
     this.applytournaments = 'checking'
     this.viewedTournament = null
     this.participants = []
   }
+
+  // filters through match divisions
   segmentChanged(ev) {
     this.filterBy = ev
     let event = ev;
@@ -542,22 +596,49 @@ export class ViewTournamentPage implements OnInit {
 
     switch (event) {
       case 'top32':
-        this.tournMatches = this.match.type16
+
+        if (this.match.type16.length > 0) {
+          this.tournMatches = this.match.type16
+        } else {
+          this.skeleton = [1, 2, 3, 4]
+        }
         break;
       case 'top16':
-        this.tournMatches = this.match.type8
+
+        if (this.match.type8.length > 0) {
+          this.tournMatches = this.match.type8
+        } else {
+          this.skeleton = [1, 2, 3, 4]
+        }
         break;
       case 'top8':
-        this.tournMatches = this.match.type4
+
+        if (this.match.type4.length > 0) {
+          this.tournMatches = this.match.type4
+        } else {
+          this.skeleton = [1, 2, 3, 4]
+        }
         break;
       case 'top4':
-        this.tournMatches = this.match.type2
+
+        if (this.match.type2.length > 0) {
+          this.tournMatches = this.match.type2
+        } else {
+          this.skeleton = [1, 2, 3, 4]
+        }
         break;
       case 'top1':
-        this.tournMatches = this.match.type1
+
+        if (this.match.type1.length > 0) {
+          this.tournMatches = this.match.type1
+        } else {
+          this.skeleton = [1, 2, 3, 4]
+        }
         break;
     }
   }
+
+  // sends the clicked match to the next page
   viewMatch(match) {
 
     console.log(match)
@@ -573,6 +654,8 @@ export class ViewTournamentPage implements OnInit {
     // passes nav params
     this.router.navigate(['view-match'], navigationExtras);
   }
+
+  // presents or dismisses a loader
   async presentLoading(cmd, state) {
     let loader = await this.loadingController.create({
       message: 'Just a moment',
