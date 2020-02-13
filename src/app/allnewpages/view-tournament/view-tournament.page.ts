@@ -190,7 +190,10 @@ export class ViewTournamentPage implements OnInit {
     });
   }
   go(){
-    let palceid= 'ChIJvTzwy6VBToYRUO9MFjcwjFE'
+    
+    
+    let palceid= this.viewedTournament.address.placeID
+    console.log('go',palceid);
     return window.location.href = 'https://www.google.com/maps/place/?q=place_id:'+palceid;
   }
   getPlayedMatches() {

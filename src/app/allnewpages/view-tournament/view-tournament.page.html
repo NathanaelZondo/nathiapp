@@ -21,7 +21,7 @@
         <ion-button class="animated"
           [ngClass]="{'bounceIn':viewedTournament.state=='newTournament'&&applytournaments=='no'}" (click)="login()"
           *ngIf="role=='user'" size="small" color="danger">
-          Sign In or Sign Up
+          Join
         </ion-button>
 
         <!-- 
@@ -30,7 +30,7 @@
         <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='no'}"
           *ngIf="viewedTournament.state=='newTournament'&&!application&&applytournaments=='no'" size="small"
           color="success" (click)="applyForTournament()">
-          Apply
+          Participate
         </ion-button>
 
         <!-- 
@@ -70,19 +70,16 @@
           {{match.winner.teamName}} <ion-skeleton-text *ngIf="!match.winner.teamName"  animated style="width: 20vw"></ion-skeleton-text> won
         </ion-button>
       </div>
-      <div class="location">
-        <ion-button (click)="go()" fill="clear" size="small">
-  <ion-icon src="../../../assets/noun_Location_3076235.svg"  ></ion-icon>
-        </ion-button>
-      
-        <p>{{viewedTournament.address.address}}</p>
+      <div class="data">
+        <h1>{{viewedTournament.formInfo.tournamentName}}</h1>
+      <p id="desc">{{viewedTournament.formInfo.bio}}</p>
       </div>
       <div class="more">
         <div class="date">
           <ion-icon src="../../../assets/noun_date_2080425.svg"></ion-icon>
           <p>{{viewedTournament.formInfo.startDate | date}}</p>
         </div>
-        <div class="location">
+        <div class="location" (click)="go()">
           <ion-icon src="../../../assets/noun_Location_3076235.svg"></ion-icon>
           <p>{{viewedTournament.formInfo.location}}</p>
         </div>

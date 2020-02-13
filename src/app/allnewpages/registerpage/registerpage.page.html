@@ -15,12 +15,16 @@
       <!-- slide 2 = image, name, email -->
       <div class="hedr">
         <h4><b>Nathi's </b>Tournaments</h4>
-        <p>Registration</p>
 
       </div>
 
-      <ion-slides mode="ios" pager="ios" scrollbar="ios">
-        <ion-slide>
+      <ion-slides  #slides [options]="slideOpts" mode="ios">
+
+        <ion-slide style="overflow-y:auto">
+          <ion-item style="    padding: 0;
+          text-align: center;">
+            <ion-label>REGISTRATION</ion-label>
+          </ion-item>
           <ion-item style="border-radius: 10px; margin: 2px 0px;">
             <ion-label position="floating">Phone Number</ion-label>
             <ion-input formControlName="phoneNumber" type="tel" [(ngModel)]="phoneNumber"></ion-input>
@@ -28,13 +32,14 @@
 
           <ion-item style="background: none;color: rgb(0, 0, 0);border-radius: 5px;">
             <ion-label position="floating" style="color: rgb(24, 24, 24);">Password</ion-label>
-            <div class="pass" style="width: 100%;display: flex;align-items: center;position: relative;">
+            
               <ion-input style="border-bottom: solid 2px white;color: rgb(34, 34, 34)" formControlName="password"
                 [type]="showPassword ? 'text':'password'" [(ngModel)]="password"></ion-input>
+                <div class="pass" style="width: 100%;display: flex;align-items: center;position: relative;">
               <div class="htt" *ngIf="password" [ngClass]="{'animated fadeIn':password!=''}"
                 style="position: absolute;top: 0;bottom: 0;right: 0;display: flex; align-items: center;z-index: 300;">
-                <ion-button fill="clear" size="small" (click)="togglePass()">
-                  <ion-icon slot="icon-only" [name]="passwordToggleIcon"></ion-icon>
+                <ion-button fill="clear" color="light" size="small" (click)="togglePass()">
+                  <ion-icon color="light" slot="icon-only" [name]="passwordToggleIcon"></ion-icon>
                 </ion-button>
               </div>
 
@@ -49,17 +54,25 @@
 
               <ion-item style="border-radius: 10px; margin: 2px 0px;">
                 <ion-label>Team manager</ion-label>
-                <ion-radio slot="start" value="teamManager" checked></ion-radio>
+                <ion-radio color="light" slot="start" value="teamManager" checked></ion-radio>
               </ion-item>
 
               <ion-item style="border-radius: 10px;margin: 2px 0px;">
                 <ion-label>Vendor</ion-label>
-                <ion-radio slot="start" value="vendor"></ion-radio>
+                <ion-radio color="light" slot="start" value="vendor"></ion-radio>
               </ion-item>
             </ion-radio-group>
           </ion-list>
+          <ion-button color="light" fill="clear" (click)="slideNext()">
+            Next
+          </ion-button>
         </ion-slide>
-        <ion-slide>
+
+
+        <ion-slide style="overflow-y:auto">
+          <ion-item>
+            <ion-label>PROFILE SETUP</ion-label>
+          </ion-item>
           <div class="profileImage">
             <div class="imgC" *ngIf="profileImage">
               <img src="{{profileImage}}" alt="">
@@ -82,23 +95,27 @@
             <ion-label position="floating">Email</ion-label>
             <ion-input formControlName="email" type="email" [(ngModel)]="email"></ion-input>
           </ion-item>
+
+          <div class="btns">
+
+            <ion-button shape="round" color="success" id="sign-in-button" [disabled]="!registrationForm.valid"
+              type="submit" class="form-buttons">
+              Sign Up
+            </ion-button>
+
+          </div>
           <p style="width: 90%; margin: auto; text-align: center; padding: 10px;">By clicking Sign Up, you agree to our
             <span style="color: rgb(77, 184, 255);text-decoration: underline;">Terms</span> and <span
               style="color: rgb(77, 184, 255);text-decoration: underline;">Data Policy</span>. You may receive
             Notifications from us.</p>
-<div class="btns">
-  <ion-button shape="round" color="light" fill="clear" id="sign-in-button" (click)="goLogin()">
-    Sign In
-  </ion-button>
-  <ion-button shape="round" color="success" id="sign-in-button" [disabled]="!registrationForm.valid"
-    type="submit" class="form-buttons">
-    Sign Up
-  </ion-button>
-</div>
         </ion-slide>
       </ion-slides>
 
     </form>
   </div>
-
+  <div class="l">
+    <ion-button shape="round" color="light" fill="clear" id="sign-in-button" (click)="goLogin()">
+      Sign In
+    </ion-button>
+  </div>
 </ion-content>

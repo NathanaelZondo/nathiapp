@@ -29,26 +29,29 @@
         <div class="pass" style="width: 100%;display: flex;align-items: center;position: relative;">
           <ion-input    style="border-bottom: solid 2px white;color: rgb(34, 34, 34)" formControlName="password" [type]="showPassword ? 'text':'password'" [(ngModel)]="password"></ion-input>
           <div class="htt" *ngIf="password" [ngClass]="{'animated fadeIn':password!=''}" style="position: absolute;top: 0;bottom: 0;right: 0;display: flex; align-items: center;z-index: 300;">
-            <ion-button  fill="clear" size="small" (click)="togglePass()">
-          <ion-icon slot="icon-only" [name]="passwordToggleIcon"></ion-icon>
+            <ion-button  fill="clear" color="light" size="small" (click)="togglePass()">
+          <ion-icon color="light" slot="icon-only" [name]="passwordToggleIcon"></ion-icon>
         </ion-button>
           </div>
         
         </div>
       </ion-item>
-
-
       <div class="button">
-        <ion-button shape="round" id="sign-in-button" color="light" fill="clear" (click)="toReg()">
-          Sign Up
-        </ion-button>
+
         <ion-button shape="round" color="success" id="sign-in-button" type="submit" class="form-buttons"
           [disabled]="!registrationForm.valid">
           Sign In
         </ion-button>
 
       </div>
-
+      <ion-button style="font-size: 3.4vw;" (click)="onClick()" size="small" expand="block" fill="clear" color="light" shape="round">
+        Forgot Password?
+      </ion-button>
     </form>
+  </div>
+  <div class="l">
+    <ion-button shape="round" id="sign-in-button" color="light" fill="clear" (click)="toReg()">
+      Sign Up
+    </ion-button>
   </div>
 </ion-content>
