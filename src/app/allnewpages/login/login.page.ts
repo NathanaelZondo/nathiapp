@@ -82,7 +82,6 @@ export class LoginPage implements OnInit {
     })
     
   }
-  
   //   async requestCode(){
   //     // this.phoneNumber = this.registrationForm.get('phoneNumber').value
   //     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
