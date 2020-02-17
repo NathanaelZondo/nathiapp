@@ -7,11 +7,19 @@
         height: 100%;
         display: flex;
         align-items: center;
-        background: url(../../../assets/bendedFootballField.svg) no-repeat ,linear-gradient(rgba(0, 13, 6, 0)) ;
-        background-position: 25% 80%;
-        background-size: 165%;
+        background: linear-gradient(rgba(255, 255, 255, 0.747),rgba(255, 255, 255, 0.096)),url(../../../assets/bendedFootballField.svg) no-repeat ,linear-gradient(rgba(0, 13, 6, 0)) ;
+        background-position: 25% 274%;
+        background-size: 565%;
         color: rgb(32, 32, 32);
         text-align: center;
+        position: relative;
+        .img {
+            position: absolute;
+            top: 6%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+        }
         div {
             width: 80%;
             margin: auto;

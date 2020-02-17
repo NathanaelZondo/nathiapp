@@ -3,8 +3,11 @@
   <div class="links">
     <div>
       <hr>
-     <h1>Nathi's&nbsp;Tournaments</h1>
+    <div class="img">
+      <img src="../../../assets/icon/tempLogo.svg" alt="">
       <p>v0.0.1</p>
+    </div>
+      
     </div>
     </div>
     <div class="information">
@@ -12,7 +15,7 @@
 max-height: 100%;
 overflow-y: auto;
 ">
-  <h1>Frequently Asked Questions</h1>
+  <h1 style="margin: 20px auto; text-align: center;">Frequently Asked Questions</h1>
   <div *ngFor="let a of FAQS;let o = index" ngClass="{'fadeInUp':questionIndex==0}" class="divide">
     <h1>{{a.question}}</h1>
   <p>{{a.answer}}</p>
