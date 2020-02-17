@@ -501,7 +501,7 @@ export class ViewTournamentPage implements OnInit {
 
   // navigates to login
   login() {
-    this.router.navigate(['login'])
+    this.router.navigate(['registerpage'])
   }
 
   //  generates images for the participants section
