@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase'
 import { Button } from 'protractor';
 import { async } from '@angular/core/testing';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 declare var window
 @Component({
   selector: 'app-login',
@@ -35,7 +36,8 @@ export class LoginPage implements OnInit {
     public formBuilder: FormBuilder,
     public alertController: AlertController,
     public route: Router,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    public googleplus :GooglePlus
   ) {
     this.registrationForm = formBuilder.group({
       phoneNumber: [this.phoneNumber, Validators.compose([Validators.required])],
@@ -52,6 +54,23 @@ export class LoginPage implements OnInit {
     return await this.loginLoader.present();
   }
   ngOnInit() {
+  }
+
+  async nativeGoogleLogin() {
+    //let credential = '';
+    try {
+      const gplusUser = await this.googleplus.login({
+        'webClientId': '81311888576-0i9kvpjn5fo0s72q7ua37bjo42vlh3t8.apps.googleusercontent.com',
+        'offline': true,
+        'scopes': 'profile email'
+      })
+       await firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)).then((i)=>{
+        //this.userProfile.doc(i.user.uid).set
+        this.route.navigateByUrl('registerpage')
+       })
+    } catch(err) {
+      console.log('Error ',err)
+    }
   }
   togglePass(): void {
     this.showPassword = !this.showPassword

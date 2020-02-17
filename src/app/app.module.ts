@@ -12,6 +12,7 @@ import * as firebase from 'firebase';
 import {config} from '../app/firebaseConfig'
 import { FCM } from '@ionic-native/fcm/ngx';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 firebase.initializeApp(config);
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ firebase.initializeApp(config);
     Camera,
     FCM,
     NativeStorage,
+    GooglePlus,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
