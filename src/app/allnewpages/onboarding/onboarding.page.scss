@@ -6,8 +6,8 @@
 
     .title {
         top: 0;
-        right: 10px;
-        left: 10px;
+        right: 0px;
+        left: 0px;
         bottom: 50vh;
         position: absolute;
         color: white;
@@ -43,7 +43,7 @@
         position: absolute;
         color: white;
         border: solid 1px #19d48f;
-        background: linear-gradient(0deg, #087141, #009e56);
+        background: linear-gradient(0deg, #08714293, #009e5757),url(../../../assets/onboarding/bottomLights.svg) no-repeat bottom center,linear-gradient(0deg, #087141, #009e56);
         border-radius: 30px 30px 0px 0px;
         z-index: 3;
         overflow: hidden;
@@ -96,7 +96,7 @@ ion-slides {
         position: relative;
         .sTitle {
             h1 {
-                font-size: 8vw !important;
+                font-size: 5vw !important;
             }
         
         p {
@@ -129,6 +129,7 @@ ion-slides {
             align-items: center;
             text-align: center;
             div {
+                // height: 80%;
                 width: 97.3%;
                 margin: auto;
             }
@@ -139,7 +140,7 @@ ion-slides {
             }
         }
         .btns {
-            position: absolute;
+            position: fixed;
             bottom: 0;
             left: -20px;
             right: -20px;
