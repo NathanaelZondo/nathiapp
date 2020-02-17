@@ -1,6 +1,8 @@
 <ion-content>
     <div class="slash"></div>
     <div class="slash o"></div>
+    <div class="o__slash"></div>
+    <div class="o__slash oo"></div>
     <div class="title">
         <div class="tContent">
 
@@ -19,13 +21,16 @@
                 Coming Up
             </ion-button>
             <ion-button [ngClass]="{'selected':filterBy=='inProgress'}" (click)="filter('inProgress')"
-                style="font-size: 3vw; margin: 0" size="small" fill="clear" color="light">
+                style="font-size: 2.3vw !important; margin: 0" size="small" fill="clear" color="light">
                 In Progress
             </ion-button>
             <ion-button [ngClass]="{'selected':filterBy=='results'}" (click)="filter('results')" style="font-size: 3vw; margin: 0"
                 size="small" fill="clear" color="light">
                 Results
             </ion-button>
+            <div class="dLine">
+
+            </div>
         </div>
         <div class="list">
             <ion-card *ngFor="let item of skeleton" >
@@ -38,22 +43,23 @@
                   </div>
                   <br><br>
             </ion-card>
-            <ion-card class="animated" [ngClass]="{'fadeOut faster':loadFilter,'fadeInUp faster':!loadFilter}"  mode="ios" *ngFor="let t of viewTournaments" >
-                <div class="more">
-                    <ion-fab-button fill="clear" color="light" size="small" (click)="viewTournament(t)">
-                        <ion-icon name="arrow-dropright"></ion-icon>
-                    </ion-fab-button>
-                </div>
-                <ion-card-header>
-                <ion-card-title style="font-weight: bolder;font-family: Muller; font-size: 5vw !important;">{{t.formInfo.tournamentName}}</ion-card-title>
-                    <ion-card-subtitle style="font-family: Muller;"><b>{{t.formInfo.location}}</b>  {{t.formInfo.startDate | date:'MMM dd'}} - {{t.formInfo.startDate | date:'shortTime'}}</ion-card-subtitle>
+            <ion-card class="animated" [ngClass]="{'fadeOut faster':loadFilter,'fadeInUp faster':!loadFilter}"  mode="ios" *ngFor="let t of viewTournaments" (click)="viewTournament(t)" >
+                
+                <ion-card-header style="padding: 10px 20px !important;">
+                <ion-card-title style="font-weight: bolder;font-family: 'Obj Bold'; font-size: 5vw !important;">{{t.formInfo.tournamentName}}</ion-card-title>
+                    <ion-card-subtitle style="font-family: 'Obj'; margin: 10px 0px !important;"><b>{{t.formInfo.location}}</b> <br> {{t.formInfo.startDate | date:'MMM dd'}}  {{t.formInfo.startDate | date:'shortTime'}}</ion-card-subtitle>
                 </ion-card-header>
                 <hr style="background: rgb(236, 236, 236);margin: 0;">
-                <ion-card-content style="width: 90% !important;" >
+                <ion-card-content style="padding: 10px 20px !important;">
                     <div class="long-text">
-                        <p style="margin: 0 ; font-family: Muller;">{{t.formInfo.bio}}</p>
+                        <p style="margin: 0 ; font-family: 'Obj Light';">{{t.formInfo.bio}}</p>
                     </div>
                 </ion-card-content>
+                <div class="more">
+                    <ion-button  size="small" fill="outline" shape="round">
+                        Read more
+                    </ion-button>
+                </div>
             </ion-card>
         </div>
     </div>

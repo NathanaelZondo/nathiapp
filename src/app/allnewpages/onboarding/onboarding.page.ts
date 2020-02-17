@@ -16,12 +16,12 @@ export class OnboardingPage implements OnInit {
   slideOpts = {
     slidesPerView: 1,
     coverflowEffect: {
-      // rotate: 50,
+      rotate: 50,
       stretch: 10,
       depth: 50,
       modifier: 1,
       spaceBetween: 2,
-      // slideShadows: true,
+      slideShadows: true,
     },
     on: {
       beforeInit() {

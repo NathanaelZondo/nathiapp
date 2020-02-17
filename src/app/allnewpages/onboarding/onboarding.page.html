@@ -1,107 +1,91 @@
 <ion-content>
 
-<div class="container">
-    <div class="title">
-        <div class="head">
-            <h1>Nathi's</h1>
-        <p>Tournaments</p>
-        </div>
-    </div>
-    <div class="information">
-        <div class="h animated" [ngClass]="{'slideOutUp faster':hideNext}">
-            <h1>Welcome</h1>
-        </div>
-        <div class="sl">
-            <div class="nexter animated" [ngClass]="{'slideOutRight faster':hideNext}" >
-                <ion-button fill="outline" color="light" shape="round" (click)="nextSlide()">
-                    <ion-icon slot="end" name="arrow-forward"></ion-icon>
-                    Next
-                </ion-button>
+    <div class="container">
+        <div class="title">
+            <div class="head">
+                <h1>Nathi's</h1>
+                <p>Tournaments</p>
             </div>
-            <div class="skipper animated" [ngClass]="{'slideOutLeft faster':hideNext}">
-                <ion-button fill="clear" color="light" shape="round" (click)="skip()">
-                    Skip
-                </ion-button>
+        </div>
+        <div class="information">
+            <div class="h animated" [ngClass]="{'slideOutUp faster':hideNext}">
+                <h1>Welcome</h1>
             </div>
-            <ion-slides #slides [options]="slideOpts" (ionSlideWillChange)="getSlide($event)" (ionSlideDidChange)="getSlide($event)" mode="md" pager="md">
-                <ion-slide >
-                   <div class="sTitle">
-                    <h1 >Begining Stages</h1>
-                   </div>
-                   <div class="instructions">
-                    <p>The following screens will help you understand the processes of the app, please click Next to begin.</p>
-                   </div>
-                </ion-slide>
-                <ion-slide >
-                    <div class="sTitle">
-                        <h1 style="font-size: 5vw;">Unregisterd User</h1>
-                       </div>
-                       <div class="instructions">
-                        <p>If you're an unregisterd user you can still see tournaments and all your favourite teams participating in them, however, you will not be able to participate yourself.</p>
-                       </div>
-                </ion-slide>
-                <ion-slide >
-                    <div class="sTitle">
-                        <h1 style="font-size: 3.7vw;" >Team Manager</h1>
-                       </div>
-                       <div class="instructions">
-<div>
-    <p>If you register as a team manager, your account and your team will need to be approved by the admin before you can apply to any tournaments.</p>
-    <br>
-    <p style="font-weight: bold;text-align: left;">Become a Team Manager: </p>
-    <ol>
-        <li>Register as a Team Manager</li>
-        <li>Add Team Information</li>
-        <li>Add Players for the Team</li>
-        <li>Wait for Approval and once approved</li>
-        <li>View Upcoming tournaments to apply for them.</li>
-    </ol>
-</div>
-                       </div>
-                </ion-slide>
-                <ion-slide >
-                    <div class="sTitle">
-                        <h1 style="font-size: 3.7vw;" >Vedor</h1>
-                       </div>
-                       <div class="instructions">
-<div>
-    <p>Registering as a Vendor means that you will only apply for tournaments to sell. <br>
-    </p>
-    <br>
-    <p style="font-weight: bold;text-align: left;">Become a Vendor: </p>
-    <ol>
-        <li>Register as a Vendor</li>
-        <li>Wait for Approval and once approved</li>
-        <li>View Upcoming tournaments to apply for them.</li>
-    </ol>
-</div>
-                       </div>
-                </ion-slide>
-                <ion-slide >
-                    <div style="margin-bottom: 50%;" class="done">
+            <div class="sl">
+                <div class="nexter animated" [ngClass]="{'slideOutRight faster':hideNext}">
+                    <ion-button fill="outline" color="light" shape="round" (click)="nextSlide()">
+                        <ion-icon slot="end" name="arrow-forward"></ion-icon>
+                        Next
+                    </ion-button>
+                </div>
+                <div class="skipper animated" [ngClass]="{'slideOutLeft faster':hideNext}">
+                    <ion-button fill="clear" color="light" shape="round" (click)="skip()">
+                        Skip
+                    </ion-button>
+                </div>
+                <ion-slides #slides [options]="slideOpts" (ionSlideWillChange)="getSlide($event)"
+                    (ionSlideDidChange)="getSlide($event)" mode="md" pager="md">
+                    <ion-slide>
                         <div class="sTitle">
-                        <h1 style="font-size: 9vw !important;">All Done!</h1>
-                       </div>
-                       <div class="instructions">
-                        <p>You are now ready to start using the app.<br>
-                        </p>
-                       <div class="btns">
-                        <ion-button shape="round" color="light"  fill="outline" (click)="sign('in')">
-                            Sign In
-                        </ion-button>
-                        <ion-button shape="round" fill="outline" color="light" (click)="sign('up')">
-                            Sign Up
-                        </ion-button> <br>
-                        <ion-button shape="round" color="light"  fill="clear" shape="round" (click)="sign('home')">
-                            Explore
-                        </ion-button>
-                       </div>
-                       </div>
-                    </div>
-                    
-                </ion-slide>
-            </ion-slides>
+                            <h1>Nathi's Tournaments</h1>
+                        </div>
+                        <div class="image">
+                            <img src="../../../assets/onboarding/tournaments.svg" alt="">
+                        </div>
+                        <div class="instructions">
+                            <p>Get your local tournaments at your finger tips. You will be able to see the location, date and be directed to where the tournament is happening.</p>
+                        </div>
+                    </ion-slide>
+                    <ion-slide>
+                        <div class="sTitle">
+                            <h1>Tournament Matches</h1>
+                        </div>
+                        <div class="image">
+                            <img src="../../../assets/onboarding/matches.svg" alt="">
+                        </div>
+                        <div class="instructions">
+                            <p>Get s live status of every match inside every playing tournament. You also get to see the history of past played tournaments any time.</p>
+                        </div>
+                    </ion-slide>
+                    <ion-slide>
+                        <div class="sTitle">
+                            <h1>Your Favourite Teams
+                                and Players</h1>
+                        </div>
+                        <div class="image">
+                            <img src="../../../assets/onboarding/teamsAndPlayers.svg" alt="">
+                        </div>
+                        <div class="instructions">
+                            <p>Witness teams battle for the first position, and players battle to be the best. Kepp track of their progress and get information about them.</p>
+                        </div>
+                    </ion-slide>
+
+                    <ion-slide>
+                        <div style="margin-bottom: 50%;" class="done">
+                            <div class="sTitle">
+                                <h1 style="font-size: 9vw !important;">All Done!</h1>
+                            </div>
+                            <div class="instructions">
+                                <p>You are now ready to start using the app.<br>
+                                </p>
+                                <div class="btns">
+                                    <ion-button shape="round" color="light" fill="outline" (click)="sign('in')">
+                                        Sign In
+                                    </ion-button>
+                                    <ion-button shape="round" fill="outline" color="light" (click)="sign('up')">
+                                        Sign Up
+                                    </ion-button> <br>
+                                    <ion-button shape="round" color="light" fill="clear" shape="round"
+                                        (click)="sign('home')">
+                                        Explore
+                                    </ion-button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </ion-slide>
+                </ion-slides>
+            </div>
         </div>
     </div>
-</div>
 </ion-content>

@@ -81,7 +81,7 @@
         </div>
         <div class="location" (click)="go()">
           <ion-icon src="../../../assets/noun_Location_3076235.svg"></ion-icon>
-          <p>{{viewedTournament.formInfo.location}}</p>
+          <p><u>{{viewedTournament.formInfo.location}}</u></p>
         </div>
       </div>
     </div>
@@ -90,6 +90,9 @@
         <h4>Participants</h4>
       </div>
       <div class="plist">
+        <div class="img animated fadeInLeft" *ngFor="let item of skeleton">
+
+        </div>
         <div class="img animated fadeInLeft" *ngFor="let item of participants">
           <img *ngIf="item.teamLogo" src="{{item.teamLogo}}" alt="">
           <img *ngIf="!item.teamLogo" style="opacity: .4;" src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="">
@@ -131,6 +134,9 @@
             class="filters animated fadeIn faster" *ngIf="filterBy=='nothing'">
             Next Division is being setup
           </h1>
+          <div class="dLine animated fadeIn delay-1s" *ngIf="viewedTournament.state!='newTournament'">
+
+          </div>
         </div>
       </div>
     </div>
@@ -151,7 +157,15 @@
   <div class="threeData">
     <div class="matchs animated fadeIn delayer1">
       <div class="matchList">
-        <div class="m animated fadeIn delayer2" [ngClass]="{'nMargin':tournMatches.length>1,'cMargin':tournMatches.length==1}" *ngFor="let item of tournMatches" (click)="viewMatch(item)">
+        <div class="fader">
+          
+        </div>
+        <div class="m animated fadeInRight delayer2" [ngClass]="{
+          'nMargin':tournMatches.length>1,
+          'cMargin':tournMatches.length==1,
+          'endedMatch':item.half=='Second Half'&&item.matchstate=='complete'
+        }" *ngFor="let item of tournMatches" (click)="viewMatch(item)">
+
           <div class="mStatus">
             <ion-button *ngIf="item.matchstate=='incomplete'||!item.matchstate&&!item.half"  size="small" shape="round" color="light">
               Not started
@@ -165,6 +179,9 @@
             <ion-button size="small" shape="round" color="tertiary"  *ngIf="item.matchstate=='complete'&&item.half=='Second Half'"  >
               Match Ended
             </ion-button>
+          </div>
+          <div class="dimmer" [ngClass]="{'endedMatch':item.half=='Second Half'&&item.matchstate=='complete'}">
+
           </div>
           <div class="teams">
             <div class="h">

@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController } from '@ionic/angular';
+import { NavController, NavParams, LoadingController, AlertController, ToastController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationExtras } from '@angular/router';
 import * as firebase from 'firebase'
@@ -13,7 +13,8 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 export class ViewTournamentPage implements OnInit {
   viewedTournament = null
   tournMatches = []
-  skeleton = [1, 2, 3, 4]
+  skeleton = [1, 2, 3, 4,5,6,7,8]
+  noMatches = false
   tempArray = []
   participants = []
   segmentValue = '16'
@@ -49,7 +50,7 @@ export class ViewTournamentPage implements OnInit {
     status: "new"
   } as any
   tournid;
-  constructor(public pass: PassInformationServiceService, public navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, public loadingController: LoadingController, public store: NativeStorage, public passService: PassInformationServiceService, public alertController: AlertController, public renderer: Renderer2) { }
+  constructor(public pass: PassInformationServiceService, public navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, public loadingController: LoadingController, public store: NativeStorage, public passService: PassInformationServiceService, public alertController: AlertController, public renderer: Renderer2,public toastCtrl: ToastController) { }
   /*
   FOR THE NEW TOURNAMENT
    get the role of the user
@@ -93,9 +94,7 @@ export class ViewTournamentPage implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.viewedTournament = this.router.getCurrentNavigation().extras.state.parms
-        setTimeout(() => {
 
-        }, 500);
         console.log(this.viewedTournament);
         this.pass.tournid = this.viewedTournament.doc_id;
         this.tournid = this.viewedTournament.doc_id;
@@ -137,7 +136,7 @@ export class ViewTournamentPage implements OnInit {
               console.log(this.match);
             } else {
               this.filterBy = 'nothing'
-              this.skeleton = [1, 2, 3, 4]
+              this.skeleton = [1, 2, 3, 4,5,6,7,8]
             }
           }).catch(err => { console.log(err); })
         } else {
@@ -175,16 +174,30 @@ export class ViewTournamentPage implements OnInit {
                 }
               })
               this.checkMatches()
+              
               console.log(this.match);
             } else {
               this.filterBy = 'nothing'
-              this.skeleton = [1, 2, 3, 4]
+              this.skeleton = [1, 2, 3, 4,5,6,7,8]
             }
 
           }).catch(err => {
             console.log(err);
 
           })
+        }
+        if (this.viewedTournament.state=='newTournament') {
+          setTimeout(async () => {
+            if (this.skeleton.length>0) {
+              this.noMatches = true
+              let toaster = await this.toastCtrl.create({
+                message: 'This Touranments has no matches.',
+                duration: 2000
+              })
+              await toaster.present()
+            }
+            console.log('noMatches ', this.noMatches);
+          }, 3000);
         }
       }
     });
@@ -231,14 +244,19 @@ export class ViewTournamentPage implements OnInit {
           }
         }
       })
-      console.log(this.match);
+      setTimeout(() => {
+        if (this.tournMatches.length==0&&this.skeleton.length>0) {
+          this.noMatches = true
+        }
+        console.log('noMatches ', this.noMatches);
+      }, 3000);
     }).catch(err => { console.log(err); })
   }
 
   // should return defaults in page, * doesn't trigger somehow
   ionViewWillLeave() {
     this.tournMatches = []
-    this.skeleton = [1,2,3,4]
+    this.skeleton = [1, 2, 3, 4,5,6,7,8]
     this.applytournaments = 'checking'
     this.storageKeys.forEach(element => {
       this.store.remove(element).then((res) => {
@@ -554,6 +572,8 @@ export class ViewTournamentPage implements OnInit {
 
   // checks the division with the highest number of matches
   checkMatches() {
+    console.log('checking matches');
+    
     if (this.match.type16.length > 0) {
       this.skeleton = []
       this.tournMatches = this.match.type16
@@ -584,6 +604,12 @@ export class ViewTournamentPage implements OnInit {
     } else {
       this.filterBy = 'nothing'
     }
+    setTimeout(() => {
+      if (this.skeleton.length>0) {
+        this.noMatches = true
+      }
+      console.log('noMatches ', this.noMatches);
+    }, 3000);
   }
 
   // clears required properties and navigates to home page
@@ -606,7 +632,7 @@ export class ViewTournamentPage implements OnInit {
         if (this.match.type16.length > 0) {
           this.tournMatches = this.match.type16
         } else {
-          this.skeleton = [1, 2, 3, 4]
+          this.skeleton = [1, 2, 3, 4,5,6,7,8]
         }
         break;
       case 'top16':
@@ -614,7 +640,7 @@ export class ViewTournamentPage implements OnInit {
         if (this.match.type8.length > 0) {
           this.tournMatches = this.match.type8
         } else {
-          this.skeleton = [1, 2, 3, 4]
+          this.skeleton = [1, 2, 3, 4,5,6,7,8]
         }
         break;
       case 'top8':
@@ -622,7 +648,7 @@ export class ViewTournamentPage implements OnInit {
         if (this.match.type4.length > 0) {
           this.tournMatches = this.match.type4
         } else {
-          this.skeleton = [1, 2, 3, 4]
+          this.skeleton = [1, 2, 3, 4,5,6,7,8]
         }
         break;
       case 'top4':
@@ -630,7 +656,7 @@ export class ViewTournamentPage implements OnInit {
         if (this.match.type2.length > 0) {
           this.tournMatches = this.match.type2
         } else {
-          this.skeleton = [1, 2, 3, 4]
+          this.skeleton = [1, 2, 3, 4,5,6,7,8]
         }
         break;
       case 'top1':
@@ -638,10 +664,18 @@ export class ViewTournamentPage implements OnInit {
         if (this.match.type1.length > 0) {
           this.tournMatches = this.match.type1
         } else {
-          this.skeleton = [1, 2, 3, 4]
+          this.skeleton = [1, 2, 3, 4,5,6,7,8]
         }
         break;
     }
+    setTimeout(() => {
+      if (this.tournMatches.length==0&&this.skeleton.length>0) {
+        this.noMatches = true
+        
+        
+      }
+      console.log('noMatches ', this.noMatches);
+    }, 3000);
   }
 
   // sends the clicked match to the next page

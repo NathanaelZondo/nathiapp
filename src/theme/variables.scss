@@ -3,16 +3,22 @@
 
 /** Ionic CSS Variables **/
 @font-face {
-  font-family: 'Muller';
+  font-family: 'Obj Light';
   font-style: normal;
-  font-weight: normal;
-  src: url('../assets/fonts/nevis.ttf');
+  font-weight: lighter;
+  src: url('../assets/fonts/Objectivity-Thin.otf');
 }
 @font-face {
-  font-family: 'Muller Bold';
+  font-family: 'Obj';
   font-style: normal;
   font-weight: normal;
-  src: url('../assets/fonts/nevis.ttf');
+  src: url('../assets/fonts/Objectivity-Regular.otf');
+}
+@font-face {
+  font-family: 'Obj Bold';
+  font-style: normal;
+  font-weight: bold;
+  src: url('../assets/fonts/Objectivity-ExtraBold.otf');
 }
 @font-face {
   font-family: 'Neou';
@@ -135,10 +141,10 @@ ion-content {
 // font-family: 'Roboto', sans-serif;
 // font-family: 'Open Sans', sans-serif;
 * {
-  font-family: 'Roboto', sans-serif !important;
+  font-family: 'Obj' !important;
 }
 h1,h2,h3,h4,h5 {
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: 'Obj Bold', sans-serif !important;
   font-weight: bold !important;
   font-size: 4.6vw !important;
   text-transform: uppercase;
@@ -150,7 +156,7 @@ a, span, p, ion-label, ion-button,ion-card-title {
   
 }
 ion-card-subtitle {
-  font-family: 'Muller' !important;
+  font-family: 'Obj' !important;
   font-weight: bold;
   font-size: 3.3vw;
 }

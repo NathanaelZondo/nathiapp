@@ -21,10 +21,9 @@
       <ion-slides  #slides [options]="slideOpts" mode="ios">
 
         <ion-slide style="overflow-y:auto">
-          <ion-item style="    padding: 0;
-          text-align: center;">
-            <ion-label>REGISTRATION</ion-label>
-          </ion-item>
+          <h4>
+            Welcome
+          </h4>
           <ion-item style="border-radius: 10px; margin: 2px 0px;">
             <ion-label position="floating">Phone Number</ion-label>
             <ion-input formControlName="phoneNumber" type="tel" [(ngModel)]="phoneNumber"></ion-input>
@@ -70,9 +69,9 @@
 
 
         <ion-slide style="overflow-y:auto">
-          <ion-item>
-            <ion-label>PROFILE SETUP</ion-label>
-          </ion-item>
+   
+            <h4 style="margin: 0;">PROFILE SETUP</h4>
+        
           <div class="profileImage">
             <div class="imgC" *ngIf="profileImage">
               <img src="{{profileImage}}" alt="">

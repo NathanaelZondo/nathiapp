@@ -91,16 +91,17 @@ ion-icon {
     visibility: inherit;
     // background: radial-gradient(black, transparent),rgb(0, 27, 0);
 }
+
 ion-tab-button {
-    box-shadow: -6px -6px 8px 0 rgb(255, 255, 255), 6px 6px 8px 0 rgb(217, 210, 200);
-    background: #EFEEEE;
-    border: 1px solid rgba(255, 255, 255, 0.54);
-    border-radius: 12px;
+    border-radius: 15px;
+    background: #efefef;
+    box-shadow:  -2px 2px 2px #bfbfbf, 2px -2px 2px #ffffff;
     margin: 0px 5px !important;
     height: 90%;
 }
+
 ion-tab-bar {
-    background: #EFEEEE !important;
+    background: #efefef !important;
     // height: 0 !important;
     border: none !important;
     padding: 2px 0px;
