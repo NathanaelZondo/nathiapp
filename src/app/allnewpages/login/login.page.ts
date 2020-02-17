@@ -82,7 +82,68 @@ export class LoginPage implements OnInit {
     })
     
   }
-  
+  forgetP(){
+    
+  }
+  showPrompt() {
+    const prompt = this.alertController.create({
+      header:'Reset Password',
+      message: 'Enter your number so we can send the password reset link.',
+      inputs: [
+        {
+          name: 'name1',
+          type: 'text',
+          placeholder: 'Email'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            let email = data.name1 + '@mail.com'
+            firebase.auth().sendPasswordResetEmail(data.name1).then(
+              async () => {
+                const alert = await this.alertController.create({
+                  message: 'Check your email for a password reset link',
+                  buttons: [
+                    {
+                      text: 'Ok',
+                      role: 'cancel',
+                      handler: () => {
+                 
+                          this.presentLoading()
+                      }
+                    }
+                  ]
+                });
+                await alert.present();
+              },
+              async error => {
+                const errorAlert = await this.alertController.create({
+                  message: error.message,
+                  buttons: [{ text: 'Ok', role: 'cancel' }]
+                });
+                await errorAlert.present();
+              }
+            );
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            console.log('Saved clicked');
+          }
+        }
+      ]
+    });
+    // prompt.present();
+  }
+  toReg() {
+    this.route.navigate(['registerpage'])
+  }
+  close() {
+    this.route.navigateByUrl('tabs');
+  }
   //   async requestCode(){
   //     // this.phoneNumber = this.registrationForm.get('phoneNumber').value
   //     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
@@ -203,11 +264,6 @@ export class LoginPage implements OnInit {
   //       console.log(error)
   //     });
   //   }
-  toReg() {
-    this.route.navigate(['registerpage'])
-  }
-  close() {
-    this.route.navigateByUrl('tabs');
-  }
+
 }
 
