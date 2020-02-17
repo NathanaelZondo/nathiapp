@@ -2,7 +2,7 @@ import { FaqsPageModule } from './../faqs/faqs.module';
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase'
 import { Button } from 'protractor';
@@ -38,7 +38,9 @@ export class LoginPage implements OnInit {
     public alertController: AlertController,
     public route: Router,
     public loadingController: LoadingController,
-    public googleplus :GooglePlus
+    public googleplus :GooglePlus,
+    public plt : Platform,
+    // private location : Location
   ) {
     this.registrationForm = formBuilder.group({
       phoneNumber: [this.phoneNumber, Validators.compose([Validators.required])],
@@ -59,6 +61,8 @@ export class LoginPage implements OnInit {
 
   async nativeGoogleLogin() {
     //let credential = '';
+    console.log('abc');
+    
     try {
       const gplusUser = await this.googleplus.login({
         'webClientId': '81311888576-0i9kvpjn5fo0s72q7ua37bjo42vlh3t8.apps.googleusercontent.com',
@@ -71,6 +75,29 @@ export class LoginPage implements OnInit {
        })
     } catch(err) {
       console.log('Error ',err)
+    }
+  }
+  webGoogleLogin() {
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      const credential = firebase.auth().signInWithPopup(provider).then((i)=>{
+        if (i.user) {
+          console.log('aaa',i);
+          
+          this.route.navigateByUrl('registerpage')
+        }
+      });
+    } catch(err) {
+      console.log(err)
+    }
+  }
+  googleLogin() {
+    console.log('seko');
+    
+    if (this.plt.is('cordova')) {
+      this.nativeGoogleLogin();
+    } else {
+      this.webGoogleLogin();
     }
   }
   togglePass(): void {
