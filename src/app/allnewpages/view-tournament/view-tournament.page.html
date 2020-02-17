@@ -66,7 +66,7 @@
           NOT A NORMAL USER''
           -->
         <ion-button class="animated fadeIn slow" *ngIf="viewedTournament.state=='finished'&&role!=='user'" size="small"
-          color="success">
+          color="success" fill="clear" >
           {{match.winner.teamName}} <ion-skeleton-text *ngIf="!match.winner.teamName"  animated style="width: 20vw"></ion-skeleton-text> won
         </ion-button>
       </div>

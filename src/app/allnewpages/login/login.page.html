@@ -8,13 +8,14 @@
       <ion-icon name="close"></ion-icon>
     </ion-fab-button>
   </div>
+
   <div class="container">
     <div id="recaptcha-container"></div>
     <form [formGroup]="registrationForm" (ngSubmit)="addUser(registrationForm.value)">
       
       <h4>Welcome back</h4>
 
-      <ion-item style="background: none;
+      <ion-item lines="none" style="background: none;
       color: rgb(0, 0, 0);border-radius: 5px;">
         <ion-label position="floating" style="color: rgb(24, 24, 24);">Phone Number</ion-label>
         <ion-input style="
@@ -24,10 +25,12 @@
       </ion-item>
 
 
-      <ion-item style="background: none;color: rgb(0, 0, 0);border-radius: 5px;">
+      <ion-item lines="none" style="background: none;color: rgb(0, 0, 0);border-radius: 5px;">
         <ion-label position="floating" style="color: rgb(24, 24, 24);">Password</ion-label>
+
+
         <div class="pass" style="width: 100%;display: flex;align-items: center;position: relative;">
-          <ion-input    style="border-bottom: solid 2px white;color: rgb(34, 34, 34)" formControlName="password" [type]="showPassword ? 'text':'password'" [(ngModel)]="password"></ion-input>
+          <ion-input maxlength="10"   style="border-bottom: solid 2px white;color: rgb(34, 34, 34)" formControlName="password" [type]="showPassword ? 'text':'password'" [(ngModel)]="password"></ion-input>
           <div class="htt" *ngIf="password" [ngClass]="{'animated fadeIn':password!=''}" style="position: absolute;top: 0;bottom: 0;right: 0;display: flex; align-items: center;z-index: 300;">
             <ion-button  fill="clear" color="light" size="small" (click)="togglePass()">
           <ion-icon color="light" slot="icon-only" [name]="passwordToggleIcon"></ion-icon>
@@ -36,17 +39,33 @@
         
         </div>
       </ion-item>
+      <div class="fp">
+        <ion-button style="font-size: 3.4vw;" (click)="onClick()" size="small" fill="clear" color="light" shape="round">
+          Forgot Password?
+        </ion-button>
+      </div>
       <div class="button">
-
-        <ion-button shape="round" color="success" id="sign-in-button" type="submit" class="form-buttons"
+        <ion-button *ngIf="signingIn" shape="round" size="small" color="success" id="sign-in-button" class="form-buttons"
+        disabled="true">
+        <ion-spinner name="lines"></ion-spinner>
+      </ion-button>
+        <ion-button *ngIf="!signingIn" shape="round" size="small" color="success" id="sign-in-button" type="submit" class="form-buttons"
           [disabled]="!registrationForm.valid">
           Sign In
-        </ion-button>
-
+        </ion-button><br>
+        <div class="or">
+          <div class="line"></div>
+          <div class="text">
+            <p>or</p>
+          </div>
+          <div class="line"></div>
+        </div>
+<ion-chip color="light" mode="ios" outline="true">
+  <ion-icon color="light" name="logo-google"></ion-icon>
+  <ion-label>Sign in with Google</ion-label>
+</ion-chip>
       </div>
-      <ion-button style="font-size: 3.4vw;" (click)="onClick()" size="small" expand="block" fill="clear" color="light" shape="round">
-        Forgot Password?
-      </ion-button>
+
     </form>
   </div>
   <div class="l">

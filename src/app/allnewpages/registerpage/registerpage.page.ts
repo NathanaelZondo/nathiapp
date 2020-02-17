@@ -45,6 +45,10 @@ export class RegisterpagePage implements OnInit {
   token
   showPassword = false
   passwordToggleIcon = 'eye'
+  vendorInfo = false
+  vendorDiv = document.getElementsByClassName('vendorInfo')
+  managerInfo = false
+  managerDiv = document.getElementsByClassName('managerInfo')
   constructor(
     public authService: AuthServiceService,
     public formBuilder: FormBuilder,
@@ -256,6 +260,42 @@ export class RegisterpagePage implements OnInit {
     //     this.route.navigateByUrl('home', { skipLocationChange: true });
     //   }
     // });
+  }
+  information(ev) {
+    let role = null
+    if (ev.detail) {
+      role = ev.detail.value
+    } else {
+      role = ev
+    }
+    
+    console.log(role);
+    
+    switch (role) {
+      case 'teamManager':
+        this.managerInfo = true
+        this.renderer.setStyle(this.managerDiv[0],'display', 'block')
+        this.vendorInfo = false;
+        setTimeout(() => {
+          this.renderer.setStyle(this.vendorDiv[0],'display', 'none')
+        }, 500);
+        break;
+        case 'vendor':
+          this.vendorInfo = true;
+          this.renderer.setStyle(this.vendorDiv[0],'display', 'block')
+          this.managerInfo = false
+          setTimeout(() => {
+            this.renderer.setStyle(this.managerDiv[0],'display', 'none')
+          }, 500);
+        break;
+        case 'close':
+          this.managerInfo = false
+          this.vendorInfo = false;
+          setTimeout(() => {
+            this.renderer.setStyle(this.managerDiv[0],'display', 'none')
+            this.renderer.setStyle(this.vendorDiv[0],'display', 'none')
+          }, 500);
+    }
   }
   slideNext() {
     this.slides.lockSwipes(false)

@@ -2,7 +2,8 @@ ion-item {
     --background: rgba(255, 255, 255, 0);
     --color: rgb(255, 255, 255) !important;
     padding: 0 !important;
-    width: 70vw !important;
+    // width: 70vw !important;
+    width: 100% !important;
     ion-input {
         color: white !important;
     }
@@ -26,7 +27,7 @@ ion-list-header {
     position: relative;
     border-radius: 20px;
     width: 70%;
-    margin: auto;
+    margin: 5px auto;
     ion-button {
         margin: 0 !important;
     }
@@ -123,9 +124,31 @@ top: 0;
         border: solid 1px #ffffff7d;
         background:#1E1F28;
         position: relative;
+        .managerInfo, .vendorInfo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: whitesmoke;
+            z-index: 200;
+            display: none;
+            color: #171717;
+            overflow-y: auto;
+            padding: 10px;
+            img {
+                width: 50vw !important;
+            }
+            ul {
+                text-align: left;
+                li {
+                    font-size: 3vw;
+                }
+            }
+        }
         ion-slides {
             width: 100%;
-            height: 70vh;
+            // height: 70vh;
         }
         ion-slide {
             display: flex;
@@ -151,8 +174,15 @@ top: 0;
         .button {
             margin: 20px 0px;
         }
+        .info {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 200;
+        }
     }
 }
+
 .close {
     position: absolute;
     top: 0;

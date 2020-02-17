@@ -50,6 +50,9 @@
                     font-size: 3vw;
                     font-family: 'Neou' !important;
                 }
+                ion-fab-button {
+                    margin: 10px auto;
+                }
             }
         }
     }
@@ -65,6 +68,17 @@
             text-align: center;
         }
     }
+    @media only screen and (min-height: 480) {
+        .former {
+            width: 90%;
+            background: #0BBB72 ;
+            margin: auto;
+            border-radius: var(--radius);
+            padding: 5px 10px;
+            overflow-y: auto;
+            height: 47vh;
+        }
+    }
     @media only screen and (min-height: 500px) {
         .former {
             width: 90%;
@@ -73,31 +87,10 @@
             border-radius: var(--radius);
             padding: 5px 10px;
             overflow-y: auto;
+            height: 50vh;
         }
     }
     @media only screen and (min-height: 568px) {
-        .former {
-            background: #2BC484;
-            width: 90%;
-            height: 40vh;
-            margin: auto;
-            z-index: 1;
-            border-radius: 0px 0px 20px 20px;
-            box-shadow: inset 0px 3px 5px #17171741, 0px 3px 5px #17171741;
-        }
-    }
-    @media only screen and (min-height: 667px) {
-        .former {
-            background: #2BC484;
-            width: 90%;
-            height: 47vh;
-            margin: auto;
-            z-index: 1;
-            border-radius: 0px 0px 20px 20px;
-            box-shadow: inset 0px 3px 5px #17171741, 0px 3px 5px #17171741;
-        }
-    }
-    @media only screen and (min-height: 812px) {
         .former {
             background: #2BC484;
             width: 90%;
@@ -108,11 +101,33 @@
             box-shadow: inset 0px 3px 5px #17171741, 0px 3px 5px #17171741;
         }
     }
+    @media only screen and (min-height: 667px) {
+        .former {
+            background: #2BC484;
+            width: 90%;
+            height: 60vh;
+            margin: auto;
+            z-index: 1;
+            border-radius: 0px 0px 20px 20px;
+            box-shadow: inset 0px 3px 5px #17171741, 0px 3px 5px #17171741;
+        }
+    }
+    @media only screen and (min-height: 812px) {
+        .former {
+            background: #2BC484;
+            width: 90%;
+            height: 66vh;
+            margin: auto;
+            z-index: 1;
+            border-radius: 0px 0px 20px 20px;
+            box-shadow: inset 0px 3px 5px #17171741, 0px 3px 5px #17171741;
+        }
+    }
     @media only screen and (min-height: 823px) {
         .former {
             background: #2BC484;
             width: 90%;
-            height: 54vh;
+            height: 65vh;
             margin: auto;
             z-index: 1;
             border-radius: 0px 0px 20px 20px;
@@ -123,7 +138,18 @@
         .former {
             background: #2BC484;
             width: 90%;
-            height: 54vh;
+            height: 63vh;
+            margin: auto;
+            z-index: 1;
+            border-radius: 0px 0px 20px 20px;
+            box-shadow: inset 0px 3px 5px #17171741, 0px 3px 5px #17171741;
+        }
+    }
+    @media only screen and (min-height: 1366px) {
+        .former {
+            background: #2BC484;
+            width: 90%;
+            height: 60vh;
             margin: auto;
             z-index: 1;
             border-radius: 0px 0px 20px 20px;
