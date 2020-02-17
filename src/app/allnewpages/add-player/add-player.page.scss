@@ -182,13 +182,22 @@ ion-item {
     }
 }
 .selected {
-    transform: scale(.3);
+    background: #F3511D !important;
+    color: white;
     transition: 0.3s;
     transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
     opacity: .9;
 }
 
 .topPart {
+    background: radial-gradient(#f4f5f885,#f4f5f8),url(../../../assets/players/player.svg) no-repeat top right;
+    background-position-y: -20px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     .head {
         display: flex;
         align-items: center;

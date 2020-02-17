@@ -98,7 +98,7 @@ ion-button {
             bottom: 0;
             left: 20%;
             right: 20%;
-            border-top: dashed 1px white;
+            border-top: solid 1px white;
             z-index: -1;
             
         }
@@ -110,7 +110,7 @@ ion-button {
             background: #00A15E !important;
             border-radius: 200px;
             font-size: 3.3vw;
-            border: dashed 1px white;
+            border: solid 1px white;
             // box-shadow: inset 2px 2px 4px #006d40, 
             // inset -2px -2px 4px #00d57c;
         }
@@ -119,10 +119,11 @@ ion-button {
             transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
             background: linear-gradient(145deg, #00ac65, #009155) !important;
             border-radius: 200px;
-            // box-shadow:  2px 2px 4px #006d40, 
-            //  -2px -2px 4px #00d57c;
+            box-shadow:  2px 2px 4px #006d40, 
+             -2px -2px 4px #00d57c;
             text-shadow: 3px 3px 5px #2727271f, -3px -3px 5px #07ce85;
             border: solid 1px rgb(255, 255, 255);
+            transform: scale(1.05);
         }
     }
     .list {

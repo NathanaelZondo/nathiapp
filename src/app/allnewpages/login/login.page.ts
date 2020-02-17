@@ -30,6 +30,7 @@ export class LoginPage implements OnInit {
   loginLoader
   showPassword = false
   passwordToggleIcon = 'eye'
+  signingIn = false
   public recaptchaVerifier: firebase.auth.RecaptchaVerifier
   constructor(
     public authService: AuthServiceService,
@@ -82,10 +83,12 @@ export class LoginPage implements OnInit {
   }
 
   addUser(form) {
+    this.signingIn = true
     let email = form.phoneNumber+'@mail.com'
     firebase.auth().signInWithEmailAndPassword(email, form.password).then(()=>{
-      this.presentLoading()
+      // this.presentLoading()
       this.route.navigate(['tabs'])
+      this.signingIn = false 
     }).catch(async err =>{
       const alert = await this.alertController.create({
         header : 'WARNING',
@@ -93,6 +96,7 @@ export class LoginPage implements OnInit {
         buttons: [{
           text: 'Okay',
           handler: () => {
+            this.signingIn = false
             this.registrationForm.reset()
           }
         }]

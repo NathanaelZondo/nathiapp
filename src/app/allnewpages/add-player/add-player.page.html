@@ -131,6 +131,9 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </div>
+  <div class="glowLine">
+    
+  </div>
   <div class="topPart">
     <div class="head">
       <div class="backer">
@@ -167,14 +170,14 @@
       <div class="playerCard animated fadeInUp" *ngFor="let item of players;let i = index" (click)="viewInfo(item, i)"
         [ngClass]="{'bounceIn':selectedId==i}">
         <div class="image">
-          <img src="{{item.docdata.profileImage}}" alt="">
+          <img src="{{item.docdata.palyerImage}}" alt="">
           <div class="edit">
             <ion-fab-button size="small" color="success" (click)="edit(item)">
               <ion-icon name="create"></ion-icon>
             </ion-fab-button>
           </div>
         </div>
-        <div class="name">
+        <div class="name" [ngClass]="{'selected':selectedId==i}" >
           <div class="p">
             <p>{{item.docdata.fullName}}</p>
           </div>
@@ -182,6 +185,7 @@
       </div>
       <div class="playerCard" *ngFor="let item of arr">
         <div class="image">
+          <!-- <img src="{{item.docdata.palyerImage}}" alt=""> -->
         </div>
         <div class="name">
           <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
