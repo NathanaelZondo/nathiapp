@@ -1,9 +1,11 @@
 ion-button {
     --ripple-color: whitesmoke !important;
 }
+
 .endedMatch {
     opacity: .4 !important;
 }
+
 .oneData {
     position: absolute;
     top: 0;
@@ -27,6 +29,7 @@ ion-button {
             display: flex;
             align-items: center;
             margin: auto;
+
             .backer {
                 flex-basis: 100%;
             }
@@ -36,7 +39,7 @@ ion-button {
         .data {
             text-align: center;
             padding: 0px 20px;
-            
+
             h1 {
                 margin: 0;
             }
@@ -46,11 +49,13 @@ ion-button {
                 margin: 15px 0px;
             }
         }
+
         .line {
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg,#BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            background: linear-gradient(90deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
         }
+
         .more {
             display: flex;
             align-items: center;
@@ -129,15 +134,17 @@ ion-button {
                 // box-shadow: 3px 3px 5px #2727271f, -3px -3px 5px #ffffff;
                 overflow-x: auto;
                 position: relative;
+
                 .dLine {
                     position: absolute;
                     top: 50%;
                     bottom: 0;
                     left: 20%;
                     right: 20%;
-                    border-top: dashed 1px #0BBB72;
+                    border-top: solid 1px #0BBB72;
                     z-index: -1;
                 }
+
                 ion-button {
                     margin: 0px auto;
                     padding: 5px 0px;
@@ -146,6 +153,7 @@ ion-button {
                     background: #fafafa !important;
                     border: solid 1px #0BBB72;
                     min-width: 30%;
+
                     #text {
                         font-size: 3vw;
                     }
@@ -189,6 +197,27 @@ ion-button {
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        .fadeLeft {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 10%;
+            z-index: 60;
+            background: linear-gradient(90deg, #05a66b, transparent);
+        }
+
+        .fadeRight {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 10%;
+            z-index: 60;
+            background: linear-gradient(90deg, transparent,#05a66b);
+        }
+
         // padding: 0px 20px;
         .m {
             background: white;
@@ -200,6 +229,7 @@ ion-button {
             position: relative;
             padding-top: 20px;
             padding-bottom: 40px;
+
             .dimmer {
                 opacity: 1;
                 position: absolute;
@@ -211,10 +241,12 @@ ion-button {
                 z-index: 10;
                 border-radius: 10px;
             }
+
             .line {
                 height: 100%;
                 width: 5px;
             }
+
             .mStatus {
                 // width: 60%;
                 transform: translateY(-17px);
@@ -227,9 +259,11 @@ ion-button {
                 top: 0;
                 left: 0;
                 right: 0;
+
                 ion-button {
                     // clip-path: polygon(75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%, 25% 0) !important;
                 }
+
                 p {
                     margin: 2px 0px;
                     font-size: 3vw;
@@ -243,6 +277,7 @@ ion-button {
                 justify-content: space-evenly;
                 align-items: center;
                 z-index: 1;
+
                 .h {
                     height: 100%;
                     display: flex;
@@ -277,6 +312,7 @@ ion-button {
                         border-radius: 200px;
                         overflow: hidden;
                         box-shadow: 0px 3px 5px #17171749;
+
                         img {
                             width: 100%;
                             height: 100%;
@@ -317,9 +353,11 @@ ion-button {
                 }
             }
         }
+
         .nMargin {
             margin: 0px 5px 0px 0px;
         }
+
         .cMargin {
             margin: 0px auto;
         }
@@ -329,8 +367,8 @@ ion-button {
         .matchList {
             position: absolute;
             bottom: 0;
-            left: 20px;
-        right: 20px;
+            left: 0px;
+            right: 0px;
             height: 32vh;
 
             .teams {
@@ -375,8 +413,8 @@ ion-button {
         .matchList {
             position: absolute;
             bottom: 0;
-            left: 20px;
-        right: 20px;
+            left: 0px;
+            right: 0px;
             height: 40vh;
 
             .teams {
@@ -421,8 +459,8 @@ ion-button {
         .matchList {
             position: absolute;
             bottom: 0;
-            left: 20px;
-        right: 20px;
+            left: 0px;
+            right: 0px;
             height: 45vh;
 
             .teams {
@@ -467,8 +505,8 @@ ion-button {
         .matchList {
             position: absolute;
             bottom: 0;
-            left: 20px;
-        right: 20px;
+            left: 0px;
+            right: 0px;
             height: 50vh;
 
             .teams {
@@ -513,8 +551,8 @@ ion-button {
         .matchList {
             position: absolute;
             bottom: 0;
-            left: 20px;
-        right: 20px;
+            left: 0px;
+            right: 0px;
             height: 47vh;
 
             .teams {
@@ -559,8 +597,8 @@ ion-button {
         .matchList {
             position: absolute;
             bottom: 0;
-            left: 20px;
-        right: 20px;
+            left: 0px;
+            right: 0px;
             height: 55vh;
 
             .teams {
