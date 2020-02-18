@@ -23,12 +23,9 @@
        color: rgb(34, 34, 34)
       " formControlName="phoneNumber" type="tel" maxlength="10" [(ngModel)]="phoneNumber"></ion-input>
       </ion-item>
-
-
+<!-- 
       <ion-item lines="none" style="background: none;color: rgb(0, 0, 0);border-radius: 5px;">
         <ion-label position="floating" style="color: rgb(24, 24, 24);">Password</ion-label>
-
-
         <div class="pass" style="width: 100%;display: flex;align-items: center;position: relative;">
           <ion-input maxlength="10"   style="border-bottom: solid 2px white;color: rgb(34, 34, 34)" formControlName="password" [type]="showPassword ? 'text':'password'" [(ngModel)]="password"></ion-input>
           <div class="htt" *ngIf="password" [ngClass]="{'animated fadeIn':password!=''}" style="position: absolute;top: 0;bottom: 0;right: 0;display: flex; align-items: center;z-index: 300;">
@@ -36,9 +33,9 @@
           <ion-icon color="light" slot="icon-only" [name]="passwordToggleIcon"></ion-icon>
         </ion-button>
           </div>
-        
         </div>
-      </ion-item>
+      </ion-item> -->
+      
       <div class="fp">
         <ion-button style="font-size: 3.4vw;" (click)="onClick()" size="small" fill="clear" color="light" shape="round">
           Forgot Password?
