@@ -136,6 +136,25 @@ ion-button {
             background-position: -8px center !important;
             position: relative;
             margin: 10px !important;
+            hr {
+                height: 2px ;
+                background: linear-gradient(#BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+                position: relative;
+                overflow: initial;
+            }
+            hr::after {
+                content: "";
+                width: 15px;
+                position: absolute;
+                height: 15px;
+                background: -webkit-gradient(linear, left top, left bottom, from(#BF953F), color-stop(#FCF6BA), color-stop(#B38728), color-stop(#FBF5B7), to(#AA771C));
+                background: linear-gradient(#BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+                z-index: 10;
+                left: 50%;
+                top: -6px;
+                transform: translateX(-50%) rotate(45deg);
+                border-radius: 4px;
+            }
             .more {
                 width: 100%;
                 text-align: end;
