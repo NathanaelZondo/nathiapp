@@ -57,12 +57,15 @@ ion-list {
         height: 2px;
         background: linear-gradient(90deg,#BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
         flex-basis: 48%;
+        border-radius: 10px;
     }
     .text {
         padding: 10px 0px;
         flex-basis: 5%;
         p{
             margin: 0;
+            padding: 0px 10px;
+            text-transform: uppercase;
         }
     }
 }
