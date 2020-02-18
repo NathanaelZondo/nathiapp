@@ -60,9 +60,7 @@
           <ion-item lines="none" style="border-radius: 10px; margin: 2px 0px;">
             <ion-label position="floating">Phone Number</ion-label>
             <ion-input style="
-            border-bottom: solid 2px white;
-             
-            " formControlName="phoneNumber" type="tel" maxlength="10" [(ngModel)]="phoneNumber"></ion-input>
+            border-bottom: solid 2px white;" formControlName="phoneNumber" type="tel" maxlength="10" [(ngModel)]="phoneNumber"></ion-input>
           </ion-item>
 
           <ion-item lines="none">
@@ -96,7 +94,7 @@
           <ion-button *ngIf="phoneNumber.length<10||!role" size="small" color="light" shape="round"
             fill="outline" disabled="true"> Register with Phone Number </ion-button>
           <ion-button *ngIf="phoneNumber.length==10&&role" size="small" color="light" shape="round"
-            fill="outline" (click)="slideNext()"> Register with Phone Number </ion-button>
+            fill="outline" (click)="userAdd()"> Register with Phone Number </ion-button>
           <div class="or">
             <div class="line"></div>
             <div class="text">

@@ -71,7 +71,7 @@ export class LoginPage implements OnInit {
       })
        await firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)).then((i)=>{
         //this.userProfile.doc(i.user.uid).set
-        this.route.navigateByUrl('registerpage')
+        this.route.navigate(['tabs/home'])
        })
     } catch(err) {
       console.log('Error ',err)
@@ -84,7 +84,7 @@ export class LoginPage implements OnInit {
         if (i.user) {
           console.log('aaa',i);
           
-          this.route.navigateByUrl('registerpage')
+          this.route.navigate(['tabs/home'])
         }
       });
     } catch(err) {
@@ -109,32 +109,7 @@ export class LoginPage implements OnInit {
     }
   }
 
-  addUser(form) {
-    this.signingIn = true
-    let email = form.phoneNumber+'@mail.com'
-    firebase.auth().signInWithEmailAndPassword(email, form.password).then(()=>{
-      // this.presentLoading()
-      this.route.navigate(['tabs'])
-      this.signingIn = false 
-    }).catch(async err =>{
-      const alert = await this.alertController.create({
-        header : 'WARNING',
-        message : err,
-        buttons: [{
-          text: 'Okay',
-          handler: () => {
-            this.signingIn = false
-            this.registrationForm.reset()
-          }
-        }]
-      });
-     await alert.present();
-    })
-    
-  }
-  forgetP(){
-    
-  }
+
   showPrompt() {
     const prompt = this.alertController.create({
       header:'Reset Password',
@@ -194,126 +169,126 @@ export class LoginPage implements OnInit {
   close() {
     this.route.navigateByUrl('tabs');
   }
-  //   async requestCode(){
-  //     // this.phoneNumber = this.registrationForm.get('phoneNumber').value
-  //     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-  //     console.log(window.recaptchaVerifier);
-  //     let appVerifier = window.recaptchaVerifier
-  //     return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
-  //       if(result.success === true){
-  //         console.log(result);
-  //         this.confirmationResult = result.result
-  //         console.log(this.confirmationResult);
+    async requestCode(){
+      // this.phoneNumber = this.registrationForm.get('phoneNumber').value
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+      console.log(window.recaptchaVerifier);
+      let appVerifier = window.recaptchaVerifier
+      return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
+        if(result.success === true){
+          console.log(result);
+          this.confirmationResult = result.result
+          console.log(this.confirmationResult);
 
-  //       }
-  //     })
-  //   }
-  //   logins(code){
-  //     if(this.confirmationResult !== ''){
-  //       return this.authService.login(code, this.confirmationResult).then(result => {
-  //         this.loginLoader.dismiss();
-  //         this.route.navigateByUrl('/tabs');
-  //       })
-  //     }
-  //   }
-  // ​
-  //   addUser(form){
-  //     // this.phoneNumber = this.registrationForm.get('phoneNumber').value
-  //     // this.fullName = this.registrationForm.get('fullName').value
-  //     // this.role = this.registrationForm.get('role').value
-  //     this.presentLoading();
-  //     let number =  this.phoneNumber.substr(1)
-  //     this.lastNum = '+' + 27 + number;
-  //     console.log(number, ' s',);
-  // this.phoneNumber = form.phoneNumber
-  //     console.log('object',this.lastNum );
-  //     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-  //       size: 'invisible',
-  //       callback: (response) => {
-  //         console.log('checking here');
-  //       },
-  //       'expired-callback': () => {
-  //         console.log('capcha expired');
+        }
+      })
+    }
+    logins(code){
+      if(this.confirmationResult !== ''){
+        return this.authService.login(code, this.confirmationResult).then(result => {
+          this.loginLoader.dismiss();
+          this.route.navigateByUrl('/tabs');
+        })
+      }
+    }
+  ​
+    addUser(form){
+      // this.phoneNumber = this.registrationForm.get('phoneNumber').value
+      // this.fullName = this.registrationForm.get('fullName').value
+      // this.role = this.registrationForm.get('role').value
+      this.presentLoading();
+      let number =  this.phoneNumber.substr(1)
+      this.lastNum = '+' + 27 + number;
+      console.log(number, ' s',);
+  this.phoneNumber = form.phoneNumber
+      console.log('object',this.lastNum );
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+        size: 'invisible',
+        callback: (response) => {
+          console.log('checking here');
+        },
+        'expired-callback': () => {
+          console.log('capcha expired');
 
-  //       }
-  //     });
-  //     console.log(window.recaptchaVerifier);
-  //     let appVerifier = window.recaptchaVerifier
-  //     return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
-  //       if(result.success === true){
-  //         console.log(result);
-  //         this.confirmationResult = result.result
-  //         console.log(this.confirmationResult);
-  //         setTimeout(() => {
-  //           console.log('dismaissed loader');
+        }
+      });
+      console.log(window.recaptchaVerifier);
+      let appVerifier = window.recaptchaVerifier
+      return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
+        if(result.success === true){
+          console.log(result);
+          this.confirmationResult = result.result
+          console.log(this.confirmationResult);
+          setTimeout(() => {
+            console.log('dismaissed loader');
 
-  //           this.loginLoader.dismiss();
-  //         }, 500);
-  //        this.alert(form);
+            this.loginLoader.dismiss();
+          }, 500);
+         this.alert(form);
 
-  //       } else {
-  //         this.loginLoader.dismiss()
-  //         const alert = await this.alertController.create({
-  //           header: 'Login Unsuccessful',
-  //           // subHeader: 'Enter verification code',
-  //           message: result.result.message,
-  //           backdropDismiss: false,
-  //           buttons: [{
-  //             text: 'Okay',
-  //             cssClass: 'success',
-  //             handler: () => {
-  //               this.route.navigate(['tabs/home'])
+        } else {
+          this.loginLoader.dismiss()
+          const alert = await this.alertController.create({
+            header: 'Login Unsuccessful',
+            // subHeader: 'Enter verification code',
+            message: result.result.message,
+            backdropDismiss: false,
+            buttons: [{
+              text: 'Okay',
+              cssClass: 'success',
+              handler: () => {
+                this.route.navigate(['tabs/home'])
+              }
+            }]
+          });
+          await alert.present();
+        }
+      })
+    }
+  ​
+    async alert(form){
+      const alert = await this.alertController.create({
+        header: 'Verification code',
+        backdropDismiss: false,
+        inputs: [
+          {
+            name: 'code',
+            type: 'tel',
+            placeholder: 'Enter code'
+          }],
+        buttons: [{
+          text: 'Submit',
+          role: 'submit',
+          cssClass: 'secondary',
+          handler: (result) => {
+            console.log(result.code);
+            this.logins(result.code)
+  //           firebase.auth().onAuthStateChanged(res =>{
+
+  //             if(res.uid ){
+  // this.db.collection('members').doc(res.uid).set({form})
+  //               console.log('see ',res.uid);
   //             }
-  //           }]
-  //         });
-  //         await alert.present();
-  //       }
-  //     })
-  //   }
-  // ​
-  //   async alert(form){
-  //     const alert = await this.alertController.create({
-  //       header: 'Verification code',
-  //       backdropDismiss: false,
-  //       inputs: [
-  //         {
-  //           name: 'code',
-  //           type: 'tel',
-  //           placeholder: 'Enter code'
-  //         }],
-  //       buttons: [{
-  //         text: 'Submit',
-  //         role: 'submit',
-  //         cssClass: 'secondary',
-  //         handler: (result) => {
-  //           console.log(result.code);
-  //           this.logins(result.code)
-  // //           firebase.auth().onAuthStateChanged(res =>{
+  //           })
 
-  // //             if(res.uid ){
-  // // this.db.collection('members').doc(res.uid).set({form})
-  // //               console.log('see ',res.uid);
-  // //             }
-  // //           })
-
-  //         }
-  //       }]
-  //     });
-  //     await alert.present();
-  //   }
-  // ​
-  //   login(){
-  //     this.phoneNumber = this.registrationForm.get('phoneNumber').value
-  //         console.log(this.phoneNumber)
-  //     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-  //     console.log(window.recaptchaVerifier);
-  //     let appVerifier = window.recaptchaVerifier
-  //     firebase.auth().signInWithPhoneNumber(String(this.lastNum), appVerifier).then(confirmationResult => {
-  //       window.confirmationResult = confirmationResult;  
-  //     }).catch((error) => {
-  //       console.log(error)
-  //     });
-  //   }
+          }
+        }]
+      });
+      await alert.present();
+    }
+  ​
+    login(){
+      this.phoneNumber = this.registrationForm.get('phoneNumber').value
+          console.log(this.phoneNumber)
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+      console.log(window.recaptchaVerifier);
+      let appVerifier = window.recaptchaVerifier
+      firebase.auth().signInWithPhoneNumber(String(this.lastNum), appVerifier).then(confirmationResult => {
+        window.confirmationResult = confirmationResult;  
+      }).catch((error) => {
+        console.log(error)
+      });
+    }
 
 }
 

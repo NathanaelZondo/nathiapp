@@ -3,12 +3,14 @@ import { RegisterFormComponent } from 'src/app/components/register-form/register
 import { UserCredential } from 'src/app/Models/user';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
 import * as firebase from 'firebase';
-import { AlertController, LoadingController, IonSlides } from '@ionic/angular';
+import { AlertController, LoadingController, IonSlides, Platform } from '@ionic/angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { async } from 'q';
 import { Router } from '@angular/router';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Button } from 'protractor';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 declare var window
 @Component({
   selector: 'app-registerpage',
@@ -16,7 +18,7 @@ declare var window
   styleUrls: ['./registerpage.page.scss'],
 })
 export class RegisterpagePage implements OnInit {
-  @ViewChild('slides',{static: true}) slides: IonSlides
+  @ViewChild('slides', { static: true }) slides: IonSlides
   tabElement = document.getElementsByTagName('ion-tab-bar')
   phoneNumber = ''
   lastNum = ''
@@ -24,7 +26,7 @@ export class RegisterpagePage implements OnInit {
   registrationForm: FormGroup
   smsSent
   confirmationResult = ''
-  email=null
+  email
   inputCode
   fullName
   uid
@@ -49,6 +51,7 @@ export class RegisterpagePage implements OnInit {
   vendorDiv = document.getElementsByClassName('vendorInfo')
   managerInfo = false
   managerDiv = document.getElementsByClassName('managerInfo')
+
   constructor(
     public authService: AuthServiceService,
     public formBuilder: FormBuilder,
@@ -57,10 +60,11 @@ export class RegisterpagePage implements OnInit {
     public loadingController: LoadingController,
     public ngZone: NgZone,
     public renderer: Renderer2,
-    public fcm : FCM,
-    private zone : NgZone,
-    private camera: Camera
-
+    public fcm: FCM,
+    private zone: NgZone,
+    private camera: Camera,
+    private plt : Platform,
+    public googleplus :GooglePlus,
   ) {
     this.smsSent = false
 
@@ -70,7 +74,7 @@ export class RegisterpagePage implements OnInit {
       phoneNumber: [this.phoneNumber, Validators.compose([Validators.required])],
       fullName: ['', Validators.required],
       role: ['', Validators.required],
-      email: ['',[Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
+      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
       // password: [this.password, Validators.compose([Validators.required,Validators.minLength(6)])],
     })
 
@@ -84,11 +88,11 @@ export class RegisterpagePage implements OnInit {
       shadowScale: 0.94,
     },
     on: {
-      beforeInit: function() {
+      beforeInit: function () {
         const swiper = this;
         swiper.classNames.push(`${swiper.params.containerModifierClass}cube`);
         swiper.classNames.push(`${swiper.params.containerModifierClass}3d`);
-  
+
         const overwriteParams = {
           slidesPerView: 1,
           slidesPerColumn: 1,
@@ -99,11 +103,11 @@ export class RegisterpagePage implements OnInit {
           centeredSlides: false,
           virtualTranslate: true,
         };
-  
+
         this.params = Object.assign(this.params, overwriteParams);
         this.originalParams = Object.assign(this.originalParams, overwriteParams);
       },
-      setTranslate: function() {
+      setTranslate: function () {
         const swiper = this;
         const {
           $el, $wrapperEl, slides, width: swiperWidth, height: swiperHeight, rtlTranslate: rtl, size: swiperSize,
@@ -129,7 +133,7 @@ export class RegisterpagePage implements OnInit {
             }
           }
         }
-  
+
         for (let i = 0; i < slides.length; i += 1) {
           const $slideEl = slides.eq(i);
           let slideIndex = i;
@@ -162,13 +166,13 @@ export class RegisterpagePage implements OnInit {
           if (rtl) {
             tx = -tx;
           }
-  
-           if (!isHorizontal) {
+
+          if (!isHorizontal) {
             ty = tx;
             tx = 0;
           }
-  
-           const transform$$1 = `rotateX(${isHorizontal ? 0 : -slideAngle}deg) rotateY(${isHorizontal ? slideAngle : 0}deg) translate3d(${tx}px, ${ty}px, ${tz}px)`;
+
+          const transform$$1 = `rotateX(${isHorizontal ? 0 : -slideAngle}deg) rotateY(${isHorizontal ? slideAngle : 0}deg) translate3d(${tx}px, ${ty}px, ${tz}px)`;
           if (progress <= 1 && progress > -1) {
             wrapperRotate = (slideIndex * 90) + (progress * 90);
             if (rtl) wrapperRotate = (-slideIndex * 90) - (progress * 90);
@@ -196,8 +200,8 @@ export class RegisterpagePage implements OnInit {
           '-ms-transform-origin': `50% 50% -${swiperSize / 2}px`,
           'transform-origin': `50% 50% -${swiperSize / 2}px`,
         });
-  
-         if (params.shadow) {
+
+        if (params.shadow) {
           if (isHorizontal) {
             $cubeShadowEl.transform(`translate3d(0px, ${(swiperWidth / 2) + params.shadowOffset}px, ${-swiperWidth / 2}px) rotateX(90deg) rotateZ(0deg) scale(${params.shadowScale})`);
           } else {
@@ -212,12 +216,12 @@ export class RegisterpagePage implements OnInit {
             $cubeShadowEl.transform(`scale3d(${scale1}, 1, ${scale2}) translate3d(0px, ${(swiperHeight / 2) + offset$$1}px, ${-swiperHeight / 2 / scale2}px) rotateX(-90deg)`);
           }
         }
-  
+
         const zFactor = (swiper.browser.isSafari || swiper.browser.isUiWebView) ? (-swiperSize / 2) : 0;
         $wrapperEl
           .transform(`translate3d(0px,0,${zFactor}px) rotateX(${swiper.isHorizontal() ? 0 : wrapperRotate}deg) rotateY(${swiper.isHorizontal() ? -wrapperRotate : 0}deg)`);
       },
-      setTransition: function(duration) {
+      setTransition: function (duration) {
         const swiper = this;
         const { $el, slides } = swiper;
         slides
@@ -230,36 +234,35 @@ export class RegisterpagePage implements OnInit {
       },
     }
   }
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     console.log('enterd');
     this.slides.lockSwipes(false)
 
     this.slides.isBeginning().then(res => {
       console.log(res);
-      
-      if(!res){
+
+      if (!res) {
         this.slides.slidePrev()
         this.slides.lockSwipes(true)
       } else {
         this.slides.lockSwipes(true)
       }
     });
-    
+
   }
   ngOnInit() {
+    let n = this.slides.getActiveIndex().then(i => {
+      console.log('aaaaccvb', i);
 
-    
-    this.zone.run(()=>{
-      this.fcm.getToken().then( token =>{
+    })
+    console.log('slide number', n);
+
+
+    this.zone.run(() => {
+      this.fcm.getToken().then(token => {
         this.token = token
       })
     })
-    // firebase.auth().onAuthStateChanged(res => {
-    //   if (res) {
-    //     this.profileService.storeAdmin(res);
-    //     this.route.navigateByUrl('home', { skipLocationChange: true });
-    //   }
-    // });
   }
   information(ev) {
     let role = null
@@ -268,86 +271,44 @@ export class RegisterpagePage implements OnInit {
     } else {
       role = ev
     }
-    
+
     console.log(role);
-    
+
     switch (role) {
       case 'teamManager':
         this.managerInfo = true
-        this.renderer.setStyle(this.managerDiv[0],'display', 'block')
+        this.renderer.setStyle(this.managerDiv[0], 'display', 'block')
         this.vendorInfo = false;
         setTimeout(() => {
-          this.renderer.setStyle(this.vendorDiv[0],'display', 'none')
+          this.renderer.setStyle(this.vendorDiv[0], 'display', 'none')
         }, 500);
         break;
-        case 'vendor':
-          this.vendorInfo = true;
-          this.renderer.setStyle(this.vendorDiv[0],'display', 'block')
-          this.managerInfo = false
-          setTimeout(() => {
-            this.renderer.setStyle(this.managerDiv[0],'display', 'none')
-          }, 500);
+      case 'vendor':
+        this.vendorInfo = true;
+        this.renderer.setStyle(this.vendorDiv[0], 'display', 'block')
+        this.managerInfo = false
+        setTimeout(() => {
+          this.renderer.setStyle(this.managerDiv[0], 'display', 'none')
+        }, 500);
         break;
-        case 'close':
-          this.managerInfo = false
-          this.vendorInfo = false;
-          setTimeout(() => {
-            this.renderer.setStyle(this.managerDiv[0],'display', 'none')
-            this.renderer.setStyle(this.vendorDiv[0],'display', 'none')
-          }, 500);
+      case 'close':
+        this.managerInfo = false
+        this.vendorInfo = false;
+        setTimeout(() => {
+          this.renderer.setStyle(this.managerDiv[0], 'display', 'none')
+          this.renderer.setStyle(this.vendorDiv[0], 'display', 'none')
+        }, 500);
     }
   }
   slideNext() {
     this.slides.lockSwipes(false)
-    this.slides.slideNext(300, true).then(res=> {console.log(res);
+    this.slides.slideNext(300, true).then(res => {
+      console.log(res);
       this.slides.lockSwipes(true)
     })
   }
-  async addUser(form){
-    const loading = await this.loadingController.create({
-      message: 'Registering',
-    });
-    await loading.present();
-    let email = form.phoneNumber+'@mail.com';
-firebase.auth().createUserWithEmailAndPassword(email ,form.password).then((newUserCredential: firebase.auth.UserCredential) => {
-  firebase.firestore().doc(`/members/${newUserCredential.user.uid}`).set({
-    form ,
-    loginEmail : email,
-    status: '',
-    profileImage: this.profileImage,
-    firstEmailRecieved : 'no' ,
-    // Token : this.token,
-    dateCreated : new Date
-    }).then(async ()=>{
-      await loading.dismiss();
-      this.route.navigateByUrl('/add-team');
-    })
 
-})
-.catch(async error => {
-  console.log(error)
-  await loading.dismiss();
-  if(error.code =='auth/email-already-in-use'){
-    let alerter = await this.alertController.create({
-      header: 'Oops',
-      message: 'This number has already has an account,if you forgot please click the forgot password button to reset your password',
-      buttons : ['OK']
-    })
-    await alerter.present()
-  }else{
-    let alerter = await this.alertController.create({
-      header: 'Oops',
-      message: error.message,
-      buttons : ['OK']
-    })
-    await alerter.present()
-  }
-  
-  // console.error(error);
-  // throw new Error(error);
-});
-  }
-  togglePass():void {
+  togglePass(): void {
     this.showPassword = !this.showPassword
     if (this.showPassword) {
       this.passwordToggleIcon = 'eye-off'
@@ -355,25 +316,80 @@ firebase.auth().createUserWithEmailAndPassword(email ,form.password).then((newUs
       this.passwordToggleIcon = 'eye'
     }
   }
-  async getImage() {
+  //Google login
+  async googleLogin() {
+    console.log('i am here',this.phoneNumber);
     
+    if (!this.phoneNumber && !this.role) {
+      let alert = await this.alertController.create({
+        header: 'OOPS',
+        message: 'Please fill in your phone number and role before proceeding',
+        buttons: ['OK']
+      })
+         await alert.present()
+    }else{
+        
+    if (this.plt.is('cordova')) {
+      this.nativeGoogleLogin();
+    } else {
+      this.webGoogleLogin();
+    }
+    }
+  }
+  async nativeGoogleLogin() {
+    console.log('abc');
+    try {
+      const gplusUser = await this.googleplus.login({
+        'webClientId': '81311888576-0i9kvpjn5fo0s72q7ua37bjo42vlh3t8.apps.googleusercontent.com',
+        'offline': true,
+        'scopes': 'profile email'
+      })
+       await firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)).then((i)=>{
+        //this.userProfile.doc(i.user.uid).set
+        this.fullName = i.user.displayName
+        this.email = i.user.email
+        this.profileImage = i.user.photoURL
+      this.slideNext()
+       })
+    } catch(err) {
+      console.log('Error ',err)
+    }
+  }
+  webGoogleLogin() {
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      const credential = firebase.auth().signInWithPopup(provider).then((i)=>{
+        if (i.user) {
+          console.log('aaa',i);
+          this.fullName = i.user.displayName
+          this.email = i.user.email
+          this.profileImage = i.user.photoURL
+          this.slideNext()
+        }
+      });
+    } catch(err) {
+      console.log(err)
+    }
+  }
+  async getImage() {
+
     let option: CameraOptions = {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       quality: 90,
-      targetHeight : 600,
-      targetWidth : 600,
+      targetHeight: 600,
+      targetWidth: 600,
       correctOrientation: true,
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
     }
     await this.camera.getPicture(option).then(res => {
-      this.profileImage=''
+      this.profileImage = ''
       console.log(res);
       const image = `data:image/jpeg;base64,${res}`;
 
       const filename = Math.floor(Date.now() / 1000);
-      let file =  filename + '.jpg';
+      let file = filename + '.jpg';
       const UserImage = this.storage.child(file);
 
       const upload = UserImage.putString(image, 'data_url');
@@ -394,160 +410,201 @@ firebase.auth().createUserWithEmailAndPassword(email ,form.password).then((newUs
           this.profileImage = downUrl;
           this.imageText = 'Done'
           console.log('Image downUrl', downUrl);
-          this.imageProgress =0
+          this.imageProgress = 0
         })
       })
     }, err => {
       console.log("Something went wrong: ", err);
     })
   }
-  // requestCode() {
-  //   // this.phoneNumber = this.registrationForm.get('phoneNumber').value
-  //   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-  //   console.log(window.recaptchaVerifier);
-  //   let appVerifier = window.recaptchaVerifier
-  //   return this.authService.requestLogin(this.lastNum, appVerifier).then(result => {
-  //     if (result.success === true) {
-  //       console.log(result);
-  //       this.confirmationResult = result.result
-  //       console.log(this.confirmationResult);
-  //     }
-  //   })
-  // }
-  // logins(code) {
-  //   if (this.confirmationResult !== '') {
-  //     return this.authService.login(code, this.confirmationResult).then(result => {
-  //       console.log(result);
-  //     })
-  //   }
-  // }
 
-  // addUser(form) {
-  //   this.presentLoading2()
+  //Phone Number Login
+  register() {
+    firebase.auth().onAuthStateChanged(i => {
+      console.log('aid found', i.uid, ' aa', this.email, this.fullName);
 
-  //   let number = this.phoneNumber.substr(1)
-  //   this.lastNum = '+' + 27 + number;
-  //   console.log(number, ' s');
+      firebase.firestore().collection('members').doc(i.uid).update({
+        form: {
+          fullName: this.fullName,
+          email: this.email
+        }
+      }).then(re => {
+        this.presentLoading2()
+        this.route.navigate(['tabs/home'])
+      })
 
-  //   // this.phoneNumber = this.registrationForm.get('phoneNumber').value
-  //   this.fullName = this.registrationForm.get('fullName').value
-  //   this.role = this.registrationForm.get('role').value
+    })
+  }
+  requestCode() {
+    // this.phoneNumber = this.registrationForm.get('phoneNumber').value
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    console.log(window.recaptchaVerifier);
+    let appVerifier = window.recaptchaVerifier
+    return this.authService.requestLogin(this.lastNum, appVerifier).then(result => {
+      if (result.success === true) {
+        console.log(result);
+        this.confirmationResult = result.result
+        console.log(this.confirmationResult);
+      }
+    })
+  }
+  logins(code) {
+    if (this.confirmationResult !== '') {
+      return this.authService.login(code, this.confirmationResult).then(async result => {
+        console.log(result);
+        console.log('uid', result.uid);
+        // let form = {
+        //   phoneNumber: rm.phoneNumber,
+        //   role: rm.role
+        // }
+        if (result.code == 'auth/invalid-verification-code') {
+          console.log('error');
+          let alerter = await this.alertController.create({
+            header: 'Oops',
+            message: result.message,
+            buttons: [{
+              text: 'Okay',
+              cssClass: 'success',
+              handler: () => {
+                //  this.addUser(rm)
+              }
+            }]
+          })
+          await alerter.present()
 
-  //   // this.lastNum = form.phoneNumber
-  //   console.log('object', this.lastNum);
-  //   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-  //     size: 'invisible',
-  //     callback: (response) => {
-  //       console.log('checking here');
-  //     },
-  //     'expired-callback': () => {
+        }
+        else {
+          // this.db.collection('members').doc(result.uid).set({ form, status: 'awaiting', firstEmailRecieved: 'no', Token: '' })
+          this.presentLoading2()
+          this.slideNext()
+        }
 
-  //     }
-  //   });
-  //   console.log(window.recaptchaVerifier);
-  //   let appVerifier = window.recaptchaVerifier
-  //   return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
-  //     if (result.success === true) {
-  //       console.log(result);
-  //       this.confirmationResult = result.result
-  //       console.log(this.confirmationResult);
+      }).catch(err => {
+        console.log('ditate', err);
 
-  //       this.alert(form);
+      })
+    }
+  }
+  userAdd() {
+    this.presentLoading2()
 
-  //     } else {
-  //       console.log(result);
-  //       const alert = await this.alertController.create({
-  //         header: 'Register Unsuccessful',
-  //         // subHeader: 'Enter verification code',
-  //         message: result.result.message,
-  //         backdropDismiss: false,
-  //         buttons: [{
-  //           text: 'Okay',
-  //           cssClass: 'success',
-  //           handler: () => {
-  //             this.route.navigate(['tabs/home'])
-  //           }
-  //         }]
-  //       });
-  //       await alert.present();
-  //     }
-  //   })
+    let number = this.phoneNumber.substr(1)
+    this.lastNum = '+' + 27 + number;
+    console.log(number, ' s');
+    this.fullName = this.registrationForm.get('fullName').value
+    this.role = this.registrationForm.get('role').value
+    console.log('object', this.lastNum);
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      size: 'invisible',
+      callback: (response) => {
+        console.log('checking here');
+      },
+      'expired-callback': () => {
 
-  //   // this.route.navigateByUrl('add-team')
-  // }
+      }
+    });
+    console.log(window.recaptchaVerifier);
+    let appVerifier = window.recaptchaVerifier
+    return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
+      if (result.success === true) {
+        console.log(result);
+        this.confirmationResult = result.result
+        console.log(this.confirmationResult);
+        // console.log('form', form);
 
-  // async alert(form) {
-  //   const alert = await this.alertController.create({
-  //     header: 'Verification code',
-  //     message:  `Code will be sent to <b>${form.phoneNumber}</b>`,
-  //     backdropDismiss: false,
-  //     inputs: [
-  //       {
-  //         name: 'code',
-  //         type: 'text',
-  //         placeholder: 'Enter code'
-  //       }],
-  //     buttons: [{
-  //       text: 'Change Number',
-  //       handler:()=> {
-  //         window.recaptchaVerifier.clear()
-  //       }
-  //     },{
-  //       text: 'Submit',
-  //       role: 'submit',
-  //       cssClass: 'secondary',
-  //       handler: (result) => {
-  //         console.log(result.code);
-  //         this.logins(result.code);
-  //         this.ngZone.run(() => {
-  //           firebase.auth().onAuthStateChanged(res => {
-  //             if (this.token) {
-  //               if (res.uid) {
-  //                 this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting',firstEmailRecieved : 'no' ,Token : this.token})
-  //                 console.log('see ', res.uid);
-  //               }
-  //             } else {
-  //               if (res.uid) {
-  //                 this.db.collection('members').doc(res.uid).set({ form, status: 'awaiting',firstEmailRecieved : 'no'})
-  //                 console.log('see ', res.uid);
-  //               }
-  //             }
-  //           })
-  //           this.presentLoading()
-  //           // this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
-  //           this.route.navigateByUrl('/tabs');
-  //         })
-  //       }
-  //     }]
-  //   });
-  //   await alert.present();
-  // }
+        this.alert();
 
-  // login() {
-  //   this.phoneNumber = this.registrationForm.get('phoneNumber').value
-  //   console.log(this.phoneNumber)
-  //   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-  //   console.log(window.recaptchaVerifier);
-  //   let appVerifier = window.recaptchaVerifier
-  //   firebase.auth().signInWithPhoneNumber(String(this.phoneNumber), appVerifier).then(confirmationResult => {
-  //     window.confirmationResult = confirmationResult;
-  //   }).catch((error) => {
-  //     console.log(error)
-  //   });
-  // }
+      } else {
+        console.log(result);
+        const alert = await this.alertController.create({
+          header: 'Register Unsuccessful',
+          // subHeader: 'Enter verification code',
+          message: result.result.message,
+          backdropDismiss: false,
+          buttons: [{
+            text: 'Okay',
+            cssClass: 'success',
+            handler: () => {
+              this.route.navigate(['tabs/home'])
+            }
+          }]
+        });
+        await alert.present();
+      }
+    })
+
+    // this.route.navigateByUrl('add-team')
+  }
+
+  addUser(form) {
+    firebase.auth().onAuthStateChanged(i => {
+      console.log('aid found', i.uid, ' aa', this.email, this.fullName);
+
+      firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' }).then(re => {
+        this.presentLoading2()
+        this.route.navigate(['addteam'])
+      })
+
+    })
+  }
+
+  async alert() {
+    const alert = await this.alertController.create({
+      header: 'Verification code',
+      message: `Code will be sent to <b>${this.phoneNumber}</b>`,
+      backdropDismiss: false,
+      inputs: [
+        {
+          name: 'code',
+          type: 'text',
+          placeholder: 'Enter code'
+        }],
+      buttons: [{
+        text: 'Change Number',
+        handler: () => {
+          window.recaptchaVerifier.clear()
+        }
+      }, {
+        text: 'Submit',
+        role: 'submit',
+        cssClass: 'secondary',
+        handler: (result) => {
+          console.log(result.code);
+          this.logins(result.code);
+          this.ngZone.run(() => {
+
+          })
+        },
+      }]
+    });
+    await alert.present();
+  }
+
+  login() {
+    this.phoneNumber = this.registrationForm.get('phoneNumber').value
+    console.log(this.phoneNumber)
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    console.log(window.recaptchaVerifier);
+    let appVerifier = window.recaptchaVerifier
+    firebase.auth().signInWithPhoneNumber(String(this.phoneNumber), appVerifier).then(confirmationResult => {
+      window.confirmationResult = confirmationResult;
+    }).catch((error) => {
+      console.log(error)
+    });
+  }
 
 
-  // async presentLoading2() {
-  //   const loading = await this.loadingController.create({
-  //     message: 'Please wait',
-  //     duration: 3000
-  //   });
-  //   await loading.present();
+  async presentLoading2() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait',
+      duration: 3000
+    });
+    await loading.present();
 
-  //   // const { role, data } = await loading.onDidDismiss();
+    // const { role, data } = await loading.onDidDismiss();
 
-  //   // console.log('Loading dismissed!');
-  // }
+    // console.log('Loading dismissed!');
+  }
   close() {
     // this.renderer.setStyle(this.tabElement[0],'transform','translateY(0vh)')
     this.route.navigateByUrl('tabs');
