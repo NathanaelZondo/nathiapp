@@ -95,7 +95,8 @@
         "GOOGLE_SERVICES_VERSION": "4.2.0"
       },
       "cordova-plugin-googleplus": {
-        "WEB_APPLICATION_CLIENT_ID": "81311888576-0i9kvpjn5fo0s72q7ua37bjo42vlh3t8.apps.googleusercontent.com"
+        "WEB_APPLICATION_CLIENT_ID": "81311888576-0i9kvpjn5fo0s72q7ua37bjo42vlh3t8.apps.googleusercontent.com",
+        "PLAY_SERVICES_VERSION": "15.0.1"
       }
     },
     "platforms": [
