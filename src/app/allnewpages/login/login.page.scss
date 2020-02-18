@@ -29,17 +29,23 @@ ion-list {
     background: linear-gradient(#0BBB72,rgb(13, 134, 84));
     text-align: center;
     color: white;
-    padding-top: 15px;
+    padding-top: 7.5vw;
     h1 {
-        font-size:12vw !important;
+        font-size: 15vw !important;
+        margin: 0;
+        text-transform: uppercase;
         font-family: 'Nasal' !important;
-        margin: 0 !important;
+        background: linear-gradient(#BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
+
     p {
-        font-family: 'Neou' !important;
-        margin: 0 !important;
-        letter-spacing: 2px;
+        margin: 0;
         font-size: 3vw;
+        letter-spacing: 3vw;
+        text-transform: uppercase;
+        font-family: 'Neou' !important;
     }
 }
 .or {
@@ -49,7 +55,7 @@ ion-list {
     align-items: center;
     .line {
         height: 2px;
-        background: rgba(255, 255, 255, 0.26);
+        background: linear-gradient(90deg,#BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
         flex-basis: 48%;
     }
     .text {
@@ -109,7 +115,7 @@ ion-list {
             padding: 6px 0px;
         }
         .button {
-            margin: 0px 0px;
+            margin: 10px 0px;
         }
     }
 }

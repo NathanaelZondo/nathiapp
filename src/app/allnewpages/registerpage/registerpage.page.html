@@ -17,39 +17,43 @@
           <ion-icon name="information-circle"></ion-icon>
         </ion-fab-button>
       </div>
-      <div class="info animated bounceIn" *ngIf="role=='teamManager'" >
+      <div class="info animated bounceIn" *ngIf="role=='teamManager'">
         <ion-fab-button size="small" color="light" (click)="information('teamManager')">
           <ion-icon name="information-circle"></ion-icon>
         </ion-fab-button>
       </div>
       <!-- slide 1 = number, pass, role -->
       <!-- slide 2 = image, name, email -->
-      <div class="managerInfo animated" [ngClass]="{'fadeInDown':managerInfo,'fadeOutUp':!managerInfo}" >
+      <div class="managerInfo animated" [ngClass]="{'fadeInDown':managerInfo,'fadeOutUp':!managerInfo}">
         <h1>Hi There Team Manager!</h1>
         <img src="../../../assets/registration/manager.svg" width="30vw" alt="">
-        <p>The role of the team manager is to help alleviate some of the workload on the coaches by handling, or delegating some of the smaller tasks associated with organizing the team.</p>
-        <p>As such its expected that you currently run a team. The next processes require information about the team. <br> You will:</p>
+        <p>The role of the team manager is to help alleviate some of the workload on the coaches by handling, or
+          delegating some of the smaller tasks associated with organizing the team.</p>
+        <p>As such its expected that you currently run a team. The next processes require information about the team.
+          <br> You will:</p>
         <ul>
           <li>Setup the team's information</li>
           <li>Setup the team's squad by adding players to the team</li>
           <li>Handle the your team's participation in tournaments.</li>
         </ul>
-        <p><b>After you are done registering we will have to approve your profile before you can participate in tournaments.</b></p>
-        <ion-button (click)="information('close')"  fill="outline" shape="round">
+        <p><b>After you are done registering we will have to approve your profile before you can participate in
+            tournaments.</b></p>
+        <ion-button (click)="information('close')" fill="outline" shape="round">
           I Understand
         </ion-button>
       </div>
       <div class="vendorInfo animated" [ngClass]="{'fadeInDown':vendorInfo,'fadeOutUp':!vendorInfo}">
         <h1>Hi There Vendor!</h1>
         <img src="../../../assets/registration/vendor.svg" alt="">
-        <p>Thank you for registering with us. After you are done registering we will have to approve your profile before you can participate in tournaments.</p>
+        <p>Thank you for registering with us. After you are done registering we will have to approve your profile before
+          you can participate in tournaments.</p>
         <ion-button (click)="information('close')" expand="block" fill="outline" shape="round">
           I Understand
         </ion-button>
       </div>
-      <ion-slides  #slides >
+      <ion-slides #slides>
 
-        <ion-slide >
+        <ion-slide>
           <h4 style="margin: 20px;">
             Welcome
           </h4>
@@ -61,21 +65,6 @@
             " formControlName="phoneNumber" type="tel" maxlength="10" [(ngModel)]="phoneNumber"></ion-input>
           </ion-item>
 
-          <ion-item lines="none" style="background: none;color: rgb(0, 0, 0);border-radius: 5px;">
-            <ion-label position="floating" style="color: rgb(24, 24, 24);">Password</ion-label>
-                <div class="pass" style="width: 100%;display: flex;align-items: center;position: relative;">
-                  <ion-input style="
-                  border-bottom: solid 2px white;" maxlength="10"  formControlName="password"
-                [type]="showPassword ? 'text':'password'" [(ngModel)]="password"></ion-input>
-              <div class="htt" *ngIf="password" [ngClass]="{'animated fadeIn':password!=''}"
-                style="position: absolute;top: 0;bottom: 0;right: 0;display: flex; align-items: center;z-index: 300;">
-                <ion-button fill="clear" color="light" size="small" (click)="togglePass()">
-                  <ion-icon color="light" slot="icon-only" [name]="passwordToggleIcon"></ion-icon>
-                </ion-button>
-              </div>
-
-            </div>
-          </ion-item>
           <ion-item lines="none">
             <ion-label position="floating">Register As</ion-label>
             <ion-select style="
@@ -104,15 +93,28 @@
               </ion-item>
             </ion-radio-group>
           </ion-list> -->
-          <ion-button *ngIf="phoneNumber.length<10||password.length<10||!role"  size="small" color="light" shape="round" fill="outline" disabled="true"> Next </ion-button>
-          <ion-button *ngIf="phoneNumber.length==10&&password.length==10&&role" size="small" color="light" shape="round" fill="outline" (click)="slideNext()"> Next </ion-button>
+          <ion-button *ngIf="phoneNumber.length<10||!role" size="small" color="light" shape="round"
+            fill="outline" disabled="true"> Register with Phone Number </ion-button>
+          <ion-button *ngIf="phoneNumber.length==10&&role" size="small" color="light" shape="round"
+            fill="outline" (click)="slideNext()"> Register with Phone Number </ion-button>
+          <div class="or">
+            <div class="line"></div>
+            <div class="text">
+              <p>or</p>
+            </div>
+            <div class="line"></div>
+          </div>
+          <ion-chip (click)="googleLogin()" color="light" mode="ios" outline="true">
+            <ion-icon color="light" name="logo-google"></ion-icon>
+            <ion-label>Register with Google</ion-label>
+          </ion-chip>
         </ion-slide>
 
 
         <ion-slide style="overflow-y:auto">
-   
-            <h4 style="margin: 20px;">PROFILE SETUP</h4>
-        
+
+          <h4 style="margin: 20px;">PROFILE SETUP</h4>
+
           <div class="profileImage">
             <div class="imgC" *ngIf="profileImage">
               <img src="{{profileImage}}" alt="">
@@ -144,9 +146,9 @@
 
           <div class="btns">
 
-            <ion-button size="small" shape="round" color="success" id="sign-in-button" [disabled]="!registrationForm.valid"
-              type="submit" class="form-buttons">
-              Sign Up
+            <ion-button size="small" shape="round" color="success" id="sign-in-button"
+              [disabled]="!registrationForm.valid" type="submit" class="form-buttons">
+              Done
             </ion-button>
 
           </div>
@@ -161,7 +163,7 @@
   </div>
   <div class="l">
     <ion-button shape="round" color="light" fill="clear" id="sign-in-button" (click)="goLogin()">
-      Sign In
+      Already have an account?&nbsp;&nbsp;<u>Log In</u>
     </ion-button>
   </div>
 </ion-content>

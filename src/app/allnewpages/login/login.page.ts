@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
   ) {
     this.registrationForm = formBuilder.group({
       phoneNumber: [this.phoneNumber, Validators.compose([Validators.required])],
-      password: [this.password, Validators.compose([Validators.required, Validators.minLength(6)])],
+      // password: [this.password, Validators.compose([Validators.required, Validators.minLength(6)])],
     })
   }
   async presentLoading() {

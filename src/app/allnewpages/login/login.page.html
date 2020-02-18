@@ -25,7 +25,7 @@
       </ion-item>
 
 
-      <ion-item lines="none" style="background: none;color: rgb(0, 0, 0);border-radius: 5px;">
+   <!--    <ion-item lines="none" style="background: none;color: rgb(0, 0, 0);border-radius: 5px;">
         <ion-label position="floating" style="color: rgb(24, 24, 24);">Password</ion-label>
 
 
@@ -43,7 +43,7 @@
         <ion-button style="font-size: 3.4vw;" (click)="onClick()" size="small" fill="clear" color="light" shape="round">
           Forgot Password?
         </ion-button>
-      </div>
+      </div> -->
       <div class="button">
         <ion-button *ngIf="signingIn" shape="round" size="small" color="success" id="sign-in-button" class="form-buttons"
         disabled="true">
@@ -51,7 +51,7 @@
       </ion-button>
         <ion-button *ngIf="!signingIn" shape="round" size="small" color="success" id="sign-in-button" type="submit" class="form-buttons"
           [disabled]="!registrationForm.valid">
-          Sign In
+          Log In
         </ion-button><br>
         <div class="or">
           <div class="line"></div>
@@ -69,7 +69,7 @@
   </div>
   <div class="l">
     <ion-button shape="round" id="sign-in-button" color="light" fill="clear" (click)="toReg()">
-      Sign Up
+      Don't have an account?&nbsp;&nbsp;<u>Register</u>
     </ion-button>
   </div>
 </ion-content>

@@ -71,17 +71,23 @@ ion-list-header {
     background: linear-gradient(#0BBB72,rgb(13, 134, 84));
     text-align: center;
     color: white;
-    padding-top: 15px;
+    padding-top: 7.5vw;
     h1 {
-        font-size:12vw !important;
-        font-family: 'Nasal' !important;
+        font-size: 15vw !important;
         margin: 0;
+        text-transform: uppercase;
+        font-family: 'Nasal' !important;
+        background: linear-gradient(#BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
+
     p {
-        margin: 0 !important;
-        font-family: 'Neou' !important;
-        letter-spacing: 2px;
+        margin: 0;
         font-size: 3vw;
+        letter-spacing: 3vw;
+        text-transform: uppercase;
+        font-family: 'Neou' !important;
     }
 }
 .container {
@@ -182,7 +188,24 @@ top: 0;
         }
     }
 }
-
+.or {
+    margin: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    .line {
+        height: 2px;
+        background: linear-gradient(90deg,#BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+        flex-basis: 48%;
+    }
+    .text {
+        padding: 10px 0px;
+        flex-basis: 5%;
+        p{
+            margin: 0;
+        }
+    }
+}
 .close {
     position: absolute;
     top: 0;

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, NgZone, Renderer2 } from '@angular/core';
 import { RegisterFormComponent } from 'src/app/components/register-form/register-form.component';
 import { UserCredential } from 'src/app/Models/user';
 import { AuthServiceService } from 'src/app/service/auth-service.service';
-import * as firebase from 'firebase'
+import * as firebase from 'firebase';
 import { AlertController, LoadingController, IonSlides } from '@ionic/angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { async } from 'q';
@@ -20,7 +20,7 @@ export class RegisterpagePage implements OnInit {
   tabElement = document.getElementsByTagName('ion-tab-bar')
   phoneNumber = ''
   lastNum = ''
-  password
+  // password
   registrationForm: FormGroup
   smsSent
   confirmationResult = ''
@@ -71,7 +71,7 @@ export class RegisterpagePage implements OnInit {
       fullName: ['', Validators.required],
       role: ['', Validators.required],
       email: ['',[Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-      password: [this.password, Validators.compose([Validators.required,Validators.minLength(6)])],
+      // password: [this.password, Validators.compose([Validators.required,Validators.minLength(6)])],
     })
 
   }
