@@ -13,6 +13,10 @@ export class ViewMatchPage implements OnInit {
   segmentVal = 'lineup'
   arr = [1,2,3,4,5,6,7,8,9,0,1]
   viewPlayer = false;
+  view = {
+    side: '',
+    index: null
+  }
   playerDetailsDiv = document.getElementsByClassName('playerInfo')
   viewTeam = false;
   teamDetailsDiv = document.getElementsByClassName('teamInfo')
@@ -163,8 +167,12 @@ export class ViewMatchPage implements OnInit {
     
   }
 
-  player(state, p) {
-    console.log(p);
+  player(state, p,side,indx) {
+    this.view = {
+      side: side,
+      index: indx
+    }
+    console.log(side,indx);
     if (p != null) {
       this.playerViewed = p
     } else {
@@ -191,6 +199,10 @@ export class ViewMatchPage implements OnInit {
         break;
       case 'close':
         this.viewPlayer = false;
+        this.view = {
+          side: '',
+          index: null
+        }
         break;
     }
   }
@@ -215,6 +227,10 @@ export class ViewMatchPage implements OnInit {
           }, 500);
         } else {
           this.viewTeam = false;
+          this.view = {
+            side: '',
+            index: null
+          }
           setTimeout(() => {
             this.teamSide = {}
           }, 500);
