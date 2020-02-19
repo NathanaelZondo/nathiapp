@@ -338,7 +338,7 @@ export class RegisterpagePage implements OnInit {
   }
   async nativeGoogleLogin() {
     console.log('abc');
-    try {
+    
       const gplusUser = await this.googleplus.login({
         'webClientId': '81311888576-0i9kvpjn5fo0s72q7ua37bjo42vlh3t8.apps.googleusercontent.com',
         'offline': true,
@@ -346,14 +346,16 @@ export class RegisterpagePage implements OnInit {
       })
        await firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)).then((i)=>{
         //this.userProfile.doc(i.user.uid).set
+        console.log(i);
+        
         this.fullName = i.user.displayName
         this.email = i.user.email
         this.profileImage = i.user.photoURL
       this.slideNext()
+       }).catch(err => {
+         console.log(err);
+         
        })
-    } catch(err) {
-      console.log('Error ',err)
-    }
   }
   webGoogleLogin() {
     try {
@@ -536,13 +538,17 @@ export class RegisterpagePage implements OnInit {
     // this.route.navigateByUrl('add-team')
   }
 
-  addUser(form) {
+  async addUser(form) {
+      let loader = await this.loadingController.create({
+        message:'Please wait...'
+      })
+      await loader.present()
     firebase.auth().onAuthStateChanged(i => {
       console.log('aid found', i.uid, ' aa', this.email, this.fullName);
 
-      firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' }).then(re => {
-        this.presentLoading2()
-        this.route.navigate(['addteam'])
+      firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' }).then(async re => {
+        await loader.dismiss()
+        this.route.navigateByUrl("/add-team")
       })
 
     })

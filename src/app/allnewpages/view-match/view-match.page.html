@@ -139,26 +139,26 @@
                 <ion-slide style="overflow-y:scroll">
                     <div class="con">
                         <div class="home">
-                            <ion-chip *ngFor="let item of homeplayers" (click)="player('open', item)">
+                            <ion-chip *ngFor="let item of homeplayers;let h = index" (click)="player('open', item,'home',h)" [ngClass]="{'animated pluse infinite':view.side=='home'&&view.index==h}">
                                 <ion-icon name="eye"></ion-icon>
-                                <ion-label>{{item.fullName}}</ion-label>
+                                <ion-label style="flex-basis: 60% !important;">{{item.fullName}}</ion-label>
                                 <ion-avatar>
                                     <img *ngIf="!item.palyerImage"
                                         src="https://image.flaticon.com/icons/png/512/14/14611.png"
                                         alt="">
-                                    <img *ngIf="item.palyerImage" src="{{item.palyerImage}}">
+                                    <img style="height: 100% !important;  width: 100% !important;" *ngIf="item.palyerImage" src="{{item.palyerImage}}">
                                 </ion-avatar>
                             </ion-chip>
                         </div>
                         <div class="away">
-                            <ion-chip *ngFor="let item of awayplayers" (click)="player('open', item)">
+                            <ion-chip *ngFor="let item of awayplayers;let a = index" (click)="player('open', item,'away',a)" [ngClass]="{'animated pluse infinite':view.side=='away'&&view.index==a}">
                                 <ion-avatar>
-                                    <img *ngIf="!item.palyerImage"
+                                    <img  *ngIf="!item.palyerImage"
                                         src="https://image.flaticon.com/icons/png/512/14/14611.png"
                                         alt="">
-                                    <img *ngIf="item.palyerImage" src="{{item.palyerImage}}">
+                                    <img style="height: 100% !important;" *ngIf="item.palyerImage" src="{{item.palyerImage}}">
                                 </ion-avatar>
-                                <ion-label>{{item.fullName}}</ion-label>
+                                <ion-label  style="flex-basis: 60% !important;">{{item.fullName}}</ion-label>
                                 <ion-icon name="eye"></ion-icon>
                             </ion-chip>
                         </div>

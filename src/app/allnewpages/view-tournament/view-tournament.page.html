@@ -20,7 +20,7 @@
           -->
         <ion-button class="animated"
           [ngClass]="{'bounceIn':viewedTournament.state=='newTournament'&&applytournaments=='no'}" (click)="login()"
-          *ngIf="role=='user'" size="small" color="danger">
+          *ngIf="role=='user'" size="small" color="success">
           Join
         </ion-button>
 
@@ -170,13 +170,13 @@
             <ion-button *ngIf="item.matchstate=='incomplete'||!item.matchstate&&!item.half"  size="small" shape="round" color="light">
               Not started
             </ion-button>
-            <ion-button  *ngIf="item.matchstate=='incomplete'||!item.matchstate&&item.half=='First Half'"   size="small" shape="round" color="danger">
+            <ion-button  *ngIf="item.matchstate=='incomplete'||!item.matchstate&&item.half=='First Half'"   size="small" shape="round" color="medium">
               Live Now
             </ion-button>
-            <ion-button  *ngIf="item.matchstate=='incomplete'||!item.matchstate&&item.half=='Second Half'"   size="small" shape="round" color="secondary">
+            <ion-button  *ngIf="item.matchstate=='incomplete'||!item.matchstate&&item.half=='Second Half'"   size="small" shape="round" color="medium">
               Half Time
             </ion-button>
-            <ion-button size="small" shape="round" color="tertiary"  *ngIf="item.matchstate=='complete'&&item.half=='Second Half'"  >
+            <ion-button size="small" shape="round" color="danger"  *ngIf="item.matchstate=='complete'&&item.half=='Second Half'"  >
               Match Ended
             </ion-button>
           </div>
