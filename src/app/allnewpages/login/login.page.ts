@@ -199,7 +199,6 @@ export class LoginPage implements OnInit {
     }
   ​
   async  addUser(form){
-
       let loader = await this.loadingController.create({
         message: 'Please wait'
       })

@@ -320,7 +320,7 @@ export class RegisterpagePage implements OnInit {
   async googleLogin() {
     console.log('i am here',this.phoneNumber);
     
-    if (!this.phoneNumber && !this.role) {
+    if (!this.phoneNumber || !this.role) {
       let alert = await this.alertController.create({
         header: 'OOPS',
         message: 'Please fill in your phone number and role before proceeding',
