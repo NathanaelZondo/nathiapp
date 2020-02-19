@@ -339,7 +339,6 @@ export class AddPlayerPage implements OnInit {
   //Functions to upload images
   async selectImage() {
     let option: CameraOptions = {
-
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
