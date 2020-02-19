@@ -450,10 +450,15 @@ export class RegisterpagePage implements OnInit {
       }
     })
   }
-  logins(code) {
+ async logins(code) {
+  let loader = await this.loadingController.create({
+    message: 'Please wait'
+  })
+  await loader.present()
     if (this.confirmationResult !== '') {
       return this.authService.login(code, this.confirmationResult).then(async result => {
         console.log(result);
+        loader.dismiss()
         console.log('uid', result.uid);
         // let form = {
         //   phoneNumber: rm.phoneNumber,
@@ -487,8 +492,12 @@ export class RegisterpagePage implements OnInit {
       })
     }
   }
-  userAdd() {
-    this.presentLoading2()
+  async userAdd() {
+    let loader = await this.loadingController.create({
+      message: 'Please wait'
+    })
+
+    await loader.present()
 
     let number = this.phoneNumber.substr(1)
     this.lastNum = '+' + 27 + number;
@@ -513,7 +522,7 @@ export class RegisterpagePage implements OnInit {
         this.confirmationResult = result.result
         console.log(this.confirmationResult);
         // console.log('form', form);
-
+        await loader.dismiss()
         this.alert();
 
       } else {
@@ -546,9 +555,14 @@ export class RegisterpagePage implements OnInit {
     firebase.auth().onAuthStateChanged(i => {
       console.log('aid found', i.uid, ' aa', this.email, this.fullName);
 
-      firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' }).then(async re => {
+      firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' ,status : ''}).then(async re => {
         await loader.dismiss()
-        this.route.navigateByUrl("/add-team")
+        if(form.role == 'teamManager'){
+          this.route.navigateByUrl("/add-team")
+        } else {
+          this.route.navigateByUrl("/tabs")
+        }
+      
       })
 
     })
@@ -575,6 +589,7 @@ export class RegisterpagePage implements OnInit {
         role: 'submit',
         cssClass: 'secondary',
         handler: (result) => {
+
           console.log(result.code);
           this.logins(result.code);
           this.ngZone.run(() => {

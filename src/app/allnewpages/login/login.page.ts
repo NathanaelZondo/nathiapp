@@ -183,20 +183,27 @@ export class LoginPage implements OnInit {
         }
       })
     }
-    logins(code){
+   async logins(code){
+      let loader = await this.loadingController.create({
+        message: 'Please wait'
+      })
+      await loader.present()
       if(this.confirmationResult !== ''){
         return this.authService.login(code, this.confirmationResult).then(result => {
-          this.loginLoader.dismiss();
+          loader.dismiss()
+          // this.loginLoader.dismiss();
+         
           this.route.navigateByUrl('/tabs');
         })
       }
     }
   ​
-    addUser(form){
-      // this.phoneNumber = this.registrationForm.get('phoneNumber').value
-      // this.fullName = this.registrationForm.get('fullName').value
-      // this.role = this.registrationForm.get('role').value
-      this.presentLoading();
+  async  addUser(form){
+
+      let loader = await this.loadingController.create({
+        message: 'Please wait'
+      })
+      await loader.present()
       let number =  this.phoneNumber.substr(1)
       this.lastNum = '+' + 27 + number;
       console.log(number, ' s',);
@@ -217,12 +224,14 @@ export class LoginPage implements OnInit {
       return this.authService.requestLogin(this.lastNum, appVerifier).then(async result => {
         if(result.success === true){
           console.log(result);
+          loader.dismiss()
           this.confirmationResult = result.result
           console.log(this.confirmationResult);
           setTimeout(() => {
             console.log('dismaissed loader');
 
-            this.loginLoader.dismiss();
+            // this.loginLoader.dismiss();
+          
           }, 500);
          this.alert(form);
 
