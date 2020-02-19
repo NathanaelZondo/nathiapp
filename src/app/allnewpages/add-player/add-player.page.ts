@@ -104,7 +104,7 @@ export class AddPlayerPage implements OnInit {
       previousTeam: new FormControl('', Validators.required),
       height: new FormControl('', Validators.compose([Validators.required])),
       playerPosition: new FormControl('', Validators.compose([Validators.required])),
-      playerNumber: new FormControl('', Validators.compose([Validators.required,Validators.max(100)])),
+      playerNumber: new FormControl('', Validators.compose([Validators.required, Validators.max(100)])),
       //  Achievements: new FormControl('', Validators.compose([Validators.required])), 
       Achievements: this.formBuilder.array([
         this.formBuilder.control('')
@@ -123,7 +123,7 @@ export class AddPlayerPage implements OnInit {
       docid: null,
       docdata: null
     }
- 
+
     this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then(res => {
       if (res.exists) {
         console.log(res.data());
@@ -131,7 +131,7 @@ export class AddPlayerPage implements OnInit {
       }
       this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').onSnapshot(async res => {
         this.players = []
-        
+
         if (!res.empty) {
           this.arr = []
           res.forEach(doc => {
@@ -150,7 +150,7 @@ export class AddPlayerPage implements OnInit {
           let alerter = await this.alertCtrl.create({
             header: 'No Players',
             message: 'Please complete the registration process by providing players for your team. Click on the bottom right button to start adding players. A minimum of 11 players are required.',
-            buttons:[{
+            buttons: [{
               text: 'Okay',
               handler: () => {
                 this.add()
@@ -159,10 +159,10 @@ export class AddPlayerPage implements OnInit {
           })
           await alerter.present()
         }
-        this.db.collection('members').doc(firebase.auth().currentUser.uid).get().then(res =>{
+        this.db.collection('members').doc(firebase.auth().currentUser.uid).get().then(res => {
           console.log('data', res.data());
-          
-          if(res.data().status === '' && this.players.length > 0){
+
+          if (res.data().status === '' && this.players.length > 0) {
             this.db.collection('members').doc(firebase.auth().currentUser.uid).update({
               status: 'awaiting'
             })
@@ -213,13 +213,13 @@ export class AddPlayerPage implements OnInit {
   dFH(cmd) {
     switch (cmd) {
       case 'open':
-        this.renderer.setStyle(this.editForm[0],'display','flex');
+        this.renderer.setStyle(this.editForm[0], 'display', 'flex');
         break;
-        case 'close':
-          setTimeout(() => {
-            this.renderer.setStyle(this.editForm[0],'display','none')
-          }, 500);
-          break;
+      case 'close':
+        setTimeout(() => {
+          this.renderer.setStyle(this.editForm[0], 'display', 'none')
+        }, 500);
+        break;
     }
   }
   async editPlayer() {
@@ -234,8 +234,8 @@ export class AddPlayerPage implements OnInit {
       this.editMode = false
       this.dFH('close')
       this.buttonChange = 'add'
-    
-    this.loadingProcess = false;
+
+      this.loadingProcess = false;
       this.addPlayerForm.reset()
       console.log(this.addPlayerForm);
 
@@ -297,9 +297,9 @@ export class AddPlayerPage implements OnInit {
       // upon success...
       user.then(async () => {
         this.buttonChange = 'add'
-    this.editMode = false
-    this.loadingProcess = false
-    this.dFH('close')
+        this.editMode = false
+        this.loadingProcess = false
+        this.dFH('close')
         this.addPlayerForm.reset()
         this.playerNode = {
           fullName: '',
@@ -395,7 +395,7 @@ export class AddPlayerPage implements OnInit {
       this.splashScreen.hide()
     }, 3000);
     setTimeout(() => {
-      this.renderer.setStyle(this.editForm[0],'display','none')
+      this.renderer.setStyle(this.editForm[0], 'display', 'none')
     }, 500);
     this.getTeam()
   }
