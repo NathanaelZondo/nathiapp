@@ -18,14 +18,14 @@ export class AddTeamPage implements OnInit {
     region: '',
     tel: '',
     // userUID: firebase.auth().currentUser.uid,
-    DateCreated : new Date,
+    DateCreated: new Date,
     teamLogo: '',
     teamJerseyIMG: '',
     goalKeeperJerseyIMG: '',
     uid: '',
     teamManagerInfo: null,
-    managerEmail : '',
-    managerName : ''
+    managerEmail: '',
+    managerName: ''
   }
   loaderHolder = null
   addTeamForm: FormGroup;
@@ -34,15 +34,15 @@ export class AddTeamPage implements OnInit {
   isuploading: false
   uploadprogress = 0;
 
-  logoImage =null
+  logoImage = null
   logoText = 'Upload Image'
   logoProgress = 0
 
-  GJerseyImage =null
+  GJerseyImage = null
   jerseyProgress = 0
   gJerseyText = 'Upload Image'
 
-  TjerseyImage=null
+  TjerseyImage = null
   teamProgress = 0
   tJerseyText = 'Upload Image'
 
@@ -73,14 +73,14 @@ export class AddTeamPage implements OnInit {
   };
   constructor(
     private formBuilder: FormBuilder,
-    private camera: Camera ,
+    private camera: Camera,
     public loadingController: LoadingController,
     private router: Router,
     public toastController: ToastController,
-    public passServie : PassInformationServiceService,
-     private activatedRoute: ActivatedRoute,
-     private nav : NavController,
-    public splashScreen: SplashScreen,  ) {
+    public passServie: PassInformationServiceService,
+    private activatedRoute: ActivatedRoute,
+    private nav: NavController,
+    public splashScreen: SplashScreen, ) {
     this.addTeamForm = this.formBuilder.group({
       teamName: new FormControl('', Validators.required),
       // location: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4), Validators.maxLength(30)])),
@@ -92,63 +92,63 @@ export class AddTeamPage implements OnInit {
   }
 
 
-   getMember(){
-     firebase.auth().onAuthStateChanged( user =>{
-       if(user){
-         this.db.collection('members').doc(user.uid).get().then( doc =>{
-          if(doc.exists){
+  getMember() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.db.collection('members').doc(user.uid).get().then(doc => {
+          if (doc.exists) {
             this.teamNode.managerEmail = doc.data().form.email
             this.teamNode.managerName = doc.data().form.fullName
             console.log(this.teamNode);
-            
+
           }
-         })
-       }
-     })
-   }
+        })
+      }
+    })
+  }
   async createTeam(addTeamForm: FormGroup): Promise<void> {
 
-if (!addTeamForm.valid) {
+    if (!addTeamForm.valid) {
       addTeamForm.value
     }
-    else  {
+    else {
       // load the profile creation process
       if (this.isEditing) {
-       this.loaderHolder = await this.loadingController.create({
+        this.loaderHolder = await this.loadingController.create({
           message: 'Editing Your Team..'
         });
         this.loaderHolder.present();
       } else {
-        this.loaderHolder  = await this.loadingController.create({
-        message: 'Creating Your Team..'
-      });
-      this.loaderHolder.present();
+        this.loaderHolder = await this.loadingController.create({
+          message: 'Creating Your Team..'
+        });
+        this.loaderHolder.present();
       }
 
       parseInt(this.teamNode.tel)
       // this.teamNode.teamManagerInfo = this.userObj
       // this.teamNode.managerEmail = this.userObj.form.email
       const user = this.db.collection('Teams').doc(firebase.auth().currentUser.uid).set(this.teamNode)
-      
+
       // upon success...
-      user.then(async() => {
+      user.then(async () => {
         if (this.isEditing) {
           this.router.navigateByUrl('add-player')
-        }else { 
+        } else {
           this.router.navigateByUrl('add-player')
         }
-        
+
         const toast = await this.toastController.create({
           message: 'Success.',
           duration: 2000,
         });
         toast.present();
-     
+
         this.loaderHolder.dismiss();
 
         // catch any errors.
       }).catch(async err => {
-        const toast =  await this.toastController.create({
+        const toast = await this.toastController.create({
           message: 'Error creating Team.',
           duration: 2000
         })
@@ -158,26 +158,27 @@ if (!addTeamForm.valid) {
       })
     }
   }
-   multiply(a: number, b: number) {
+  multiply(a: number, b: number) {
     return a + b;
   }
   //Functions to upload images
   async selectLogoImage() {
-    this.teamNode.teamLogo =''
     let option: CameraOptions = {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       quality: 90,
-      targetHeight : 600,
-      targetWidth : 600,
+      targetHeight: 600,
+      targetWidth: 600,
       correctOrientation: true,
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
     }
     await this.camera.getPicture(option).then(res => {
       console.log(res);
       const image = `data:image/jpeg;base64,${res}`;
-
+      if (image) {
+        this.teamNode.teamLogo = ''
+      }
       this.logoImage = image;
       const filename = Math.floor(Date.now() / 1000);
       let file = 'Teams-Logo-image/' + firebase.auth().currentUser.uid + filename + '.jpg';
@@ -204,30 +205,32 @@ if (!addTeamForm.valid) {
           this.teamNode.teamLogo = downUrl;
           this.logoText = 'Done'
           console.log('Image downUrl', downUrl);
-          this.logoProgress =0
+          this.logoProgress = 0
         })
       })
     }, err => {
       console.log("Something went wrong: ", err);
     })
-  }  
+  }
 
   async teamJersey() {
-    this.teamNode.teamJerseyIMG =''
+
     let option: CameraOptions = {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       quality: 90,
-      targetHeight : 600,
-      targetWidth : 600,
+      targetHeight: 600,
+      targetWidth: 600,
       correctOrientation: true,
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
     }
     await this.camera.getPicture(option).then(res => {
       console.log(res);
       const image = `data:image/jpeg;base64,${res}`;
-
+      if (image) {
+        this.teamNode.teamJerseyIMG = ''
+      }
       this.TjerseyImage = image;
       const filename = Math.floor(Date.now() / 1000);
       let file = 'Teams-Jersey-image/' + firebase.auth().currentUser.uid + filename + '.jpg';
@@ -256,33 +259,32 @@ if (!addTeamForm.valid) {
           this.teamNode.teamJerseyIMG = downUrl;
           this.tJerseyText = 'Done'
           console.log('Image downUrl', downUrl);
-          this.teamProgress =0
+          this.teamProgress = 0
 
         })
       })
     }, err => {
       console.log("Something went wrong: ", err);
     })
-  }  
+  }
   async GoalKeeperJersey() {
-    this.teamNode.goalKeeperJerseyIMG =''
     let option: CameraOptions = {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       quality: 90,
-      targetHeight : 600,
-      targetWidth : 600,
+      targetHeight: 600,
+      targetWidth: 600,
       correctOrientation: true,
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
     }
     await this.camera.getPicture(option).then(res => {
       console.log(res);
       const image = `data:image/jpeg;base64,${res}`;
-
+      if (image) {
+        this.teamNode.goalKeeperJerseyIMG = ''
+      }
       this.GJerseyImage = image;
-
-
 
       const filename = Math.floor(Date.now() / 1000);
       let file = 'Teams-Jersey-image/' + firebase.auth().currentUser.uid + filename + '.jpg';
@@ -318,15 +320,16 @@ if (!addTeamForm.valid) {
         })
       })
     }, err => {
+
       console.log("Something went wrong: ", err);
     })
-  }  
+  }
 
 
   back() {
-    
+
     this.router.navigateByUrl('tabs/manageTeam')
-    this.isEditing  = false
+    this.isEditing = false
   }
   ngOnInit() {
     firebase.auth().onAuthStateChanged(user => {
@@ -337,8 +340,8 @@ if (!addTeamForm.valid) {
             this.teamExists = true
           }
           setTimeout(() => {
-      this.splashScreen.hide()
-    }, 3000);
+            this.splashScreen.hide()
+          }, 3000);
         })
       }
     })
@@ -351,5 +354,5 @@ if (!addTeamForm.valid) {
         console.log(this.isEditing, this.teamNode);
       }
     });
-   }
+  }
 }

@@ -441,11 +441,29 @@ export class ViewTournamentPage implements OnInit {
         }
       })
     } else {
-      this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).collection('vendorApplications').doc(this.loggedInUser.uid).get().then(res => {
+      this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).collection('vendorApplications').doc(this.loggedInUser.uid).get().then(async res => {
+        console.log(res);
+        this.application = res.data()
+        console.log(this.application);
+
         if (res.exists) {
-          this.applytournaments = 'yes'
+          setTimeout(() => {
+            this.applytournaments = 'yes'
+          }, 1000);
         } else {
-          this.applytournaments = 'no'
+          setTimeout(() => {
+            this.applytournaments = 'no'
+          }, 1000);
+        }
+        if (this.application.status == 'accepted') {
+          let alerter = await this.alertController.create({
+            header: 'Congrats !',
+            message: 'Your application has been accepted, please use the following reference to pay the participating fee: <br><br> <b>' + this.application.refNumber + '</br><br> <br>* Full instructions in your email.',
+            buttons: [{
+              text: 'Okay'
+            }]
+          })
+          await alerter.present()
         }
       })
     }
