@@ -537,6 +537,7 @@ export class RegisterpagePage implements OnInit {
   }
 
   addUser(form) {
+    
     firebase.auth().onAuthStateChanged(i => {
       console.log('aid found', i.uid, ' aa', this.email, this.fullName);
 
