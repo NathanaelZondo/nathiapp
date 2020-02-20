@@ -218,7 +218,7 @@ export class ViewTournamentPage implements OnInit {
                   this.generateParticipants('2')
                 }
               })
-
+              this.checkMatches()
               console.log(this.participants);
             }).catch(err => { console.log(err); })
           }
@@ -243,7 +243,7 @@ export class ViewTournamentPage implements OnInit {
 
 
     let palceid = this.viewedTournament.address.placeID
-    return window.location.href = 'https://www.google.com/maps/place/?q=place_id:' + palceid;
+    // return window.location.href = 'https://www.google.com/maps/place/?q=place_id:' + palceid;
     // return window.location.href = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+palceid+'&key=YOUR_API_KEY'
     console.log('go', palceid);
   }
