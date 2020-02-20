@@ -116,7 +116,7 @@ check(){
     this.ngZone.run(() => {
       // this.check()
       this.getMatchFixtures()
-      this.presentAlertCheckbox();
+      // this.presentAlertCheckbox();
       this.auth.setUser(this.user);
       // this.getUserProfile();
       this.getUser();
