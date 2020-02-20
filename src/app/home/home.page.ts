@@ -116,6 +116,7 @@ check(){
     this.ngZone.run(() => {
       // this.check()
       this.getMatchFixtures()
+      this.presentAlertCheckbox();
       this.auth.setUser(this.user);
       // this.getUserProfile();
       this.getUser();
@@ -222,10 +223,10 @@ firebase.firestore().collection('MatchFixtures').get().then( res =>{
   res.forEach(doc =>{
     if(firebase.auth().currentUser.uid == doc.data().TeamObject.uid && date == doc.data().matchdate ){
       console.log('yes');
-      this.presentAlertCheckbox()
+      // this.presentAlertCheckbox()
       
     }else  if(firebase.auth().currentUser.uid == doc.data().aTeamObject.uid && date == doc.data().matchdate) {
-      this.presentAlertCheckbox()
+      // this.presentAlertCheckbox()
     }
     // console.log('data',doc.data().TeamObject.uid);
     
@@ -234,58 +235,61 @@ firebase.firestore().collection('MatchFixtures').get().then( res =>{
 
   }
   async presentAlertCheckbox() {
-    firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').get().then(async res =>{
-     let player = {
-
-        type: 'checkbox',
-        label: 'Checkbox 1',
-        value: 'value1',
-      }
-      res.forEach( doc =>{
-        
-        player = {
-          type: 'checkbox',
-          label: doc.data().fullName,
-          value: doc.id,
-        }
-        this.players.push(player)
-        player = {
-          type: 'checkbox',
-          label: null,
-          value: null,
-        }
-      })
-          const alert = await this.alertController.create({
-      header: 'Select your players',
-      message: 'Please select your players',
-      inputs: this.players,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ok',
-          handler: data => {
-            data.forEach(element => {
-              console.log(element);
-              firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(element).update({
-                status : 'available'
-              })
-            });
-        
-            console.log('Confirm Ok', data);
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-    })
-
+  firebase.auth().onAuthStateChanged( user =>{
+    if(user){
+      firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').get().then(async res =>{
+        let player = {
+   
+           type: 'checkbox',
+           label: 'Checkbox 1',
+           value: 'value1',
+         }
+         res.forEach( doc =>{
+           
+           player = {
+             type: 'checkbox',
+             label: doc.data().fullName,
+             value: doc.id,
+           }
+           this.players.push(player)
+           player = {
+             type: 'checkbox',
+             label: null,
+             value: null,
+           }
+         })
+             const alert = await this.alertController.create({
+         header: 'Select your players',
+         message: 'Please select your players',
+         inputs: this.players,
+         buttons: [
+           {
+             text: 'Cancel',
+             role: 'cancel',
+             cssClass: 'secondary',
+             handler: () => {
+               console.log('Confirm Cancel');
+             }
+           }, {
+             text: 'Ok',
+             handler: data => {
+               data.forEach(element => {
+                 console.log(element);
+                 firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(element).update({
+                   status : 'available'
+                 })
+               });
+           
+               console.log('Confirm Ok', data);
+             }
+           }
+         ]
+       });
+   
+       await alert.present();
+       }) 
+    }
+  })
   }
 
 
