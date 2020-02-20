@@ -77,7 +77,6 @@ export class RegisterpagePage implements OnInit {
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
       // password: [this.password, Validators.compose([Validators.required,Validators.minLength(6)])],
     })
-
   }
   slideOpts = {
     grabCursor: true,
@@ -307,7 +306,6 @@ export class RegisterpagePage implements OnInit {
       this.slides.lockSwipes(true)
     })
   }
-
   togglePass(): void {
     this.showPassword = !this.showPassword
     if (this.showPassword) {
@@ -374,7 +372,6 @@ export class RegisterpagePage implements OnInit {
     }
   }
   async getImage() {
-
     let option: CameraOptions = {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
@@ -419,7 +416,6 @@ export class RegisterpagePage implements OnInit {
       console.log("Something went wrong: ", err);
     })
   }
-
   //Phone Number Login
   register() {
     firebase.auth().onAuthStateChanged(i => {
@@ -613,8 +609,6 @@ export class RegisterpagePage implements OnInit {
       console.log(error)
     });
   }
-
-
   async presentLoading2() {
     const loading = await this.loadingController.create({
       message: 'Please wait',

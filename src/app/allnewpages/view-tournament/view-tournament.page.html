@@ -28,7 +28,7 @@
           shows only if the '''TOURNAMENT IS NEW'''' and there is '''NO APPLICATION''' and user '''DIDN'T APPLY  FOR TOURNAMENTS'''
           -->
         <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='no'}"
-          *ngIf="viewedTournament.state=='newTournament'&&!application&&applytournaments=='no'" size="small"
+          *ngIf="viewedTournament.state=='newTournament'&&!application.status&&applytournaments=='no'" size="small"
           color="success" (click)="applyForTournament()">
           Participate
         </ion-button>
@@ -82,7 +82,7 @@
         </div>
         <div class="location" (click)="go()">
           <ion-icon src="../../../assets/noun_Location_3076235.svg"></ion-icon>
-          <p><u>{{viewedTournament.formInfo.location}}</u></p>
+          <p><u>{{viewedTournament.formInfo.stadiumName}}</u></p>
         </div>
       </div>
     </div>
@@ -133,7 +133,7 @@
           </ion-button>
           <h1 style="margin: auto; text-align: center; box-shadow: none !important;"
             class="filters animated fadeIn faster" *ngIf="filterBy=='nothing'">
-            Next Division is being setup
+            Next Stage is being setup
           </h1>
           <div class="dLine animated fadeIn delay-1s" *ngIf="viewedTournament.state!='newTournament'">
 
@@ -145,11 +145,9 @@
   <!-- 
     MATCH STARTED
     half = 'First Half'
-    matchstate = 'incomplete' || undefined
 
     HALF TIME
     half = 'Second Half'
-    matchstate = 'incomplete' || undefined
 
     FULL TIME
     half = 'Half Time'
@@ -167,20 +165,20 @@
         }" *ngFor="let item of tournMatches" (click)="viewMatch(item)">
 
           <div class="mStatus">
-            <ion-button *ngIf="item.matchstate=='incomplete'||!item.matchstate&&!item.half"  size="small" shape="round" color="light">
+            <ion-button *ngIf="!item.half"  size="small" shape="round" color="light">
               Not started
             </ion-button>
-            <ion-button  *ngIf="item.matchstate=='incomplete'||!item.matchstate&&item.half=='First Half'"   size="small" shape="round" color="medium">
+            <ion-button  *ngIf="item.half=='First Half'"   size="small" shape="round" color="medium">
               Live Now
             </ion-button>
-            <ion-button  *ngIf="item.matchstate=='incomplete'||!item.matchstate&&item.half=='Second Half'"   size="small" shape="round" color="medium">
+            <ion-button  *ngIf="item.half=='Second Half'&&item.matchstate=='incomplete'"   size="small" shape="round" color="medium">
               Half Time
             </ion-button>
             <ion-button size="small" shape="round" color="danger"  *ngIf="item.matchstate=='complete'&&item.half=='Second Half'"  >
               Match Ended
             </ion-button>
           </div>
-          <div class="dimmer" [ngClass]="{'endedMatch':item.half=='Second Half'&&item.matchstate=='complete'}">
+          <div class="dimmer" [ngClass]="{'endedMatch':item.matchstate=='complete'&&item.half=='Second Half'}" *ngIf="item.matchstate=='complete'&&item.half=='Second Half'">
 
           </div>
           <div class="teams">
@@ -190,8 +188,8 @@
               
             </div>
             <div class="v">
-              <p *ngIf="item.matchstate=='incomplete'||!item.matchstate&&!item.half">{{item.matchdate | date:'shortTime'}}</p>
-              <p *ngIf="item.matchstate=='incomplete'||!item.matchstate&&item.half=='First Half'">v</p>
+              <p *ngIf="!item.half">{{item.matchdate | date:'shortTime'}}</p>
+              <p *ngIf="(item.half=='First Half'||item.half=='Second Half')&&item.matchstate=='incomplete'">v</p>
               <p *ngIf="item.matchstate=='complete'&&item.half=='Second Half'">FT</p>
             </div>
             <!-- [ngStyle]="{'background': 'url(' + sampImg + ') no-repeat 0 0 / cover'}" -->

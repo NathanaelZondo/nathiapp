@@ -24,7 +24,7 @@ export class ProfilePage implements OnInit {
     status: "awaitin",
     profileImage: 'https://avatarfiles.alphacoders.com/855/85557.png'
   }
-  skeleton = [1,1]
+  skeleton = [1, 1]
   tournaments = []
   vendorTournaments = []
   participatingTourn = []
@@ -35,29 +35,29 @@ export class ProfilePage implements OnInit {
   editProfile = document.getElementsByClassName('editProfile')
   editMode = false
   role = null
-  constructor(public router: Router, private alertCtrl: AlertController,public formBuilder: FormBuilder,private camera: Camera, public renderer: Renderer2, public toastCtrl: ToastController, public loadingCtrl: LoadingController) { }
+  constructor(public router: Router, private alertCtrl: AlertController, public formBuilder: FormBuilder, private camera: Camera, public renderer: Renderer2, public toastCtrl: ToastController, public loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.profileForm = this.formBuilder.group({
       phoneNumber: [this.profile.form.phoneNumber, Validators.compose([Validators.required])],
       fullName: [this.profile.form.fullName, Validators.required],
-      email: [this.profile.form.email,[Validators.required,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]]
+      email: [this.profile.form.email, [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]]
     })
   }
   async getImage() {
-    
+
     let option: CameraOptions = {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       quality: 90,
-      targetHeight : 600,
-      targetWidth : 600,
+      targetHeight: 600,
+      targetWidth: 600,
       correctOrientation: true,
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
     }
     await this.camera.getPicture(option).then(res => {
-      this.profile.profileImage=''
+      this.profile.profileImage = ''
       const image = `data:image/jpeg;base64,${res}`;
 
       const filename = Math.floor(Date.now() / 1000);
@@ -76,35 +76,35 @@ export class ProfilePage implements OnInit {
         } else if (progress == 100) {
           this.imageText = 'Finnishing Upload'
         }
-      },async err => {
+      }, async err => {
         let toaster = this.toastCtrl.create({
           message: 'Error Uploading Image. Try again.',
           duration: 2000,
-          buttons:[{icon:'close'}]
+          buttons: [{ icon: 'close' }]
         })
         await (await toaster).present()
       }, () => {
         upload.snapshot.ref.getDownloadURL().then(downUrl => {
           this.profile.profileImage = downUrl;
           this.imageText = 'Done'
-    
-          this.imageProgress =0
+
+          this.imageProgress = 0
         })
       })
-    },async err => {
-        let toaster = this.toastCtrl.create({
-          message: 'Error Selecting Image',
-          duration: 2000,
-          buttons:[{icon:'close'}]
-        })
-        await (await toaster).present()
+    }, async err => {
+      let toaster = this.toastCtrl.create({
+        message: 'Error Selecting Image',
+        duration: 2000,
+        buttons: [{ icon: 'close' }]
+      })
+      await (await toaster).present()
     })
   }
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     firebase.auth().onAuthStateChanged(user => {
       firebase.auth().updateCurrentUser(user).then(() => {
         this.loggedInUser = user
-        
+
         this.db.collection('members').doc(this.loggedInUser.uid).get().then(res => {
           this.profile.form.fullName = res.data().form.fullName
           this.profile.form.phoneNumber = res.data().form.phoneNumber
@@ -112,16 +112,12 @@ export class ProfilePage implements OnInit {
           this.profile.form.email = res.data().form.email
           this.role = res.data().form.role
           if (res.data().profileImage) {
+            this.profile.profileImage = ''
             this.profile.profileImage = res.data().profileImage
           }
-
           if (res.data().form.role == 'teamManager') {
-            console.log('Manager');
-            
             this.getManagerTournaments()
           } else {
-            console.log('Vendor');
-            
             this.getVendorTournaments()
           }
         })
@@ -142,21 +138,21 @@ export class ProfilePage implements OnInit {
   // }
   getManagerTournaments() {
     this.db.collection('newTournaments').get().then(res => {
-      this.tournaments = [] 
+      this.tournaments = []
       res.forEach(tourns => {
         this.db.collection('newTournaments').doc(tourns.id).collection('teamApplications').where('TeamObject.uid', '==', this.loggedInUser.uid).where('status', '==', 'paid').get().then(snap => {
-          
+
           if (snap.size > 0) {
             this.skeleton = []
             console.log('cealr skel');
-            
+
             snap.forEach(doc => {
               if (doc.exists) {
                 this.tournaments.push(tourns.data())
               }
             })
           } else {
-            this.skeleton = [1,1]
+            this.skeleton = [1, 1]
           }
         })
       })
@@ -167,8 +163,8 @@ export class ProfilePage implements OnInit {
       this.vendorTournaments = []
       res.forEach(tourns => {
         this.db.collection('newTournaments').doc(tourns.id).collection('vendorApplications').where('uid', '==', this.loggedInUser.uid).get().then(snap => {
-         
-          if (res.size > 0 ) {
+
+          if (res.size > 0) {
             this.skeleton = []
             snap.forEach(doc => {
               if (doc.exists) {
@@ -176,7 +172,7 @@ export class ProfilePage implements OnInit {
               }
             })
           } else {
-            this.skeleton = [1,1]
+            this.skeleton = [1, 1]
           }
         })
       })
@@ -281,18 +277,18 @@ export class ProfilePage implements OnInit {
     switch (cmd) {
       case 'open':
         this.editMode = true
-          this.renderer.setStyle(this.editProfile[0],'display','block')
-        break;  
-        case 'close':
-          this.editMode = false
-          setTimeout(() => {
-            this.renderer.setStyle(this.editProfile[0],'display','none')
-          }, 500);
-          break;
+        this.renderer.setStyle(this.editProfile[0], 'display', 'block')
+        break;
+      case 'close':
+        this.editMode = false
+        setTimeout(() => {
+          this.renderer.setStyle(this.editProfile[0], 'display', 'none')
+        }, 500);
+        break;
     }
   }
   async edit(form) {
-    
+
     let loader = await this.loadingCtrl.create({
       message: 'Updating'
     })
@@ -324,23 +320,25 @@ export class ProfilePage implements OnInit {
           }
         ]
       })
-     await alerter.present()
+      await alerter.present()
     })
   }
-  //   getParticipatingTournaments(){
-  // this.db.collection('newTournaments').where('approved','==','true').onSnapshot(res =>{
-  //   this.participatingTourn = []
-  //   res.forEach(doc =>{
-  //     this.db.collection('newTournaments').doc(doc.id).collection('teamApplications').where('uid', '==', this.loggedInUser.uid).where('status','==','paid').onSnapshot(docx =>{
+  /*
+    getParticipatingTournaments(){
+  this.db.collection('newTournaments').where('approved','==','true').onSnapshot(res =>{
+    this.participatingTourn = []
+    res.forEach(doc =>{
+      this.db.collection('newTournaments').doc(doc.id).collection('teamApplications').where('uid', '==', this.loggedInUser.uid).where('status','==','paid').onSnapshot(docx =>{
 
-  //        if(docx.size>0) {
-  //         this.participatingTourn.push(doc.data())
-  //       
+         if(docx.size>0) {
+          this.participatingTourn.push(doc.data())
+        
 
-  //        }
-  //     })
+         }
+      })
 
-  //   })
-  // })
-  //   }
+    })
+  })
+    }
+    */
 }

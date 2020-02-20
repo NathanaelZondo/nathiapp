@@ -12,14 +12,15 @@
         bottom: 50vh;
         position: absolute;
         color: white;
-        background: radial-gradient(rgba(30, 31, 40, 0.8), rgb(6, 6, 8)),url(../../../assets/bendedFootballField.svg ) no-repeat, #1E1F28;
-    background-position: center 30%;
+        background: radial-gradient(rgba(30, 31, 40, 0.8), rgb(6, 6, 8)), url(../../../assets/bendedFootballField.svg ) no-repeat, #1E1F28;
+        background-position: center 30%;
         border-radius: 0px 0px 30px 30px;
 
         .head {
             padding: 10px;
             text-align: center;
             margin-top: 7.5vw;
+
             h1 {
                 font-size: 15vw !important;
                 margin: 0;
@@ -48,7 +49,8 @@
         position: absolute;
         color: white;
         border: solid 1px #19d48f;
-        background: linear-gradient(0deg, #087142e8, #009e5757), url(../../../assets/onboarding/bottomLights.svg) no-repeat bottom center, linear-gradient(0deg, #087141, #009e56);
+        background:  linear-gradient(#009e56,#006e3d);
+        // no-repeat bottom center linear-gradient(#087142e8, #009e5757), url(../../../assets/onboarding/bottomLights.svg) ,
         border-radius: 30px 30px 0px 0px;
         z-index: 3;
         overflow: hidden;

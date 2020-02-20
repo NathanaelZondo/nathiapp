@@ -1,0 +1,88 @@
+ion-item {
+    --background: rgba(51, 117, 117, 0);
+    --color: black;
+
+}
+
+.error {
+    .messages {
+        background: rgba(255, 0, 0, 0.068);
+        color: red;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 5px;
+
+        p {
+            color: red !important;
+            margin: 0;
+            padding: 0 10px;
+            font-size: 3vw;
+        }
+    }
+
+}
+
+.achievements {
+    // background: rgba(0, 128, 0, 0.253);
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+
+    .btn {
+        position: absolute;
+        bottom: -25px;
+        right: 0;
+    }
+
+    .closer {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        z-index: 900;
+        transform: translateY(-50%);
+    }
+
+}
+        .titler {
+            text-align: center;
+            // position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 10%;
+            display: flex;
+            align-items: center;
+            background: white;
+            z-index: 2000;
+            p {
+                margin: 5px auto;
+            }
+        }
+        .former {
+            width: 100%;
+            // margin: 10% auto 0% auto;
+            height: 90%;
+            overflow-y: auto;
+            padding: 5%;
+            background: whitesmoke;
+        }
+.imager {
+    width: 100%;
+    height: 48vw;
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--drop-shadow);
+    position: relative;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .imagePicker {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: whitesmoke;
+        border-radius: 20px 0px;
+    }
+}

@@ -13,6 +13,7 @@ import {config} from '../app/firebaseConfig'
 import { FCM } from '@ionic-native/fcm/ngx';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { PlayerAddPage } from './player-add/player-add.page';
 firebase.initializeApp(config);
 @NgModule({
   declarations: [AppComponent],

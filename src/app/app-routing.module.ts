@@ -60,7 +60,11 @@ const routes: Routes = [
   {
     path: 'onboarding',
     loadChildren: () => import('./allnewpages/onboarding/onboarding.module').then( m => m.OnboardingPageModule)
+  },  {
+    path: 'player-add',
+    loadChildren: () => import('./player-add/player-add.module').then( m => m.PlayerAddPageModule)
   },
+
 
   
 
