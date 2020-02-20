@@ -124,7 +124,7 @@ export class ViewTournamentPage implements OnInit {
                   this.match.type2.push(doc.data())
                 } else if (doc.data().type == '1') { // 2
                   this.match.type1.push(doc.data())
-                  if (doc.data().score >= 1) {
+                  if (doc.data().score > doc.data().ascore) {
                     this.match.winner = doc.data().TeamObject
                   } else {
                     this.match.winner = doc.data().aTeamObject

@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import anime from 'animejs/lib/anime.es.js';
 import * as firebase from 'firebase'
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
@@ -99,6 +99,16 @@ export class ProfilePage implements OnInit {
       })
       await (await toaster).present()
     })
+  }
+  viewTournament(tournament) {
+    console.log(tournament);
+    let navigationExtras: NavigationExtras = {
+      state: {
+        parms: tournament
+      }
+    };
+    // passes nav params
+    this.router.navigate(['view-tournament'], navigationExtras);
   }
   ionViewWillEnter() {
     firebase.auth().onAuthStateChanged(user => {

@@ -51,6 +51,8 @@ export class AppComponent {
   }
   runProcesses() {
     this.nativeStorage.getItem('doneOnboarding').then( res => {
+      console.log('App Component ', res);
+      
       if (res == true) {
         const unsubscribe = firebase.auth().onAuthStateChanged(user => {
           if (!user) {
