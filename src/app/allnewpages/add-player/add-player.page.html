@@ -11,10 +11,7 @@
   <div class="topPart">
     <div class="head">
       <div class="backer">
-        <ion-fab-button size="small" color="light" disabled="true" *ngIf="players.length==0" >
-          <ion-icon name="arrow-back"></ion-icon>
-        </ion-fab-button>
-        <ion-fab-button size="small" color="light" *ngIf="players.length>0" (click)="back()">
+        <ion-fab-button size="small" color="light" (click)="back()">
           <ion-icon name="arrow-back"></ion-icon>
         </ion-fab-button>
       </div>
