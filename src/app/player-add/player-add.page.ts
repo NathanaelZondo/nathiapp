@@ -77,7 +77,7 @@ export class PlayerAddPage implements OnInit {
   TjerseyImage
   isuploading: false
   imageProgressText = 'Upload Image'
-  editingPlayer = {}
+  editingPlayer = {} as any
   constructor(private formBuilder: FormBuilder,
     private camera: Camera,
     public loadingController: LoadingController,
@@ -111,7 +111,20 @@ export class PlayerAddPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.editingPlayer = this.router.getCurrentNavigation().extras.state.parms
 
-        console.log(this.editingPlayer);
+        if (this.editingPlayer) {
+          this.playerNode = {
+            fullName: this.editingPlayer.docdata.fullName,
+            palyerImage: this.editingPlayer.docdata.palyerImage,
+            DOB: this.editingPlayer.docdata.DOB,
+            previousTeam: this.editingPlayer.docdata.previousTeam,
+            DateCreated: this.editingPlayer.docdata.DateCreated,
+            DateEdited: new Date(),
+            playerPosition: this.editingPlayer.docdata.playerPositon,
+            playerNumber: this.editingPlayer.docdata.playerNumber,
+            height: this.editingPlayer.docdata.height,
+            Achievements: this.editingPlayer.docdata.Achievements
+          }
+        }
 
       } else {
         console.log('No Player To edit');
@@ -121,6 +134,9 @@ export class PlayerAddPage implements OnInit {
   }
   get Achievements() {
     return this.addPlayerForm.get('Achievements') as FormArray
+  }
+  addNew() {
+    this.Achievements.push(this.formBuilder.control(''));
   }
   async editPlayer() {
     this.loadingProcess = true;

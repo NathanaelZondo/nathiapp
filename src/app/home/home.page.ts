@@ -22,7 +22,7 @@ export class HomePage {
   role
   user
   token
-  skeleton = [1,2,3,4,5,6,7]
+  skeleton = [1, 2, 3, 4, 5, 6, 7]
   viewTournaments = []
   tourn = {
     inprogres: [],
@@ -32,17 +32,17 @@ export class HomePage {
   accountRole = 'user'
   filterBy = 'comingUp'
   loadFilter = false;
-  players  = []
+  players = []
   constructor(public router: Router,
     public popoverController: PopoverController,
     public pass: PassInformationServiceService,
     public auth: AuthServiceService,
     public splashScreen: SplashScreen,
     // private oneSignal: OneSignal,
-    public alertController : AlertController,
+    public alertController: AlertController,
     public ngZone: NgZone) {
     this.tourn.upcoming = [];
-   
+
     // this.router.navigate(['tournament']);
     // console.log('uid',firebase.auth().currentUser.uid);
     // this.getUserProfile()
@@ -64,8 +64,11 @@ export class HomePage {
           }
         }
       })
-      this.skeleton = []
+
+      if (this.tourn.upcoming.length > 0) {
+        this.skeleton = []
       this.viewTournaments = this.tourn.upcoming
+      }
     })
 
 
@@ -102,17 +105,17 @@ export class HomePage {
       this.popover1.dismiss();
     }
   }
-check(){
+  check() {
 
     this.presentAlertCheckbox()
-  
-}
+
+  }
   ngOnInit() {
     let today = new Date();
     // let timeToday = new 
     let date = new Date();
-    console.log('date',date);
-    
+    console.log('date', date);
+
     this.ngZone.run(() => {
       // this.check()
       this.getMatchFixtures()
@@ -174,10 +177,10 @@ check(){
 
           setTimeout(() => {
             this.viewTournaments = this.tourn.upcoming
-            
+
             this.loadFilter = false
             if (this.tourn.upcoming.length == 0) {
-              this.skeleton = [1,2,3,4,5,6,7]
+              this.skeleton = [1, 2, 3, 4, 5, 6, 7]
             } else {
               this.skeleton = []
             }
@@ -187,10 +190,10 @@ check(){
 
           setTimeout(() => {
             this.viewTournaments = this.tourn.inprogres
-            
+
             this.loadFilter = false
             if (this.tourn.inprogres.length == 0) {
-              this.skeleton = [1,2,3,4,5,6,7]
+              this.skeleton = [1, 2, 3, 4, 5, 6, 7]
             } else {
               this.skeleton = []
             }
@@ -200,10 +203,10 @@ check(){
 
           setTimeout(() => {
             this.viewTournaments = this.tourn.finished
-            
+
             this.loadFilter = false
             if (this.tourn.finished.length == 0) {
-              this.skeleton = [1,2,3,4,5,6,7]
+              this.skeleton = [1, 2, 3, 4, 5, 6, 7]
             } else {
               this.skeleton = []
             }
@@ -215,34 +218,34 @@ check(){
   login() {
     this.router.navigate(['login'])
   }
-  getMatchFixtures(){
-console.log('seko');
-firebase.firestore().collection('MatchFixtures').get().then( res =>{
-  let date = new Date();
-  res.forEach(doc =>{
-    if(firebase.auth().currentUser.uid == doc.data().TeamObject.uid && date == doc.data().matchdate ){
-      console.log('yes');
-      this.presentAlertCheckbox()
-      
-    }else  if(firebase.auth().currentUser.uid == doc.data().aTeamObject.uid && date == doc.data().matchdate) {
-      this.presentAlertCheckbox()
-    }
-    // console.log('data',doc.data().TeamObject.uid);
-    
-  })
-})
+  getMatchFixtures() {
+    console.log('seko');
+    firebase.firestore().collection('MatchFixtures').get().then(res => {
+      let date = new Date();
+      res.forEach(doc => {
+        if (firebase.auth().currentUser.uid == doc.data().TeamObject.uid && date == doc.data().matchdate) {
+          console.log('yes');
+          this.presentAlertCheckbox()
+
+        } else if (firebase.auth().currentUser.uid == doc.data().aTeamObject.uid && date == doc.data().matchdate) {
+          this.presentAlertCheckbox()
+        }
+        // console.log('data',doc.data().TeamObject.uid);
+
+      })
+    })
 
   }
   async presentAlertCheckbox() {
-    firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').get().then(async res =>{
-     let player = {
+    firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').get().then(async res => {
+      let player = {
 
         type: 'checkbox',
         label: 'Checkbox 1',
         value: 'value1',
       }
-      res.forEach( doc =>{
-        
+      res.forEach(doc => {
+
         player = {
           type: 'checkbox',
           label: doc.data().fullName,
@@ -255,35 +258,35 @@ firebase.firestore().collection('MatchFixtures').get().then( res =>{
           value: null,
         }
       })
-          const alert = await this.alertController.create({
-      header: 'Select your players',
-      message: 'Please select your players',
-      inputs: this.players,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ok',
-          handler: data => {
-            data.forEach(element => {
-              console.log(element);
-              firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(element).update({
-                status : 'available'
-              })
-            });
-        
-            console.log('Confirm Ok', data);
-          }
-        }
-      ]
-    });
+      const alert = await this.alertController.create({
+        header: 'Select your players',
+        message: 'Please select your players',
+        inputs: this.players,
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log('Confirm Cancel');
+            }
+          }, {
+            text: 'Ok',
+            handler: data => {
+              data.forEach(element => {
+                console.log(element);
+                firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(element).update({
+                  status: 'available'
+                })
+              });
 
-    await alert.present();
+              console.log('Confirm Ok', data);
+            }
+          }
+        ]
+      });
+
+      await alert.present();
     })
 
   }
