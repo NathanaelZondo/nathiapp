@@ -555,7 +555,7 @@ export class RegisterpagePage implements OnInit {
     firebase.auth().onAuthStateChanged(i => {
       console.log('aid found', i.uid, ' aa', this.email, this.fullName);
 
-      firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' ,status : ''}).then(async re => {
+      firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' ,status : '', profileImage: this.profileImage}).then(async re => {
         await loader.dismiss()
         if(form.role == 'teamManager'){
           this.route.navigateByUrl("/add-team")

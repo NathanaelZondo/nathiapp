@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, AlertController } from '@ionic/angular';
 import { menuController } from '@ionic/core';
 import { MenuComponent } from '../components/menu/menu.component';
 import * as firebase from 'firebase';
@@ -8,6 +8,7 @@ import { PassInformationServiceService } from '../service/pass-information-servi
 import { AuthServiceService } from '../service/auth-service.service';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { NavigationExtras } from '@angular/router';
+import { element } from 'protractor';
 // import { FCM } from '@ionic-native/fcm/ngx';
 // import { OneSignal } from '@ionic-native/onesignal/ngx';
 @Component({
@@ -31,14 +32,17 @@ export class HomePage {
   accountRole = 'user'
   filterBy = 'comingUp'
   loadFilter = false;
+  players  = []
   constructor(public router: Router,
     public popoverController: PopoverController,
     public pass: PassInformationServiceService,
     public auth: AuthServiceService,
     public splashScreen: SplashScreen,
     // private oneSignal: OneSignal,
+    public alertController : AlertController,
     public ngZone: NgZone) {
     this.tourn.upcoming = [];
+   
     // this.router.navigate(['tournament']);
     // console.log('uid',firebase.auth().currentUser.uid);
     // this.getUserProfile()
@@ -98,30 +102,20 @@ export class HomePage {
       this.popover1.dismiss();
     }
   }
-  /*
-  getToken(){
-    this.oneSignal.getIds().then(res =>{
-      this.token = res.userId;
-    })
-  firebase.auth().onAuthStateChanged(res =>{
-    if(res.uid){
-      firebase.firestore().collection('Tokens').add({
-        uid: res.uid,
-        token: this.token
-      })
-      
-    }else if(!res.uid){
-      firebase.firestore().collection('Tokens').add({
-        uid: '',
-        token: this.token
-      })
-    }
-  })
-    
-  }
-  */
+check(){
+
+    this.presentAlertCheckbox()
+  
+}
   ngOnInit() {
+    let today = new Date();
+    // let timeToday = new 
+    let date = new Date();
+    console.log('date',date);
+    
     this.ngZone.run(() => {
+      this.check()
+      this.getMatchFixtures()
       this.auth.setUser(this.user);
       // this.getUserProfile();
       this.getUser();
@@ -221,4 +215,78 @@ export class HomePage {
   login() {
     this.router.navigate(['login'])
   }
+  getMatchFixtures(){
+console.log('seko');
+firebase.firestore().collection('MatchFixtures').get().then( res =>{
+  let date = new Date();
+  res.forEach(doc =>{
+    if(firebase.auth().currentUser.uid == doc.data().TeamObject.uid && date == doc.data().matchdate ){
+      console.log('yes');
+      this.presentAlertCheckbox()
+      
+    }else  if(firebase.auth().currentUser.uid == doc.data().aTeamObject.uid && date == doc.data().matchdate) {
+      this.presentAlertCheckbox()
+    }
+    // console.log('data',doc.data().TeamObject.uid);
+    
+  })
+})
+
+  }
+  async presentAlertCheckbox() {
+    firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').get().then(async res =>{
+     let player = {
+
+        type: 'checkbox',
+        label: 'Checkbox 1',
+        value: 'value1',
+      }
+      res.forEach( doc =>{
+        
+        player = {
+          type: 'checkbox',
+          label: doc.data().fullName,
+          value: doc.id,
+        }
+        this.players.push(player)
+        player = {
+          type: 'checkbox',
+          label: null,
+          value: null,
+        }
+      })
+          const alert = await this.alertController.create({
+      header: 'Select your players',
+      message: 'Please select your players',
+      inputs: this.players,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: data => {
+            data.forEach(element => {
+              console.log(element);
+              firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(element).update({
+                status : 'available'
+              })
+            });
+        
+            console.log('Confirm Ok', data);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+    })
+
+  }
+
+
 }
