@@ -114,7 +114,7 @@ check(){
     console.log('date',date);
     
     this.ngZone.run(() => {
-      this.check()
+      // this.check()
       this.getMatchFixtures()
       this.auth.setUser(this.user);
       // this.getUserProfile();
