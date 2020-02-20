@@ -398,7 +398,7 @@ ion-chip {
                 .selected {
                     transition: 0.3s;
                     transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
-                    background: whitesmoke !important;
+                    background: rgb(180, 180, 180) !important;
                     border-radius: 200px;
                     box-shadow: inset 2px 2px 2px #2727271f, inset -2px -2px 2px #ffffff;
                     text-shadow: 3px 3px 5px #2727271f, -3px -3px 5px #1717175c;
@@ -455,21 +455,20 @@ ion-chip {
             justify-content: space-evenly;
             align-items: center;
 
-            .h,
-            .s,
-            .a {
-                text-align: center;
 
-                p {
-                    margin: 10px 0;
-                    font-size: 4vw;
-                }
-            }
         }
     }
 }
 
-
+.h, .s, .a {
+    text-align: center;
+    flex-basis: 35%;
+    width: 35%;
+    p {
+        margin: 10px 0;
+        font-size: 4vw;
+    }
+}
 .goalscorers {
     background: radial-gradient(#fafafa, #ffffff);
     background-position-y: -83px;

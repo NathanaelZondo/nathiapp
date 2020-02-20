@@ -1,23 +1,21 @@
-import { AddPlayerService } from './../../services/add-player.service';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import * as firebase from 'firebase';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { LoadingController, ToastController, NavController, AlertController, ModalController } from '@ionic/angular';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { PlayerAddPage } from 'src/app/player-add/player-add.page';
+// import { PlayerAddPage } from 'src/app/player-add/player-add.page';
 @Component({
-  selector: 'app-add-player',
-  templateUrl: './add-player.page.html',
-  styleUrls: ['./add-player.page.scss'],
+  selector: 'app-player-add',
+  templateUrl: './player-add.page.html',
+  styleUrls: ['./player-add.page.scss'],
 })
-export class AddPlayerPage implements OnInit {
-  players: any = []
-  arr: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 9]
+export class PlayerAddPage implements OnInit {
+  db = firebase.firestore();
+  storage = firebase.storage().ref();
+  addPlayerForm: FormGroup;
   date
-  viewPlayer = {} as any
-  selectedId = 0
   playerNode = {
     fullName: '',
     palyerImage: '',
@@ -30,22 +28,12 @@ export class AddPlayerPage implements OnInit {
     height: '',
     Achievements: []
   }
-  editMode = false
-  editForm = document.getElementsByClassName('dFH')
-  buttonChange = 'add'
-  addPlayerForm: FormGroup;
-  db = firebase.firestore();
-  storage = firebase.storage().ref();
-  isuploading: false
   uploadprogress = 0;
   loadingProcess = false;
-  imageProgressText = 'Upload Image'
-  logoImage
-  GJerseyImage
-  TjerseyImage
-  counter: number;
+  buttonChange = 'add'
+  counter
+  editMode = false
   documentID
-
   position = [
     { value: 'Goalkeeper', label: '1 Goalkeeper' },
     { value: 'Right Fullback', label: '2 Right Fullback' },
@@ -86,9 +74,11 @@ export class AddPlayerPage implements OnInit {
     //   { type: 'required', message: 'Achievements is required.' }
     // ],
   };
-  dater = null
-  constructor(
-    private formBuilder: FormBuilder,
+  TjerseyImage
+  isuploading: false
+  imageProgressText = 'Upload Image'
+  editingPlayer = {}
+  constructor(private formBuilder: FormBuilder,
     private camera: Camera,
     public loadingController: LoadingController,
     private router: Router,
@@ -97,10 +87,12 @@ export class AddPlayerPage implements OnInit {
     public navctrl: NavController,
     public splashScreen: SplashScreen,
     public modalCtrl: ModalController,
-    private alertCtrl: AlertController,
-    private addPlayerModal: AddPlayerService
-    ) {
+    private alertCtrl: AlertController, public navCtrl: NavController,
+    private activatedRoute: ActivatedRoute) {
 
+  }
+
+  ngOnInit() {
     let v = new Date
     this.date = v.getFullYear() - 8
     this.addPlayerForm = this.formBuilder.group({
@@ -115,114 +107,20 @@ export class AddPlayerPage implements OnInit {
         this.formBuilder.control('')
       ])
     });
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.editingPlayer = this.router.getCurrentNavigation().extras.state.parms
 
-  }
-  viewInfo(p, i) {
-    this.selectedId = i
-    this.viewPlayer = p
-    console.log(p, this.selectedId)
-  }
-  getTeam() {
+        console.log(this.editingPlayer);
 
-    let obj = {
-      docid: null,
-      docdata: null
-    }
-
-    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then(res => {
-      if (res.exists) {
-        console.log(res.data());
-
+      } else {
+        console.log('No Player To edit');
+        
       }
-      this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').onSnapshot(async res => {
-        this.players = []
-
-        if (!res.empty) {
-          this.arr = []
-          res.forEach(doc => {
-            obj = {
-              docid: doc.id,
-              docdata: doc.data()
-            }
-            this.players.push(obj)
-            console.log('players', this.players);
-
-            // this.isPlayer = true
-          })
-          this.viewPlayer = this.players[0]
-          console.log(this.viewPlayer)
-        } else {
-          let alerter = await this.alertCtrl.create({
-            header: 'No Players',
-            message: 'Please complete the registration process by providing players for your team. Click on the bottom right button to start adding players. A minimum of 11 players are required.',
-            buttons: [{
-              text: 'Okay',
-              handler: () => {
-                this.add()
-              }
-            }]
-          })
-          await alerter.present()
-        }
-        this.db.collection('members').doc(firebase.auth().currentUser.uid).get().then(res => {
-          console.log('data', res.data());
-
-          if (res.data().status === '' && this.players.length > 0) {
-            this.db.collection('members').doc(firebase.auth().currentUser.uid).update({
-              status: 'awaiting'
-            })
-          }
-        })
-      })
-    })
-  }
-  back() {
-    this.navctrl.navigateBack('tabs/manageTeam')
+    });
   }
   get Achievements() {
     return this.addPlayerForm.get('Achievements') as FormArray
-  }
-  addNew() {
-    this.Achievements.push(this.formBuilder.control(''));
-  }
-  async add() {
-    // let addPlayerModal = await this.modalCtrl.create({
-    //   component: PlayerAddPage
-    // })
-    // await addPlayerModal.present()
-    this.navctrl.navigateForward('player-add')
-  }
-  close() {
-    this.addPlayerForm.reset()
-    this.dFH('close')
-    this.buttonChange = 'add'
-    this.editMode = false
-  }
-  edit(i) {
-    let navigationExtras: NavigationExtras = {
-      state: {
-        parms: i
-      }
-    };
-    // passes nav params
-    this.router.navigate(['player-add'], navigationExtras);
-  }
-  remove(index) {
-    console.log(this.addPlayerForm.get('Achievements'));
-
-    this.Achievements.removeAt(index)
-  }
-  dFH(cmd) {
-    switch (cmd) {
-      case 'open':
-        this.renderer.setStyle(this.editForm[0], 'display', 'flex');
-        break;
-      case 'close':
-        setTimeout(() => {
-          this.renderer.setStyle(this.editForm[0], 'display', 'none')
-        }, 500);
-        break;
-    }
   }
   async editPlayer() {
     this.loadingProcess = true;
@@ -230,13 +128,10 @@ export class AddPlayerPage implements OnInit {
       message: 'Creating Your Player..'
     });
     const user = this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(this.documentID).set(this.playerNode)
-
     // upon success...
     user.then(async () => {
       this.editMode = false
-      this.dFH('close')
       this.buttonChange = 'add'
-
       this.loadingProcess = false;
       this.addPlayerForm.reset()
       console.log(this.addPlayerForm);
@@ -301,7 +196,6 @@ export class AddPlayerPage implements OnInit {
         this.buttonChange = 'add'
         this.editMode = false
         this.loadingProcess = false
-        this.dFH('close')
         this.addPlayerForm.reset()
         this.playerNode = {
           fullName: '',
@@ -336,9 +230,6 @@ export class AddPlayerPage implements OnInit {
     }
 
   }
-
-
-  //Functions to upload images
   async selectImage() {
     let option: CameraOptions = {
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -379,28 +270,13 @@ export class AddPlayerPage implements OnInit {
           this.imageProgressText = 'Done'
           this.playerNode.palyerImage = downUrl;
           console.log('Image downUrl', downUrl);
-
-
         })
       })
     }, err => {
       console.log("Something went wrong: ", err);
     })
-
   }
-  done() {
-    this.buttonChange = 'add'
-    this.editMode = false
-  }
-  ngOnInit() {
-    setTimeout(() => {
-      this.getTeam()
-      this.splashScreen.hide()
-      
-    }, 3000);
-    // setTimeout(() => {
-    //   this.renderer.setStyle(this.editForm[0], 'display', 'none')
-    // }, 500);
-    
+  close() {
+    this.navCtrl.navigateBack('add-player')
   }
 }

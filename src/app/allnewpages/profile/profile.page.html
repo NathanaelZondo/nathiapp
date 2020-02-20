@@ -87,7 +87,7 @@
       </div>
 
       <ion-card class="animated" [ngClass]="{'fadeOut faster':loadFilter,'fadeInUp faster':!loadFilter}" mode="ios"
-        *ngFor="let t of tournaments">
+        *ngFor="let t of tournaments" (click)="viewTournament(t)">
         <ion-card-header>
           <ion-card-title style="font-weight: bolder;font-family: Muller; font-size: 5vw !important;">
             {{t.formInfo.tournamentName}}</ion-card-title>

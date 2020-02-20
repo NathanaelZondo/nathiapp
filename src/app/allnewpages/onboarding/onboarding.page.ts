@@ -155,6 +155,8 @@ export class OnboardingPage implements OnInit {
   }
   sign(page) {
     this.nativeStorage.setItem('doneOnboarding', true).then(res => {
+      console.log('On res');
+      
       switch (page) {
         case 'up':
           this.navCtrl.navigateRoot('registerpage')
@@ -167,7 +169,7 @@ export class OnboardingPage implements OnInit {
             break;
       }
     },err => {
-      console.log('storage err');
+      console.log('storage err', err);
       
       switch (page) {
         case 'up':

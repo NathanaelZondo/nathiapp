@@ -1,32 +1,39 @@
+import { AuthModule } from 'src/app/shared-modules/auth.module';
+import { RouterModule,Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AddPlayerPageRoutingModule } from './add-player-routing.module';
-
-import { AddPlayerPage } from './add-player.page';
+import { PlayerAddPageRoutingModule } from './player-add-routing.module';
 import { NgCircleProgressModule } from 'ng-circle-progress';
-import { PlayerAddPage } from 'src/app/player-add/player-add.page';
+import { PlayerAddPage } from './player-add.page';
+const routes: Routes = [
+  {
+    path: '',
+    component: PlayerAddPage
+  }
+];
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AddPlayerPageRoutingModule,
+    // PlayerAddPageRoutingModule,
+    RouterModule.forChild(routes),
+    AuthModule,
     ReactiveFormsModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       radius: 100,
       outerStrokeWidth: 16,
-      innerStrokeWidth: 2,
+      innerStrokeWidth: 8,
       outerStrokeColor: "#78C000",
-      innerStrokeColor: "#F3511D",
+      innerStrokeColor: "#C7E596",
       animationDuration: 300,
     })
   ],
-  entryComponents: [],
-  declarations: [AddPlayerPage]
+  declarations: [PlayerAddPage]
 })
-export class AddPlayerPageModule {}
+export class PlayerAddPageModule {}

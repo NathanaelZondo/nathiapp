@@ -32,6 +32,9 @@
   font-weight: normal;
   src: url('../assets/fonts/nasalization-rg.ttf');
 }
+ion-modal {
+  --border-width: 90vw;
+}
 :root {
   --ion-color-primary: #012615;
   --ion-color-primary-rgb: 1,38,21;

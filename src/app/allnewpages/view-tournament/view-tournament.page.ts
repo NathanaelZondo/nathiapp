@@ -13,7 +13,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 export class ViewTournamentPage implements OnInit {
   viewedTournament = null
   tournMatches = []
-  skeleton = [1, 2, 3, 4,5,6,7,8]
+  skeleton = [1, 2, 3, 4, 5, 6, 7, 8]
   noMatches = false
   tempArray = []
   participants = []
@@ -48,9 +48,9 @@ export class ViewTournamentPage implements OnInit {
     clientNotified: null,
     refNumber: "",
     status: "new"
-  } as any
+  }
   tournid;
-  constructor(public pass: PassInformationServiceService, public navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, public loadingController: LoadingController, public store: NativeStorage, public passService: PassInformationServiceService, public alertController: AlertController, public renderer: Renderer2,public toastCtrl: ToastController) { }
+  constructor(public pass: PassInformationServiceService, public navCtrl: NavController, private activatedRoute: ActivatedRoute, private router: Router, public loadingController: LoadingController, public store: NativeStorage, public passService: PassInformationServiceService, public alertController: AlertController, public renderer: Renderer2, public toastCtrl: ToastController) { }
   /*
   FOR THE NEW TOURNAMENT
    get the role of the user
@@ -124,7 +124,7 @@ export class ViewTournamentPage implements OnInit {
                   this.match.type2.push(doc.data())
                 } else if (doc.data().type == '1') { // 2
                   this.match.type1.push(doc.data())
-                  if (doc.data().score >= 1) {
+                  if (doc.data().score > doc.data().ascore) {
                     this.match.winner = doc.data().TeamObject
                   } else {
                     this.match.winner = doc.data().aTeamObject
@@ -136,7 +136,7 @@ export class ViewTournamentPage implements OnInit {
               console.log(this.match);
             } else {
               this.filterBy = 'nothing'
-              this.skeleton = [1, 2, 3, 4,5,6,7,8]
+              this.skeleton = [1, 2, 3, 4, 5, 6, 7, 8]
             }
           }).catch(err => { console.log(err); })
         } else {
@@ -174,21 +174,44 @@ export class ViewTournamentPage implements OnInit {
                 }
               })
               this.checkMatches()
-              
+
               console.log(this.match);
             } else {
               this.filterBy = 'nothing'
-              this.skeleton = [1, 2, 3, 4,5,6,7,8]
+              this.skeleton = [1, 2, 3, 4, 5, 6, 7, 8]
             }
 
           }).catch(err => {
             console.log(err);
 
           })
+          if (this.viewedTournament.state == 'inprogress') {
+            console.log('In Progress');
+
+            this.db.collection('PlayedMatches').where('tournid', '==', this.viewedTournament.doc_id).orderBy("matchdate", "desc").get().then(res => {
+              res.forEach(doc => {
+                // this.tempArray.push(doc.data())
+                // CHECK WICH MATCH TYPE IS WHICH AND PUSH IT INTO THE RESPECTIVE ARRAY
+                if (doc.data().type == '16') { // 32
+                  this.match.type16.push(doc.data())
+                } else if (doc.data().type == '8') { // 16
+                  this.match.type8.push(doc.data())
+                } else if (doc.data().type == '4') { // 8
+                  this.match.type4.push(doc.data())
+                } else if (doc.data().type == '2') { // 4
+                  this.match.type2.push(doc.data())
+                } else if (doc.data().type == '1') { // 2
+                  this.match.type1.push(doc.data())
+                }
+              })
+              // this.getPlayedMatches()
+              console.log(this.match);
+            }).catch(err => { console.log(err); })
+          }
         }
-        if (this.viewedTournament.state=='newTournament') {
+        if (this.viewedTournament.state == 'newTournament') {
           setTimeout(async () => {
-            if (this.skeleton.length>0) {
+            if (this.skeleton.length > 0) {
               this.noMatches = true
               let toaster = await this.toastCtrl.create({
                 message: 'This Touranments has no matches.',
@@ -202,12 +225,13 @@ export class ViewTournamentPage implements OnInit {
       }
     });
   }
-  go(){
-    
-    
-    let palceid= this.viewedTournament.address.placeID
-    console.log('go',palceid);
-    return window.location.href = 'https://www.google.com/maps/place/?q=place_id:'+palceid;
+  go() {
+
+
+    let palceid = this.viewedTournament.address.placeID
+    return window.location.href = 'https://www.google.com/maps/place/?q=place_id:' + palceid;
+    // return window.location.href = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+palceid+'&key=YOUR_API_KEY'
+    console.log('go', palceid);
   }
   getPlayedMatches() {
     // let obj = {
@@ -245,7 +269,7 @@ export class ViewTournamentPage implements OnInit {
         }
       })
       setTimeout(() => {
-        if (this.tournMatches.length==0&&this.skeleton.length>0) {
+        if (this.tournMatches.length == 0 && this.skeleton.length > 0) {
           this.noMatches = true
         }
         console.log('noMatches ', this.noMatches);
@@ -256,7 +280,7 @@ export class ViewTournamentPage implements OnInit {
   // should return defaults in page, * doesn't trigger somehow
   ionViewWillLeave() {
     this.tournMatches = []
-    this.skeleton = [1, 2, 3, 4,5,6,7,8]
+    this.skeleton = [1, 2, 3, 4, 5, 6, 7, 8]
     this.applytournaments = 'checking'
     this.storageKeys.forEach(element => {
       this.store.remove(element).then((res) => {
@@ -413,13 +437,36 @@ export class ViewTournamentPage implements OnInit {
     console.log(this.applytournaments);
 
     this.applytournaments = 'checking'
+    console.log('check role', this.role);
 
     if (this.role == 'teamManager') {
       this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).collection('teamApplications').doc(this.loggedInUser.uid).get().then(async res => {
-        console.log(res);
-        this.application = res.data()
-        console.log(this.application);
+        console.log(res.data());
+        if (res.data()) {
+          this.application = {
+            TeamObject: res.data().TeamObject,
+            TournamentID: res.data().TournamentID,
+            clientNotified: res.data().clientNotified,
+            refNumber: res.data().refNumber,
+            status: res.data().status
+          }
+          // this.application = res.data()
 
+          console.log(this.application);
+
+          if (this.application.status == 'accepted') {
+            let alerter = await this.alertController.create({
+              header: 'Congrats !',
+              message: 'Your application has been accepted, please use the following reference to pay the participating fee: <br><br> <b>' + this.application.refNumber + '</br><br> <br>* Full instructions in your email.',
+              buttons: [{
+                text: 'Okay'
+              }]
+            })
+            await alerter.present()
+          }
+        } else {
+          this.application.status = undefined
+        }
         if (res.exists) {
           setTimeout(() => {
             this.applytournaments = 'yes'
@@ -429,21 +476,17 @@ export class ViewTournamentPage implements OnInit {
             this.applytournaments = 'no'
           }, 1000);
         }
-        if (this.application.status == 'accepted') {
-          let alerter = await this.alertController.create({
-            header: 'Congrats !',
-            message: 'Your application has been accepted, please use the following reference to pay the participating fee: <br><br> <b>' + this.application.refNumber + '</br><br> <br>* Full instructions in your email.',
-            buttons: [{
-              text: 'Okay'
-            }]
-          })
-          await alerter.present()
-        }
       })
     } else {
       this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).collection('vendorApplications').doc(this.loggedInUser.uid).get().then(async res => {
         console.log(res);
-        this.application = res.data()
+        this.application = {
+          TeamObject: res.data().TeamObject,
+          TournamentID: res.data().TournamentID,
+          clientNotified: res.data().clientNotified,
+          refNumber: res.data().refNumber,
+          status: res.data().status
+        }
         console.log(this.application);
 
         if (res.exists) {
@@ -498,7 +541,7 @@ export class ViewTournamentPage implements OnInit {
     firebase.firestore().collection('members').doc(this.loggedInUser.uid).onSnapshot(res => {
       if (res.exists) {
         this.vendorObj = res.data()
-        console.log('vendor', this.vendorObj);
+        console.log('getProfile()', this.vendorObj);
 
         this.profile.fullName = res.data().form.fullName;
         this.profile.status = res.data().status;
@@ -591,7 +634,7 @@ export class ViewTournamentPage implements OnInit {
   // checks the division with the highest number of matches
   checkMatches() {
     console.log('checking matches');
-    
+
     if (this.match.type16.length > 0) {
       this.skeleton = []
       this.tournMatches = this.match.type16
@@ -623,7 +666,7 @@ export class ViewTournamentPage implements OnInit {
       this.filterBy = 'nothing'
     }
     setTimeout(() => {
-      if (this.skeleton.length>0) {
+      if (this.skeleton.length > 0) {
         this.noMatches = true
       }
       console.log('noMatches ', this.noMatches);
@@ -650,7 +693,7 @@ export class ViewTournamentPage implements OnInit {
         if (this.match.type16.length > 0) {
           this.tournMatches = this.match.type16
         } else {
-          this.skeleton = [1, 2, 3, 4,5,6,7,8]
+          this.skeleton = [1, 2, 3, 4, 5, 6, 7, 8]
         }
         break;
       case 'top16':
@@ -658,7 +701,7 @@ export class ViewTournamentPage implements OnInit {
         if (this.match.type8.length > 0) {
           this.tournMatches = this.match.type8
         } else {
-          this.skeleton = [1, 2, 3, 4,5,6,7,8]
+          this.skeleton = [1, 2, 3, 4, 5, 6, 7, 8]
         }
         break;
       case 'top8':
@@ -666,7 +709,7 @@ export class ViewTournamentPage implements OnInit {
         if (this.match.type4.length > 0) {
           this.tournMatches = this.match.type4
         } else {
-          this.skeleton = [1, 2, 3, 4,5,6,7,8]
+          this.skeleton = [1, 2, 3, 4, 5, 6, 7, 8]
         }
         break;
       case 'top4':
@@ -674,7 +717,7 @@ export class ViewTournamentPage implements OnInit {
         if (this.match.type2.length > 0) {
           this.tournMatches = this.match.type2
         } else {
-          this.skeleton = [1, 2, 3, 4,5,6,7,8]
+          this.skeleton = [1, 2, 3, 4, 5, 6, 7, 8]
         }
         break;
       case 'top1':
@@ -682,15 +725,15 @@ export class ViewTournamentPage implements OnInit {
         if (this.match.type1.length > 0) {
           this.tournMatches = this.match.type1
         } else {
-          this.skeleton = [1, 2, 3, 4,5,6,7,8]
+          this.skeleton = [1, 2, 3, 4, 5, 6, 7, 8]
         }
         break;
     }
     setTimeout(() => {
-      if (this.tournMatches.length==0&&this.skeleton.length>0) {
+      if (this.tournMatches.length == 0 && this.skeleton.length > 0) {
         this.noMatches = true
-        
-        
+
+
       }
       console.log('noMatches ', this.noMatches);
     }, 3000);
