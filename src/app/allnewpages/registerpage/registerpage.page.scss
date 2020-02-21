@@ -1,20 +1,126 @@
 ion-item {
     --background: rgba(255, 255, 255, 0);
-    --color: rgb(37, 37, 37) !important;
-    
-  }
-  ion-list {
-    background: none !important;
-    color: rgb(24, 24, 24) !important;
+    --color: rgb(255, 255, 255) !important;
+    padding: 0 !important;
+    // width: 70vw !important;
+    width: 100% !important;
+
+    ion-input {
+        color: white !important;
+    }
+
+    ion-label {
+        color: white !important;
+    }
 }
+
+ion-list {
+    background: none !important;
+    color: rgb(255, 255, 255) !important;
+    padding: 0 !important;
+}
+
+ion-list-header {
+    color: white !important;
+
+    ion-label {
+        color: white !important;
+    }
+}
+
+.profileImage {
+    background: rgba(151, 151, 151, 0);
+    position: relative;
+    border-radius: 20px;
+    width: 70%;
+    margin: 5px auto;
+
+    ion-button {
+        margin: 0 !important;
+    }
+
+    .imgC {
+        width: 30vw;
+        height: 30vw;
+        margin: 3vw auto;
+        border-radius: 200px;
+        overflow: hidden;
+        border: solid 1px rgba(245, 245, 245, 0.582);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .picker {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+.l {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 200;
+}
+
+.bended {
+    position: fixed;
+    bottom: 1vh;
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    border-radius: var(--radius);
+    box-shadow: var(--drop-shadow);
+    background: linear-gradient(#0BBB72, rgb(13, 134, 84));
+    text-align: center;
+    color: white;
+    padding-top: 7.5vw;
+
+    h1 {
+        font-size: 15vw !important;
+        margin: 0;
+        text-transform: uppercase;
+        font-family: 'Nasal' !important;
+        background: linear-gradient(#BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    p {
+        margin: 0;
+        font-size: 3vw;
+        letter-spacing: 3vw;
+        text-transform: uppercase;
+        font-family: 'Neou' !important;
+    }
+}
+
 .container {
     width: 100%;
     height: 100%;
-    background: url(../../../assets/footer_curves.svg) no-repeat, linear-gradient(145deg, #05a66b 10%, transparent 10%), linear-gradient(134deg, #e0b500 10%, transparent 10%), linear-gradient(157deg, #e0b500 10%, transparent 10%), radial-gradient(rgba(0, 0, 0, 0), #37776024);
+
     background-size: 100% auto;
     background-position: 100% 100%;
     display: flex;
     align-items: center;
+    display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    color: white;
+
     .recaptcha-container {
         position: absolute;
         top: 0;
@@ -23,33 +129,120 @@ ion-item {
         right: 0;
         z-index: 500;
     }
+
     form {
         text-align: center;
-        color: rgb(63, 63, 63) !important;
+        color: rgb(252, 252, 252) !important;
         width: 90%;
         margin: auto;
-        backdrop-filter: blur(50px);
+        // backdrop-filter: blur(50px);
         border-radius: 10px;
         box-shadow: 0px 3px 3px #17171738;
-        max-height: 90vh;
+        max-height: 70vh;
         border-radius: 10px;
         // box-shadow: 0px 3px 3px #17171738;
         box-shadow: -2px -2px 3px 0 #0000001c, 2px 2px 3px 0 #0000001c;
         overflow-y: auto;
         border: solid 1px #ffffff7d;
-        background: #efeeee6e;
-        
+        background: #1E1F28;
+        position: relative;
+
+        .managerInfo,
+        .vendorInfo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: whitesmoke;
+            z-index: 200;
+            display: none;
+            color: #171717;
+            overflow-y: auto;
+            padding: 10px;
+
+            img {
+                width: 50vw !important;
+            }
+
+            ul {
+                text-align: left;
+
+                li {
+                    font-size: 3vw;
+                }
+            }
+        }
+
+        ion-slides {
+            width: 100%;
+            // height: 70vh;
+        }
+
+        ion-slide {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto !important;
+
+            .btns {
+                display: flex;
+            }
+        }
+
+        .hedr {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            text-align: center;
+        }
+
         p {
             font-size: 3vw;
         }
+
         hr {
             background: rgba(255, 255, 255, 0.411);
         }
+
         .button {
             margin: 20px 0px;
         }
+
+        .info {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 200;
+        }
     }
 }
+
+.or {
+    margin: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    .line {
+        height: 2px;
+        background: linear-gradient(90deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+        flex-basis: 48%;
+        border-radius: 10px;
+    }
+
+    .text {
+        padding: 10px 0px;
+        flex-basis: 5%;
+
+        p {
+            margin: 0;
+            padding: 0px 10px;
+            text-transform: uppercase;
+        }
+    }
+}
+
 .close {
     position: absolute;
     top: 0;

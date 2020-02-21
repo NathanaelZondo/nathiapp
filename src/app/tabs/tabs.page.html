@@ -2,17 +2,12 @@
 
   <ion-tab-bar slot="bottom" >
     <!-- <ion-card #scroller no-padding no-margin class="no-border-radius segment-card"  (ionScroll)="onScroll($event)"> -->
-      <div class="indicator"  *ngIf="role == 'teamManager'"  [ngClass]="{'home':activePage=='home','apply':activePage=='apply','team':activePage=='team','profile':activePage=='profile','faq':activePage=='faq'}" ></div>
+      <!-- <div class="indicator"  *ngIf="role == 'teamManager'"  [ngClass]="{'home':activePage=='home','apply':activePage=='apply','team':activePage=='team','profile':activePage=='profile','faq':activePage=='faq'}" ></div> -->
 
     <ion-tab-button tab="home" class="segment-item" (click)="active('home')" >
     
       <ion-icon src="../../assets/noun_Ball_2578364.svg"></ion-icon>
       <!-- <ion-label>Tournaments</ion-label> -->
-    </ion-tab-button>
-
-    <ion-tab-button tab="applyTournament" *ngIf="role == 'teamManager'||role=='vendor'" (click)="active('apply')"  class="segment-item" >
-      <ion-icon src="../../assets/noun_tournament_2387029.svg"></ion-icon>
-      <!-- <ion-label>Apply</ion-label> -->
     </ion-tab-button>
 
     <ion-tab-button tab="manageTeam" class="segment-item" *ngIf="role == 'teamManager'" (click)="active('team')">
@@ -25,15 +20,6 @@
       <!-- <ion-label>Profile</ion-label> -->
     </ion-tab-button>
 
-    <ion-tab-button routerLink="/login"  *ngIf="role == 'user'" class="segment-item" (click)="active('login')">
-      <ion-icon src="../../assets/noun_Login_86790.svg"></ion-icon>
-      <!-- <ion-label>Login</ion-label> -->
-    </ion-tab-button>
-
-    <ion-tab-button routerLink="/registerpage" *ngIf="role == 'user'" class="segment-item" (click)="active('register')">
-      <ion-icon src="../../assets/noun_register_2773678.svg"></ion-icon>
-      <!-- <ion-label>Register</ion-label> -->
-    </ion-tab-button>
 
     <ion-tab-button tab="faqs" class="segment-item" (click)="active('faq')" >
       <ion-icon src="../../assets/noun_FAQ_1272960.svg" ></ion-icon>

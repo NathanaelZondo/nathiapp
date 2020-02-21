@@ -1,0 +1,122 @@
+<ion-content>
+  <div class="titler">
+    <p>Add Player</p>
+  </div>
+  <div class="former">
+    <form [formGroup]="addPlayerForm">
+      <div class="fList">
+        <div class="imager">
+          <circle-progress *ngIf="!playerNode.palyerImage" 
+          [percent]="[uploadprogress]"
+          [animation]="true"
+          [responsive]="true"
+          [titleFontSize]="50"
+          [subtitleFontSize]="20"
+          [subtitle]="[imageProgressText]"
+        ></circle-progress>
+        <img *ngIf="playerNode.palyerImage" src="{{playerNode.palyerImage}}" alt="">
+          <div class="imagePicker">
+            <ion-button size="small" fill="clear" (click)="selectImage()">
+              <ion-icon slot="icon-only" name="camera"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+                  <ion-item>
+        <ion-label position="floating">Full Name</ion-label>
+        <ion-input type="text" formControlName="fullName" [(ngModel)]="playerNode.fullName" ngDefaultControl>
+        </ion-input>
+      </ion-item>
+      <div class="error" *ngFor="let validate of validation_messages.fullName">
+        <div class="messages" style="color:red"
+          *ngIf="addPlayerForm.get('fullName').hasError(validate.type) && (addPlayerForm.get('fullName').dirty || addPlayerForm.get('fullName').touched)">
+          <p>{{validate.message}}</p>
+        </div>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Position</ion-label>
+        <ion-select formControlName="playerPosition" [(ngModel)]="playerNode.playerPosition">
+          <ion-select-option *ngFor="let g of position" [value]="g.value">{{g.label}} </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Jersey Number</ion-label>
+        <ion-input type="tel" formControlName="playerNumber" [(ngModel)]="playerNode.playerNumber" ngDefaultControl>
+        </ion-input>
+      </ion-item>
+      <div class="error" *ngFor="let validate of validation_messages.playerNumber">
+        <div class="messages" style="color:red"
+          *ngIf="addPlayerForm.get('playerNumber').hasError(validate.type) && (addPlayerForm.get('playerNumber').dirty || addPlayerForm.get('playerNumber').touched)">
+          <p>{{validate.message}}</p>
+        </div>
+      </div>
+ 
+      <ion-item>
+        <ion-label position="floating">Date of Birth</ion-label>
+        <ion-datetime formControlName="DOB" [(ngModel)]="playerNode.DOB" ngDefaultControl
+          displayFormat="DD, MMM YYYY" min="1970-03-14" max="{{date}}"></ion-datetime>
+      </ion-item>
+ 
+      <ion-item>
+        <ion-label position="floating">Previous Team</ion-label>
+        <ion-input type="text" formControlName="previousTeam" [(ngModel)]="playerNode.previousTeam"
+          ngDefaultControl></ion-input>
+      </ion-item>
+      <div class="error" *ngFor="let validate of validation_messages.previousTeam">
+        <div class="messages" style="color:red"
+          *ngIf="addPlayerForm.get('previousTeam').hasError(validate.type) && (addPlayerForm.get('previousTeam').dirty || addPlayerForm.get('previousTeam').touched)">
+          <p> {{validate.message}}</p>
+        </div>
+      </div>
+     
+      <ion-item>
+        <ion-label position="floating">Height <sup>(m)</sup></ion-label>
+        <ion-input type="tel" maxLength="3" formControlName="height" [(ngModel)]="playerNode.height"></ion-input>
+      </ion-item>
+      <div class="error" *ngFor="let validate of validation_messages.height">
+        <div class="messages" style="color:red"
+          *ngIf="addPlayerForm.get('height').hasError(validate.type) && (addPlayerForm.get('height').dirty || addPlayerForm.get('height').touched)">
+          <p> {{validate.message}}</p>
+        </div>
+      </div>
+      
+      <div class="achievements" formArrayName="Achievements">
+        <div class="btn">
+          <ion-button (click)="addNew()" size="small" shape="round" color="success">Add</ion-button>
+        </div>
+        <ion-item *ngFor="let ach of Achievements.controls;let i=index">
+          <ion-label position="floating">Achievement <ion-badge color="primary"> {{i+1}}</ion-badge>
+          </ion-label>
+          <ion-input type="text" [formControlName]="i"></ion-input>
+          <div class="closer">
+            <ion-button style="margin: 0;" shape="round" size="small" color="danger" (click)="remove(i)">
+              <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-item>
+      </div>
+
+      </div>
+
+      <br>
+      <div class="subButton" style="width: 100%;    margin: 0px auto 0px auto;
+      width: 100%;">
+        <div class="btn" style="text-align: center;">
+          <ion-button fill="clear" color="danger" shape="round" id="skip" (click)="close()" ion-button>Close
+          </ion-button>
+          <ion-button  *ngIf="buttonChange=='add'&&!loadingProcess" color="success" shape="round"
+            id="skip" (click)="createTeam(addPlayerForm)" type="submit" [disabled]="!addPlayerForm.valid"
+            ion-button>Save</ion-button>
+          <ion-button *ngIf="buttonChange=='edit'&&!loadingProcess" color="success" shape="round" id="skip"
+            (click)="editPlayer(addPlayerForm)" type="submit" [disabled]="!addPlayerForm.valid" ion-button>Done
+          </ion-button>
+          <ion-button *ngIf="loadingProcess" color="success" shape="round" id="skip" disabled="true" ion-button>
+            <ion-spinner></ion-spinner>
+          </ion-button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</ion-content>

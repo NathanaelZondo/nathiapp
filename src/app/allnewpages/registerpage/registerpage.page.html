@@ -1,57 +1,166 @@
 <ion-content>
   <div class="close">
-      <ion-fab-button size="small" color="light" (click)="close()">
-        <ion-icon name="close"></ion-icon>
-      </ion-fab-button>
-    </div>
-    <div class="container">
-      <div id="recaptcha-container"></div>
-  <form  [formGroup]="registrationForm" (ngSubmit)="addUser(registrationForm.value)">
-      <h4><b>Nathi's </b>Tournaments</h4> 
-      <p>Registration</p>
-      <hr>
-      <ion-item  style="border-radius: 10px;
-      margin: 2px 0px;">
-        <ion-label position="floating">Phone Number</ion-label>
-        <ion-input formControlName="phoneNumber" type="tel" [(ngModel)]="phoneNumber"></ion-input>
-      </ion-item>
-      
-     <ion-item  style="border-radius: 10px;
-     margin: 2px 0px;">
-        <ion-label position="floating">Full Name</ion-label>
-      <ion-input formControlName="fullName" type="text" [(ngModel)]="fullName"></ion-input>
-     </ion-item>
-     <ion-item  style="border-radius: 10px;
-     margin: 2px 0px;">
-        <ion-label position="floating">Email</ion-label>
-      <ion-input formControlName="email" type="text" [(ngModel)]="email"></ion-input>
-     </ion-item>
-      <ion-list>
-        <ion-radio-group formControlName="role"  [(ngModel)]="role">
-          <ion-list-header>
-            <ion-label style="color: rgb(46, 46, 46); font-weight: bolder;">Register as:</ion-label>
-          </ion-list-header>
-    
-          <ion-item style="border-radius: 10px;
-          margin: 2px 0px;">
-            <ion-label>Team manager</ion-label>
-            <ion-radio slot="start" value="teamManager" checked></ion-radio>
+    <ion-fab-button size="small" color="light" (click)="close()">
+      <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </div>
+
+  <div class="bended">
+    <h1>Nathi's</h1>
+    <p>Tournaments</p>
+  </div>
+  <div class="container">
+    <div id="recaptcha-container"></div>
+    <form [formGroup]="registrationForm" (ngSubmit)="addUser(registrationForm.value)">
+      <div class="info animated bounceIn" *ngIf="role=='vendor'">
+        <ion-fab-button size="small" color="light" (click)="information('vendor')">
+          <ion-icon name="information-circle"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <div class="info animated bounceIn" *ngIf="role=='teamManager'">
+        <ion-fab-button size="small" color="light" (click)="information('teamManager')">
+          <ion-icon name="information-circle"></ion-icon>
+        </ion-fab-button>
+      </div>
+      <!-- slide 1 = number, pass, role -->
+      <!-- slide 2 = image, name, email -->
+      <div class="managerInfo animated" [ngClass]="{'fadeInDown':managerInfo,'fadeOutUp':!managerInfo}">
+        <h1>Hi There Team Manager!</h1>
+        <img src="../../../assets/registration/manager.svg" width="30vw" alt="">
+        <p>The role of the team manager is to help alleviate some of the workload on the coaches by handling, or
+          delegating some of the smaller tasks associated with organizing the team.</p>
+        <p>As such its expected that you currently run a team. The next processes require information about the team.
+          <br> You will:</p>
+        <ul>
+          <li>Setup the team's information</li>
+          <li>Setup the team's squad by adding players to the team</li>
+          <li>Handle the your team's participation in tournaments.</li>
+        </ul>
+        <p><b>After you are done registering we will have to approve your profile before you can participate in
+            tournaments.</b></p>
+        <ion-button (click)="information('close')" fill="outline" shape="round">
+          I Understand
+        </ion-button>
+      </div>
+      <div class="vendorInfo animated" [ngClass]="{'fadeInDown':vendorInfo,'fadeOutUp':!vendorInfo}">
+        <h1>Hi There Vendor!</h1>
+        <img src="../../../assets/registration/vendor.svg" alt="">
+        <p>Thank you for registering with us. After you are done registering we will have to approve your profile before
+          you can participate in tournaments.</p>
+        <ion-button (click)="information('close')" expand="block" fill="outline" shape="round">
+          I Understand
+        </ion-button>
+      </div>
+      <ion-slides #slides>
+
+        <ion-slide>
+          <h4 style="margin: 20px;">
+            Welcome
+          </h4>
+          <ion-item lines="none" style="border-radius: 10px; margin: 2px 0px;">
+            <ion-label position="floating">Phone Number</ion-label>
+            <ion-input style="
+            border-bottom: solid 2px white;" formControlName="phoneNumber" type="tel" maxlength="10" [(ngModel)]="phoneNumber"></ion-input>
           </ion-item>
-    
-          <ion-item style="    border-radius: 10px;
-          margin: 2px 0px;
-      ">
-            <ion-label>Vendor</ion-label>
-            <ion-radio slot="start" value="vendor"></ion-radio>
+
+          <ion-item lines="none">
+            <ion-label position="floating">Register As</ion-label>
+            <ion-select style="
+            border-bottom: solid 2px white;
+             
+            " formControlName="role" [(ngModel)]="role" (ionChange)="information($event)">
+              <ion-select-option value="teamManager">Team Manager</ion-select-option>
+              <ion-select-option value="vendor">Vendor</ion-select-option>
+            </ion-select>
           </ion-item>
-        </ion-radio-group>
-      </ion-list>
-      <p style="width: 90%; margin: auto; text-align: center; padding: 10px;">By clicking Sign Up, you agree to our <span style="color: rgb(77, 184, 255);text-decoration: underline;">Terms</span> and <span style="color: rgb(77, 184, 255);text-decoration: underline;">Data Policy</span>. You may receive Notifications from us.</p>
-    <ion-button shape="round" id="sign-in-button" [disabled]="!registrationForm.valid"  type="submit" class="form-buttons"  >
-      Sign Up
-    </ion-button>
-    
+
+          <!-- <ion-list>
+            <ion-radio-group >
+              <ion-list-header>
+                <ion-label style="color: rgb(46, 46, 46); font-weight: bolder;">Register as:</ion-label>
+              </ion-list-header>
+
+              <ion-item style="border-radius: 10px; margin: 2px 0px;">
+                <ion-label>Team manager</ion-label>
+                <ion-radio color="light" slot="start" value="teamManager" checked></ion-radio>
+              </ion-item>
+
+              <ion-item style="border-radius: 10px;margin: 2px 0px;">
+                <ion-label>Vendor</ion-label>
+                <ion-radio color="light" slot="start" value="vendor"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list> -->
+          <ion-button *ngIf="phoneNumber.length<10||!role" size="small" color="light" shape="round"
+            fill="outline" disabled="true"> Register with Phone Number </ion-button>
+          <ion-button *ngIf="phoneNumber.length==10&&role" size="small" color="light" shape="round"
+            fill="outline" (click)="userAdd()"> Register with Phone Number </ion-button>
+          <div class="or">
+            <div class="line"></div>
+            <div class="text">
+              <p>or</p>
+            </div>
+            <div class="line"></div>
+          </div>
+          <ion-chip (click)="googleLogin()" color="light" mode="ios" outline="true">
+            <ion-icon color="light" name="logo-google"></ion-icon>
+            <ion-label>Register with Google</ion-label>
+          </ion-chip>
+        </ion-slide>
+
+
+        <ion-slide style="overflow-y:auto">
+
+          <h4 style="margin: 20px;">PROFILE SETUP</h4>
+
+          <div class="profileImage">
+            <div class="imgC" *ngIf="profileImage">
+              <img src="{{profileImage}}" alt="">
+            </div>
+            <circle-progress *ngIf="!profileImage" [percent]="[imageProgress]" [animation]="true" [responsive]="true"
+              [titleFontSize]="50" [subtitleFontSize]="20" [subtitle]="[imageText]"></circle-progress>
+            <div class="picker">
+              <ion-fab-button (click)="getImage()" size="small" shape="round" color="success">
+                <ion-icon name="camera"></ion-icon>
+              </ion-fab-button>
+            </div>
+          </div>
+          <ion-item lines="none" style="border-radius: 10px;
+         margin: 2px 0px;">
+            <ion-label position="floating">Full Name</ion-label>
+            <ion-input style="
+            border-bottom: solid 2px white;
+             
+            " formControlName="fullName" type="text" [(ngModel)]="fullName"></ion-input>
+          </ion-item>
+          <ion-item lines="none" style="border-radius: 10px;
+         margin: 2px 0px;">
+            <ion-label position="floating">Email</ion-label>
+            <ion-input style="
+            border-bottom: solid 2px white;
+             
+            " formControlName="email" type="email" [(ngModel)]="email"></ion-input>
+          </ion-item>
+
+          <div class="btns">
+
+            <ion-button size="small" shape="round" color="success" id="sign-in-button"
+              [disabled]="!registrationForm.valid" type="submit" class="form-buttons">
+              Done
+            </ion-button>
+
+          </div>
+          <p style="width: 90%; margin: 5px; text-align: center; padding: 10px;">By clicking Sign Up, you agree to our
+            <span style="color: rgb(77, 184, 255);text-decoration: underline;">Terms</span> and <span
+              style="color: rgb(77, 184, 255);text-decoration: underline;">Data Policy</span>. You may receive
+            Notifications from us.</p>
+        </ion-slide>
+      </ion-slides>
     </form>
-    </div>
-  
+  </div>
+  <div class="l">
+    <ion-button shape="round" color="light" fill="clear" id="sign-in-button" (click)="goLogin()">
+      Already have an account?&nbsp;&nbsp;<u>Log In</u>
+    </ion-button>
+  </div>
 </ion-content>

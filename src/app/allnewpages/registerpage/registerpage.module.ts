@@ -9,6 +9,7 @@ import { RegisterpagePageRoutingModule } from './registerpage-routing.module';
 import { RegisterpagePage } from './registerpage.page';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthModule } from 'src/app/shared-modules/auth.module';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 const routes: Routes = [
   {
     path: '',
@@ -22,7 +23,16 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     AuthModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgCircleProgressModule.forRoot({
+      // set defaults here
+      radius: 100,
+      outerStrokeWidth: 16,
+      innerStrokeWidth: 2,
+      outerStrokeColor: "#78C000",
+      innerStrokeColor: "#F3511D",
+      animationDuration: 300,
+    })
   ],
   declarations: [RegisterpagePage]
 })

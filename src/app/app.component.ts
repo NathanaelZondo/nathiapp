@@ -9,6 +9,8 @@ import { PassInformationServiceService } from './service/pass-information-servic
 import * as firebase from 'firebase';
 import {config} from './firebaseConfig'
 import { FCM } from '@ionic-native/fcm/ngx';
+import { NativeStorage } from "@ionic-native/native-storage/ngx";
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -28,40 +30,106 @@ export class AppComponent {
     private pass : PassInformationServiceService,
     public ngZone: NgZone,
     private alertCtrl: AlertController,
-    private fcm : FCM
+    private fcm : FCM,
+    private nativeStorage: NativeStorage,
+    public alertController: AlertController
   ) {
     
     this.initializeApp();
-    this.fcm.getToken().then(token => {
-      this.token = token
-      console.log('token',token);
-      firebase.firestore().collection('testToken').add({
-        token: token,
-        timeStamp : new Date
-      })
-      });
-    
-    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-      if (!user) {
-        this.router.navigateByUrl("/tabs");
-        console.log('not logged in');
-        
-        unsubscribe();
-      } else {
-this.ngZone.run(()=>{
-  if(this.token != null) {
-    firebase.firestore().collection('members').doc(user.uid).update({
-      Token : this.token
+    this.ngZone.run(() =>{
+      this.fcm.getToken().then(token => {
+        this.token = token
+        console.log('token',token);
+        firebase.firestore().collection('testToken').add({
+          token: token,
+          timeStamp : new Date
+        })
+        });
+        this.runProcesses()
+        // this.checkForTeamAndPlayers();
     })
-    this.router.navigateByUrl("/tabs");
-    console.log('logged in');
   }
-  unsubscribe();
-})
+  runProcesses() {
+    this.nativeStorage.getItem('doneOnboarding').then( res => {
+      console.log('App Component ', res);
+      
+      if (res == true) {
+        const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+          if (!user) {
+            this.router.navigateByUrl("/tabs");
+            unsubscribe();
+          } else {
+      this.ngZone.run(()=>{
+        firebase.auth().onAuthStateChanged(user =>{
+          if (user) {
+            firebase.firestore().collection('Teams').doc(user.uid).get().then(res =>{
+              firebase.firestore().collection('Teams').doc(user.uid).collection('Players').get().then( players =>{
+                if(!res.exists){
+                  this.router.navigateByUrl("/add-team")
+                  this.presentAlert()
+              }else if(res.exists && players.empty == true ){
+                console.log('no player');
+                
+                this.router.navigateByUrl("/add-player");
+                this.presentAlert1()
+              }
+              else{
+                this.router.navigateByUrl("/tabs")
+              }
+              })
+          
+            })
+          } else {
+            this.router.navigateByUrl("/tabs")
+          }
+    
+        })
+        firebase.firestore().collection('members').doc(user.uid).update({
+          Token : this.token
+        })
+     
+      unsubscribe();
+      })
+      }
+        });
+      } else {
+        this.router.navigateByUrl("onboarding");
+      }
+    }, err => {
+      console.log('component error ', err);
+      
+      // this.router.navigateByUrl("/tabs");
+      this.router.navigateByUrl("onboarding");
+    })
   }
-    });
-  }
+  checkForTeamAndPlayers(){
 
+    firebase.auth().onAuthStateChanged(user =>{
+      if (user) {
+        firebase.firestore().collection('Teams').doc(user.uid).get().then(res =>{
+          firebase.firestore().collection('Teams').doc(user.uid).collection('Players').get().then( players =>{
+            if(!res.exists){
+              this.router.navigateByUrl("/add-team")
+              this.presentAlert()
+          }else if(res.exists && players.empty == true ){
+            console.log('no player');
+            
+            this.router.navigateByUrl("/add-player")
+            this.presentAlert1()
+          }
+          else{
+            this.router.navigateByUrl("/tabs")
+          }
+          })
+      
+        })
+      } else {
+        this.router.navigateByUrl("/tabs")
+      }
+
+    })
+ 
+  }
   initializeApp() {
 
     this.platform.ready().then(() => {
@@ -70,13 +138,27 @@ this.ngZone.run(()=>{
        }
       this.statusBar.styleLightContent();
       this.statusBar.backgroundColorByHexString('#387336')
-
+       
     });
-
-
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'No Team found',
+      message: 'In order for you to be able to apply for tournaments, you must add your team details',
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
+  async presentAlert1() {
+    const alert = await this.alertController.create({
+      header: 'No Players found',
+      message: 'In order for you to be able to apply for tournaments, you must add your team players',
+      buttons: ['OK']
+    });
 
+    await alert.present();
+  }
 }
 

@@ -1,88 +1,220 @@
 <ion-content>
-  <div class="header">
-    <div class="backb">
-      <ion-fab-button size="small"  color="light" (click)="goBack()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-fab-button>
-    </div>
-    <div class="info">
-      <div class="t"> <span>{{viewedTournament.formInfo.tournamentName}}</span>
-        <hr>
-        <p>{{viewedTournament.formInfo.location}}</p>
-        <p *ngIf="viewedTournament.state!='finished'">{{viewedTournament.formInfo.startDate | date}} to {{viewedTournament.formInfo.endDate | date}}</p>
-        <p *ngIf="viewedTournament.state=='finished'">Ended {{viewedTournament.formInfo.endDate | date}}</p>
-        <p>R {{viewedTournament.formInfo.joiningFee}}.00 fee</p>
-        <p>Top: {{viewedTournament.formInfo.type}}</p>
-        <p *ngIf="viewedTournament.approvedVendors.length>0&&viewedTournament.state!='finished'" >Food will be sold</p>
-        <p *ngIf="viewedTournament.approvedVendors.length==0&&viewedTournament.state!='finished'" >No Food Sold</p>
-      <p *ngIf="viewedTournament.state=='finished'"><i>Winner <b>{{match.winner.teamName}}</b> </i></p>
+  <div class="oneData animated fadeInDown faster">
+    <div class="shad animated fadeIn delayer1">
+      <div class="title">
+        <div class="backer">
+          <ion-fab-button (click)="goBack()" size="small" color="light">
+            <ion-icon name="arrow-back"></ion-icon>
+          </ion-fab-button>
+        </div>
+
+
+        <ion-button class="animated fadeIn"
+          *ngIf="viewedTournament.state=='newTournament'&&applytournaments=='checking'" size="small"
+          color="success" disabled='true' fill='clear'>
+          <ion-spinner name="lines"></ion-spinner>
+        </ion-button>
+
+        <!-- 
+          shows only if the user's role is user
+          -->
+        <ion-button class="animated"
+          [ngClass]="{'bounceIn':viewedTournament.state=='newTournament'&&applytournaments=='no'}" (click)="login()"
+          *ngIf="role=='user'" size="small" color="success">
+          Join
+        </ion-button>
+
+        <!-- 
+          shows only if the '''TOURNAMENT IS NEW'''' and there is '''NO APPLICATION''' and user '''DIDN'T APPLY  FOR TOURNAMENTS'''
+          -->
+        <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments=='no'}"
+          *ngIf="viewedTournament.state=='newTournament'&&!application.status&&applytournaments=='no'" size="small"
+          color="success" (click)="applyForTournament()">
+          Participate
+        </ion-button>
+
+        <!-- 
+          shows only if the '''APPLICATION IS AWAITING'''' and '''APPLY TOURNAMENTS IS EITHER YES OR NO'''
+          -->
+        <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments!='checking'}"
+          *ngIf="application.status=='awaiting'&&applytournaments!='checking'" size="small" color="success"
+          disabled='true'>
+          Application Pending
+        </ion-button>
+
+        <!-- 
+          shows only if the '''APPLICATION IS ACCEPTED'''' and '''APPLY TOURNAMENTS IS EITHER YES OR NO'''
+          -->
+          <ion-button class="animated"
+          [ngClass]="{'bounceIn':application.status=='accepted'&&applytournaments!='checking'}"
+          *ngIf="application.status=='accepted'&&applytournaments!='checking'" size="small" color="success"
+          disabled='true'>
+          Application Accepted
+        </ion-button>
+
+          <!-- 
+          shows only if the '''TOURNAMENT IS NEW'''' and there is '''THE APPLICATION IS PAID''' and '''APPLY TOURNAMENTS IS EITHER YES OR NO'''
+          -->
+          <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments!='checking'}"
+          *ngIf="application.status=='paid'&&applytournaments!='checking'&&viewedTournament.state=='newTournament'"
+          size="small" color="success" disabled='true'>
+          Participating Member
+        </ion-button>
+
+        <!-- 
+          shows only if the '''TOURNAMENT IS FINISHED'''' and user role is ''
+          NOT A NORMAL USER''
+          -->
+        <ion-button class="animated fadeIn slow" *ngIf="viewedTournament.state=='finished'&&role!=='user'" size="small"
+          color="success" fill="clear" >
+          {{match.winner.teamName}} <ion-skeleton-text *ngIf="!match.winner.teamName"  animated style="width: 20vw"></ion-skeleton-text> won
+        </ion-button>
+      </div>
+      <div class="data">
+        <h1>{{viewedTournament.formInfo.tournamentName}}</h1>
+      <p id="desc">{{viewedTournament.formInfo.bio}}</p>
+      </div>
+      <div class="line"></div>
+      <div class="more">
+        <div class="date">
+          <ion-icon src="../../../assets/noun_date_2080425.svg"></ion-icon>
+          <p>{{viewedTournament.formInfo.startDate | date}}</p>
+        </div>
+        <div class="location" (click)="go()">
+          <ion-icon src="../../../assets/noun_Location_3076235.svg"></ion-icon>
+          <p><u>{{viewedTournament.formInfo.stadiumName}}</u></p>
+        </div>
       </div>
     </div>
-    <div class="sponsors">
-      <div class="sTitle">
-        
+    <div class="participants animated fadeIn delayer2 fast">
+      <div class="pTitle">
+        <h4>Participants</h4>
       </div>
-      <div class="arrSponsors">
-        <div class="image" *ngFor="let v of viewedTournament.sponsors">
-          <img src="{{v.sponsorImage}}">
+      <div class="plist">
+        <div class="img animated fadeInLeft" *ngFor="let item of skeleton">
+
+        </div>
+        <div class="img animated fadeInLeft" *ngFor="let item of participants">
+          <img *ngIf="item.teamLogo" src="{{item.teamLogo}}" alt="">
+          <img *ngIf="!item.teamLogo" style="opacity: .4;" src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="">
+        </div>
+      </div>
+      <div class="dSegms">
+        <div class="filters animated fadeIn faster">
+
+          <ion-button *ngIf="match.type16.length>0" class="filters animated fadeIn faster"
+            [ngClass]="{'selected':filterBy=='top32'}" color="dark" (click)="segmentChanged('top32')"
+            style="font-size: 3vw;" size="small" fill="clear">
+            Top 32
+          </ion-button>
+
+          <ion-button *ngIf="match.type8.length>0" class="filters animated fadeIn faster"
+            [ngClass]="{'selected':filterBy=='top16'}" color="dark" (click)="segmentChanged('top16')"
+            style="font-size: 3vw;" size="small" fill="clear">
+            Top 16
+          </ion-button>
+
+          <ion-button *ngIf="match.type4.length>0" class="filters animated fadeIn faster"
+            [ngClass]="{'selected':filterBy=='top8'}" color="dark" (click)="segmentChanged('top8')"
+            style="font-size: 3vw;" size="small" fill="clear">
+            Top 8
+          </ion-button>
+
+          <ion-button *ngIf="match.type2.length>0" class="filters animated fadeIn faster"
+            [ngClass]="{'selected':filterBy=='top4'}" color="dark" (click)="segmentChanged('top4')"
+            style="font-size: 3vw;" size="small" fill="clear">
+            Semi-Final
+          </ion-button>
+
+          <ion-button *ngIf="match.type1.length>0" class="filters animated fadeIn faster"
+            [ngClass]="{'selected':filterBy=='top1'}" color="dark" (click)="segmentChanged('top1')"
+            style="font-size: 3vw;" size="small" fill="clear">
+            Final
+          </ion-button>
+          <h1 style="margin: auto; text-align: center; box-shadow: none !important;"
+            class="filters animated fadeIn faster" *ngIf="filterBy=='nothing'">
+            Next Stage is being setup
+          </h1>
+          <div class="dLine animated fadeIn delay-1s" *ngIf="viewedTournament.state!='newTournament'">
+
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="matches">
-    <div class="mTitle">
-      <div class="label">
-        <p>Matches</p>
-      </div>
-      <div class="line">
-        <div class="l"></div>
-      </div>
-      <ion-segment scrollable="true" [(ngModel)]="category" (ionChange)="segmentChanged($event)">
-        <ion-segment-button *ngIf="match.type16.length>0" mode="ios" value="top32" color="primary">
-          <ion-label>Top 32</ion-label>
-        </ion-segment-button>
-        <ion-segment-button *ngIf="match.type8.length>0" mode="ios" value="top16">
-          <ion-label>Top 16</ion-label>
-        </ion-segment-button>
-        <ion-segment-button *ngIf="match.type4.length>0" mode="ios" value="top8">
-          <ion-label>Top 8</ion-label>
-        </ion-segment-button>
-        <ion-segment-button mode="ios" value="top4">
-          <ion-label>Semi-Final</ion-label>
-        </ion-segment-button>
-        <ion-segment-button mode="ios" value="top1">
-          <ion-label>Final</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-    </div>
-    <div class="list">
-      <div class="matcher" *ngIf="tournMatches.length==0">
-        <p style="margin: auto;text-align: center;">Next division is being setup</p>
-      </div>
-      <div class="match" *ngFor="let m of tournMatches" (click)="viewMatch(m)">
-        <div class="date">
-          <p>{{m.matchdate | date}} - {{m.matchdate | date:'shortTime'}}</p>
-        </div>
-        <div class="details">
-          <div class="home">
-            <p>{{m.TeamObject.teamName}}</p>
-          </div>
-          <div class="vs">
-            <p *ngIf="viewedTournament.state!='finished'">v</p>
-            <p *ngIf="viewedTournament.state=='finished'">{{m.score}} FT {{m.ascore}}</p>
-          </div>
-          <div class="away">
-            <p>{{m.aTeamObject.teamName}}</p>
-          </div>
-        </div>
+  <!-- 
+    MATCH STARTED
+    half = 'First Half'
 
-        <div class="homeF">
-          <p>Home</p>
-        </div>
-        <div class="awayF">
-          <p>Away</p>
-        </div>
+    HALF TIME
+    half = 'Second Half'
 
+    FULL TIME
+    half = 'Half Time'
+    matchstate = 'complete'
+   -->
+  <div class="threeData">
+    <div class="matchs animated fadeIn delayer1">
+      <div class="matchList">
+        <div class="fadeLeft"></div>
+        <div class="fadeRight"></div>
+        <div class="m animated fadeInRight delayer2" [ngClass]="{
+          'nMargin':tournMatches.length>1,
+          'cMargin':tournMatches.length==1,
+          'endedMatch':item.half=='Second Half'&&item.matchstate=='complete'
+        }" *ngFor="let item of tournMatches" (click)="viewMatch(item)">
+
+          <div class="mStatus">
+            <ion-button *ngIf="!item.half"  size="small" shape="round" color="light">
+              Not started
+            </ion-button>
+            <ion-button  *ngIf="item.half=='First Half'"   size="small" shape="round" color="medium">
+              Live Now
+            </ion-button>
+            <ion-button  *ngIf="item.half=='Second Half'&&item.matchstate=='incomplete'"   size="small" shape="round" color="medium">
+              Half Time
+            </ion-button>
+            <ion-button size="small" shape="round" color="danger"  *ngIf="item.matchstate=='complete'&&item.half=='Second Half'"  >
+              Match Ended
+            </ion-button>
+          </div>
+          <div class="dimmer" [ngClass]="{'endedMatch':item.matchstate=='complete'&&item.half=='Second Half'}" *ngIf="item.matchstate=='complete'&&item.half=='Second Half'">
+
+          </div>
+          <div class="teams">
+            <div class="h">
+              <div *ngIf="item.TeamObject.teamLogo"  class="img"><img src="{{item.TeamObject.teamLogo}}"></div>
+              <div *ngIf="!item.TeamObject.teamLogo"  class="img"><img style="opacity: .4;" src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="No Image"></div>
+              
+            </div>
+            <div class="v">
+              <p *ngIf="!item.half">{{item.matchdate | date:'shortTime'}}</p>
+              <p *ngIf="(item.half=='First Half'||item.half=='Second Half')&&item.matchstate=='incomplete'">v</p>
+              <p *ngIf="item.matchstate=='complete'&&item.half=='Second Half'">FT</p>
+            </div>
+            <!-- [ngStyle]="{'background': 'url(' + sampImg + ') no-repeat 0 0 / cover'}" -->
+            <div class="a">
+              <div *ngIf="item.aTeamObject.teamLogo"  class="img"><img src="{{item.aTeamObject.teamLogo}}"></div>
+              <div *ngIf="!item.aTeamObject.teamLogo"  class="img"><img style="opacity: .4;" src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="No Image"></div>
+            </div>
+          </div>
+          <div class="data">
+            <h5>{{viewedTournament.formInfo.location}}</h5>
+            <p>{{item.matchdate | date:'MMM dd'}} - {{item.matchdate | date:'shortTime'}}</p>
+          </div>
+          <div class="line"></div>
+        </div>
+        <div class="m animated fadeInRight delayer2" [ngClass]="{'nMargin':tournMatches.length>1,'cMargin':tournMatches.length==1}" style="margin: 0px 4px" *ngFor="let item of skeleton" (click)="viewMatch(item)">
+          <div class="ion-padding custom-skeleton">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </div>
+        
+          <div class="line"></div>
+        </div>
       </div>
     </div>
   </div>

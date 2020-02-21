@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, AlertController } from '@ionic/angular';
 import { menuController } from '@ionic/core';
 import { MenuComponent } from '../components/menu/menu.component';
 import * as firebase from 'firebase';
@@ -8,6 +8,9 @@ import { PassInformationServiceService } from '../service/pass-information-servi
 import { AuthServiceService } from '../service/auth-service.service';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { NavigationExtras } from '@angular/router';
+import { element } from 'protractor';
+import * as moment from 'moment'
+// import {moment} from 
 // import { FCM } from '@ionic-native/fcm/ngx';
 // import { OneSignal } from '@ionic-native/onesignal/ngx';
 @Component({
@@ -21,55 +24,69 @@ export class HomePage {
   role
   user
   token
-  inprogress = []
-  upcoming = []
-  finished = []
-  accountRole = null
+  skeleton = [1, 2, 3, 4, 5, 6, 7]
+  viewTournaments = []
+  tourn = {
+    inprogres: [],
+    upcoming: [],
+    finished: []
+  }
+  accountRole = 'user'
+  filterBy = 'comingUp'
+  loadFilter = false;
+  players = []
   constructor(public router: Router,
     public popoverController: PopoverController,
     public pass: PassInformationServiceService,
     public auth: AuthServiceService,
     public splashScreen: SplashScreen,
     // private oneSignal: OneSignal,
+    public alertController: AlertController,
     public ngZone: NgZone) {
-    this.upcoming = [];
+    this.tourn.upcoming = [];
+
     // this.router.navigate(['tournament']);
     // console.log('uid',firebase.auth().currentUser.uid);
     // this.getUserProfile()
     // this.user = firebase.auth().currentUser.uid
 
     firebase.firestore().collection('newTournaments').where("state", '==', 'newTournament').onSnapshot(res => {
-      this.upcoming = []
+      this.tourn.upcoming = []
       res.forEach(val => {
-       
-if (val.data().approved == true) {
-           console.log("here", this.upcoming)
-  this.upcoming.push({ ...{ doc_id: val.id }, ...val.data() });
 
-  if (this.upcoming.length == undefined) {
-    this.upcoming = [];
-  }
-  else {
-    // this.upcoming.push({ ...{ doc_id: val.id }, ...val.data() });
-  }
-}
+        if (val.data().approved == true) {
+          console.log("here", this.tourn.upcoming)
+          this.tourn.upcoming.push({ ...{ doc_id: val.id }, ...val.data() });
+
+          if (this.tourn.upcoming.length == undefined) {
+            this.tourn.upcoming = [];
+          }
+          else {
+            // this.upcoming.push({ ...{ doc_id: val.id }, ...val.data() });
+          }
+        }
       })
+
+      if (this.tourn.upcoming.length > 0) {
+        this.skeleton = []
+      this.viewTournaments = this.tourn.upcoming
+      }
     })
 
 
     firebase.firestore().collection('newTournaments').where("state", '==', 'inprogress').onSnapshot(res => {
-      this.inprogress = []
+      this.tourn.inprogres = []
       res.forEach(val => {
-        this.inprogress.push({ ...{ doc_id: val.id }, ...val.data() });
-        console.log("inprog", this.inprogress)
+        this.tourn.inprogres.push({ ...{ doc_id: val.id }, ...val.data() });
+        console.log("inprog", this.tourn.inprogres)
       })
     })
 
 
     firebase.firestore().collection('newTournaments').where("state", '==', 'finished').onSnapshot(res => {
-      this.finished =[]
+      this.tourn.finished = []
       res.forEach(val => {
-        this.finished.push({ ...{ doc_id: val.id }, ...val.data() });
+        this.tourn.finished.push({ ...{ doc_id: val.id }, ...val.data() });
         console.log("here")
       })
     })
@@ -90,30 +107,25 @@ if (val.data().approved == true) {
       this.popover1.dismiss();
     }
   }
-  /*
-  getToken(){
-    this.oneSignal.getIds().then(res =>{
-      this.token = res.userId;
-    })
-  firebase.auth().onAuthStateChanged(res =>{
-    if(res.uid){
-      firebase.firestore().collection('Tokens').add({
-        uid: res.uid,
-        token: this.token
-      })
-      
-    }else if(!res.uid){
-      firebase.firestore().collection('Tokens').add({
-        uid: '',
-        token: this.token
-      })
-    }
-  })
-    
+  check() {
+
+    this.presentAlertCheckbox()
+
   }
-  */
   ngOnInit() {
+    let t = new Date('22/02/2020') 
+  let s =  moment([2020,2,22]).fromNow();         
+  console.log('izesha', s);
+  
+    let today = new Date();
+    // let timeToday = new 
+    let date = new Date();
+    console.log('date', date);
+
     this.ngZone.run(() => {
+      // this.check()
+      this.getMatchFixtures()
+      // this.presentAlertCheckbox();
       this.auth.setUser(this.user);
       // this.getUserProfile();
       this.getUser();
@@ -161,4 +173,133 @@ if (val.data().approved == true) {
     // passes nav params
     this.router.navigate(['view-tournament'], navigationExtras);
   }
+  filter(by) {
+    if (this.filterBy != by) {
+      this.loadFilter = true
+      this.filterBy = by
+      console.log(this.filterBy);
+
+      switch (by) {
+        case 'comingUp':
+
+          setTimeout(() => {
+            this.viewTournaments = this.tourn.upcoming
+
+            this.loadFilter = false
+            if (this.tourn.upcoming.length == 0) {
+              this.skeleton = [1, 2, 3, 4, 5, 6, 7]
+            } else {
+              this.skeleton = []
+            }
+          }, 100);
+          break;
+        case 'inProgress':
+
+          setTimeout(() => {
+            this.viewTournaments = this.tourn.inprogres
+
+            this.loadFilter = false
+            if (this.tourn.inprogres.length == 0) {
+              this.skeleton = [1, 2, 3, 4, 5, 6, 7]
+            } else {
+              this.skeleton = []
+            }
+          }, 100);
+          break;
+        case 'results':
+
+          setTimeout(() => {
+            this.viewTournaments = this.tourn.finished
+
+            this.loadFilter = false
+            if (this.tourn.finished.length == 0) {
+              this.skeleton = [1, 2, 3, 4, 5, 6, 7]
+            } else {
+              this.skeleton = []
+            }
+          }, 100);
+          break;
+      }
+    }
+  }
+  login() {
+    this.router.navigate(['login'])
+  }
+  getMatchFixtures(){
+console.log('seko');
+firebase.firestore().collection('MatchFixtures').get().then( res =>{
+  let date = new Date();
+  res.forEach(doc =>{
+    if(firebase.auth().currentUser.uid == doc.data().TeamObject.uid && date == doc.data().matchdate ){
+      console.log('yes');
+      // this.presentAlertCheckbox()
+      
+    }else  if(firebase.auth().currentUser.uid == doc.data().aTeamObject.uid && date == doc.data().matchdate) {
+      // this.presentAlertCheckbox()
+    }
+    // console.log('data',doc.data().TeamObject.uid);
+    
+  })
+})
+
+  }
+  async presentAlertCheckbox() {
+  firebase.auth().onAuthStateChanged( user =>{
+    if(user){
+      firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').get().then(async res =>{
+        let player = {
+   
+           type: 'checkbox',
+           label: 'Checkbox 1',
+           value: 'value1',
+         }
+         res.forEach( doc =>{
+           
+           player = {
+             type: 'checkbox',
+             label: doc.data().fullName,
+             value: doc.id,
+           }
+           this.players.push(player)
+           player = {
+             type: 'checkbox',
+             label: null,
+             value: null,
+           }
+         })
+             const alert = await this.alertController.create({
+         header: 'Select your players',
+         message: 'Please select your players',
+         inputs: this.players,
+         buttons: [
+           {
+             text: 'Cancel',
+             role: 'cancel',
+             cssClass: 'secondary',
+             handler: () => {
+               console.log('Confirm Cancel');
+             }
+           }, {
+             text: 'Ok',
+             handler: data => {
+               data.forEach(element => {
+                 console.log(element);
+                 firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(element).update({
+                   status : 'available'
+                 })
+               });
+           
+               console.log('Confirm Ok', data);
+             }
+           }
+         ]
+       });
+   
+       await alert.present();
+       }) 
+    }
+  })
+  }
+
+
 }

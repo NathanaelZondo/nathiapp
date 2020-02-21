@@ -1,201 +1,212 @@
 <ion-content>
-<div class="container">
-    <div class="playerInfo animated" [ngClass]="{'bounceInDown':viewPlayer,'bounceOutUp':!viewPlayer}">
-        <div class="playerData">
-            <div class="image">
-                <img *ngIf="!playerViewed.palyerImage"  src="../../../assets/nathi_noImage.png" alt="">
+  
+    <div class="teamInfo" [ngClass]="{'oTeam':viewTeam,'cTeam':!viewTeam}">
+<div class="images">
+    <div class="jersey">
+    <img *ngIf="teamSide.teamJerseyIMG"  src="{{teamSide.teamJerseyIMG}}" alt="">
+    <img *ngIf="!teamSide.teamJerseyIMG"  src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="">
+    </div>
+    <div class="logo">
+        <img *ngIf="teamSide.teamLogo"  src="{{teamSide.teamLogo}}" alt="">
+        <img *ngIf="!teamSide.teamLogo"  src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="">
+    </div>
+    <div class="keeper">
+        <img *ngIf="teamSide.goalKeeperJerseyIMG"  src="{{teamSide.goalKeeperJerseyIMG}}" alt="">
+        <img *ngIf="!teamSide.goalKeeperJerseyIMG"  src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="">
+    </div>
+</div>
+<div class="t">
+    <div class="s">
+    <h1>{{teamSide.teamName}}</h1>
+    <p>Coach: {{teamSide.teamName}}</p>
+    <p>{{teamSide.tel}}</p>
+    <p>Based in {{teamSide.region}}</p>
+    </div>
+</div>
+<div class="close">
+    <ion-fab-button size="small" (click)="team('home','close')">
+        <ion-icon name="arrow-up"></ion-icon>
+    </ion-fab-button>
+</div>
+    </div>
+    <div class="playerInfo" [ngClass]="{'oPlayer':viewPlayer,'cPlayer':!viewPlayer}" >
+        <div class="img">
             <img *ngIf="playerViewed.palyerImage"  src="{{playerViewed.palyerImage}}" alt="">
-            </div>
-            <div class="details">
-            <h2>{{playerViewed.fullName}}</h2>
-                <hr>
-                <p>{{playerViewed.playerPosition}}</p>
-            <p>Previous Team {{playerViewed.previousTeam}}</p>
+        <img *ngIf="!playerViewed.palyerImage" style=" width: 100%;
+        height: 100%;
+        object-fit: cover;" src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="">
+        </div>
+        <div class="det">
+        <h1>{{playerViewed.fullName}}</h1>
+            <p>{{playerViewed.playerPosition}}</p>
+            <p>{{playerViewed.Achievements}}</p>
             <p>{{playerViewed.height}}m tall</p>
-                <div class="clos">
-                    <ion-button shape="round" (click)="player('away','close', null)">
-                        Close
-                    </ion-button>
-                </div>
-            </div>
-            
+        </div>
+        <div class="close">
+            <ion-fab-button size="small" (click)="player('close',null)">
+                <ion-icon name="arrow-up"></ion-icon>
+            </ion-fab-button>
         </div>
     </div>
+    <div class="topPart">
+        <div class="data">
+            <div class="head">
+                <div class="backer">
+                    <ion-fab-button size="small" color="light" (click)="goBack()">
+                        <ion-icon name="arrow-back"></ion-icon>
+                    </ion-fab-button>
+                </div>
+                <div class="title">
+                    <p style="font-family: Neou;">Scoreboard</p>
+                </div>
 
-    <div class="teamInfo animated" [ngClass]="{'bounceInDown':viewTeam,'bounceOutUp':!viewTeam}">
-        <div class="teamData" *ngIf="teamSide=='home'" >
-            <div class="goalKeeperJersey image">
-                <img *ngIf="object.TeamObject.goalKeeperJerseyIMG" src="{{object.TeamObject.goalKeeperJerseyIMG}}" alt="">
-                <img *ngIf="!object.TeamObject.goalKeeperJerseyIMG"  src="../../../assets/nathi_noImage.png" alt="">
             </div>
-            <div class="teamLogo m-image">
-                <img *ngIf="object.TeamObject.teamLogo" src="{{object.TeamObject.teamLogo}}" alt="">
-                <img *ngIf="!object.TeamObject.teamLogo"  src="../../../assets/nathi_noImage.png" alt="">
-            </div>
-            <div class="playerJersey image">
-                <img *ngIf="object.TeamObject.teamJerseyIMG" src="{{object.TeamObject.teamJerseyIMG}}" alt="">
-                <img *ngIf="!object.TeamObject.teamJerseyIMG"  src="../../../assets/nathi_noImage.png" alt="">
-            </div>
-            <div class="information">
-                <h1>{{object.TeamObject.teamName}}</h1>
-                <hr>
-                <p>Coach: {{object.TeamObject.coachName}}</p>
-                <p> {{object.TeamObject.tel}}</p>
-                <p>Based in  {{object.TeamObject.region}}</p>
-                <div class="clos">
-                    <ion-button shape="round" (click)="team('away', 'close', null)">
-                        Close
-                    </ion-button>
+            <div class="status">
+                <div class="line">
+                    <div class="l"></div>
+                </div>
+                <div class="text">
+                    <p style="font-family: Neou;">Match&nbsp;Started</p>
+                </div>
+                <div class="line">
+                    <div class="l"></div>
                 </div>
             </div>
-        </div>
-        <div class="teamData" *ngIf="teamSide=='away'">
-            <div class="goalKeeperJersey image">
-                <img *ngIf="object.aTeamObject.goalKeeperJerseyIMG"  src="{{object.aTeamObject.goalKeeperJerseyIMG}}" alt="">
-                <img *ngIf="!object.aTeamObject.goalKeeperJerseyIMG" src="../../../assets/nathi_noImage.png" alt="">
+            <div class="location">
+                <!-- stadiumName -->
+                <p style="font-family: Muller;"><b>{{object.location}} - {{object.matchdate | date}},
+                        {{object.matchdate | date:'shortTime'}}</b></p>
             </div>
-            <div class="teamLogo m-image">
-                <img *ngIf="object.aTeamObject.teamLogo"  src="{{object.aTeamObject.teamLogo}}" alt="">
-                <img *ngIf="!object.aTeamObject.teamLogo" src="../../../assets/nathi_noImage.png" alt="">
-            </div>
-            <div class="playerJersey image">
-                <img *ngIf="object.aTeamObject.teamJerseyIMG" src="{{object.aTeamObject.teamJerseyIMG}}" alt="">
-                <img *ngIf="!object.aTeamObject.teamJerseyIMG" src="../../../assets/nathi_noImage.png" alt="">
-            </div>
-            <div class="information">
-                <h1>{{object.aTeamObject.teamName}}</h1>
-                <hr>
-                <p>Coach: {{object.aTeamObject.coachName}}</p>
-                <p> {{object.aTeamObject.tel}}</p>
-                <p>Based in  {{object.aTeamObject.region}}</p>
-                <div class="clos">
-                    <ion-button shape="round" (click)="team('away', 'close', null)">
-                        Close
-                    </ion-button>
+            <div class="teams">
+                <div class="home" (click)="team('home','open')">
+                    <div class="name">
+                        <p>{{object.TeamObject.teamName}}</p>
+                        <div class="ind">
+                            <p>Home</p>
+                        </div>
+                    </div>
+                    <div class="img">
+                        <img *ngIf="object.TeamObject.teamLogo"  src="{{object.TeamObject.teamLogo}}" alt="">
+                        <img *ngIf="!object.TeamObject.teamLogo"  src="https://image.flaticon.com/icons/png/512/14/14611.png" alt="">
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
+                <div class="v">
+                    <p>v</p>
+                </div>
+                <div class="away" (click)="team('away','open')">
+                    <div class="img">
+                        <img *ngIf="object.aTeamObject.teamLogo"  src="{{object.aTeamObject.teamLogo}}">
+                        <img *ngIf="!object.aTeamObject.teamLogo"  src="https://image.flaticon.com/icons/png/512/14/14611.png">
+                    </div>
+                    <div class="name">
+                        <p>{{object.aTeamObject.teamName}}</p>
+                        <div class="ind">
+                            <p>Away</p>
+                        </div>
+                    </div>
 
-    <div class="backB">
-        <ion-fab-button shape="round" size="small" (click)="goBack( )">
-            <ion-icon name="arrow-back"></ion-icon>
-        </ion-fab-button>
-    </div>
-    <div class="matchDetails">
-<div class="match" >
-    <div class="homeTeam">
-        <div class="image" (click)="team('home','open')">
-            <img *ngIf="!object.TeamObject.teamLogo"  src="../../../assets/nathi_noImage.png" alt="">
-            <img *ngIf="object.TeamObject.teamLogo"  [src]="object.TeamObject.teamLogo" alt="No Logo">
-        </div>
-        <div class="teamName">
-    {{object.TeamObject.teamName}}
-        </div>
-    </div>
-    <div class="matchD">
-        <p>v</p>
-        <h3>{{object.score}} FT {{object.ascore}}</h3>
-        <p>{{object.mins}}:{{object.secs}}</p>
-    </div>
-    <div class="awayTeam">
-        <div class="image" (click)="team('away','open')">
-            <img *ngIf="!object.aTeamObject.teamLogo"  src="../../../assets/nathi_noImage.png" alt="">
-            <img *ngIf="object.aTeamObject.teamLogo"  [src]="object.aTeamObject.teamLogo" alt ="No Logo">
-        </div>
-        <div class="teamName">
-            {{object.aTeamObject.teamName}}
-        </div>
-    </div>
-</div>
-        <div class="segment">
-            <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="segmentVal" >
-                <ion-segment-button color="light" value="lineup" color="light">
-                    <ion-label>Line Up</ion-label>
-                </ion-segment-button>
-                <ion-segment-button color="light" value="summary">
-                    <ion-label>Summary</ion-label>
-                </ion-segment-button>
-            </ion-segment>
-        </div>
-    </div>
-<div class="data">
-    <div class="playerList animated" [ngClass]="{'bounceInLeft':segmentVal=='lineup','bounceOutLeft':segmentVal=='summary'}">
-        <div class="homePlayers">
-            <div class="card" *ngFor="let item of homeplayers" (click)="player('home','open', item)">
-                <p>{{item.fullName}}</p>
-                <div class="position">
-                    <p>{{item.playerPosition}}</p>
+                </div>
+            </div>
+            <div class="largeScore">
+                <div class="h">
+                    <p>{{object.score}}</p>
+                </div>
+                <div class="s">
+                    <p>:</p>
+                </div>
+                <div class="a">
+                    <p>{{object.ascore}}</p>
+                </div>
+            </div>
+            <div class="segms">
+                <div class="filters animated fadeIn faster">
+
+                    <ion-button class="filters animated fadeIn faster" [ngClass]="{'selected':segmentVal=='lineup'}"
+                        color="dark" (click)="segmentChanged('lineup')" style="font-size: 3vw;" size="small"
+                        fill="clear">
+                        Line Up
+                    </ion-button>
+
+                    <ion-button class="filters animated fadeIn faster" [ngClass]="{'selected':segmentVal=='stats'}"
+                        color="dark" (click)="segmentChanged('stats')" style="font-size: 3vw;" size="small"
+                        fill="clear">
+                        Stats
+                    </ion-button>
                 </div>
             </div>
         </div>
-        <div class="awayPlayers">
-            <div class="card" *ngFor="let item of awayplayers" (click)="player('away','open', item)">
-                <p>{{item.fullName}}</p>
-                <div class="position">
-                    <p>{{item.playerPosition}}</p>
-                </div>
+        <div class="lineUp orange">
+            <ion-slides #slides style="height: 100%;">
+                <ion-slide style="overflow-y:scroll">
+                    <div class="con">
+                        <div class="home">
+                            <ion-chip *ngFor="let item of homeplayers;let h = index" (click)="player('open', item,'home',h)" [ngClass]="{'animated pluse infinite':view.side=='home'&&view.index==h}">
+                                <ion-icon name="eye"></ion-icon>
+                                <ion-label style="flex-basis: 60% !important;">{{item.fullName}}</ion-label>
+                                <ion-avatar>
+                                    <img *ngIf="!item.palyerImage"
+                                        src="https://image.flaticon.com/icons/png/512/14/14611.png"
+                                        alt="">
+                                    <img style="height: 100% !important;  width: 100% !important;" *ngIf="item.palyerImage" src="{{item.palyerImage}}">
+                                </ion-avatar>
+                            </ion-chip>
+                        </div>
+                        <div class="away">
+                            <ion-chip *ngFor="let item of awayplayers;let a = index" (click)="player('open', item,'away',a)" [ngClass]="{'animated pluse infinite':view.side=='away'&&view.index==a}">
+                                <ion-avatar>
+                                    <img  *ngIf="!item.palyerImage"
+                                        src="https://image.flaticon.com/icons/png/512/14/14611.png"
+                                        alt="">
+                                    <img style="height: 100% !important;" *ngIf="item.palyerImage" src="{{item.palyerImage}}">
+                                </ion-avatar>
+                                <ion-label  style="flex-basis: 60% !important;">{{item.fullName}}</ion-label>
+                                <ion-icon name="eye"></ion-icon>
+                            </ion-chip>
+                        </div>
+                    </div>
+                </ion-slide>
+                <ion-slide>
+                    <div class="stat">
+                        <div class="h">
+                            <p> {{object.corners}} </p>
+                            <p>{{object.yellow}}</p>
+                            <p>{{object.red}}</p>
+                            <p>{{object.offsides}}</p>
+                        </div>
+                        <div class="s">
+                            <p>Corners</p>
+                            <p>Yellow Cards</p>
+                            <p>Red Cards</p>
+                            <p>OffSides</p>
+                        </div>
+                        <div class="a">
+                            <p> {{object.acorners}} </p>
+                            <p>{{object.ayellow}}</p>
+                            <p>{{object.ared}}</p>
+                            <p>{{object.aoffsides}}</p>
+                        </div>
+                    </div>
+                </ion-slide>
+            </ion-slides>
+
+
+        </div>
+    </div>
+    <div class="goalscorers" [ngClass]="{'gClose':!viewStatistics,'gOpen':viewStatistics}">
+        <div class="title" (click)="viewStats()">
+            <p>GoalScorers</p>
+        </div>
+        <div class="lister">
+            <div class="ho">
+                <ion-chip *ngFor="let item of object.goal">
+                    <ion-label>{{item.goalscorer}}</ion-label>
+                </ion-chip>
+            </div>
+            <div class="aw">
+                <ion-chip *ngFor="let item of object.agoal">
+                    <ion-label>{{item.goalscorer}}</ion-label>
+                </ion-chip>
             </div>
         </div>
     </div>
-    <div class="summary animated" [ngClass]="{'bounceInRight':segmentVal=='summary','bounceOutRight':segmentVal=='lineup'}">
-        <div class="homeStats">
-            <p>{{corner}}</p>
-            <p>{{red}}</p>
-            <p>{{yellow}}</p>
-            <p>{{offside}}</p>
-        </div>
-        <div class="labels">
-            <p>Corners</p>
-            <p>Red Cards</p>
-            <p>Yellow Cards</p>
-            <p>Offsides</p>
-        </div>
-        <div class="awayStats">
-            <p>{{acorner}}</p>
-            <p>{{ared}}</p>
-            <p>{{ayellow}}</p>
-            <p>{{aoffside}}</p>
-        </div>
-    </div>
-</div>
-<div  [ngClass]="{'goalScorers': viewStatistics, 'goalScorers-hide':!viewStatistics}" >
-    <div class="title" (click)="viewStats()">
-        <p>Statistics <sup>(GOALS)</sup></p>
-    </div>
-    <div class="list">
-        <div class="t">
-            <p>Home</p>
-            <p>Away</p>
-        </div>
-        <div class="home">
-            <div class="card" *ngIf="!object.goal" >
-                <p style="padding:10px;">No Information</p>
-            </div>
-            <div class="card" *ngFor="let item of object.goal" >
-                <div class="name">
-                <p>{{item.goalscorer}}</p>
-                </div>
-                <div class="time">
-                <p>{{item.scoretime}}</p>
-                </div>
-            </div>
-        </div>
-        <div class="away">
-            <div class="card" *ngIf="!object.agoal" >
-                <p style="padding: 10px;
-                ;">No Information</p>
-            </div>
-            <div class="card" *ngFor="let item of object.agoal" >
-                <div class="name">
-                    <p>{{item.goalscorer}}</p>
-                </div>
-                <div class="time">
-                    <p>{{item.scoretime}}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
 </ion-content>

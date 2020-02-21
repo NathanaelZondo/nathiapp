@@ -1,69 +1,76 @@
 <ion-content>
-
-  <div class="container">
-<div class="div">
-  <div class="title">
-    <div class="closer">
-<ion-fab-button (click)="back()" style="margin: 0;" size="small" color="light">
-  <ion-icon name="arrow-back"></ion-icon>
-</ion-fab-button>
+<div class="topPart">
+  <div class="shad">
+    <div class="head">
+      <div class="backer">
+        <ion-fab-button size="small" color="light" (click)="back()">
+          <ion-icon name="arrow-back"></ion-icon>
+        </ion-fab-button>
       </div>
-  <div class="text">
-<h1 *ngIf="!isEditing">Setup Your Team</h1>
-<h1 *ngIf="isEditing">Edit Mode</h1>
-  </div>
-</div>
-<div class="imageUploads">
-  <div class="backimage">
-    <p>Team Logo</p>
-    <div class="img">
-      <img src="{{logoImage}}" alt="" class="bimage">
+      <div class="hTitle">
+        <p>Team Info</p>
+      </div>
     </div>
-  <ion-progress-bar color="primary" value="{{logoProgress/100}}"></ion-progress-bar>
-    <div class="btn">
-      <ion-button (click)="selectLogoImage()">
-        <ion-icon style="transform: scale(1.7) translateY(2px);" src="../../../assets/noun_Logo_2510105.svg"></ion-icon>
-      </ion-button>
+    <div class="images">
+      <div class="j">
+      <img *ngIf="teamNode.teamJerseyIMG"  src="{{teamNode.teamJerseyIMG}}" alt="">
+        <circle-progress *ngIf="!teamNode.teamJerseyIMG" 
+        [percent]="[teamProgress]"
+        [animation]="true"
+        [responsive]="true"
+        [titleFontSize]="50"
+        [subtitleFontSize]="20"
+        [subtitle]="[tJerseyText]"
+      ></circle-progress>
+      </div>
+      <div class="l">
+      <img *ngIf="teamNode.teamLogo"  src="{{teamNode.teamLogo}}" alt="">
+        <circle-progress *ngIf="!teamNode.teamLogo" 
+        [percent]="[logoProgress]"
+        [animation]="true"
+        [responsive]="true"
+        [titleFontSize]="50"
+        [subtitleFontSize]="20"
+        [subtitle]="[logoText]"
+      ></circle-progress>
+      </div>
+      <div class="g">
+      <img *ngIf="teamNode.goalKeeperJerseyIMG"  src="{{teamNode.goalKeeperJerseyIMG}}" alt="">
+        <circle-progress *ngIf="!teamNode.goalKeeperJerseyIMG" 
+        [percent]="[jerseyProgress]"
+        [animation]="true"
+        [responsive]="true"
+        [titleFontSize]="50"
+        [subtitleFontSize]="20"
+        [toFixed]="0"
+        [subtitle]="[gJerseyText]"
+      ></circle-progress>
+      </div>
     </div>
-  </div>
-  <div class="backimage" >
-    <p>Team Jersey</p>
-    <div class="img">
-      <img src="{{TjerseyImage}}" alt="" class="bimage">
-    </div>
-    
-  <ion-progress-bar color="primary" value="{{teamProgress/100}}"></ion-progress-bar>
-    <div class="btn">
-        <ion-button (click)="teamJersey()">
-            <ion-icon name="shirt"></ion-icon>
-        </ion-button>
-    </div>
-  </div>
-  <div class="backimage" >
-    <p>GoalKeeper Jersey</p>
-    <div class="img">
-      <img src="{{GJerseyImage}}" alt="" class="bimage">
-    </div>
-    
-    <ion-progress-bar color="primary" value="{{jerseyProgress/100}}"></ion-progress-bar>
-    <div class="btn">
-        <ion-button (click)="GoalKeeperJersey()">
-            <ion-icon name="shirt"></ion-icon>
-        </ion-button>
-    </div>
-  </div>
+    <div class="imgBtns">
+      <div class="uJ">
+        <ion-fab-button size="small" color="success" (click)="teamJersey()">
+          <ion-icon src="../../../assets/tJersey.svg"></ion-icon>
+        </ion-fab-button>
+        <p>Team&nbsp;Jersey</p>
+      </div>
+      <div class="uL">
+        <ion-fab-button size="small" color="success" (click)="selectLogoImage()">
+          <ion-icon src="../../../assets/tLogo.svg"></ion-icon>
+        </ion-fab-button>
+        <p>Team&nbsp;Logo</p>
+      </div>
+      <div class="uG">
 
-</div>
-<div class="form">
-  <div class="text-label">
-    <div class="text">
-      <p>Team Info</p>
-    </div>
-    <div class="decor">
-      <div class="line"></div>
+        <ion-fab-button  size="small" color="success" (click)="GoalKeeperJersey()">
+          <ion-icon  src="../../../assets/gJersey.svg"></ion-icon>
+        </ion-fab-button>
+        <p>Goalkeeper <br> Jersey</p>
+      </div>
     </div>
   </div>
-  <form [formGroup]="addTeamForm">
+  <div class="former">
+    <form [formGroup]="addTeamForm">
 
       <ion-item>
         <ion-label  position="floating">Team Name</ion-label>
@@ -112,7 +119,7 @@
       
 
     <div class="error" *ngFor="let validate of validation_messages.tel">
-      <div class="messages" style="color:red"
+      <div class="messages" style="color:rgb(221, 137, 137)"
         *ngIf="addTeamForm.get('tel').hasError(validate.type) && (addTeamForm.get('tel').dirty || addTeamForm.get('tel').touched)">
         <p>{{validate.message}}</p>
       </div>
@@ -122,16 +129,12 @@
     <br>
 <div class="buttoning">
 <!--  [disabled]="!addTeamForm.valid" -->
-<ion-button *ngIf="isEditing" color="success" shape="round" id="skip" (click)="createTeam(addTeamForm)" type="submit" ion-button
+
+<ion-button  [disabled]="!addTeamForm.valid" size="small" color="success" id="skip" (click)="createTeam(addTeamForm)" type="submit" ion-button
 >
-Edit Done</ion-button>
-<ion-button *ngIf="!isEditing" color="success" shape="round" id="skip" (click)="createTeam(addTeamForm)" type="submit" ion-button
->
-Add Team</ion-button>
+Save</ion-button>
 </div>
   </form>
-</div>
-</div>
   </div>
-
+</div>
 </ion-content>

@@ -1,93 +1,100 @@
 <ion-content>
-  <!-- <div class="profile animated" [ngClass]="{'fadeIn':!profile,'fadeOutUp':profile}">
-    <div class="center">
-      
-    </div>
-  </div> -->
-  <div class="noTeam animated" [ngClass]="{'fadeIn':!isTeam,'fadeOutUp':isTeam}">
-    <div class="c" *ngIf="!createTeam">
-      <h1>Checking</h1>
-      <ion-spinner color="light" name="bubbles"></ion-spinner>
-    </div>
-    <div class="c" *ngIf="createTeam&&profile">
-      <h1>Please Create a Team</h1>
-      <p><sub>You need a team to participate in a tournament.</sub></p>
-      <ion-button  shape="round" color="success" (click)="addTeam()">
-        Add Team
-      </ion-button>
-    </div>
-    <div class="a"  *ngIf="createTeam&&!profile">
-      <h1>Approval</h1>
-      <p>Please be patient as your profile is being checked for approval.</p>
-    </div>
+<div class="topInfo">
+<div class="ever">
+  <div class="title">
+    <p>My Team</p>
   </div>
-  <div class="head" *ngIf="isTeam">
-    <div class="title">
-
-      <div class="t">
-        <h5 style="font-size: 5vw;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        padding: 0px 22px;">{{display.teamName}} <ion-button style="margin:  0 !important;" color="light" fill="clear" (click)="editTean()">
-          <ion-icon name="create"></ion-icon>
-          
-        </ion-button></h5>
-      </div>
+  <div class="team">
+    <div class="tTitle">
+      <ion-skeleton-text *ngIf="!display.teamName"  animated style="height: 9vw;
+      width: 90%;
+      margin: auto;
+      border-radius: 10px;"></ion-skeleton-text>
+      <h1 class="animated fadeIn delayer1">{{display.teamName}}</h1>
     </div>
-    <div class="details">
-      <div class="d">
-        <p>{{display.region}}</p>
-        <p style="font-size: 2.5vw;">{{display.tel}}</p>
-      </div>
-      <div class="logos">
-        
-       
-        
-        <div class="img" [ngClass]="{'team':enlarge=='team','normal':enlarge!='team'}"  (click)="enlargeImage('team')"><img *ngIf="!display.teamJerseyIMG"  src="https://www.terra-institute.eu/wp-content/uploads/2015/09/black-white.png"><img *ngIf="display.teamJerseyIMG"  src="{{display.teamJerseyIMG}}"></div>
-
-
-        <div class="img" [ngClass]="{'logo':enlarge=='logo','normal':enlarge!='logo'}" (click)="enlargeImage('logo')"> <img *ngIf="!display.teamLogo"  src="https://www.terra-institute.eu/wp-content/uploads/2015/09/black-white.png" ><img *ngIf="display.teamLogo"  src="{{display.teamLogo}}"></div>
-
-
-        <div class="img" [ngClass]="{'keeper':enlarge=='keeper','normal':enlarge!='keeper'}" (click)="enlargeImage('keeper')"><img *ngIf="!display.goalKeeperJerseyIMG"  src="https://www.terra-institute.eu/wp-content/uploads/2015/09/black-white.png" ><img *ngIf="display.goalKeeperJerseyIMG"  src="{{display.goalKeeperJerseyIMG}}"></div>
-      
-      
-      
-      </div>
-    </div>
-  </div>
-  <div class="teamList" *ngIf="isTeam">
-    <div class="label">
-     <div class="l"> <p>Squad</p>
-      <ion-button style="margin: 0;" size="small" shape="round" (click)="addPlayer()"> Manage </ion-button></div>
-    </div>
-    <div class="list">
-
-      <div>
-        <div class="card" *ngFor="let i of players;let ind = index" (click)="viewPlayer(ind)">
-          <div class="playerInformation animated" [ngClass]="{'fadeInRight':playerMore==ind,'fadeOutRight':playerMore!=ind}" >
-           <div>
-            <p>Previous team: {{i.previousTeam}}</p>
-            <p>Height: {{i.height}}m</p>
-            <p>DOB: {{i.DOB | date}}</p>
-            <p id="a" *ngFor="let a of i.Achievements"></p>
-           </div>
+    <div class="data">
+      <div class="f">
+        <div class="d">
+          <div class="icon">
+            <ion-icon slot="start" src="../../../assets/noun_Location_3076235.svg"></ion-icon>
           </div>
-          <img *ngIf="i.palyerImage" src="{{i.palyerImage}}" alt="">
-          <img *ngIf="!i.palyerImage"
-            src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=50">
-          <div class="details">
-            <div>
-              <p style="font-size: 4vw; text-transform: uppercase; margin: 0;"><b>{{i.fullName}}</b></p>
-              <p>{{i.playerPosition}}</p>
-            </div>
+          <div class="text">
+            <ion-skeleton-text *ngIf="!display.teamName"  animated style="height: 4vw;
+      width: 20vw;
+      margin: auto;
+      border-radius: 10px;"></ion-skeleton-text>
+            <p>{{display.region}}</p>
           </div>
         </div>
+        <div class="d">
+          <div class="icon">
+            <ion-icon src="../../../assets/noun_Phone_3063218.svg" ></ion-icon>
+          </div>
+          <div class="text">
+            <ion-skeleton-text *ngIf="!display.teamName"  animated style="height: 4vw;
+      width: 23vw;
+      margin: auto;
+      border-radius: 10px;"></ion-skeleton-text>
+            <p>{{display.tel}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="coach">
+        <ion-skeleton-text *ngIf="!display.teamName"  animated style="height: 4vw;
+      width: 26vw;
+      margin: auto;
+      border-radius: 10px;"></ion-skeleton-text>
+        <p *ngIf="display.teamName">Coached by <span>{{display.coachName}}</span></p>
+      </div>
+    </div>
 
-
-
+  </div>
+  <div class="images">
+    <div class="j">
+      <img src="{{display.teamJerseyIMG}}" alt="">
+    </div>
+    <div class="l">
+      <img src="{{display.teamLogo}}" alt="">
+    </div>
+    <div class="g">
+      <img src="{{display.goalKeeperJerseyIMG}}" alt="">
+    </div>
+  </div>
+  <div class="btns">
+    <ion-button size="small" color="success" (click)="addTeam()">
+      Team Info
+    </ion-button>
+    <ion-button size="small" color="success" (click)="addPlayer()">
+      Player Info
+    </ion-button>
+  </div>
+</div>
+  <div class="lister">
+    <div class="skelcard animated fadeInDown delayer2" *ngFor="let p of arr" >
+      <div class="image">
+      <img *ngIf="isPlayer" src="{{p.palyerImage}}" alt="">
+      <div class="number">
+      <p>{{p.playerNumber}}</p>
+      </div>
+      </div>
+      <div class="pDetails animated fadeIn" *ngIf="!isPlayer" >
+        <div class="ion-padding custom-skeleton">
+          <ion-skeleton-text animated></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </div>
+      </div>
+      <div class="pDetails animated fadeInDown" *ngIf="isPlayer" >
+        <div class="ion-padding custom-skeleton">
+        <h1>{{p.fullName}}</h1>
+        <p>{{p.playerPosition}}</p>
+        <p>{{p.DOB | date}}</p>
+        <p>{{p.height}}m tall</p>
+        <p>{{p.previousTeam}}</p>
+        </div>
       </div>
     </div>
   </div>
+</div>
 </ion-content>

@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'tabs', pathMatch: 'full' },
+  { path: '', redirectTo: '', pathMatch: 'full' },
   { path: 'tabs', loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)},
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule), canActivate: [AuthGuardService]
   },
   {
     path: 'add-player',
@@ -55,10 +56,15 @@ const routes: Routes = [
   {
     path: 'view-match',
     loadChildren: () => import('./allnewpages/view-match/view-match.module').then( m => m.ViewMatchPageModule)
-  },  {
+  },
+  {
     path: 'onboarding',
     loadChildren: () => import('./allnewpages/onboarding/onboarding.module').then( m => m.OnboardingPageModule)
+  },  {
+    path: 'player-add',
+    loadChildren: () => import('./player-add/player-add.module').then( m => m.PlayerAddPageModule)
   },
+
 
   
 
