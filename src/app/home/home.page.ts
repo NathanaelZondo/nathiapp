@@ -9,6 +9,8 @@ import { AuthServiceService } from '../service/auth-service.service';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { NavigationExtras } from '@angular/router';
 import { element } from 'protractor';
+import * as moment from 'moment'
+// import {moment} from 
 // import { FCM } from '@ionic-native/fcm/ngx';
 // import { OneSignal } from '@ionic-native/onesignal/ngx';
 @Component({
@@ -108,6 +110,10 @@ check(){
   
 }
   ngOnInit() {
+    let t = new Date('22/02/2020') 
+  let s =  moment([2020,2,22]).fromNow();         
+  console.log('izesha', s);
+  
     let today = new Date();
     // let timeToday = new 
     let date = new Date();
