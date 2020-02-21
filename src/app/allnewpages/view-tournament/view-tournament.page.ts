@@ -194,18 +194,32 @@ export class ViewTournamentPage implements OnInit {
                 // CHECK WICH MATCH TYPE IS WHICH AND PUSH IT INTO THE RESPECTIVE ARRAY
                 if (doc.data().type == '16') { // 32
                   this.match.type16.push(doc.data())
+                  this.participants = []
+                  this.generateParticipants('32')
+                
                 } else if (doc.data().type == '8') { // 16
                   this.match.type8.push(doc.data())
+                  this.participants = []
+                  this.generateParticipants('16')
+                
                 } else if (doc.data().type == '4') { // 8
                   this.match.type4.push(doc.data())
+                  this.participants = []
+                  this.generateParticipants('8')
+                
                 } else if (doc.data().type == '2') { // 4
                   this.match.type2.push(doc.data())
+                  this.participants = []
+                  this.generateParticipants('4')
+                
                 } else if (doc.data().type == '1') { // 2
                   this.match.type1.push(doc.data())
+                  this.participants = []
+                  this.generateParticipants('2')
                 }
               })
-              // this.getPlayedMatches()
-              console.log(this.match);
+              this.checkMatches()
+              console.log(this.participants);
             }).catch(err => { console.log(err); })
           }
         }
@@ -229,7 +243,7 @@ export class ViewTournamentPage implements OnInit {
 
 
     let palceid = this.viewedTournament.address.placeID
-    return window.location.href = 'https://www.google.com/maps/place/?q=place_id:' + palceid;
+    // return window.location.href = 'https://www.google.com/maps/place/?q=place_id:' + palceid;
     // return window.location.href = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+palceid+'&key=YOUR_API_KEY'
     console.log('go', palceid);
   }

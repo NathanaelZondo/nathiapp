@@ -24,7 +24,7 @@ export class HomePage {
   role
   user
   token
-  skeleton = [1,2,3,4,5,6,7]
+  skeleton = [1, 2, 3, 4, 5, 6, 7]
   viewTournaments = []
   tourn = {
     inprogres: [],
@@ -34,17 +34,17 @@ export class HomePage {
   accountRole = 'user'
   filterBy = 'comingUp'
   loadFilter = false;
-  players  = []
+  players = []
   constructor(public router: Router,
     public popoverController: PopoverController,
     public pass: PassInformationServiceService,
     public auth: AuthServiceService,
     public splashScreen: SplashScreen,
     // private oneSignal: OneSignal,
-    public alertController : AlertController,
+    public alertController: AlertController,
     public ngZone: NgZone) {
     this.tourn.upcoming = [];
-   
+
     // this.router.navigate(['tournament']);
     // console.log('uid',firebase.auth().currentUser.uid);
     // this.getUserProfile()
@@ -66,8 +66,11 @@ export class HomePage {
           }
         }
       })
-      this.skeleton = []
+
+      if (this.tourn.upcoming.length > 0) {
+        this.skeleton = []
       this.viewTournaments = this.tourn.upcoming
+      }
     })
 
 
@@ -104,11 +107,11 @@ export class HomePage {
       this.popover1.dismiss();
     }
   }
-check(){
+  check() {
 
     this.presentAlertCheckbox()
-  
-}
+
+  }
   ngOnInit() {
     let t = new Date('22/02/2020') 
   let s =  moment([2020,2,22]).fromNow();         
@@ -117,12 +120,12 @@ check(){
     let today = new Date();
     // let timeToday = new 
     let date = new Date();
-    console.log('date',date);
-    
+    console.log('date', date);
+
     this.ngZone.run(() => {
       // this.check()
       this.getMatchFixtures()
-      this.presentAlertCheckbox();
+      // this.presentAlertCheckbox();
       this.auth.setUser(this.user);
       // this.getUserProfile();
       this.getUser();
@@ -181,10 +184,10 @@ check(){
 
           setTimeout(() => {
             this.viewTournaments = this.tourn.upcoming
-            
+
             this.loadFilter = false
             if (this.tourn.upcoming.length == 0) {
-              this.skeleton = [1,2,3,4,5,6,7]
+              this.skeleton = [1, 2, 3, 4, 5, 6, 7]
             } else {
               this.skeleton = []
             }
@@ -194,10 +197,10 @@ check(){
 
           setTimeout(() => {
             this.viewTournaments = this.tourn.inprogres
-            
+
             this.loadFilter = false
             if (this.tourn.inprogres.length == 0) {
-              this.skeleton = [1,2,3,4,5,6,7]
+              this.skeleton = [1, 2, 3, 4, 5, 6, 7]
             } else {
               this.skeleton = []
             }
@@ -207,10 +210,10 @@ check(){
 
           setTimeout(() => {
             this.viewTournaments = this.tourn.finished
-            
+
             this.loadFilter = false
             if (this.tourn.finished.length == 0) {
-              this.skeleton = [1,2,3,4,5,6,7]
+              this.skeleton = [1, 2, 3, 4, 5, 6, 7]
             } else {
               this.skeleton = []
             }
