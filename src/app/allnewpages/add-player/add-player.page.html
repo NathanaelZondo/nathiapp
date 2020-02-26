@@ -23,7 +23,7 @@
       <div class="pInfo ion-padding" *ngIf="viewPlayer.docdata">
         <h1>{{viewPlayer.docdata.fullName}}</h1>
         <p>{{viewPlayer.docdata.playerPosition}}</p>
-        <p *ngIf="viewPlayer.docdata.previousTeam!='none'"><b>{{viewPlayer.docdata.previousTeam}}</b></p>
+        <p *ngIf="viewPlayer.docdata.previousTeam!='none'"><b>Played for {{viewPlayer.docdata.previousTeam}}</b></p>
         <p *ngIf="viewPlayer.docdata.previousTeam=='none'"><b>No Previous Team</b></p>
         <p><b>{{viewPlayer.docdata.height}}m tall</b></p>
         <p> <b>{{viewPlayer.docdata.Achievements}}</b>

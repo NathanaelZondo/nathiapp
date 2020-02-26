@@ -8,8 +8,8 @@ ion-chip {
 
     ion-label {
         font-size: 3vw !important;
-        font-family: 'Muller Bold' !important;
-        // font-weight: bolder;
+        font-family: 'Obj' !important;
+        text-transform: capitalize;
     }
 }
 
@@ -374,7 +374,7 @@ ion-chip {
         .segms {
             .filters {
                 height: var(--home-filter-height);
-                background: rgb(250, 250, 250);
+                // background: rgb(216, 216, 216);
                 display: flex;
                 // justify-content: space-evenly;
                 align-items: center;
@@ -388,6 +388,7 @@ ion-chip {
                     padding: 5px 0px;
                     height: 76%;
                     color: black;
+                    background: #ffe8e8 !important;
                     width: 50%;
 
                     #text {
@@ -398,7 +399,7 @@ ion-chip {
                 .selected {
                     transition: 0.3s;
                     transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
-                    background: rgb(180, 180, 180) !important;
+                    background: #f14d4d !important;
                     border-radius: 200px;
                     box-shadow: inset 2px 2px 2px #2727271f, inset -2px -2px 2px #ffffff;
                     text-shadow: 3px 3px 5px #2727271f, -3px -3px 5px #1717175c;
@@ -475,10 +476,10 @@ ion-chip {
     height: 50vh;
     position: absolute;
     bottom: 0;
-    left: 10px;
-    right: 10px;
+    left: 0px;
+    right: 0px;
     z-index: 20;
-    box-shadow: 0px -25px 21px -16px rgba(171, 171, 171, 1);
+    box-shadow: 0px -2px 3px #17171733;
     border-radius: 20px 20px 0px 0px;
     overflow: hidden;
     transform: translateY(45vh);
@@ -486,12 +487,15 @@ ion-chip {
 
     .title {
         text-align: center;
-        height: 10%;
-        background: whitesmoke;
-        display: flex;
-        align-content: center;
+    height: 10%;
+    background: linear-gradient(4deg, #f04141, #f25454);
+    display: -webkit-box;
+    display: flex;
+    color: white;
+    align-content: center;
 
         p {
+            font-weight: bold;
             margin: 0;
             padding: 5px 0px;
             font-family: "Muller";
@@ -519,7 +523,7 @@ ion-chip {
 
                 ion-label {
                     font-size: 3vw !important;
-                    font-family: 'Muller Bold' !important;
+                    font-family: 'Obj' !important;
                     
                     // font-weight: bolder;
                 }
@@ -532,7 +536,84 @@ ion-chip {
         }
     }
 }
+.penalties {
+    background: radial-gradient(#fafafa, #ffffff);
+    background-position-y: -83px;
+    height: 50vh;
+    position: absolute;
+    bottom: 0;
+    left: 0px;
+    right: 0px;
+    z-index: 10;
+    box-shadow: 0px -2px 3px #17171733;
+    border-radius: 20px 20px 0px 0px;
+    overflow: hidden;
+    transform: translateY(45vh);
+    transition-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
 
+    .title {
+        text-align: center;
+        // height: 10%;
+        padding: 8px 0px;
+        // background: whitesmoke;
+        display: flex;
+        align-content: center;
+        justify-content: space-around;
+        .home, .away {
+            font-size: 4vw !important;
+            background: gray;
+            border-radius: 200px;
+            padding: 5px 10px;
+            color: white !important;
+        }
+        p {
+            font-weight: bold;
+            margin: 0;
+            padding: 5px 0px;
+            font-family: "Muller";
+            text-transform: uppercase;
+            font-size: 4vw;
+            text-align: center;
+            margin: auto;
+        }
+    }
+
+    .lister {
+        width: 100%;
+        height: 90%;
+        display: flex;
+
+        .ho,
+        .aw {
+            ion-chip {
+                --background: rgb(228, 228, 228) !important;
+                margin: 3px auto !important;
+                width: 100% !important;
+                text-align: center;
+                display: flex !important;
+                justify-content: space-evenly !important;
+
+                ion-label {
+                    font-size: 3vw !important;
+                    font-family: 'Obj' !important;
+                    
+                    // font-weight: bolder;
+                }
+            }
+
+            flex-basis: 50%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    }
+}
+.pClose {
+    transform: translateY(37vh) !important;
+    transition: 0.4s;
+
+    transition-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+}
 .gClose {
     transform: translateY(45vh) !important;
     transition: 0.4s;

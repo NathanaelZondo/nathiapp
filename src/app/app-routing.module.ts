@@ -64,6 +64,10 @@ const routes: Routes = [
     path: 'player-add',
     loadChildren: () => import('./player-add/player-add.module').then( m => m.PlayerAddPageModule)
   },
+  {
+    path: 'no-network',
+    loadChildren: () => import('./allnewpages/no-network/no-network.module').then( m => m.NoNetworkPageModule)
+  },
 
 
   

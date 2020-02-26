@@ -227,7 +227,7 @@ export class AddPlayerPage implements OnInit {
   async editPlayer() {
     this.loadingProcess = true;
     const load = await this.loadingController.create({
-      message: 'Creating Your Player..'
+      message: 'Saving Updates..'
     });
     const user = this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(this.documentID).set(this.playerNode)
 

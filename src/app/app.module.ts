@@ -1,3 +1,4 @@
+import { Network } from '@ionic-native/network/ngx';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -14,6 +15,7 @@ import { FCM } from '@ionic-native/fcm/ngx';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { PlayerAddPage } from './player-add/player-add.page';
+
 firebase.initializeApp(config);
 @NgModule({
   declarations: [AppComponent],
@@ -33,8 +35,9 @@ firebase.initializeApp(config);
     Camera,
     FCM,
     NativeStorage,
+    Network,
     GooglePlus,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy,  }
   ],
   bootstrap: [AppComponent]
 })

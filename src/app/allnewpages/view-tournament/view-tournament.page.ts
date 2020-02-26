@@ -124,10 +124,21 @@ export class ViewTournamentPage implements OnInit {
                   this.match.type2.push(doc.data())
                 } else if (doc.data().type == '1') { // 2
                   this.match.type1.push(doc.data())
-                  if (doc.data().score > doc.data().ascore) {
-                    this.match.winner = doc.data().TeamObject
+                  // first check if the score is not the same
+                  if(doc.data().score != doc.data().ascore) {
+                    // if not check who won
+                    if (doc.data().score > doc.data().ascore) {
+                      this.match.winner = doc.data().TeamObject
+                    } else {
+                      this.match.winner = doc.data().aTeamObject
+                    }
                   } else {
-                    this.match.winner = doc.data().aTeamObject
+                    // if true, check in the penalties for winner
+                    if (doc.data().apenalties > doc.data().hpenalties) {
+                      this.match.winner = doc.data().TeamObject
+                    } else {
+                      this.match.winner = doc.data().aTeamObject
+                    }
                   }
                 }
               })
@@ -584,7 +595,7 @@ export class ViewTournamentPage implements OnInit {
 
     switch (type) {
       case '32':
-        console.log('case 8');
+        console.log('case 32');
 
         for (let i = 0; i < this.match.type16.length; i++) {
           const homeTeam = this.match.type16[i].TeamObject;
@@ -595,12 +606,13 @@ export class ViewTournamentPage implements OnInit {
         }
         break;
       case '16':
-        console.log('case 8');
+        console.log('case 16');
 
         for (let i = 0; i < this.match.type8.length; i++) {
           const homeTeam = this.match.type8[i].TeamObject;
           const awayTeam = this.match.type8[i].aTeamObject;
-
+          
+          
           this.participants.push(homeTeam)
           this.participants.push(awayTeam)
         }
@@ -611,14 +623,14 @@ export class ViewTournamentPage implements OnInit {
         for (let i = 0; i < this.match.type4.length; i++) {
           const homeTeam = this.match.type4[i].TeamObject;
           const awayTeam = this.match.type4[i].aTeamObject;
-
+          console.log( this.match.type4.length);
           this.participants.push(homeTeam)
           this.participants.push(awayTeam)
         }
 
         break;
       case '4':
-        console.log('case 8');
+        console.log('case 4');
 
         for (let i = 0; i < this.match.type2.length; i++) {
           const homeTeam = this.match.type2[i].TeamObject;
@@ -630,7 +642,7 @@ export class ViewTournamentPage implements OnInit {
 
         break;
       case '2':
-        console.log('case 8');
+        console.log('case 2');
 
         for (let i = 0; i < this.match.type1.length; i++) {
           const homeTeam = this.match.type1[i].TeamObject;

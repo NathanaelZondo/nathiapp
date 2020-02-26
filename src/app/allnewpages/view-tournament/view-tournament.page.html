@@ -65,10 +65,13 @@
           shows only if the '''TOURNAMENT IS FINISHED'''' and user role is ''
           NOT A NORMAL USER''
           -->
-        <ion-button class="animated fadeIn slow" *ngIf="viewedTournament.state=='finished'&&role!=='user'" size="small"
-          color="success" fill="clear" >
-          {{match.winner.teamName}} <ion-skeleton-text *ngIf="!match.winner.teamName"  animated style="width: 20vw"></ion-skeleton-text> won
-        </ion-button>
+          <ion-chip  style="width: 50vw"  class="animated fadeIn slow" *ngIf="viewedTournament.state=='finished'&&role!=='user'" size="small" color="primary" mode="ios" outline="true">
+            <ion-skeleton-text *ngIf="!match.winner.teamName"  animated style="width: 20vw"></ion-skeleton-text>
+            <ion-icon name="trophy"></ion-icon>
+            <ion-label *ngIf="match.winner.teamName" >{{match.winner.teamName}} Won</ion-label>
+            
+          </ion-chip>
+
       </div>
       <div class="data">
         <h1>{{viewedTournament.formInfo.tournamentName}}</h1>
@@ -80,10 +83,10 @@
           <ion-icon src="../../../assets/noun_date_2080425.svg"></ion-icon>
           <p>{{viewedTournament.formInfo.startDate | date}}</p>
         </div>
-        <div class="location" (click)="go()">
+        <!-- <div class="location" (click)="go()">
           <ion-icon src="../../../assets/noun_Location_3076235.svg"></ion-icon>
           <p><u>{{viewedTournament.formInfo.stadiumName}}</u></p>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="participants animated fadeIn delayer2 fast">

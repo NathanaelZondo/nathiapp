@@ -32,7 +32,7 @@ export class HomePage {
     finished: []
   }
   accountRole = 'user'
-  filterBy = 'comingUp'
+  filterBy = 'inProgress'
   loadFilter = false;
   players = []
   constructor(public router: Router,
@@ -66,11 +66,6 @@ export class HomePage {
           }
         }
       })
-
-      if (this.tourn.upcoming.length > 0) {
-        this.skeleton = []
-      this.viewTournaments = this.tourn.upcoming
-      }
     })
 
 
@@ -80,6 +75,10 @@ export class HomePage {
         this.tourn.inprogres.push({ ...{ doc_id: val.id }, ...val.data() });
         console.log("inprog", this.tourn.inprogres)
       })
+      if (this.tourn.inprogres.length > 0) {
+        this.skeleton = []
+      this.viewTournaments = this.tourn.inprogres
+      }
     })
 
 

@@ -16,7 +16,7 @@
     </div>
 </div>
 <div class="t">
-    <div class="s">
+    <div class="s" style="width: 100% !important">
     <h1>{{teamSide.teamName}}</h1>
     <p>Coach: {{teamSide.teamName}}</p>
     <p>{{teamSide.tel}}</p>
@@ -66,7 +66,10 @@
                     <div class="l"></div>
                 </div>
                 <div class="text">
-                    <p style="font-family: Neou;">Match&nbsp;Started</p>
+                    <p *ngIf="!object.half" style="font-family: Neou;">Not&nbsp;Started</p>
+                    <p *ngIf="object.half=='First Half'" style="font-family: Neou;">Match&nbsp;Started</p>
+                    <p *ngIf="object.half=='Second Half'&&object.matchstate=='incomplete'" style="font-family: Neou;">Half&nbsp;Time</p>
+                    <p *ngIf="object.matchstate=='complete'&&object.half=='Second Half'" >Match&nbsp;Ended</p>
                 </div>
                 <div class="line">
                     <div class="l"></div>
@@ -142,7 +145,7 @@
                         <div class="home">
                             <ion-chip *ngFor="let item of homeplayers;let h = index" (click)="player('open', item,'home',h)" [ngClass]="{'animated pluse infinite':view.side=='home'&&view.index==h}">
                                 <ion-icon name="eye"></ion-icon>
-                                <ion-label style="flex-basis: 60% !important;">{{item.fullName}}</ion-label>
+                                <ion-label style="flex-basis: 60% !important; text-align: right;">{{item.fullName}}</ion-label>
                                 <ion-avatar>
                                     <img *ngIf="!item.palyerImage"
                                         src="https://image.flaticon.com/icons/png/512/14/14611.png"
@@ -159,7 +162,7 @@
                                         alt="">
                                     <img style="height: 100% !important;" *ngIf="item.palyerImage" src="{{item.palyerImage}}">
                                 </ion-avatar>
-                                <ion-label  style="flex-basis: 60% !important;">{{item.fullName}}</ion-label>
+                                <ion-label  style="flex-basis: 60% !important;text-align: left;">{{item.fullName}}</ion-label>
                                 <ion-icon name="eye"></ion-icon>
                             </ion-chip>
                         </div>
@@ -207,6 +210,25 @@
                     <ion-label>{{item.goalscorer}}</ion-label>
                 </ion-chip>
             </div>
+        </div>
+    </div>
+    <div class="penalties" *ngIf="object.score==object.ascore"  [ngClass]="{'pClose':!viewPenalties,'gOpen':viewPenalties}">
+        <div class="title">
+            <p class="home">{{object.hpenalties}}</p>
+            <p>Penalties</p>
+            <p class="away">{{object.apenalties}}</p>
+        </div>
+        <div class="lister">
+            <!-- <div class="ho">
+                <ion-chip *ngFor="let item of object.goal">
+                    <ion-label>{{item.goalscorer}}</ion-label>
+                </ion-chip>
+            </div> -->
+            <!-- <div class="aw">
+                <ion-chip *ngFor="let item of object.agoal">
+                    <ion-label>{{item.goalscorer}}</ion-label>
+                </ion-chip>
+            </div> -->
         </div>
     </div>
 </ion-content>
