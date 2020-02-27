@@ -1,9 +1,21 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>noNetwork</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+<div class="container">
+  <div class="d">
+    <p>The battle for the ultimate kick is happening without you.</p>
+    <h1>No Network Connection</h1>
+    
+    <div class="exitApp">
+      <circle-progress 
+      [percent]="[uploadprogress]"
+      [animation]="true"
+      [responsive]="true"
 
+      [subtitle]="[text]"
+      [clockwise]="true"
+      
+    ></circle-progress></div>
+    <p>Please connect to the internet. <br> A fast network is recomended for the app to run smoothly.</p>
+    
+  </div>
+</div>
 </ion-content>
