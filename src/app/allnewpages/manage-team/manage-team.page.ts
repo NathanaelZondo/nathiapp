@@ -1,8 +1,8 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
-import { Router, NavigationExtras } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { Router,NavigationExtras } from '@angular/router';
+import { NavController, AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-manage-team',
   templateUrl: './manage-team.page.html',
@@ -19,16 +19,76 @@ export class ManageTeamPage implements OnInit {
   createTeam = false;
   profile = false
   enlarge = null
-  arr: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1]
-  constructor(public renderer: Renderer2, private formBuilder: FormBuilder, public router: Router, public navctrl: NavController) {
-  }
-  editTean() {
-    const parms: NavigationExtras = {
-      state: {
-        isEditing: true,
-        data: this.display
-      }
+  arr :any = [1,2,3,4,5,6,7,8,9,0,1]
+  player = []
+    constructor(  public renderer: Renderer2,  private formBuilder: FormBuilder, public router : Router,public navctrl : NavController,public alertController : AlertController) { 
+      
     }
+    async presentAlertCheckbox() {
+      firebase.auth().onAuthStateChanged( user =>{
+        if(user){
+          firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').get().then(async res =>{
+            this.player = []
+            let player = {
+       
+               type: 'checkbox',
+               label: 'Checkbox 1',
+               value: 'value1',
+             }
+             res.forEach( doc =>{
+               
+               player = {
+                 type: 'checkbox',
+                 label: doc.data().fullName,
+                 value: doc.id,
+               }
+               this.player.push(player)
+               player = {
+                 type: 'checkbox',
+                 label: null,
+                 value: null,
+               }
+             })
+                 const alert = await this.alertController.create({
+             header: 'Select your players',
+             message: 'Please select your players',
+             inputs: this.player,
+             buttons: [
+               {
+                 text: 'Cancel',
+                 role: 'cancel',
+                 cssClass: 'secondary',
+                 handler: () => {
+                   console.log('Confirm Cancel');
+                 }
+               }, {
+                 text: 'Ok',
+                 handler: data => {
+                   data.forEach(element => {
+                     console.log(element);
+                     firebase.firestore().collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(element).update({
+                       status : 'available'
+                     })
+                   });
+               
+                   console.log('Confirm Ok', data);
+                 }
+               }
+             ]
+           });
+       
+           await alert.present();
+           }) 
+        }
+      })
+      }
+    editTean() {
+      const parms: NavigationExtras  = {
+        state: {
+          isEditing: true,
+          data: this.display 
+        }
+      }
     this.router.navigateByUrl('add-team', parms)
   }
   back() {
