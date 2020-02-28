@@ -553,16 +553,20 @@ export class RegisterpagePage implements OnInit {
       await loader.present()
     firebase.auth().onAuthStateChanged(i => {
       console.log('aid found', i.uid, ' aa', this.email, this.fullName);
-
-      firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' ,status : '', profileImage: this.profileImage}).then(async re => {
-        await loader.dismiss()
-        if(form.role == 'teamManager'){
-          this.route.navigateByUrl("/add-team")
-        } else {
+      if(form.role == 'vendor'){
+        firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' ,status : 'awaiting', profileImage: this.profileImage}).then( async response =>{
+          await loader.dismiss()
           this.route.navigateByUrl("/tabs")
-        }
-      
-      })
+        })
+      }
+      else if(form.role == 'teamManager'){
+        firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' ,status : '', profileImage: this.profileImage}).then(async re => {
+          await loader.dismiss()
+          this.route.navigateByUrl("/add-team")
+        })
+      }
+
+   
 
     })
   }
