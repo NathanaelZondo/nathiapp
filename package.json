@@ -35,11 +35,11 @@
     "cordova-plugin-googleplus": "8.4.0",
     "cordova-plugin-nativestorage": "2.3.2",
     "core-js": "^2.5.4",
-    "firebase": "^7.8.2",
+    "firebase": "^7.9.0",
     "moment": "^2.24.0",
     "ng-circle-progress": "^1.5.1",
     "rxjs": "^6.5.4",
-    "tslib": "^1.9.0",
+    "tslib": "^1.11.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {

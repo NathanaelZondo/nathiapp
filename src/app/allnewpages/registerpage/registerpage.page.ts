@@ -12,6 +12,9 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Button } from 'protractor';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 declare var window
+
+
+
 @Component({
   selector: 'app-registerpage',
   templateUrl: './registerpage.page.html',
@@ -338,7 +341,7 @@ export class RegisterpagePage implements OnInit {
     console.log('abc');
     
       const gplusUser = await this.googleplus.login({
-        'webClientId': '81311888576-0i9kvpjn5fo0s72q7ua37bjo42vlh3t8.apps.googleusercontent.com',
+        'webClientId': '208184896-0945aoivssc87q8b89eplb51de9gm9tot6m.apps.googleusercontent.com',
         'offline': true,
         'scopes': 'profile email'
       })
