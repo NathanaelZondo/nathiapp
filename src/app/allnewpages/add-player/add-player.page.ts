@@ -198,10 +198,13 @@ export class AddPlayerPage implements OnInit {
     this.buttonChange = 'add'
     this.editMode = false
   }
-  edit(i) {
+  edit(i,docid) {
+   let v = 'edit'
+    let obj = {}
     let navigationExtras: NavigationExtras = {
       state: {
-        parms: i
+        parms: i,
+        poo: v
       }
     };
     // passes nav params

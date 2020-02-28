@@ -35,6 +35,7 @@ export class PlayerAddPage implements OnInit {
   counter
   editMode = false
   documentID
+  editValue
   position = [
     { value: 'Goalkeeper', label: '1 Goalkeeper' },
     { value: 'Right Fullback', label: '2 Right Fullback' },
@@ -111,6 +112,9 @@ export class PlayerAddPage implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.editingPlayer = this.router.getCurrentNavigation().extras.state.parms
+        this.documentID = this.router.getCurrentNavigation().extras.state.parms.docid
+console.log('se', );
+this.buttonChange = this.router.getCurrentNavigation().extras.state.poo
 
         if (this.editingPlayer) {
           this.playerNode = {
@@ -149,7 +153,7 @@ export class PlayerAddPage implements OnInit {
   async editPlayer() {
     this.loadingProcess = true;
     const load = await this.loadingController.create({
-      message: 'Creating Your Player..'
+      message: 'editing Your Player..'
     });
     const user = this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(this.documentID).set(this.playerNode)
     // upon success...
