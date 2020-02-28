@@ -37,17 +37,17 @@ export class PlayerAddPage implements OnInit {
   documentID
   editValue
   position = [
-    { value: 'Goalkeeper', label: '1 Goalkeeper' },
-    { value: 'Right Fullback', label: '2 Right Fullback' },
-    { value: 'Left Fullback', label: '3 Left Fullback' },
-    { value: 'Center Back', label: '4 Center Back' },
-    { value: 'Center Back (Sweeper)', label: '5 Center Back(Sweeper)' },
-    { value: 'Defending/Holding Midfielder', label: '6 Defending/Holding Midfielder' },
-    { value: 'Right Midfielder/Winger', label: '7 Right Midfielder/Winger' },
-    { value: 'Central/Box-to-Box Midfielder', label: '8 Central/Box-to-Box Midfielder' },
-    { value: 'Striker', label: '9 Striker' },
-    { value: 'Attacking Midfielder/Playmaker', label: '10 Attacking Midfielder/Playmaker' },
-    { value: 'Left Midfielder/Wingers', label: '11 Left Midfielder/Wingers' }];
+    { value: '1.Goalkeeper', label: '1 Goalkeeper' },
+    { value: '2.Right Fullback', label: '2 Right Fullback' },
+    { value: '3.Left Fullback', label: '3 Left Fullback' },
+    { value: '4.Center Back', label: '4 Center Back' },
+    { value: '5.Center Back (Sweeper)', label: '5 Center Back(Sweeper)' },
+    { value: '6.Defending/Midfielder', label: '6 Defending/Holding Midfielder' },
+    { value: '7.Right Midfielder', label: '7 Right Midfielder/Winger' },
+    { value: '8.Central/Midfielder', label: '8 Central/Box-to-Box Midfielder' },
+    { value: '9.Striker', label: '9 Striker' },
+    { value: '10.Attacking Midfielder', label: '10 Attacking Midfielder/Playmaker' },
+    { value: '11.Left Midfielder', label: '11 Left Midfielder/Winger' }];
   validation_messages = {
     'fullName': [
       { type: 'required', message: 'Name is required.' },
