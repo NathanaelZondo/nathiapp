@@ -82,13 +82,13 @@
       </div>
       
       <div class="achievements" formArrayName="Achievements">
-        <div class="btn">
+        <div class="btn" *ngIf="achievementLimit.length < 3" >
           <ion-button (click)="addNew()" size="small" shape="round" color="success">Add</ion-button>
         </div>
         <ion-item *ngFor="let ach of Achievements.controls;let i=index">
           <ion-label position="floating">Achievement <ion-badge color="primary"> {{i+1}}</ion-badge>
           </ion-label>
-          <ion-input type="text" [formControlName]="i"></ion-input>
+          <ion-input type="text" [formControlName]="i" maxlength="20"></ion-input>
           <div class="closer">
             <ion-button style="margin: 0;" shape="round" size="small" color="danger" (click)="remove(i)">
               <ion-icon slot="icon-only" name="close"></ion-icon>

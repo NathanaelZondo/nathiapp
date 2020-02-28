@@ -28,6 +28,7 @@ export class PlayerAddPage implements OnInit {
     height: '',
     Achievements: []
   }
+  achievementLimit = ['limit']
   uploadprogress = 0;
   loadingProcess = false;
   buttonChange = 'add'
@@ -136,7 +137,14 @@ export class PlayerAddPage implements OnInit {
     return this.addPlayerForm.get('Achievements') as FormArray
   }
   addNew() {
+    this.achievementLimit.push('limit')
     this.Achievements.push(this.formBuilder.control(''));
+  }
+  remove(index) {
+    this.achievementLimit.pop()
+    console.log(this.addPlayerForm.get('Achievements'));
+
+    this.Achievements.removeAt(index)
   }
   async editPlayer() {
     this.loadingProcess = true;

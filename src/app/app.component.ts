@@ -10,7 +10,7 @@ import * as firebase from 'firebase';
 import {config} from './firebaseConfig'
 import { FCM } from '@ionic-native/fcm/ngx';
 import { NativeStorage } from "@ionic-native/native-storage/ngx";
-
+import { Network } from '@ionic-native/network/ngx';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -32,9 +32,10 @@ export class AppComponent {
     private alertCtrl: AlertController,
     private fcm : FCM,
     private nativeStorage: NativeStorage,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private network: Network
   ) {
-    
+
     this.initializeApp();
     this.ngZone.run(() =>{
       this.fcm.getToken().then(token => {
@@ -50,6 +51,36 @@ export class AppComponent {
     })
   }
   runProcesses() {
+    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+      console.log('network was disconnected :-(');
+      this.router.navigateByUrl('no-network')
+    }, err => {
+      console.log(err);
+      
+    });
+    // disconnectSubscription.unsubscribe()
+
+    
+    // watch network for a connection
+let connectSubscription = this.network.onConnect().subscribe(() => {
+  console.log('network connected!');
+  
+  // We just got a connection but we need to wait briefly
+   // before we determine the connection type. Might need to wait.
+  // prior to doing any api requests as well.
+  setTimeout(() => {
+    this.router.navigateByUrl('tabs')
+    if (this.network.type === 'wifi') {
+      console.log('we got a wifi connection, woohoo!',this.network.type);
+    }
+  }, 3000);
+},err => {
+  console.log(err);
+  
+});
+// connectSubscription.unsubscribe()
+
+
     this.nativeStorage.getItem('doneOnboarding').then( res => {
       console.log('App Component ', res);
       
@@ -93,11 +124,12 @@ export class AppComponent {
       }
         });
       } else {
-        this.router.navigateByUrl("onboarding");
+        // this.router.navigateByUrl("onboarding");
+        // 
       }
     }, err => {
       console.log('component error ', err);
-      
+      // 
       // this.router.navigateByUrl("/tabs");
       this.router.navigateByUrl("onboarding");
     })
