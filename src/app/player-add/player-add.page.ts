@@ -124,7 +124,7 @@ this.buttonChange = this.router.getCurrentNavigation().extras.state.poo
             previousTeam: this.editingPlayer.docdata.previousTeam,
             DateCreated: this.editingPlayer.docdata.DateCreated,
             DateEdited: new Date(),
-            playerPosition: this.editingPlayer.docdata.playerPositon,
+            playerPosition: this.editingPlayer.docdata.playerPosition,
             playerNumber: this.editingPlayer.docdata.playerNumber,
             height: this.editingPlayer.docdata.height,
             Achievements: this.editingPlayer.docdata.Achievements
