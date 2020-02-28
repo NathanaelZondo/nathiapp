@@ -65,9 +65,7 @@
     <ion-button size="small" color="success" (click)="addTeam()">
       Team Info
     </ion-button>
-    <ion-button size="small" color="success" (click) = "presentAlertCheckbox()">
-      Team Lineup
-    </ion-button>
+
     <ion-button size="small" color="success" (click)="addPlayer()">
       Player Info
     </ion-button>
@@ -99,7 +97,7 @@
         </div>
       </div>
       <div class="lineup">
-        <ion-toggle></ion-toggle>
+        <ion-toggle [checked]="property"></ion-toggle>
       </div>
     </div>
   </div>

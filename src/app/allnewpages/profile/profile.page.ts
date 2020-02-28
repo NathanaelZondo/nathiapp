@@ -158,7 +158,8 @@ export class ProfilePage implements OnInit {
 
             snap.forEach(doc => {
               if (doc.exists) {
-                this.tournaments.push(tourns.data())
+                this.tournaments.push({ ...{ doc_id: tourns.id }, ...tourns.data() });
+                // this.tournaments.push(tourns.data())
               }
             })
           } else {
