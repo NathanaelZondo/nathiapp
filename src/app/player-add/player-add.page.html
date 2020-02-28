@@ -107,9 +107,9 @@
           </ion-button>
           <ion-button  *ngIf="buttonChange=='add'&&!loadingProcess" color="success" shape="round"
             id="skip" (click)="createTeam(addPlayerForm)" type="submit" [disabled]="!addPlayerForm.valid"
-            ion-button>Save</ion-button>
+            ion-button>Add</ion-button>
           <ion-button *ngIf="buttonChange=='edit'&&!loadingProcess" color="success" shape="round" id="skip"
-            (click)="editPlayer(addPlayerForm)" type="submit" [disabled]="!addPlayerForm.valid" ion-button>Done
+            (click)="editPlayer(addPlayerForm)" type="submit" [disabled]="!addPlayerForm.valid" ion-button>Edit
           </ion-button>
           <ion-button *ngIf="loadingProcess" color="success" shape="round" id="skip" disabled="true" ion-button>
             <ion-spinner></ion-spinner>
