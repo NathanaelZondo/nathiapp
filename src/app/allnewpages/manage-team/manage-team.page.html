@@ -1,4 +1,5 @@
 <ion-content>
+  <!-- choose lineup -->
 <div class="topInfo">
 <div class="ever">
   <div class="title">
@@ -73,7 +74,7 @@
   </div>
 </div>
   <div class="lister">
-    <div class="skelcard animated fadeInDown delayer2" *ngFor="let p of arr" >
+    <div class="skelcard animated fadeInDown delayer2" *ngFor="let p of arr">
       <div class="image">
       <img *ngIf="isPlayer" src="{{p.palyerImage}}" alt="">
       <div class="number">
@@ -96,6 +97,9 @@
         <p>{{p.height}}m tall</p>
         <p>{{p.previousTeam}}</p>
         </div>
+      </div>
+      <div class="lineup">
+        <ion-toggle></ion-toggle>
       </div>
     </div>
   </div>

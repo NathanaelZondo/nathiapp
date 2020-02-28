@@ -526,7 +526,7 @@ export class ViewTournamentPage implements OnInit {
         if (this.application.status == 'accepted') {
           let alerter = await this.alertController.create({
             header: 'Congrats !',
-            message: 'Your application has been accepted, please use the following reference to pay the participating fee: <br><br> <b>' + this.application.refNumber + '</br><br> <br>* Full instructions in your email.',
+            message: 'Your application has been accepted, please use the following reference to pay the participating fee: <br><br> <b>' + this.application.refNumber + ' <br></br><br> <br>* Full instructions in your email.',
             buttons: [{
               text: 'Okay'
             }]

@@ -128,6 +128,13 @@
             border-radius: 15px;
             position: relative;
             padding-left: 24vw;
+            .lineup {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 10;
+            }
             .image {
                 // height: 10vw;
                 width: 24vw;

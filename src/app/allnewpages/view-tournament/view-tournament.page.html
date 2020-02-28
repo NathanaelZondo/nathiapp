@@ -61,6 +61,11 @@
           Participating Member
         </ion-button>
 
+        <ion-button class="animated" [ngClass]="{'bounceIn':applytournaments!='checking'}"
+          *ngIf="!application.status&&applytournaments!='checking'&&viewedTournament.state=='inprogress'"
+          size="small" color="success" disabled='true'>
+          Not Participating
+        </ion-button>
         <!-- 
           shows only if the '''TOURNAMENT IS FINISHED'''' and user role is ''
           NOT A NORMAL USER''
