@@ -2,7 +2,8 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import { Router,NavigationExtras } from '@angular/router';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, ToastController } from '@ionic/angular';
+import { async } from 'rxjs/internal/scheduler/async';
 @Component({
   selector: 'app-manage-team',
   templateUrl: './manage-team.page.html',
@@ -15,13 +16,14 @@ export class ManageTeamPage implements OnInit {
   db = firebase.firestore();
   display = {} as any
   isPlayer = false;
-  players = []
+  players = [] as any
   createTeam = false;
   profile = false
   enlarge = null
   arr :any = [1,2,3,4,5,6,7,8,9,0,1]
   player = []
-    constructor(  public renderer: Renderer2,  private formBuilder: FormBuilder, public router : Router,public navctrl : NavController,public alertController : AlertController) { 
+  public property : boolean
+    constructor(  public renderer: Renderer2,  private formBuilder: FormBuilder, public router : Router,public navctrl : NavController,public alertController : AlertController,public toastController: ToastController) { 
       
     }
     async presentAlertCheckbox() {
@@ -119,9 +121,39 @@ export class ManageTeamPage implements OnInit {
   addPlayer() {
     this.router.navigateByUrl('add-player');
   }
+  async change(v,docid)
+  {
+    console.log('se',v.detail.checked);
+  if(v.detail.checked == true){
+  const toast = await this.toastController.create({
+    message: 'Player has been selected to play on next match.',
+    duration: 2000
+  });
+  toast.present();
+  this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then( res =>{
+    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(docid).update({
+      status : 'available'
+    })
+  })
+ }else{
+  const toast = await this.toastController.create({
+    message: 'Player has been deselected to play on next match.',
+    duration: 2000
+  });
+  toast.present();
+  this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then( res =>{
+    this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').doc(docid).update({
+      status : 'not available'
+    })
+  })
+ }
+    
+    // if(pro)
+  }
   getTeam() {
 
     this.db.collection('Teams').doc(firebase.auth().currentUser.uid).onSnapshot(res => {
+
       if (res.exists) {
         console.log('data', res.data());
         this.isTeam = true;
@@ -133,15 +165,26 @@ export class ManageTeamPage implements OnInit {
       }
       this.db.collection('Teams').doc(firebase.auth().currentUser.uid).collection('Players').onSnapshot(res => {
         this.players = [];
+        this.arr = []
         if (!res.empty) {
+          let obj  = {
+            obj : null,
+            docid : null
+          }
           res.forEach(doc => {
-            this.players.push(doc.data());
+            obj = {
+              obj : doc.data(),
+              docid : doc.id
+            }
+            this.players.push(obj)
             console.log('players', this.players);
-
-
           });
           this.isPlayer = true;
-          this.arr = this.players
+          this.players
+           obj  = {
+            obj : null,
+            docid : null
+          }
         }
       });
     });

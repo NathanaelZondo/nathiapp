@@ -72,32 +72,32 @@
   </div>
 </div>
   <div class="lister">
-    <div class="skelcard animated fadeInDown delayer2" *ngFor="let p of arr">
+    <div class="skelcard animated fadeIn"*ngFor="let p of arr" >
+      <div class="ion-padding custom-skeleton">
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+      </div>
+    </div>
+    <div class="skelcard animated fadeInDown delayer2" *ngFor="let p of players">
       <div class="image">
-      <img *ngIf="isPlayer" src="{{p.palyerImage}}" alt="">
+      <img *ngIf="isPlayer" src="{{p.obj.palyerImage}}" alt="">
       <div class="number">
       <p>{{p.playerNumber}}</p>
       </div>
       </div>
-      <div class="pDetails animated fadeIn" *ngIf="!isPlayer" >
-        <div class="ion-padding custom-skeleton">
-          <ion-skeleton-text animated></ion-skeleton-text>
-          <ion-skeleton-text animated style="width: 88%"></ion-skeleton-text>
-          <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
-          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-        </div>
-      </div>
       <div class="pDetails animated fadeInDown" *ngIf="isPlayer" >
         <div class="ion-padding custom-skeleton">
-        <h1>{{p.fullName}}</h1>
-        <p>{{p.playerPosition}}</p>
-        <p>{{p.DOB | date}}</p>
-        <p>{{p.height}}m tall</p>
-        <p>{{p.previousTeam}}</p>
+        <h1>{{p.obj.fullName}}</h1>
+        <p>{{p.obj.playerPosition}}</p>
+        <p>{{p.obj.DOB | date}}</p>
+        <p>{{p.obj.height}}m tall</p>
+        <p>{{p.obj.previousTeam}}</p>
         </div>
       </div>
       <div class="lineup">
-        <ion-toggle [checked]="property"></ion-toggle>
+        <ion-toggle [checked]="p.obj.status =='available'" (ionChange) = "change($event,p.docid)" ></ion-toggle>
       </div>
     </div>
   </div>
