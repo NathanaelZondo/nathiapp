@@ -338,7 +338,7 @@ export class RegisterpagePage implements OnInit {
     }
   }
   async nativeGoogleLogin() {
-    console.log('abc');
+    // console.log('abc');
     
       const gplusUser = await this.googleplus.login({
         'webClientId': '945208184896-9k8s2gk6t4tmlat280fgr256p9cvpjbl.apps.googleusercontent.com',

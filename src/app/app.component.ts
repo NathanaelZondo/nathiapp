@@ -59,7 +59,7 @@ export class AppComponent {
         console.log(err);
 
       });
-      // disconnectSubscription.unsubscribe()
+      disconnectSubscription.unsubscribe()
 
       // watch network for a connection
       let connectSubscription = this.network.onConnect().subscribe(() => {
@@ -78,7 +78,7 @@ export class AppComponent {
         console.log(err);
 
       });
-      // connectSubscription.unsubscribe()
+      connectSubscription.unsubscribe()
 
       // check for the onboarding property
       this.nativeStorage.getItem('doneOnboarding').then(res => {
