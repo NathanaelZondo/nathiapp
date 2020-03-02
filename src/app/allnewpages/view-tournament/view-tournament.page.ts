@@ -459,7 +459,7 @@ export class ViewTournamentPage implements OnInit {
 
   // depends on the role to get the status of application
   checkForTournaments() {
-    console.log(this.applytournaments);
+    
 
     this.applytournaments = 'checking'
     console.log('check role', this.role);
@@ -504,25 +504,20 @@ export class ViewTournamentPage implements OnInit {
       })
     } else {
       this.db.collection('newTournaments').doc(this.viewedTournament.doc_id).collection('vendorApplications').doc(this.loggedInUser.uid).get().then(async res => {
-        console.log(res);
-        this.application = {
-          TeamObject: res.data().TeamObject,
-          TournamentID: res.data().TournamentID,
-          clientNotified: res.data().clientNotified,
-          refNumber: res.data().refNumber,
-          status: res.data().status
-        }
-        console.log(this.application);
-
         if (res.exists) {
-          setTimeout(() => {
+          console.log(res.data());
+          
             this.applytournaments = 'yes'
-          }, 1000);
+            this.application.TournamentID = res.data().TournamentID
+            this.application.clientNotified = res.data().clientNotified
+            this.application.refNumber = res.data().refNumber
+            this.application.status = res.data().status
+        
         } else {
-          setTimeout(() => {
             this.applytournaments = 'no'
-          }, 1000);
+            this.application.status  = null
         }
+        console.log(this.applytournaments, this.application, this.viewedTournament);
         if (this.application.status == 'accepted') {
           let alerter = await this.alertController.create({
             header: 'Congrats !',

@@ -126,8 +126,9 @@ export class ManageTeamPage implements OnInit {
     console.log('se',v.detail.checked);
   if(v.detail.checked == true){
   const toast = await this.toastController.create({
-    message: 'Player has been selected to play on next match.',
-    duration: 2000
+    message: 'Player added to lineup.',
+    duration: 2000,
+    buttons: [{icon:'checkmark',cssClass:'greenToast'}]
   });
   toast.present();
   this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then( res =>{
@@ -137,8 +138,9 @@ export class ManageTeamPage implements OnInit {
   })
  }else{
   const toast = await this.toastController.create({
-    message: 'Player has been deselected to play on next match.',
-    duration: 2000
+    message: 'Player removed from lineup.',
+    duration: 2000,
+    buttons: [{icon:'close',cssClass:'redToast'}]
   });
   toast.present();
   this.db.collection('Teams').doc(firebase.auth().currentUser.uid).get().then( res =>{

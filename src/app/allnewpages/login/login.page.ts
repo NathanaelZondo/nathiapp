@@ -65,7 +65,7 @@ export class LoginPage implements OnInit {
     
     try {
       const gplusUser = await this.googleplus.login({
-        'webClientId': '81311888576-0i9kvpjn5fo0s72q7ua37bjo42vlh3t8.apps.googleusercontent.com',
+        'webClientId': '945208184896-9k8s2gk6t4tmlat280fgr256p9cvpjbl.apps.googleusercontent.com',
         'offline': true,
         'scopes': 'profile email'
       })

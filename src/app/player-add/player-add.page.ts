@@ -129,6 +129,9 @@ this.buttonChange = this.router.getCurrentNavigation().extras.state.poo
             height: this.editingPlayer.docdata.height,
             Achievements: this.editingPlayer.docdata.Achievements
           }
+          this.editingPlayer.docdata.Achievements.forEach(element => {
+            this.Achievements.push(this.formBuilder.control(element));
+          });
         }
 
       } else {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Network } from '@ionic-native/network/ngx';
 import { Router } from '@angular/router';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 @Component({
   selector: 'app-no-network',
   templateUrl: './no-network.page.html',
@@ -10,9 +11,10 @@ export class NoNetworkPage implements OnInit {
   uploadprogress = 100
   text = "Closing App"
   netStatus = false
-  constructor( private router : Router, private network: Network) { }
+  constructor( private router : Router, private network: Network,private splashScreen: SplashScreen,) { }
 
   ngOnInit() {
+    this.splashScreen.hide()
     let connectSubscription = this.network.onConnect().subscribe(() => {
       console.log('network connected!');
       

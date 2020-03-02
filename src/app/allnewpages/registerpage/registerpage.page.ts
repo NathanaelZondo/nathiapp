@@ -341,7 +341,7 @@ export class RegisterpagePage implements OnInit {
     console.log('abc');
     
       const gplusUser = await this.googleplus.login({
-        'webClientId': '208184896-0945aoivssc87q8b89eplb51de9gm9tot6m.apps.googleusercontent.com',
+        'webClientId': '945208184896-9k8s2gk6t4tmlat280fgr256p9cvpjbl.apps.googleusercontent.com',
         'offline': true,
         'scopes': 'profile email'
       })
