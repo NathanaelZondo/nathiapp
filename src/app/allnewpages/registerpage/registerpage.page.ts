@@ -337,18 +337,28 @@ export class RegisterpagePage implements OnInit {
     }
     }
   }
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
+  }
   async nativeGoogleLogin() {
     // console.log('abc');
-    
+    this.presentLoading()
       const gplusUser = await this.googleplus.login({
         'webClientId': '945208184896-9k8s2gk6t4tmlat280fgr256p9cvpjbl.apps.googleusercontent.com',
         'offline': true,
         'scopes': 'profile email'
       })
-       await firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)).then((i)=>{
+       await firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)).then(async (i)  =>{
         //this.userProfile.doc(i.user.uid).set
         console.log(i);
-        
+      //   const loading =  this.loadingController.create({
+      //     message: 'Please wait...',
+      //   });
+      // await loading.present();
         this.fullName = i.user.displayName
         this.email = i.user.email
         this.profileImage = i.user.photoURL
@@ -360,6 +370,7 @@ export class RegisterpagePage implements OnInit {
   }
   webGoogleLogin() {
     try {
+      this.presentLoading()
       const provider = new firebase.auth.GoogleAuthProvider();
       const credential = firebase.auth().signInWithPopup(provider).then((i)=>{
         if (i.user) {
