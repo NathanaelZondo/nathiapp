@@ -15,7 +15,7 @@ import { FCM } from '@ionic-native/fcm/ngx';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { PlayerAddPage } from './player-add/player-add.page';
-
+import { Device } from '@ionic-native/device/ngx';
 firebase.initializeApp(config);
 @NgModule({
   declarations: [AppComponent],
@@ -37,6 +37,7 @@ firebase.initializeApp(config);
     NativeStorage,
     Network,
     GooglePlus,
+    Device,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy,  }
   ],
   bootstrap: [AppComponent]

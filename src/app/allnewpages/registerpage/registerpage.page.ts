@@ -54,7 +54,8 @@ export class RegisterpagePage implements OnInit {
   vendorDiv = document.getElementsByClassName('vendorInfo')
   managerInfo = false
   managerDiv = document.getElementsByClassName('managerInfo')
-
+ alertRole = ''
+  isEmailInputDisable = false
   constructor(
     public authService: AuthServiceService,
     public formBuilder: FormBuilder,
@@ -74,7 +75,7 @@ export class RegisterpagePage implements OnInit {
     firebase.auth().languageCode = 'en';
 
     this.registrationForm = formBuilder.group({
-      phoneNumber: [this.phoneNumber, Validators.compose([Validators.required])],
+      phoneNumber: [this.phoneNumber],
       fullName: ['', Validators.required],
       role: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
@@ -321,13 +322,61 @@ export class RegisterpagePage implements OnInit {
   async googleLogin() {
     console.log('i am here',this.phoneNumber);
     
-    if (!this.phoneNumber || !this.role) {
-      let alert = await this.alertController.create({
-        header: 'OOPS',
-        message: 'Please fill in your phone number and role before proceeding',
-        buttons: ['OK']
-      })
-         await alert.present()
+    if ( !this.role) {
+      const alert = await this.alertController.create({
+        header: 'Register As!',
+        // message: 'Message <strong>text</strong>!!!',
+        inputs: [
+          {
+            name: 'teamManager',
+            type: 'radio',
+            label: 'Team Manager',
+            value: 'teamManager',
+          },
+  
+          {
+            name: 'vendor',
+            type: 'radio',
+            label: 'Vendor',
+            value: 'vendor'
+          },
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Okay',
+            handler: async (data) => {
+ 
+              if(!data){
+                const another = await this.alertController.create({
+                  message : 'Please select a role before proceeding',
+                  buttons: [{ text: 'Okay'}]
+                })
+                await another.present()
+              }else{
+
+                this.alertRole = data
+                this.isEmailInputDisable = true
+                console.log('value of',this.alertRole)
+                if (this.plt.is('cordova')) {
+                  this.nativeGoogleLogin();
+                } else {
+                  this.webGoogleLogin();
+                }
+              }
+              console.log('Confirm Okay' ,data);
+            }
+          }
+        ]
+      });
+  
+      await alert.present();
     }else{
         
     if (this.plt.is('cordova')) {
@@ -367,6 +416,40 @@ export class RegisterpagePage implements OnInit {
          console.log(err);
          
        })
+  }
+ async accept(){
+    let loader = await this.loadingController.create({
+      message:'Please wait...'
+    })
+    await loader.present()
+    console.log('im being called!!');
+    firebase.auth().onAuthStateChanged(i => {
+      console.log('aid found', i.uid, ' aa', this.email, this.fullName);
+      if(this.alertRole == 'vendor'){
+        let form = {
+          email : this.email,
+          fullName : this.fullName,
+          role : this.alertRole,
+          phoneNumber: ''
+        }
+        firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' ,status : 'awaiting', profileImage: this.profileImage}).then( async response =>{
+          await loader.dismiss()
+          this.route.navigateByUrl("/tabs")
+        })
+      }
+      else if(this.alertRole == 'teamManager' ){
+        let form = {
+          email : this.email,
+          fullName : this.fullName,
+          role : this.alertRole,
+          phoneNumber: ''
+        }
+        firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' ,status : '', profileImage: this.profileImage}).then(async re => {
+          await loader.dismiss()
+          this.route.navigateByUrl("/add-team")
+        })
+      }
+    })
   }
   webGoogleLogin() {
     try {
@@ -564,21 +647,18 @@ export class RegisterpagePage implements OnInit {
       await loader.present()
     firebase.auth().onAuthStateChanged(i => {
       console.log('aid found', i.uid, ' aa', this.email, this.fullName);
-      if(form.role == 'vendor'){
+      if(form.role == 'vendor' || this.alertRole == 'vendor'){
         firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' ,status : 'awaiting', profileImage: this.profileImage}).then( async response =>{
           await loader.dismiss()
           this.route.navigateByUrl("/tabs")
         })
       }
-      else if(form.role == 'teamManager'){
+      else if(form.role == 'teamManager' || this.alertRole == 'teamManager' ){
         firebase.firestore().collection('members').doc(i.uid).set({ form, firstEmailRecieved: 'no', Token: '' ,status : '', profileImage: this.profileImage}).then(async re => {
           await loader.dismiss()
           this.route.navigateByUrl("/add-team")
         })
       }
-
-   
-
     })
   }
 

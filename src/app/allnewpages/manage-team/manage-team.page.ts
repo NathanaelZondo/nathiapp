@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import { Router,NavigationExtras } from '@angular/router';
 import { NavController, AlertController, ToastController } from '@ionic/angular';
 import { async } from 'rxjs/internal/scheduler/async';
+
 @Component({
   selector: 'app-manage-team',
   templateUrl: './manage-team.page.html',

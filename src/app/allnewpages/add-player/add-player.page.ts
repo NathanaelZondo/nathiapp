@@ -28,7 +28,8 @@ export class AddPlayerPage implements OnInit {
     playerPosition: '',
     playerNumber: '',
     height: '',
-    Achievements: []
+    Achievements: [],
+    status : 'available'
   }
   editMode = false
   editForm = document.getElementsByClassName('dFH')
@@ -254,7 +255,8 @@ export class AddPlayerPage implements OnInit {
         playerPosition: '',
         height: '',
         Achievements: [],
-        playerNumber: ''
+        playerNumber: '',
+        status : ''
 
       }
       this.router.navigateByUrl('add-player')
@@ -316,7 +318,8 @@ export class AddPlayerPage implements OnInit {
           playerPosition: '',
           height: '',
           Achievements: [],
-          playerNumber: ''
+          playerNumber: '',
+          status : ''
         }
         this.router.navigateByUrl('add-player')
         const toast = await this.toastController.create({

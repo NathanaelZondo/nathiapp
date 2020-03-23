@@ -93,7 +93,7 @@
           </ion-list> -->
           <ion-button *ngIf="phoneNumber.length<10||!role" size="small" color="light" shape="round"
             fill="outline" disabled="true"> Register with Phone Number </ion-button>
-          <ion-button *ngIf="phoneNumber.length==10&&role" size="small" color="light" shape="round"
+          <ion-button *ngIf="phoneNumber.length==10 && role" size="small" color="light" shape="round"
             fill="outline" (click)="userAdd()"> Register with Phone Number </ion-button>
           <div class="or">
             <div class="line"></div>
@@ -136,18 +136,18 @@
           <ion-item lines="none" style="border-radius: 10px;
          margin: 2px 0px;">
             <ion-label position="floating">Email</ion-label>
-            <ion-input style="
-            border-bottom: solid 2px white;
-             
-            " formControlName="email" type="email" [(ngModel)]="email"></ion-input>
+            <ion-input disabled="{{isEmailInputDisable}}" style="
+            border-bottom: solid 2px white;" formControlName="email" type="email" [(ngModel)]="email"></ion-input>
           </ion-item>
 
           <div class="btns">
 
-            <ion-button size="small" shape="round" color="success" id="sign-in-button"
+            <ion-button *ngIf="!alertRole"  size="small" shape="round" color="success" id="sign-in-button"
               [disabled]="!registrationForm.valid" type="submit" class="form-buttons">
               Done
             </ion-button>
+
+          <ion-button *ngIf="alertRole" (click)="accept()" size="small" shape="round" color="success" id="sign-in-button" class="form-buttons">Done</ion-button>
 
           </div>
           <p style="width: 90%; margin: 5px; text-align: center; padding: 10px;">By clicking Sign Up, you agree to our

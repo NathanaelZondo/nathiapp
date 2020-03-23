@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
 
+import { Device } from '@ionic-native/device/ngx';
 import { PassInformationServiceService } from './service/pass-information-service.service';
 import * as firebase from 'firebase';
 import { config } from './firebaseConfig'
@@ -33,11 +34,16 @@ export class AppComponent {
     private fcm: FCM,
     private nativeStorage: NativeStorage,
     public alertController: AlertController,
-    private network: Network
+    private network: Network,
+    private device: Device
   ) {
 
     this.initializeApp();
     this.ngZone.run(() => {
+      console.log('device',this.device, this.device.uuid)
+      //store device uuid to firebase 
+    
+        
       this.fcm.getToken().then(token => {
         this.token = token
         console.log('token', token);
@@ -81,10 +87,14 @@ export class AppComponent {
       connectSubscription.unsubscribe()
 
       // check for the onboarding property
-      this.nativeStorage.getItem('doneOnboarding').then(res => {
+
+      firebase.firestore().collection('DeviceUUID').where('uid','==',this.device.uuid).get().then( res =>{
+
+      
+      // this.nativeStorage.getItem('doneOnboarding').then(res => {
 
         // IF THE RESPONSE IS TRUE
-        if (res == true) {
+        if (res.size > 0) {
 
           // CHECK IF THE USER IS LOGGED IN
           const unsubscribe = firebase.auth().onAuthStateChanged(user => {

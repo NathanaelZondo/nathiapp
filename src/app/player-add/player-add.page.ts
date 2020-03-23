@@ -26,7 +26,8 @@ export class PlayerAddPage implements OnInit {
     playerPosition: '',
     playerNumber: '',
     height: '',
-    Achievements: []
+    Achievements: [],
+    status : 'available'
   }
   achievementLimit = ['limit']
   uploadprogress = 0;
@@ -127,7 +128,8 @@ this.buttonChange = this.router.getCurrentNavigation().extras.state.poo
             playerPosition: this.editingPlayer.docdata.playerPosition,
             playerNumber: this.editingPlayer.docdata.playerNumber,
             height: this.editingPlayer.docdata.height,
-            Achievements: this.editingPlayer.docdata.Achievements
+            Achievements: this.editingPlayer.docdata.Achievements,
+            status : ''
           }
           this.editingPlayer.docdata.Achievements.forEach(element => {
             this.Achievements.push(this.formBuilder.control(element));
@@ -177,7 +179,8 @@ this.buttonChange = this.router.getCurrentNavigation().extras.state.poo
         playerPosition: '',
         height: '',
         Achievements: [],
-        playerNumber: ''
+        playerNumber: '',
+        status : ''
 
       }
       this.router.navigateByUrl('add-player')
@@ -238,7 +241,8 @@ this.buttonChange = this.router.getCurrentNavigation().extras.state.poo
           playerPosition: '',
           height: '',
           Achievements: [],
-          playerNumber: ''
+          playerNumber: '',
+          status : ''
         }
         this.router.navigateByUrl('add-player')
         const toast = await this.toastController.create({

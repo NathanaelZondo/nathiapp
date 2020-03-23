@@ -4,6 +4,8 @@ import { IonSlides, NavController } from '@ionic/angular';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import * as firebase from 'firebase';
+import { Device } from '@ionic-native/device/ngx';
 @Component({
   selector: 'app-onboarding',
   templateUrl: './onboarding.page.html',
@@ -103,9 +105,10 @@ export class OnboardingPage implements OnInit {
     }
   }
   constructor(public navCtrl: NavController,private router: Router, private activatedRoute: ActivatedRoute,private nativeStorage: NativeStorage,
-    public splashScreen: SplashScreen,) { }
+    public splashScreen: SplashScreen, private device: Device) { }
 
   ngOnInit() {
+    
     setTimeout(() => {
       this.splashScreen.hide()
     }, 3000);
@@ -154,7 +157,8 @@ export class OnboardingPage implements OnInit {
     this.slides.lockSwipes(true)
   }
   sign(page) {
-    this.nativeStorage.setItem('doneOnboarding', true).then(res => {
+    
+    firebase.firestore().collection('DeviceUUID').add({ uid : this.device.uuid}).then(res => {
       console.log('On res');
       
       switch (page) {
