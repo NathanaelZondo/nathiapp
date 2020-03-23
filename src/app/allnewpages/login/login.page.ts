@@ -15,7 +15,6 @@ declare var window
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
   db = firebase.firestore()
   registrationForm: FormGroup
   phoneNumber = ''

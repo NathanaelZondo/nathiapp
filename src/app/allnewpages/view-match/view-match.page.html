@@ -191,8 +191,6 @@
                     </div>
                 </ion-slide>
             </ion-slides>
-
-
         </div>
     </div>
     <div class="goalscorers" [ngClass]="{'gClose':!viewStatistics,'gOpen':viewStatistics}">
@@ -212,7 +210,7 @@
             </div>
         </div>
     </div>
-    <div class="penalties" *ngIf="object.score==object.ascore"  [ngClass]="{'pClose':!viewPenalties,'gOpen':viewPenalties}">
+    <div class="penalties" *ngIf="object.score==object.ascore&&object.matchstate=='complete'"  [ngClass]="{'pClose':!viewPenalties,'gOpen':viewPenalties}">
         <div class="title">
             <p class="home">{{object.hpenalties}}</p>
             <p>Penalties</p>

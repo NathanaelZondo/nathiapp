@@ -176,11 +176,11 @@
             <ion-button *ngIf="!item.half"  size="small" shape="round" color="light">
               Not started
             </ion-button>
-            <ion-button  *ngIf="item.half=='First Half'"   size="small" shape="round" color="medium">
+            <ion-button  *ngIf="item.half=='First Half'"   size="small" shape="round" color="danger">
               Live Now
             </ion-button>
             <ion-button  *ngIf="item.half=='Second Half'&&item.matchstate=='incomplete'"   size="small" shape="round" color="medium">
-              Half Time
+              Second Half
             </ion-button>
             <ion-button size="small" shape="round" color="danger"  *ngIf="item.matchstate=='complete'&&item.half=='Second Half'"  >
               Match Ended
