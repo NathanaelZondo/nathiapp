@@ -186,7 +186,7 @@ export class HomePage {
 
             this.loadFilter = false
             if (this.tourn.upcoming.length == 0) {
-              this.skeleton = [1, 2, 3, 4, 5, 6, 7]
+              this.skeleton = [1]
             } else {
               this.skeleton = []
             }
@@ -199,7 +199,7 @@ export class HomePage {
 
             this.loadFilter = false
             if (this.tourn.inprogres.length == 0) {
-              this.skeleton = [1, 2, 3, 4, 5, 6, 7]
+              this.skeleton = [1]
             } else {
               this.skeleton = []
             }
@@ -212,7 +212,7 @@ export class HomePage {
 
             this.loadFilter = false
             if (this.tourn.finished.length == 0) {
-              this.skeleton = [1, 2, 3, 4, 5, 6, 7]
+              this.skeleton = [1]
             } else {
               this.skeleton = []
             }
@@ -225,7 +225,6 @@ export class HomePage {
     this.router.navigate(['login'])
   }
   getMatchFixtures(){
-console.log('seko');
 firebase.firestore().collection('MatchFixtures').get().then( res =>{
   let date = new Date();
   res.forEach(doc =>{

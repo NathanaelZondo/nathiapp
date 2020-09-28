@@ -25,7 +25,7 @@ export class RegisterpagePage implements OnInit {
   tabElement = document.getElementsByTagName('ion-tab-bar')
   phoneNumber = ''
   lastNum = ''
-  // password
+  password
   registrationForm: FormGroup
   smsSent
   confirmationResult = ''
@@ -79,7 +79,7 @@ export class RegisterpagePage implements OnInit {
       fullName: ['', Validators.required],
       role: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-      // password: [this.password, Validators.compose([Validators.required,Validators.minLength(6)])],
+      password: ['', Validators.compose([Validators.required,Validators.minLength(6)])],
     })
   }
   slideOpts = {
@@ -640,6 +640,20 @@ export class RegisterpagePage implements OnInit {
     // this.route.navigateByUrl('add-team')
   }
 
+  async emailLogin(){
+    let loader = await this.loadingController.create({
+      message:'Please wait...'
+    })
+    await loader.present()
+    console.log(this.email,' ' ,this.password)
+    firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(async results =>{
+      console.log(results);
+      
+      await loader.dismiss()
+      this.slideNext()
+    })
+    
+  }
   async addUser(form) {
       let loader = await this.loadingController.create({
         message:'Please wait...'

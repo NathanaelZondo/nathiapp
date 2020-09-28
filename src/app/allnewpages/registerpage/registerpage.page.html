@@ -58,9 +58,14 @@
             Welcome
           </h4>
           <ion-item lines="none" style="border-radius: 10px; margin: 2px 0px;">
-            <ion-label position="floating">Phone Number</ion-label>
+            <ion-label position="floating">Email</ion-label>
             <ion-input style="
-            border-bottom: solid 2px white;" formControlName="phoneNumber" type="tel" maxlength="10" [(ngModel)]="phoneNumber"></ion-input>
+            border-bottom: solid 2px white;" formControlName="email" type="text"  [(ngModel)]="email"></ion-input>
+          </ion-item>
+                <ion-item lines="none" style="border-radius: 10px; margin: 2px 0px;">
+            <ion-label position="floating">Password</ion-label>
+            <ion-input style="
+            border-bottom: solid 2px white;" formControlName="password" type="text" [(ngModel)]="password"></ion-input>
           </ion-item>
 
           <ion-item lines="none">
@@ -91,10 +96,10 @@
               </ion-item>
             </ion-radio-group>
           </ion-list> -->
-          <ion-button *ngIf="phoneNumber.length<10||!role" size="small" color="light" shape="round"
-            fill="outline" disabled="true"> Register with Phone Number </ion-button>
-          <ion-button *ngIf="phoneNumber.length==10 && role" size="small" color="light" shape="round"
-            fill="outline" (click)="userAdd()"> Register with Phone Number </ion-button>
+          <ion-button *ngIf="!role" size="small" color="light" shape="round"
+            fill="outline" disabled="true"> Register with email </ion-button>
+          <ion-button *ngIf="role" size="small" color="light" shape="round"
+            fill="outline" (click)="emailLogin()"> Register with email </ion-button>
           <div class="or">
             <div class="line"></div>
             <div class="text">

@@ -43,7 +43,7 @@ export class LoginPage implements OnInit {
   ) {
     this.registrationForm = formBuilder.group({
       phoneNumber: [this.phoneNumber, Validators.compose([Validators.required])],
-      // password: [this.password, Validators.compose([Validators.required, Validators.minLength(6)])],
+      password: [this.password, Validators.compose([Validators.required])],
     })
   }
   async presentLoading() {
@@ -182,6 +182,7 @@ export class LoginPage implements OnInit {
         }
       })
     }
+
    async logins(code){
       let loader = await this.loadingController.create({
         message: 'Please wait'
@@ -196,7 +197,21 @@ export class LoginPage implements OnInit {
         })
       }
     }
-  ​
+  ​   async emailLogin(){
+    let loader = await this.loadingController.create({
+      message: 'Please wait'
+    })
+    await loader.present()
+    return firebase.auth().signInWithEmailAndPassword(this.phoneNumber, this.password).then(async result => {
+        loader.dismiss()
+       console.log(result);
+        this.route.navigateByUrl('/tabs');
+      }).catch(err =>{
+        console.log(err.messages);
+        
+      })
+   
+  }
   async  addUser(form){
       let loader = await this.loadingController.create({
         message: 'Please wait'

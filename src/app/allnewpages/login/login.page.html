@@ -11,17 +11,37 @@
 
   <div class="container">
     <div id="recaptcha-container"></div>
-    <form [formGroup]="registrationForm" (ngSubmit)="addUser(registrationForm.value)">
+    <form [formGroup]="registrationForm" (ngSubmit)="emailLogin(registrationForm.value)">
       
       <h4>Welcome back</h4>
-
-      <ion-item lines="none" style="background: none;
+<!--
+  <ion-item lines="none" style="background: none;
       color: rgb(0, 0, 0);border-radius: 5px;">
         <ion-label position="floating" style="color: rgb(24, 24, 24);">Phone Number</ion-label>
         <ion-input style="
       border-bottom: solid 2px white;
        color: rgb(34, 34, 34)
       " formControlName="phoneNumber" type="tel" maxlength="10" [(ngModel)]="phoneNumber"></ion-input>
+      </ion-item>
+-->
+    
+
+       <ion-item lines="none" style="background: none;
+      color: rgb(0, 0, 0);border-radius: 5px;">
+        <ion-label position="floating" style="color: rgb(24, 24, 24);">Email</ion-label>
+        <ion-input style="
+      border-bottom: solid 2px white;
+       color: rgb(34, 34, 34)
+      " formControlName="phoneNumber" type="text" [(ngModel)]="phoneNumber"></ion-input>
+      </ion-item>
+
+       <ion-item lines="none" style="background: none;
+      color: rgb(0, 0, 0);border-radius: 5px;">
+        <ion-label position="floating" style="color: rgb(24, 24, 24);">Password</ion-label>
+        <ion-input style="
+      border-bottom: solid 2px white;
+       color: rgb(34, 34, 34)
+      " formControlName="password" type="text" [(ngModel)]="password"></ion-input>
       </ion-item>
 <!-- 
       <ion-item lines="none" style="background: none;color: rgb(0, 0, 0);border-radius: 5px;">
@@ -48,7 +68,7 @@
       </ion-button>
         <ion-button *ngIf="!signingIn" shape="round" size="small" color="success" id="sign-in-button" type="submit" class="form-buttons"
           [disabled]="!registrationForm.valid">
-          Log In with phone number
+          Log In with email
         </ion-button><br>
         <div class="or">
           <div class="line"></div>
