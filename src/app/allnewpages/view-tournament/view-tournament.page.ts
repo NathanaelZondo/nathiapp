@@ -802,7 +802,9 @@ export class ViewTournamentPage implements OnInit {
             buttons: [
               {
                 text: 'Okay',
-                role: 'cancel'
+                handler: () => {
+                  this.router.navigateByUrl('tabs')
+                }
               }
             ]
           })

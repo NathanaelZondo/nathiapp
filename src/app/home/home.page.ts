@@ -24,7 +24,7 @@ export class HomePage {
   role
   user
   token
-  skeleton = [1, 2, 3, 4, 5, 6, 7]
+  skeleton = [1]
   viewTournaments = []
   tourn = {
     inprogres: [],
