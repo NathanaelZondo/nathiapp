@@ -22,7 +22,7 @@ export class ProfilePage implements OnInit {
       email: null
     },
     status: "awaitin",
-    profileImage: 'https://avatarfiles.alphacoders.com/855/85557.png'
+    profileImage: '../../../assets/nathi_noImage.png'
   }
   skeleton = [1, 1]
   tournaments = []

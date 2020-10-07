@@ -52,13 +52,16 @@
   </div>
   <div class="images">
     <div class="j">
-      <img src="{{display.teamJerseyIMG}}" alt="">
+      <img *ngIf="!display.teamJerseyIMG" src="../../../assets/nathi_noImage.png">
+      <img *ngIf="display.teamJerseyIMG" src="{{display.teamJerseyIMG}}" alt="">
     </div>
     <div class="l">
-      <img src="{{display.teamLogo}}" alt="">
+      <img *ngIf="!display.teamLogo" src="../../../assets/nathi_noImage.png">
+      <img *ngIf="display.teamLogo"  src="{{display.teamLogo}}" alt="">
     </div>
     <div class="g">
-      <img src="{{display.goalKeeperJerseyIMG}}" alt="">
+      <img *ngIf="!display.goalKeeperJerseyIMG" src="../../../assets/nathi_noImage.png">
+      <img *ngIf="display.goalKeeperJerseyIMG" src="{{display.goalKeeperJerseyIMG}}" alt="">
     </div>
   </div>
   <div class="btns">
@@ -82,7 +85,8 @@
     </div>
     <div class="skelcard animated fadeInDown delayer2" *ngFor="let p of players">
       <div class="image">
-      <img *ngIf="isPlayer" src="{{p.obj.palyerImage}}" alt="">
+        <img *ngIf="!p.obj.palyerImage" src="../../../assets/nathi_noImage.png">
+      <img *ngIf="p.obj.palyerImage" src="{{p.obj.palyerImage}}" alt="">
       <div class="number">
       <p>{{p.playerNumber}}</p>
       </div>

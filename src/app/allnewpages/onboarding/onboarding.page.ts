@@ -156,51 +156,51 @@ export class OnboardingPage implements OnInit {
     this.slides.slideTo(4).then(()=>{})
     this.slides.lockSwipes(true)
   }
-  // sign(page) {
+  sign(page) {
     
-  //   firebase.firestore().collection('DeviceUUID').add({ uid : this.device.uuid}).then(res => {
-  //     console.log('On res');
+    firebase.firestore().collection('DeviceUUID').add({ uid : this.device.uuid}).then(res => {
+      console.log('On res');
       
-  //     switch (page) {
-  //       case 'up':
-  //         this.navCtrl.navigateRoot('registerpage')
-  //         break;
-  //         case 'in':
-  //           this.navCtrl.navigateRoot('login')
-  //           break;
-  //           case 'home':
-  //           this.navCtrl.navigateRoot('tabs')
-  //           break;
-  //     }
-  //   },err => {
-  //     console.log('storage err', err);
+      switch (page) {
+        case 'up':
+          this.navCtrl.navigateRoot('registerpage')
+          break;
+          case 'in':
+            this.navCtrl.navigateRoot('login')
+            break;
+            case 'home':
+            this.navCtrl.navigateRoot('tabs')
+            break;
+      }
+    },err => {
+      console.log('storage err', err);
       
-  //     switch (page) {
-  //       case 'up':
-  //         this.navCtrl.navigateRoot('registerpage')
-  //         break;
-  //         case 'in':
-  //           this.navCtrl.navigateRoot('login')
-  //           break;
-  //           case 'home':
-  //           this.navCtrl.navigateRoot('tabs')
-  //           break;
-  //     }
+      switch (page) {
+        case 'up':
+          this.navCtrl.navigateRoot('registerpage')
+          break;
+          case 'in':
+            this.navCtrl.navigateRoot('login')
+            break;
+            case 'home':
+            this.navCtrl.navigateRoot('tabs')
+            break;
+      }
       
-  //   })
+    })
 
-  // }
-  sign(page){
-    switch (page) {
-      case 'up':
-        this.navCtrl.navigateRoot('registerpage')
-        break;
-        case 'in':
-          this.navCtrl.navigateRoot('login')
-          break;
-          case 'home':
-          this.navCtrl.navigateRoot('tabs')
-          break;
-    }
   }
+  // sign(page){
+  //   switch (page) {
+  //     case 'up':
+  //       this.navCtrl.navigateRoot('registerpage')
+  //       break;
+  //       case 'in':
+  //         this.navCtrl.navigateRoot('login')
+  //         break;
+  //         case 'home':
+  //         this.navCtrl.navigateRoot('tabs')
+  //         break;
+  //   }
+  // }
 }

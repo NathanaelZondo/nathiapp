@@ -41,7 +41,8 @@
       <div class="playerCard animated fadeInUp" *ngFor="let item of players;let i = index" (click)="viewInfo(item, i)"
         [ngClass]="{'bounceIn':selectedId==i}">
         <div class="image">
-          <img src="{{item.docdata.palyerImage}}" alt="">
+          <img *ngIf="!item.docdata.palyerImage" src="../../../assets/nathi_noImage.png" >
+          <img *ngIf="item.docdata.palyerImage" src="{{item.docdata.palyerImage}}" alt="">
           <div class="edit">
             <ion-fab-button size="small" color="success" (click)="edit(item,item.docid)">
               <ion-icon name="create"></ion-icon>

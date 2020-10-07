@@ -49,7 +49,10 @@ export class AppComponent {
           token: token,
           timeStamp: new Date
         })
-      });
+      }).catch(err => {
+        console.log('FCM Error ', err);
+        
+      })
       this.runProcesses()
       // this.checkForTeamAndPlayers();
     })
