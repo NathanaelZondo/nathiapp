@@ -21,7 +21,6 @@ export class AppComponent {
   role
   //  profile = {} as Profile 
   token = null
-  o
 
   constructor(
     private platform: Platform,
@@ -41,9 +40,8 @@ export class AppComponent {
     this.initializeApp();
     this.ngZone.run(() => {
       console.log('device',this.device, this.device.uuid)
+      
       //store device uuid to firebase 
-    
-        
       this.fcm.getToken().then(token => {
         this.token = token
         console.log('token', token);
@@ -151,9 +149,6 @@ export class AppComponent {
               firebase.firestore().collection('members').doc(user.uid).update({
                 Token: this.token
               })
-
-              
-
             }
           });
         } else {

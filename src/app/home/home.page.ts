@@ -77,7 +77,7 @@ export class HomePage {
       })
       if (this.tourn.inprogres.length > 0) {
         this.skeleton = []
-      this.viewTournaments = this.tourn.inprogres
+        this.viewTournaments = this.tourn.inprogres
       }
     })
 
@@ -90,7 +90,7 @@ export class HomePage {
       })
     })
   }
-  async  popover() {
+  async popover() {
     this.popover1 = await this.popoverController.create({
       component: MenuComponent,
       translucent: true
@@ -112,10 +112,10 @@ export class HomePage {
 
   // }
   ngOnInit() {
-    let t = new Date('22/02/2020') 
-  let s =  moment([2020,2,22]).fromNow();         
-  console.log('izesha', s);
-  
+    let t = new Date('22/02/2020')
+    let s = moment([2020, 2, 22]).fromNow();
+    console.log('izesha', s);
+
     let today = new Date();
     // let timeToday = new 
     let date = new Date();
@@ -224,24 +224,24 @@ export class HomePage {
   login() {
     this.router.navigate(['login'])
   }
-  getMatchFixtures(){
-firebase.firestore().collection('MatchFixtures').get().then( res =>{
-  let date = new Date();
-  res.forEach(doc =>{
-    if(firebase.auth().currentUser.uid == doc.data().TeamObject.uid && date == doc.data().matchdate ){
-      console.log('yes');
-      // this.presentAlertCheckbox()
-      
-    }else  if(firebase.auth().currentUser.uid == doc.data().aTeamObject.uid && date == doc.data().matchdate) {
-      // this.presentAlertCheckbox()
-    }
-    // console.log('data',doc.data().TeamObject.uid);
-    
-  })
-})
+  getMatchFixtures() {
+    firebase.firestore().collection('MatchFixtures').get().then(res => {
+      let date = new Date();
+      res.forEach(doc => {
+        if (firebase.auth().currentUser.uid == doc.data().TeamObject.uid && date == doc.data().matchdate) {
+          console.log('yes');
+          // this.presentAlertCheckbox()
+
+        } else if (firebase.auth().currentUser.uid == doc.data().aTeamObject.uid && date == doc.data().matchdate) {
+          // this.presentAlertCheckbox()
+        }
+        // console.log('data',doc.data().TeamObject.uid);
+
+      })
+    })
 
   }
- 
+
 
 
 }

@@ -27,7 +27,7 @@ export class PlayerAddPage implements OnInit {
     playerNumber: '',
     height: '',
     Achievements: [],
-    status : 'available'
+    status: 'available'
   }
   achievementLimit = ['limit']
   uploadprogress = 0;
@@ -58,17 +58,17 @@ export class PlayerAddPage implements OnInit {
       // { type: 'validUsername', message: 'Your username has already been taken.' }
     ],
     'previousTeam': [
-      { type: 'required', message: 'previous Team is required.' },
-      { type: 'minlength', message: 'previous Team must be at least 4 characters long.' },
-      { type: 'maxlength', message: 'previous Team cannot be more than 25 characters long.' },
+      { type: 'required', message: 'Previous Team is required.' },
+      { type: 'minlength', message: 'Previous Team must be at least 4 characters long.' },
+      { type: 'maxlength', message: 'Previous Team cannot be more than 25 characters long.' },
       { type: 'pattern', message: 'Your previous Team must not contain numbers and special characters.' },
       { type: 'validUsername', message: 'Your previous Team has already been taken.' }
     ],
     'playerPosition': [
-      { type: 'required', message: 'player Position is required.' }
+      { type: 'required', message: 'Player position is required.' }
     ],
     'height': [
-      { type: 'required', message: 'height  is required.' }
+      { type: 'required', message: 'Height is required.' }
     ],
     'playerNumber': [
       { type: 'required', message: 'Player jersey number is required.' },
@@ -114,8 +114,8 @@ export class PlayerAddPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.editingPlayer = this.router.getCurrentNavigation().extras.state.parms
         this.documentID = this.router.getCurrentNavigation().extras.state.parms.docid
-console.log('se', );
-this.buttonChange = this.router.getCurrentNavigation().extras.state.poo
+        console.log('se',);
+        this.buttonChange = this.router.getCurrentNavigation().extras.state.poo
 
         if (this.editingPlayer) {
           this.playerNode = {
@@ -129,7 +129,7 @@ this.buttonChange = this.router.getCurrentNavigation().extras.state.poo
             playerNumber: this.editingPlayer.docdata.playerNumber,
             height: this.editingPlayer.docdata.height,
             Achievements: this.editingPlayer.docdata.Achievements,
-            status : ''
+            status: ''
           }
           this.editingPlayer.docdata.Achievements.forEach(element => {
             this.Achievements.push(this.formBuilder.control(element));
@@ -138,7 +138,7 @@ this.buttonChange = this.router.getCurrentNavigation().extras.state.poo
 
       } else {
         console.log('No Player To edit');
-        
+
       }
     });
   }
@@ -180,7 +180,7 @@ this.buttonChange = this.router.getCurrentNavigation().extras.state.poo
         height: '',
         Achievements: [],
         playerNumber: '',
-        status : ''
+        status: ''
 
       }
       this.router.navigateByUrl('add-player')
@@ -242,7 +242,7 @@ this.buttonChange = this.router.getCurrentNavigation().extras.state.poo
           height: '',
           Achievements: [],
           playerNumber: '',
-          status : ''
+          status: ''
         }
         this.router.navigateByUrl('add-player')
         const toast = await this.toastController.create({
