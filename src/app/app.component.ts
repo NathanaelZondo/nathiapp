@@ -42,6 +42,11 @@ export class AppComponent {
       console.log('device',this.device, this.device.uuid)
       
       //store device uuid to firebase 
+<<<<<<< Updated upstream
+=======
+  
+        
+>>>>>>> Stashed changes
       this.fcm.getToken().then(token => {
         this.token = token
         console.log('token', token);
