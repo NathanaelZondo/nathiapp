@@ -151,6 +151,7 @@ export class ViewTournamentPage implements OnInit {
             }
           }).catch(err => { console.log(err); })
         } else {
+
           // these are upcoming ur inplay matches
           this.db.collection('MatchFixtures').where('tournid', '==', this.viewedTournament.doc_id).orderBy("matchdate", "desc").get().then(res => {
             if (res.size > 0) {
@@ -596,7 +597,7 @@ export class ViewTournamentPage implements OnInit {
           const homeTeam = this.match.type16[i].TeamObject;
           const awayTeam = this.match.type16[i].aTeamObject;
 
-          this.participants.push(homeTeam)
+          // this.participants.push(homeTeam)
           this.participants.push(awayTeam)
         }
         break;
@@ -608,7 +609,7 @@ export class ViewTournamentPage implements OnInit {
           const awayTeam = this.match.type8[i].aTeamObject;
           
           
-          this.participants.push(homeTeam)
+          // this.participants.push(homeTeam)
           this.participants.push(awayTeam)
         }
         break;
@@ -619,7 +620,7 @@ export class ViewTournamentPage implements OnInit {
           const homeTeam = this.match.type4[i].TeamObject;
           const awayTeam = this.match.type4[i].aTeamObject;
           console.log( this.match.type4.length);
-          this.participants.push(homeTeam)
+          // this.participants.push(homeTeam)
           this.participants.push(awayTeam)
         }
 
@@ -631,7 +632,7 @@ export class ViewTournamentPage implements OnInit {
           const homeTeam = this.match.type2[i].TeamObject;
           const awayTeam = this.match.type2[i].aTeamObject;
 
-          this.participants.push(homeTeam)
+          // this.participants.push(homeTeam)
           this.participants.push(awayTeam)
         }
 
